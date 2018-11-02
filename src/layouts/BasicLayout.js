@@ -21,38 +21,38 @@ import Exception403 from '../pages/Exception/403';
 const { Content } = Layout;
 
 // Conversion router to menu.
-function formatter(data, parentAuthority, parentName) {
-  return data
-    .map(item => {
-      let locale = 'menu';
-      if (parentName && item.name) {
-        locale = `${parentName}.${item.name}`;
-      } else if (item.name) {
-        locale = `menu.${item.name}`;
-      } else if (parentName) {
-        locale = parentName;
-      }
-      if (item.path) {
-        const result = {
-          ...item,
-          locale,
-          authority: item.authority || parentAuthority,
-        };
-        if (item.routes) {
-          const children = formatter(item.routes, item.authority, locale);
-          // Reduce memory usage
-          result.children = children;
-        }
-        delete result.routes;
-        return result;
-      }
+// function formatter(data, parentAuthority, parentName) {
+//   return data
+//     .map(item => {
+//       let locale = 'menu';
+//       if (parentName && item.name) {
+//         locale = `${parentName}.${item.name}`;
+//       } else if (item.name) {
+//         locale = `menu.${item.name}`;
+//       } else if (parentName) {
+//         locale = parentName;
+//       }
+//       if (item.path) {
+//         const result = {
+//           ...item,
+//           locale,
+//           authority: item.authority || parentAuthority,
+//         };
+//         if (item.routes) {
+//           const children = formatter(item.routes, item.authority, locale);
+//           // Reduce memory usage
+//           result.children = children;
+//         }
+//         delete result.routes;
+//         return result;
+//       }
 
-      return null;
-    })
-    .filter(item => item);
-}
+//       return null;
+//     })
+//     .filter(item => item);
+// }
 
-const memoizeOneFormatter = memoizeOne(formatter, isEqual);
+// const memoizeOneFormatter = memoizeOne(formatter, isEqual);
 
 const query = {
   'screen-xs': {
@@ -141,12 +141,78 @@ class BasicLayout extends React.PureComponent {
     };
   }
 
-  getMenuData() {
-    const {
-      route: { routes },
-    } = this.props;
-    return memoizeOneFormatter(routes);
-  }
+  getMenuData = () => {
+    const data = [
+      {
+        path: '/',
+        // "locale": "menu.home"
+      },
+      {
+        path: '/system',
+        name: '系统管理',
+        icon: 'setting',
+        // "locale": "menu.system",
+        children: [
+          {
+            path: '/system/accounts',
+            name: '账号管理',
+            // "locale": "menu.system.accounts"
+          },
+          {
+            path: '/system/roles',
+            name: '角色管理',
+            // "locale": "menu.system.roles"
+          },
+          {
+            path: '/system/menus',
+            name: '菜单管理',
+            // "locale": "menu.system.menus"
+          },
+        ],
+      },
+      {
+        path: '/business',
+        name: 'business',
+        icon: 'appstore',
+        // "locale": "menu.business",
+        children: [
+          {
+            path: '/business/medical-card-inquiry',
+            name: 'medical-card-inquiry',
+            // "locale": "menu.business.medical-card-inquiry"
+          },
+          {
+            path: '/business/registration-appointment-inquiry',
+            name: 'registration-appointment-inquiry',
+            // "locale": "menu.business.registration-appointment-inquiry"
+          },
+          {
+            path: '/business/performance-statistics',
+            name: 'performance-statistics',
+            // "locale": "menu.business.performance-statistics"
+          },
+          {
+            path: '/business/application-dissemination',
+            name: 'application-dissemination',
+            // "locale": "menu.business.application-dissemination"
+          },
+          {
+            path: '/business/dissemination-data-statistics',
+            name: 'dissemination-data-statistics',
+            // "locale": "menu.business.dissemination-data-statistics"
+          },
+          {
+            path: '/business/registration-appointment-data-statistics',
+            name: 'registration-appointment-data-statistics',
+            // "locale": "menu.business.registration-appointment-data-statistics"
+          },
+        ],
+      },
+    ];
+    // console.log(JSON.stringify(memoizeOneFormatter(routes)));
+    // return memoizeOneFormatter(routes);
+    return data;
+  };
 
   /**
    * 获取面包屑映射
@@ -180,10 +246,12 @@ class BasicLayout extends React.PureComponent {
     if (!currRouterData) {
       return '上海市预约诊疗服务运营管理后台';
     }
-    const message = formatMessage({
-      id: currRouterData.locale || currRouterData.name,
-      defaultMessage: currRouterData.name,
-    });
+    const message = currRouterData.locale
+      ? formatMessage({
+          id: currRouterData.locale || currRouterData.name,
+          defaultMessage: currRouterData.name,
+        })
+      : currRouterData.name;
     return `${message} - 上海市预约诊疗服务运营管理后台`;
   };
 

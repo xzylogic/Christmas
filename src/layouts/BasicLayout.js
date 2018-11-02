@@ -141,8 +141,10 @@ class BasicLayout extends React.PureComponent {
     };
   }
 
-  getMenuData = () => {
-    const data = [
+  getMenuData() {
+    const { location } = this.props;
+    console.log(location);
+    return [
       {
         path: '/',
         // "locale": "menu.home"
@@ -211,8 +213,8 @@ class BasicLayout extends React.PureComponent {
     ];
     // console.log(JSON.stringify(memoizeOneFormatter(routes)));
     // return memoizeOneFormatter(routes);
-    return data;
-  };
+    // return data;
+  }
 
   /**
    * 获取面包屑映射

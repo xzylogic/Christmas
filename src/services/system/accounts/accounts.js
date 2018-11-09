@@ -17,6 +17,15 @@ export async function toggleAccountState(params) {
   });
 }
 
+export async function deleteAccount(params) {
+  return request('/api/accounts/deleteAccount', {
+    method: 'POST',
+    body: {
+      ...params,
+    },
+  });
+}
+
 export async function resetAccountPassword(params) {
   return request('/api/accounts/resetPassword', {
     method: 'POST',

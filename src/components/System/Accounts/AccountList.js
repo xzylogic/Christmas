@@ -1,18 +1,33 @@
 import React from 'react';
+import Router from 'umi/router';
 import { Table, Divider } from 'antd';
 
 import classes from './AccountList.less';
 
-// const accountList = (props) => {
-//   console.log(props.accounts);
-//   return (
-//     <div className={classes.AccountListContainer}>
-//       AccountList
-//     </div>
-//   );
-// }
-
 class AccountList extends React.PureComponent {
+  handleState = (e, record) => {
+    e.preventDefault();
+    const { onSelectedChange } = this.props;
+    onSelectedChange(record, 'state');
+  };
+
+  handleEditor = (e, record) => {
+    e.preventDefault();
+    Router.push(`/system/accounts/${record.id}`);
+  };
+
+  handleResetPwd = (e, record) => {
+    e.preventDefault();
+    const { onSelectedChange } = this.props;
+    onSelectedChange(record, 'reset');
+  };
+
+  handleDelete = (e, record) => {
+    e.preventDefault();
+    const { onSelectedChange } = this.props;
+    onSelectedChange(record, 'delete');
+  };
+
   render() {
     const { accounts } = this.props;
     const columns = [
@@ -52,19 +67,20 @@ class AccountList extends React.PureComponent {
         title: '操作',
         dataIndex: 'isDelete',
         key: 'action',
-        render: text => (
+        render: (text, record) => (
           <span>
-            <a>{text === true ? '禁用' : '启用'}</a>
+            <a onClick={e => this.handleState(e, record)}>{text === true ? '禁用' : '启用'}</a>
             <Divider type="vertical" />
-            <a>编辑</a>
+            <a onClick={e => this.handleEditor(e, record)}>编辑</a>
             <Divider type="vertical" />
-            <a>重置密码</a>
+            <a onClick={e => this.handleResetPwd(e, record)}>重置密码</a>
             <Divider type="vertical" />
-            <a>删除</a>
+            <a onClick={e => this.handleDelete(e, record)}>删除</a>
           </span>
         ),
       },
     ];
+
     return (
       <div className={classes.AccountListContainer}>
         <Table

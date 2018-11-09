@@ -31,6 +31,11 @@ export default [
             component: './System/Accounts/Accounts',
           },
           {
+            path: '/system/accounts/:id',
+            name: 'accounts_detail',
+            component: './System/Accounts/AccountDetail/AccountDetail',
+          },
+          {
             path: '/system/roles',
             name: 'roles',
             component: './System/Roles/Roles',

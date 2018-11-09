@@ -116,6 +116,14 @@ const accountList = {
   currentPage: 0,
 };
 
+const success = {
+  code: 200,
+  data: null,
+};
+
 export default {
   'GET /api/accountList': accountList,
+  'POST /api/accounts/toggleState': success,
+  'POST /api/accounts/deleteAccount': success,
+  'POST /api/accounts/resetPassword': success,
 };

@@ -1,4 +1,9 @@
-import { fetchAccountListService } from '@/services/system/accounts/accounts';
+import {
+  fetchAccountListService,
+  toggleAccountState,
+  resetAccountPassword,
+  deleteAccount,
+} from '@/services/system/accounts/accounts';
 
 export default {
   namespace: 'account',
@@ -9,6 +14,10 @@ export default {
       state: null,
     },
     accountList: null,
+    selectedAccount: null,
+    modalType: '',
+    modalVisible: false,
+    modalLoading: false,
     currentPage: 0,
     totalPages: 0,
   },
@@ -30,6 +39,30 @@ export default {
         payload: data.totalPages,
       });
     },
+    *toggleAccountState({ payload }, { call, put }) {
+      const data = yield call(toggleAccountState, {
+        id: payload.id,
+        isDelete: payload.isDelete,
+      });
+      if (data) {
+        console.log(data);
+        yield put({ type: 'closeAccountModal' });
+      }
+    },
+    *resetAccountPassword({ payload }, { call, put }) {
+      const data = yield call(resetAccountPassword, { id: payload.id });
+      if (data) {
+        console.log(data);
+        yield put({ type: 'closeAccountModal' });
+      }
+    },
+    *deleteAccount({ payload }, { call, put }) {
+      const data = yield call(deleteAccount, { id: payload.id });
+      if (data) {
+        console.log(data);
+        yield put({ type: 'closeAccountModal' });
+      }
+    },
   },
 
   reducers: {
@@ -48,6 +81,14 @@ export default {
         accountList: payload,
       };
     },
+    updateSelectedAccount(state, { payload }) {
+      return {
+        ...state,
+        selectedAccount: payload.data,
+        modalType: payload.type,
+        modalVisible: true,
+      };
+    },
     updateCurrentPage(state, { payload }) {
       return {
         ...state,
@@ -58,6 +99,18 @@ export default {
       return {
         ...state,
         totalPages: payload,
+      };
+    },
+    openAccountModal(state) {
+      return {
+        ...state,
+        modalVisible: true,
+      };
+    },
+    closeAccountModal(state) {
+      return {
+        ...state,
+        modalVisible: false,
       };
     },
   },

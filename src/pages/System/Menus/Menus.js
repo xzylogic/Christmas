@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import classes from './Menus.less';
 
 export class Menus extends Component {
@@ -8,7 +9,11 @@ export class Menus extends Component {
   }
 
   render() {
-    return <div className={classes.Menus}>Menus</div>;
+    return (
+      <PageHeaderWrapper>
+        <div className={classes.Menus}>Menus</div>
+      </PageHeaderWrapper>
+    );
   }
 }
 

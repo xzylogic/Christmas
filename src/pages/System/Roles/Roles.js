@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import classes from './Roles.less';
 
 export class Roles extends Component {
@@ -8,7 +9,11 @@ export class Roles extends Component {
   }
 
   render() {
-    return <div className={classes.Roles}>Roles</div>;
+    return (
+      <PageHeaderWrapper>
+        <div className={classes.Roles}>Roles</div>
+      </PageHeaderWrapper>
+    );
   }
 }
 

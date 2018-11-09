@@ -5,7 +5,7 @@ import classes from './AccountSearch.less';
 
 const accountSearch = props => {
   const selectProps = {};
-  const { state, onStateChange, name, onNameChange, search } = props;
+  const { state, onStateChange, name, onNameChange, search, onNewClick } = props;
   if (state !== null) {
     selectProps.value = state;
   }
@@ -30,7 +30,7 @@ const accountSearch = props => {
         </Button>
       </div>
       <div className={classes.ButtonContainer}>
-        <Button type="primary" onClick={search}>
+        <Button type="primary" onClick={onNewClick}>
           添加账号
         </Button>
       </div>

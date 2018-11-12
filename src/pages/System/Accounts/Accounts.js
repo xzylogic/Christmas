@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import Router from 'umi/router';
 import { connect } from 'dva';
 
-import AccountSearch from '@/components/System/Accounts/AccountSearch';
-import AccountList from '@/components/System/Accounts/AccountList';
-import AccountModal from '@/components/System/Accounts/AccountModal';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
+import AccountSearch from './AccountsComponent/AccountSearch';
+import AccountList from './AccountsComponent/AccountList';
+import AccountModal from './AccountsComponent/AccountModal';
+
 import classes from './Accounts.less';
 
 const mapStateToProps = state => ({
@@ -19,10 +20,10 @@ const mapDispatchToProps = dispatch => ({
     dispatch({
       type: 'account/fetchAccountList',
     }),
-  onUpdateSearchParam: (mykey, myname) =>
+  onUpdateSearchParam: (key, name) =>
     dispatch({
       type: 'account/updateSearchParam',
-      payload: { key: mykey, name: myname },
+      payload: { key, name },
     }),
   onUpdateSelectedAccount: (data, type) =>
     dispatch({
@@ -45,7 +46,8 @@ class Accounts extends Component {
 
   handleInputChange = (event, myKey) => {
     const { onUpdateSearchParam } = this.props;
-    onUpdateSearchParam(myKey, myKey === 'state' ? event : event.target.value);
+    const myName = myKey === 'state' ? event : event.target.value;
+    onUpdateSearchParam(myKey, myName);
   };
 
   handleSearch = () => {

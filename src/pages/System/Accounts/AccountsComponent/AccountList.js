@@ -1,6 +1,6 @@
 import React from 'react';
 import Router from 'umi/router';
-import { Table, Divider } from 'antd';
+import { Table, Divider, Popconfirm } from 'antd';
 
 import classes from '../Accounts.less';
 
@@ -69,13 +69,40 @@ class AccountList extends React.PureComponent {
         key: 'action',
         render: (text, record) => (
           <span>
-            <a onClick={e => this.handleState(e, record)}>{text === true ? '禁用' : '启用'}</a>
+            <Popconfirm
+              placement="topRight"
+              title={`是否要${record.isDelete === true ? '禁用' : '启用'}账号${record.username}？`}
+              onConfirm={e => this.handleState(e, record)}
+              onCancel={e => e.preventDefault()}
+              okText="是"
+              cancelText="否"
+            >
+              <a>{text === true ? '禁用' : '启用'}</a>
+            </Popconfirm>
             <Divider type="vertical" />
             <a onClick={e => this.handleEditor(e, record)}>编辑</a>
             <Divider type="vertical" />
-            <a onClick={e => this.handleResetPwd(e, record)}>重置密码</a>
+            <Popconfirm
+              placement="topRight"
+              title={`是否要重置账号${record.username}的密码为：123456？`}
+              onConfirm={e => this.handleResetPwd(e, record)}
+              onCancel={e => e.preventDefault()}
+              okText="是"
+              cancelText="否"
+            >
+              <a>重置密码</a>
+            </Popconfirm>
             <Divider type="vertical" />
-            <a onClick={e => this.handleDelete(e, record)}>删除</a>
+            <Popconfirm
+              placement="topRight"
+              title={`是否要删除账号${record.username}？`}
+              onConfirm={e => this.handleDelete(e, record)}
+              onCancel={e => e.preventDefault()}
+              okText="是"
+              cancelText="否"
+            >
+              <a>删除</a>
+            </Popconfirm>
           </span>
         ),
       },

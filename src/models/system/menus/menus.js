@@ -85,7 +85,7 @@ export default {
           type: 'fetchMenuList',
         });
       } else {
-        message.error(res.message || '保存菜单失败！！！');
+        message.error((res && res.message) || '保存菜单失败！！！');
       }
     },
     *deleteMenu({ payload }, { call, put }) {
@@ -96,7 +96,7 @@ export default {
           type: 'fetchMenuList',
         });
       } else {
-        message.error(res.message || '删除菜单失败！！！');
+        message.error((res && res.message) || '删除菜单失败！！！');
       }
     },
   },

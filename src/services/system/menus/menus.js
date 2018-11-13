@@ -1,11 +1,11 @@
 import request from '@/utils/request';
 
 export async function fetchMenuList() {
-  return request(`http://10.2.100.205:8080/menu/getMenus`);
+  return request(`/menu/getMenus`);
 }
 
 export async function saveMenu(menu) {
-  return request('http://10.2.100.205:8080/menu/addMenu', {
+  return request('/menu/addMenu', {
     method: 'POST',
     body: {
       ...menu,
@@ -14,5 +14,5 @@ export async function saveMenu(menu) {
 }
 
 export async function deleteMenu(menuId) {
-  return request(`http://10.2.100.205:8080/menu/deleteMenus?menuId=${menuId}`);
+  return request(`/menu/deleteMenus?menuId=${menuId}`);
 }

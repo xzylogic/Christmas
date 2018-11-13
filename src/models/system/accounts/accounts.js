@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import {
   fetchAccountListService,
   toggleAccountState,
@@ -14,10 +15,6 @@ export default {
       state: null,
     },
     accountList: null,
-    selectedAccount: null,
-    modalType: '',
-    modalVisible: false,
-    modalLoading: false,
     currentPage: 0,
     totalPages: 0,
   },
@@ -25,42 +22,47 @@ export default {
   effects: {
     *fetchAccountList(_, { call, put, select }) {
       const searchParam = yield select(state => state.account.searchParam);
-      const data = yield call(fetchAccountListService, searchParam);
-      yield put({
-        type: 'updateAccountList',
-        payload: data.data,
-      });
-      yield put({
-        type: 'updateCurrentPage',
-        payload: data.currentPage,
-      });
-      yield put({
-        type: 'updateTotalPages',
-        payload: data.totalPages,
-      });
+      const res = yield call(fetchAccountListService, searchParam);
+      if (res) {
+        yield put({
+          type: 'updateAccountList',
+          payload: res.data,
+        });
+        yield put({
+          type: 'updateCurrentPage',
+          payload: res.currentPage,
+        });
+        yield put({
+          type: 'updateTotalPages',
+          payload: res.totalPages,
+        });
+      }
     },
-    *toggleAccountState({ payload }, { call, put }) {
-      const data = yield call(toggleAccountState, {
+    *toggleAccountState({ payload }, { call }) {
+      const res = yield call(toggleAccountState, {
         id: payload.id,
         isDelete: payload.isDelete,
       });
-      if (data) {
-        console.log(data);
-        yield put({ type: 'closeAccountModal' });
+      if (res && res.code === 200) {
+        message.success(res.message || '操作成功！！！');
+      } else {
+        message.success((res && res.message) || '操作失败！！！');
       }
     },
-    *resetAccountPassword({ payload }, { call, put }) {
-      const data = yield call(resetAccountPassword, { id: payload.id });
-      if (data) {
-        console.log(data);
-        yield put({ type: 'closeAccountModal' });
+    *resetAccountPassword({ payload }, { call }) {
+      const res = yield call(resetAccountPassword, { id: payload.id });
+      if (res && res.code === 200) {
+        message.success(res.message || '操作成功！！！');
+      } else {
+        message.success((res && res.message) || '操作失败！！！');
       }
     },
-    *deleteAccount({ payload }, { call, put }) {
-      const data = yield call(deleteAccount, { id: payload.id });
-      if (data) {
-        console.log(data);
-        yield put({ type: 'closeAccountModal' });
+    *deleteAccount({ payload }, { call }) {
+      const res = yield call(deleteAccount, { id: payload.id });
+      if (res && res.code === 200) {
+        message.success(res.message || '操作成功！！！');
+      } else {
+        message.success((res && res.message) || '操作失败！！！');
       }
     },
   },
@@ -81,14 +83,6 @@ export default {
         accountList: payload,
       };
     },
-    updateSelectedAccount(state, { payload }) {
-      return {
-        ...state,
-        selectedAccount: payload.data,
-        modalType: payload.type,
-        modalVisible: true,
-      };
-    },
     updateCurrentPage(state, { payload }) {
       return {
         ...state,
@@ -99,18 +93,6 @@ export default {
       return {
         ...state,
         totalPages: payload,
-      };
-    },
-    openAccountModal(state) {
-      return {
-        ...state,
-        modalVisible: true,
-      };
-    },
-    closeAccountModal(state) {
-      return {
-        ...state,
-        modalVisible: false,
       };
     },
   },

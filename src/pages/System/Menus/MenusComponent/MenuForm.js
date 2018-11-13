@@ -6,6 +6,7 @@ const mapStateToProps = state => ({
   menuCopy: state.menu.menuCopy,
   selectedMenu: state.menu.selectedMenu,
   submitting: state.loading.effects['menu/saveMenu'],
+  deleting: state.loading.effects['menu/deleteMenu'],
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -53,6 +54,7 @@ class MenuForm extends Component {
       type,
       selectedMenu,
       submitting,
+      deleting,
       menuCopy: { parents, root },
       form: { getFieldDecorator },
     } = this.props;
@@ -129,7 +131,6 @@ class MenuForm extends Component {
             <Button type="primary" htmlType="submit" loading={submitting}>
               修改菜单
             </Button>
-            <Button style={{ marginLeft: 8 }}>取消</Button>
           </Form.Item>
         </Form>
       );
@@ -189,7 +190,6 @@ class MenuForm extends Component {
               <Button type="primary" htmlType="submit" loading={submitting}>
                 生成菜单
               </Button>
-              <Button style={{ marginLeft: 8 }}>取消</Button>
             </Form.Item>
           </Form>
         );
@@ -217,9 +217,10 @@ class MenuForm extends Component {
                 okText="是"
                 cancelText="否"
               >
-                <Button type="primary">删除菜单</Button>
+                <Button type="primary" loading={deleting}>
+                  删除菜单
+                </Button>
               </Popconfirm>
-              ,<Button style={{ marginLeft: 8 }}>取消</Button>
             </Form.Item>
           </Form>
         );

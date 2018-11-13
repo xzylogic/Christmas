@@ -5,7 +5,6 @@ import { connect } from 'dva';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import AccountSearch from './AccountsComponent/AccountSearch';
 import AccountList from './AccountsComponent/AccountList';
-import AccountModal from './AccountsComponent/AccountModal';
 
 import classes from './Accounts.less';
 
@@ -25,10 +24,20 @@ const mapDispatchToProps = dispatch => ({
       type: 'account/updateSearchParam',
       payload: { key, name },
     }),
-  onUpdateSelectedAccount: (data, type) =>
+  onChangeAccountState: (id, state) =>
     dispatch({
-      type: 'account/updateSelectedAccount',
-      payload: { data, type },
+      type: 'account/toggleAccountState',
+      payload: { id, state },
+    }),
+  onResetAccountPwd: id =>
+    dispatch({
+      type: 'account/resetAccountPassword',
+      payload: { id },
+    }),
+  onDeleteAccount: id =>
+    dispatch({
+      type: 'account/deleteAccount',
+      payload: { id },
     }),
 });
 
@@ -60,12 +69,24 @@ class Accounts extends Component {
     Router.push(`/system/accounts/0`);
   };
 
+  handleSelectedChange = (record, type) => {
+    const { onChangeAccountState, onResetAccountPwd, onDeleteAccount } = this.props;
+    if (type === 'state') {
+      onChangeAccountState(record.id, !record.isDelete);
+    }
+    if (type === 'reset') {
+      onResetAccountPwd(record.id);
+    }
+    if (type === 'delete') {
+      onDeleteAccount(record.id);
+    }
+  };
+
   render() {
-    const { searchParam, accountList, onUpdateSelectedAccount } = this.props;
+    const { searchParam, accountList } = this.props;
     return (
       <PageHeaderWrapper>
         <div className={classes.Accounts}>
-          <AccountModal />
           <AccountSearch
             state={searchParam.state}
             onStateChange={event => this.handleInputChange(event, 'state')}
@@ -74,7 +95,7 @@ class Accounts extends Component {
             search={this.handleSearch}
             onNewClick={this.handleNew}
           />
-          <AccountList accounts={accountList} onSelectedChange={onUpdateSelectedAccount} />
+          <AccountList accounts={accountList} onSelectedChange={this.handleSelectedChange} />
         </div>
       </PageHeaderWrapper>
     );

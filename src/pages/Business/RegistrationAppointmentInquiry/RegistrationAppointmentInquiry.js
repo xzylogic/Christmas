@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 export class RegistrationAppointmentInquiry extends Component {
   componentDidMount() {
-    console.log('Menus');
+    console.log('RegistrationAppointmentInquiry');
   }
 
   render() {

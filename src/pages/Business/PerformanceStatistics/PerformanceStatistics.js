@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 export class PerformanceStatistics extends Component {
   componentDidMount() {
-    console.log('Menus');
+    console.log('PerformanceStatistics');
   }
 
   render() {

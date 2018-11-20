@@ -136,39 +136,54 @@ class BasicLayout extends React.PureComponent {
         ],
       },
       {
+        path: '/comprehensive',
+        name: '医联综合统计',
+        icon: 'bar-chart',
+        children: [
+          {
+            path: '/comprehensive/member-statistics',
+            name: '会员统计',
+          },
+          {
+            path: '/comprehensive/registration-statistics',
+            name: '预约挂号统计',
+          },
+        ],
+      },
+      {
         path: '/business',
-        name: 'business',
+        name: '医联业务应用',
         icon: 'appstore',
         // "locale": "menu.business",
         children: [
           {
             path: '/business/medical-card-inquiry',
-            name: 'medical-card-inquiry',
+            name: '就诊卡查询',
             // "locale": "menu.business.medical-card-inquiry"
           },
           {
             path: '/business/registration-appointment-inquiry',
-            name: 'registration-appointment-inquiry',
+            name: '预约查询',
             // "locale": "menu.business.registration-appointment-inquiry"
           },
           {
             path: '/business/performance-statistics',
-            name: 'performance-statistics',
+            name: '业绩统计',
             // "locale": "menu.business.performance-statistics"
           },
           {
             path: '/business/application-dissemination',
-            name: 'application-dissemination',
+            name: '应用推广',
             // "locale": "menu.business.application-dissemination"
           },
           {
             path: '/business/dissemination-data-statistics',
-            name: 'dissemination-data-statistics',
+            name: '推广数据统计',
             // "locale": "menu.business.dissemination-data-statistics"
           },
           {
             path: '/business/registration-appointment-data-statistics',
-            name: 'registration-appointment-data-statistics',
+            name: '预约数据统计',
             // "locale": "menu.business.registration-appointment-data-statistics"
           },
         ],

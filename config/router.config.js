@@ -46,6 +46,23 @@ export default [
         ],
       },
       // comprehensive
+      {
+        path: '/comprehensive',
+        name: 'comprehensive',
+        icon: 'appstore',
+        routes: [
+          {
+            path: '/comprehensive/member-statistics',
+            name: 'member-statistics',
+            component: './Comprehensive/MemberStatistics/MemberStatistics',
+          },
+          {
+            path: '/comprehensive/registration-statistics',
+            name: 'registration-statistics',
+            component: './Comprehensive/RegistrationStatistics/RegistrationStatistics',
+          },
+        ],
+      },
       // business
       {
         path: '/business',

@@ -1,11 +1,11 @@
 import request from '@/utils/request';
 
 export async function fetchMenuList() {
-  return request(`/menu/getMenus`);
+  return request(`/yilian-cloud-backend-api/menu/getMenus`);
 }
 
 export async function saveMenu(menu) {
-  return request('/menu/addMenu', {
+  return request('/yilian-cloud-backend-api/menu/addMenu', {
     method: 'POST',
     body: {
       ...menu,
@@ -14,5 +14,5 @@ export async function saveMenu(menu) {
 }
 
 export async function deleteMenu(menuId) {
-  return request(`/menu/deleteMenus?menuId=${menuId}`);
+  return request(`/yilian-cloud-backend-api/menu/deleteMenus?menuId=${menuId}`);
 }

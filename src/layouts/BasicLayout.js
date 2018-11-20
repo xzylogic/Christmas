@@ -20,40 +20,6 @@ import Exception403 from '../pages/Exception/403';
 
 const { Content } = Layout;
 
-// Conversion router to menu.
-// function formatter(data, parentAuthority, parentName) {
-//   return data
-//     .map(item => {
-//       let locale = 'menu';
-//       if (parentName && item.name) {
-//         locale = `${parentName}.${item.name}`;
-//       } else if (item.name) {
-//         locale = `menu.${item.name}`;
-//       } else if (parentName) {
-//         locale = parentName;
-//       }
-//       if (item.path) {
-//         const result = {
-//           ...item,
-//           locale,
-//           authority: item.authority || parentAuthority,
-//         };
-//         if (item.routes) {
-//           const children = formatter(item.routes, item.authority, locale);
-//           // Reduce memory usage
-//           result.children = children;
-//         }
-//         delete result.routes;
-//         return result;
-//       }
-
-//       return null;
-//     })
-//     .filter(item => item);
-// }
-
-// const memoizeOneFormatter = memoizeOne(formatter, isEqual);
-
 const query = {
   'screen-xs': {
     maxWidth: 575,
@@ -96,9 +62,6 @@ class BasicLayout extends React.PureComponent {
 
   componentDidMount() {
     const { dispatch } = this.props;
-    dispatch({
-      type: 'user/fetchCurrent',
-    });
     dispatch({
       type: 'setting/getSetting',
     });

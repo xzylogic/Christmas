@@ -30,34 +30,4 @@ export default {
       },
     ],
   },
-  Mobile: {
-    props: {
-      size: 'large',
-      prefix: <Icon type="mobile" className={styles.prefixIcon} />,
-      placeholder: 'mobile number',
-    },
-    rules: [
-      {
-        required: true,
-        message: 'Please enter mobile number!',
-      },
-      {
-        pattern: /^1\d{10}$/,
-        message: 'Wrong mobile number format!',
-      },
-    ],
-  },
-  Captcha: {
-    props: {
-      size: 'large',
-      prefix: <Icon type="mail" className={styles.prefixIcon} />,
-      placeholder: 'captcha',
-    },
-    rules: [
-      {
-        required: true,
-        message: 'Please enter Captcha!',
-      },
-    ],
-  },
 };

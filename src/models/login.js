@@ -1,6 +1,6 @@
 import { routerRedux } from 'dva/router';
 import { stringify } from 'qs';
-import { fakeAccountLogin, getFakeCaptcha } from '@/services/api';
+import { login } from '@/services/auth';
 import { setAuthority } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
 import { reloadAuthorized } from '@/utils/Authorized';
@@ -10,17 +10,29 @@ export default {
 
   state: {
     status: undefined,
+    currentUser: {
+      name: 'admin',
+    },
   },
 
   effects: {
     *login({ payload }, { call, put }) {
-      const response = yield call(fakeAccountLogin, payload);
-      yield put({
-        type: 'changeLoginStatus',
-        payload: response,
-      });
+      const response = yield call(login, payload.userName, payload.password);
       // Login successfully
-      if (response.status === 'ok') {
+      if (response.code === 200) {
+        console.log(response.data);
+        yield put({
+          type: 'changeLoginStatus',
+          payload: {
+            currentAuthority: 'admin',
+            status: true,
+            type: 'account',
+          },
+        });
+        yield put({
+          type: 'saveCurrentUser',
+          payload: response.data,
+        });
         reloadAuthorized();
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();
@@ -39,10 +51,6 @@ export default {
         }
         yield put(routerRedux.replace(redirect || '/'));
       }
-    },
-
-    *getCaptcha({ payload }, { call }) {
-      yield call(getFakeCaptcha, payload);
     },
 
     *logout(_, { put }) {
@@ -72,6 +80,12 @@ export default {
         ...state,
         status: payload.status,
         type: payload.type,
+      };
+    },
+    saveCurrentUser(state, action) {
+      return {
+        ...state,
+        currentUser: action.payload || {},
       };
     },
   },

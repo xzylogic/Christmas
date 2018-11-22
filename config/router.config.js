@@ -39,6 +39,11 @@ export default [
             component: './System/Roles/Roles',
           },
           {
+            path: '/system/roles/:id',
+            name: 'roles_detail',
+            component: './System/Roles/RoleDetail/RoleDetail',
+          },
+          {
             path: '/system/menus',
             name: 'menus',
             component: './System/Menus/Menus',

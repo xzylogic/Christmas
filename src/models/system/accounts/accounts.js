@@ -16,25 +16,33 @@ export default {
     },
     accountList: null,
     currentPage: 0,
-    totalPages: 0,
+    totalElements: 0,
   },
 
   effects: {
-    *fetchAccountList(_, { call, put, select }) {
+    *fetchAccountList({ payload }, { call, put, select }) {
       const searchParam = yield select(state => state.account.searchParam);
-      const res = yield call(fetchAccountListService, searchParam);
-      if (res) {
+      const { page } = payload;
+      let params = '';
+      if (searchParam && searchParam.name) {
+        params += `name=${searchParam.name}`;
+      }
+      if (searchParam && searchParam.state) {
+        params += `state=${searchParam.state}`;
+      }
+      const res = yield call(fetchAccountListService, params, page, 10);
+      if (res && res.code === 200) {
         yield put({
           type: 'updateAccountList',
-          payload: res.data,
+          payload: res.data.content,
         });
         yield put({
           type: 'updateCurrentPage',
-          payload: res.currentPage,
+          payload: page,
         });
         yield put({
-          type: 'updateTotalPages',
-          payload: res.totalPages,
+          type: 'updateTotalElements',
+          payload: res.data.totalElements,
         });
       }
     },
@@ -89,10 +97,10 @@ export default {
         currentPage: payload,
       };
     },
-    updateTotalPages(state, { payload }) {
+    updateTotalElements(state, { payload }) {
       return {
         ...state,
-        totalPages: payload,
+        totalElements: payload,
       };
     },
   },

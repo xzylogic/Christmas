@@ -11,13 +11,16 @@ import classes from './Accounts.less';
 const mapStateToProps = state => ({
   accountList: state.account.accountList,
   searchParam: state.account.searchParam,
+  currentPage: state.account.currentPage,
+  totalElements: state.account.totalElements,
   loading: state.loading.effects['account/fetchAccountList'],
 });
 
 const mapDispatchToProps = dispatch => ({
-  onFetchAccountList: () =>
+  onFetchAccountList: page =>
     dispatch({
       type: 'account/fetchAccountList',
+      payload: { page },
     }),
   onUpdateSearchParam: (key, name) =>
     dispatch({
@@ -49,7 +52,7 @@ class Accounts extends Component {
   componentDidMount() {
     const { accountList, onFetchAccountList } = this.props;
     if (accountList === null) {
-      onFetchAccountList();
+      onFetchAccountList(0);
     }
   }
 
@@ -61,7 +64,7 @@ class Accounts extends Component {
 
   handleSearch = () => {
     const { onFetchAccountList } = this.props;
-    onFetchAccountList();
+    onFetchAccountList(0);
   };
 
   handleNew = e => {
@@ -83,7 +86,7 @@ class Accounts extends Component {
   };
 
   render() {
-    const { searchParam, accountList } = this.props;
+    const { searchParam, accountList, currentPage, totalElements, onFetchAccountList } = this.props;
     return (
       <PageHeaderWrapper>
         <div className={classes.Accounts}>
@@ -95,7 +98,13 @@ class Accounts extends Component {
             search={this.handleSearch}
             onNewClick={this.handleNew}
           />
-          <AccountList accounts={accountList} onSelectedChange={this.handleSelectedChange} />
+          <AccountList
+            accounts={accountList}
+            onSelectedChange={this.handleSelectedChange}
+            currentPage={currentPage}
+            totalElements={totalElements}
+            onPageChange={onFetchAccountList}
+          />
         </div>
       </PageHeaderWrapper>
     );

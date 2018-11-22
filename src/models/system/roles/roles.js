@@ -1,4 +1,4 @@
-import { fetchAccountListService } from '@/services/system/accounts/accounts';
+import { fetchRoleListService } from '@/services/system/roles/roles';
 
 export default {
   namespace: 'role',
@@ -7,27 +7,34 @@ export default {
     searchParam: {
       name: '',
     },
-    accountList: [],
+    roleList: null,
     currentPage: 0,
-    totalPages: 0,
+    totalElements: 0,
   },
 
   effects: {
-    *fetchAccountList(_, { call, put, select }) {
+    *fetchRoleList({ payload }, { call, put, select }) {
       const searchParam = yield select(state => state.account.searchParam);
-      const data = yield call(fetchAccountListService, searchParam);
-      yield put({
-        type: 'updateAccountList',
-        payload: data.data,
-      });
-      yield put({
-        type: 'updateCurrentPage',
-        payload: data.currentPage,
-      });
-      yield put({
-        type: 'updateTotalPages',
-        payload: data.totalPages,
-      });
+      const { page } = payload;
+      let params = '';
+      if (searchParam && searchParam.name) {
+        params += `name=${searchParam.name}`;
+      }
+      const res = yield call(fetchRoleListService, params, page, 10);
+      if (res && res.code === 200) {
+        yield put({
+          type: 'updateRoleList',
+          payload: res.data.content,
+        });
+        yield put({
+          type: 'updateCurrentPage',
+          payload: page,
+        });
+        yield put({
+          type: 'updateTotalElements',
+          payload: res.data.totalElements,
+        });
+      }
     },
   },
 
@@ -41,10 +48,10 @@ export default {
         },
       };
     },
-    updateAccountList(state, { payload }) {
+    updateRoleList(state, { payload }) {
       return {
         ...state,
-        accountList: payload,
+        roleList: payload,
       };
     },
     updateCurrentPage(state, { payload }) {
@@ -53,10 +60,10 @@ export default {
         currentPage: payload,
       };
     },
-    updateTotalsPage(state, { payload }) {
+    updateTotalElements(state, { payload }) {
       return {
         ...state,
-        totalPages: payload,
+        totalElements: payload,
       };
     },
   },

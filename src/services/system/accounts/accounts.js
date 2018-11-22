@@ -1,11 +1,11 @@
 import request from '@/utils/request';
 
-export async function fetchAccountListService() {
-  // let query = '';
-  // if (params) {
-  //   query = `?params`;
-  // }
-  return request(`/api/accountList`);
+export async function fetchAccountListService(params, page, size) {
+  let query = `?page=${page}&size=${size || 10}`;
+  if (params) {
+    query += `&${params}`;
+  }
+  return request(`/yilian-cloud-backend-api/user/getUsers${query}`);
 }
 
 export async function toggleAccountState(params) {

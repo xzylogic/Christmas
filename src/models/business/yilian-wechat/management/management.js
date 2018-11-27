@@ -1,21 +1,21 @@
-// import { message } from 'antd';
+import { message } from 'antd';
 import {
   fetchGroupListService,
   fetchMemberListService,
   fetchLocationListService,
-  // createGroupService,
+  createGroupService,
   // createMemberService,
   // createLocationService,
-  // modifyGroupService,
+  modifyGroupService,
   // modifyMemberService,
   // modifyLocationService,
-  // deleteGroupService,
+  deleteGroupService,
   // deleteMemberService,
   // deleteLocationService,
-} from '@/services/business/application-dissemination/application-dissemination';
+} from '@/services/business/yilian-wechat/management/management';
 
 export default {
-  namespace: 'applicationDissemination',
+  namespace: 'businessYilianWechatManagement',
 
   state: {
     searchParam: {
@@ -42,7 +42,7 @@ export default {
 
   effects: {
     *fetchGroupList({ payload }, { call, put, select }) {
-      const searchParam = yield select(state => state.applicationDissemination.searchParam);
+      const searchParam = yield select(state => state.businessYilianWechatManagement.searchParam);
       const { page } = payload;
       let params = '';
       if (searchParam && searchParam.groupName) {
@@ -62,7 +62,7 @@ export default {
       }
     },
     *fetchMemberList({ payload }, { call, put, select }) {
-      const searchParam = yield select(state => state.applicationDissemination.searchParam);
+      const searchParam = yield select(state => state.businessYilianWechatManagement.searchParam);
       const { page } = payload;
       let params = '';
       if (searchParam && searchParam.memberName) {
@@ -82,7 +82,7 @@ export default {
       }
     },
     *fetchLocationList({ payload }, { call, put, select }) {
-      const searchParam = yield select(state => state.applicationDissemination.searchParam);
+      const searchParam = yield select(state => state.businessYilianWechatManagement.searchParam);
       const { page } = payload;
       let params = '';
       if (searchParam && searchParam.locationName) {
@@ -99,6 +99,42 @@ export default {
             totalElements: res.data.totalElements,
           },
         });
+      }
+    },
+    *createGroup({ payload }, { call, put }) {
+      const { postData } = payload;
+      const res = yield call(createGroupService, postData);
+      let ifsuccess = false;
+      if (res && res.code === 200) {
+        ifsuccess = true;
+        yield put({ type: 'fetchGroupList', payload: { page: 0 } });
+        message.success('新增小组成功！');
+      } else {
+        message.error('新增小组失败！');
+      }
+      return ifsuccess;
+    },
+    *modifyGroup({ payload }, { call, put }) {
+      const { postData } = payload;
+      const res = yield call(modifyGroupService, postData);
+      let ifsuccess = false;
+      if (res && res.code === 200) {
+        ifsuccess = true;
+        yield put({ type: 'fetchGroupList', payload: { page: 0 } });
+        message.success('修改小组信息成功！');
+      } else {
+        message.error('修改小组信息失败！');
+      }
+      return ifsuccess;
+    },
+    *deleteGroup({ payload }, { call, put }) {
+      const { id } = payload;
+      const res = yield call(deleteGroupService, id);
+      if (res && res.code === 200) {
+        yield put({ type: 'fetchGroupList', payload: { page: 0 } });
+        message.success('删除小组成功！');
+      } else {
+        message.error('删除小组失败！');
       }
     },
   },

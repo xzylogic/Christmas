@@ -9,31 +9,36 @@ import TableList from './TableList';
 import GroupEditor from './GroupEditor';
 
 const mapStateToProps = state => ({
-  groupName: state.applicationDissemination.searchParam.groupName,
-  groupList: state.applicationDissemination.list.group,
-  currentPage: state.applicationDissemination.currentPage.group,
-  totalElements: state.applicationDissemination.totalElements.group,
-  loading: state.loading.effects['applicationDissemination/fetchGroupList'],
+  groupName: state.businessYilianWechatManagement.searchParam.groupName,
+  groupList: state.businessYilianWechatManagement.list.group,
+  currentPage: state.businessYilianWechatManagement.currentPage.group,
+  totalElements: state.businessYilianWechatManagement.totalElements.group,
+  loading: state.loading.effects['businessYilianWechatManagement/fetchGroupList'],
 });
 
 const mapDispatchToProps = dispatch => ({
   onFetchGroupList: page =>
     dispatch({
-      type: 'applicationDissemination/fetchGroupList',
+      type: 'businessYilianWechatManagement/fetchGroupList',
       payload: { page },
     }),
   onSearchGroupList: debounce(
     page =>
       dispatch({
-        type: 'applicationDissemination/fetchGroupList',
+        type: 'businessYilianWechatManagement/fetchGroupList',
         payload: { page },
       }),
     500
   ),
   onUpdateSearchParam: (key, value) =>
     dispatch({
-      type: 'applicationDissemination/updateSearchParam',
+      type: 'businessYilianWechatManagement/updateSearchParam',
       payload: { key, value },
+    }),
+  onDeleteGroup: id =>
+    dispatch({
+      type: 'businessYilianWechatManagement/deleteGroup',
+      payload: { id },
     }),
 });
 
@@ -44,6 +49,7 @@ const mapDispatchToProps = dispatch => ({
 class GroupContainer extends Component {
   state = {
     showEditor: false,
+    selectedData: null,
   };
 
   componentDidMount() {
@@ -55,14 +61,16 @@ class GroupContainer extends Component {
 
   handleEditor = (e, record) => {
     e.preventDefault();
-    console.log(record);
-    this.setState({ showEditor: true });
+    this.setState({
+      showEditor: true,
+      selectedData: record,
+    });
   };
 
   handleDelete = (e, record) => {
     e.preventDefault();
-    console.log(record);
-    console.log('delete');
+    const { onDeleteGroup } = this.props;
+    onDeleteGroup(record.id);
   };
 
   handlePageChange = page => {
@@ -150,7 +158,10 @@ class GroupContainer extends Component {
 
   handleNew = e => {
     e.preventDefault();
-    console.log('new');
+    this.setState({
+      showEditor: true,
+      selectedData: null,
+    });
   };
 
   handleExport = e => {
@@ -160,7 +171,7 @@ class GroupContainer extends Component {
 
   render() {
     const { groupName, groupList, currentPage, totalElements } = this.props;
-    const { showEditor } = this.state;
+    const { showEditor, selectedData } = this.state;
     return (
       <div>
         <SearchBar
@@ -180,7 +191,11 @@ class GroupContainer extends Component {
           totalElements={totalElements}
           onPageChange={this.handlePageChange}
         />
-        <GroupEditor visible={showEditor} onClose={() => this.setState({ showEditor: false })} />
+        <GroupEditor
+          visible={showEditor}
+          initialValue={selectedData}
+          onClose={() => this.setState({ showEditor: false })}
+        />
       </div>
     );
   }

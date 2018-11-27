@@ -3,7 +3,6 @@
   "version": "2.1.0",
   "description": "An out-of-box UI solution for enterprise applications",
   "private": true,
-  "proxy": "http://10.2.10.13:9080/yilian-cloud-backend-api",
   "scripts": {
     "presite": "node ./scripts/generateMock.js && cd functions && npm install",
     "start": "cross-env APP_TYPE=site umi dev",

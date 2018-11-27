@@ -225,40 +225,40 @@ class BasicLayout extends React.PureComponent {
       },
       // 区平台统计分析
       {
-        path: '/yilian-statistics/qu-statistics',
+        path: '/qu-statistics',
         name: '区平台统计分析',
         icon: 'bar-chart',
         children: [
           {
-            path: '/yilian-statistics/qu-statistics/usage-of-hospitals-numbers',
+            path: '/qu-statistics/usage-of-hospitals-numbers',
             name: '各医院号源使用情况',
           },
           {
-            path: '/yilian-statistics/qu-statistics/amount-of-hospitals-appointments',
+            path: '/qu-statistics/amount-of-hospitals-appointments',
             name: '各医院预约量',
           },
           {
-            path: '/yilian-statistics/qu-statistics/amount-of-hospitals-refunds',
+            path: '/qu-statistics/amount-of-hospitals-refunds',
             name: '各医院退号量',
           },
           {
-            path: '/yilian-statistics/qu-statistics/amount-of-hospitals-failures',
+            path: '/qu-statistics/amount-of-hospitals-failures',
             name: '各医院爽约量',
           },
           {
-            path: '/yilian-statistics/qu-statistics/amount-of-channels-registration',
+            path: '/qu-statistics/amount-of-channels-registration',
             name: '各渠道注册量',
           },
           {
-            path: '/yilian-statistics/qu-statistics/amount-of-channels-refunds',
+            path: '/qu-statistics/amount-of-channels-refunds',
             name: '各渠道退号量',
           },
           {
-            path: '/yilian-statistics/qu-statistics/amount-of-channels-failures',
+            path: '/qu-statistics/amount-of-channels-failures',
             name: '各渠道爽约量',
           },
           {
-            path: '/yilian-statistics/qu-statistics/amount-of-channels-appointments',
+            path: '/qu-statistics/amount-of-channels-appointments',
             name: '各渠道预约量',
           },
         ],

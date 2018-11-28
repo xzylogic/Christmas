@@ -1,124 +1,348 @@
-English | [简体中文](./README.zh-CN.md) | [Русский](./README.ru-RU.md)
+# 上海市预约诊疗服务运营管理后台
 
-<h1 align="center">Ant Design Pro</h1>
+## 技术栈
+- 【Ant Design Pro】[https://pro.ant.design/](https://pro.ant.design/)
+- 【UmiJS】[https://umijs.org/](https://umijs.org/)
+- 【DvaJS】[https://dvajs.com/](https://dvajs.com/)
+- 【React】[https://reactjs.org/](https://reactjs.org/)
+- 【Redux】[https://redux.js.org/](https://redux.js.org/)
+- 【React Redux】[https://react-redux.js.org/](https://react-redux.js.org/)
+- 【Redux Saga】[https://redux-saga.js.org/](https://redux-saga.js.org/)
+- 【React Router】[https://reacttraining.com/react-router/web](https://reacttraining.com/react-router/web)
 
-<div align="center">
+## 需求列表
 
-An out-of-box UI solution for enterprise applications as a React boilerplate.
-
-[![CircleCI Status](https://circleci.com/gh/ant-design/ant-design-pro.svg?style=svg)](https://circleci.com/gh/ant-design/ant-design-pro/)
-[![Build status](https://ci.appveyor.com/api/projects/status/67fxu2by3ibvqtat/branch/master?svg=true)](https://ci.appveyor.com/project/afc163/ant-design-pro/branch/master)
-[![Dependencies](https://img.shields.io/david/ant-design/ant-design-pro.svg)](https://david-dm.org/ant-design/ant-design-pro)
-[![DevDependencies](https://img.shields.io/david/dev/ant-design/ant-design-pro.svg)](https://david-dm.org/ant-design/ant-design-pro?type=dev)
-[![Gitter](https://badges.gitter.im/ant-design/ant-design-pro.svg)](https://gitter.im/ant-design/ant-design-pro?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
-
-![](https://user-images.githubusercontent.com/8186664/44953195-581e3d80-aec4-11e8-8dcb-54b9db38ec11.png)
-
+<div style="width: 80%;margin: 0 auto;text-align: center;">
+  <img alt="需求列表" src="http://image.violetqqy.com/yilian.png-normal" />
 </div>
 
-- Preview: http://preview.pro.ant.design
-- Home Page: http://pro.ant.design
-- Documentation: http://pro.ant.design/docs/getting-started
-- ChangeLog: http://pro.ant.design/docs/changelog
-- FAQ: http://pro.ant.design/docs/faq
-- Mirror Site in China: http://ant-design-pro.gitee.io
-
-## 2.0 Released Now! 🎉🎉🎉
-[Announcing Ant Design Pro 2.0.0](https://medium.com/ant-design/beautiful-and-powerful-ant-design-pro-2-0-release-51358da5af95)
-
-## Translation Recruitment :loudspeaker:
-
-We need your help: https://github.com/ant-design/ant-design-pro/issues/120
-
-## Features
-
-- :gem: **Neat Design**: Follow [Ant Design specification](http://ant.design/)
-- :triangular_ruler: **Common Templates**: Typical templates for enterprise applications
-- :rocket: **State of The Art Development**: Newest development stack of React/umi/dva/antd
-- :iphone: **Responsive**: Designed for variable screen sizes
-- :art: **Theming**: Customizable theme with simple config
-- :globe_with_meridians: **International**: Built-in i18n solution
-- :gear: **Best Practices**: Solid workflow to make your code healthy
-- :1234: **Mock development**: Easy to use mock development solution
-- :white_check_mark: **UI Test**: Fly safely with unit and e2e tests
-
-## Templates
+## 页面结构(pages)
 
 ```
-- Dashboard
-  - Analytic
-  - Monitor
-  - Workspace
-- Form
-  - Basic Form
-  - Step Form
-  - Advanced From
-- List
-  - Standard Table
-  - Standard List
-  - Card List
-  - Search List (Project/Applications/Article)
-- Profile
-  - Simple Profile
-  - Advanced Profile
-- Account
-  - Account Center
-  - Account Settings
-- Result
-  - Success
-  - Failed
-- Exception
-  - 403
-  - 404
-  - 500
 - User
-  - Login
-  - Register
-  - Register Result
+  - Login //登录
+- System // 系统管理
+  - Accounts // 账号管理
+    - AccountDetail // 账号管理详情
+  - Menus // 菜单管理
+  - Roles // 角色管理
+    - RoleDetail // 角色管理详情
+- Statistics // 统计分析
+  - UsageOfHospitalsNumbers // 各医院号源使用情况
+  - AmountOfHospitalsAppointments // 各医院预约量
+    - Shi // 市平台
+    - Yilian // 医联平台
+    - Qu // 区平台
+  - AmountOfHospitalsRefunds // 各医院退号量
+    - Shi // 市平台
+    - Yilian // 医联平台
+    - Qu // 区平台
+  - AmountOfHospitalsFailures // 各医院爽约量
+    - Shi // 市平台
+    - Yilian // 医联平台
+    - Qu // 区平台
+  - AmountOfChannelsRegistration // 各渠道注册量
+    - Shi // 市平台
+    - Yilian // 医联平台
+    - Qu // 区平台
+  - AmountOfChannlesRefunds // 各渠道退号量
+    - Shi // 市平台
+    - Yilian // 医联平台
+    - Qu // 区平台
+  - AmountOfChannlesFailures // 各渠道爽约量
+    - Shi // 市平台
+    - Yilian // 医联平台
+    - Qu // 区平台
+  - AmountOfChannelsAppointments // 各渠道预约量
+    - Shi // 市平台
+    - Yilian // 医联平台
+    - Qu // 区平台
+- Business // 业务
+  - YilianWechat // 医联微信
+    - Query // 查询
+      - Appointments // 预约查询
+      - Performance // 业绩查询
+      - Members // 会员查询
+    - Management // 管理
+    - Statistics // 统计
+        - Popularization // 推广数据统计
+        - PopularizationReport // 推广数据报表
+        - Appointments // 预约数据统计
+        - AppointmentsReport // 预约数据报表
 ```
 
-## Usage
+## 菜单结构
 
-### Use bash
-
-```bash
-$ git clone https://github.com/ant-design/ant-design-pro.git --depth=1
-$ cd ant-design-pro
-$ npm install
-$ npm start         # visit http://localhost:8000
+```
+[
+      {
+        path: '/',
+      },
+      // 系统管理
+      {
+        path: '/system',
+        name: '系统管理',
+        icon: 'setting',
+        children: [
+          {
+            path: '/system/accounts',
+            name: '账号管理',
+          },
+          {
+            path: '/system/roles',
+            name: '角色管理',
+          },
+          {
+            path: '/system/menus',
+            name: '菜单管理',
+          },
+        ],
+      },
+      // 市平台统计分析
+      {
+        path: '/shi-statistics',
+        name: '市平台统计分析',
+        icon: 'bar-chart',
+        children: [
+          {
+            path: '/shi-statistics/usage-of-hospitals-numbers',
+            name: '各医院号源使用情况',
+          },
+          {
+            path: '/shi-statistics/amount-of-hospitals-appointments',
+            name: '各医院预约量',
+          },
+          {
+            path: '/shi-statistics/amount-of-hospitals-refunds',
+            name: '各医院退号量',
+          },
+          {
+            path: '/shi-statistics/amount-of-hospitals-failures',
+            name: '各医院爽约量',
+          },
+          {
+            path: '/shi-statistics/amount-of-channels-registration',
+            name: '各渠道注册量',
+          },
+          {
+            path: '/shi-statistics/amount-of-channels-refunds',
+            name: '各渠道退号量',
+          },
+          {
+            path: '/shi-statistics/amount-of-channels-failures',
+            name: '各渠道爽约量',
+          },
+          {
+            path: '/shi-statistics/amount-of-channels-appointments',
+            name: '各渠道预约量',
+          },
+        ],
+      },
+      // 医联统计分析
+      {
+        path: '/yilian-statistics',
+        name: '医联统计分析',
+        icon: 'bar-chart',
+        children: [
+          {
+            path: '/yilian-statistics/usage-of-hospitals-numbers',
+            name: '各医院号源使用情况',
+          },
+          {
+            path: '/yilian-statistics/amount-of-hospitals-appointments',
+            name: '各医院预约量',
+          },
+          {
+            path: '/yilian-statistics/amount-of-hospitals-refunds',
+            name: '各医院退号量',
+          },
+          {
+            path: '/yilian-statistics/amount-of-hospitals-failures',
+            name: '各医院爽约量',
+          },
+          {
+            path: '/yilian-statistics/amount-of-channels-registration',
+            name: '各渠道注册量',
+          },
+          {
+            path: '/yilian-statistics/amount-of-channels-refunds',
+            name: '各渠道退号量',
+          },
+          {
+            path: '/yilian-statistics/amount-of-channels-failures',
+            name: '各渠道爽约量',
+          },
+          {
+            path: '/yilian-statistics/amount-of-channels-appointments',
+            name: '各渠道预约量',
+          },
+          {
+            path: '/yilian-statistics/amount-of-daily-activeness',
+            name: '各渠道日活量',
+          },
+          {
+            path: '/yilian-statistics/amount-of-monthly-activeness',
+            name: '各渠道月活量',
+          },
+          {
+            path: '/yilian-statistics/amount-of-download',
+            name: '各渠道下载量',
+          },
+        ],
+      },
+      // 区平台统计分析
+      {
+        path: '/qu-statistics',
+        name: '区平台统计分析',
+        icon: 'bar-chart',
+        children: [
+          {
+            path: '/qu-statistics/usage-of-hospitals-numbers',
+            name: '各医院号源使用情况',
+          },
+          {
+            path: '/qu-statistics/amount-of-hospitals-appointments',
+            name: '各医院预约量',
+          },
+          {
+            path: '/qu-statistics/amount-of-hospitals-refunds',
+            name: '各医院退号量',
+          },
+          {
+            path: '/qu-statistics/amount-of-hospitals-failures',
+            name: '各医院爽约量',
+          },
+          {
+            path: '/qu-statistics/amount-of-channels-registration',
+            name: '各渠道注册量',
+          },
+          {
+            path: '/qu-statistics/amount-of-channels-refunds',
+            name: '各渠道退号量',
+          },
+          {
+            path: '/qu-statistics/amount-of-channels-failures',
+            name: '各渠道爽约量',
+          },
+          {
+            path: '/qu-statistics/amount-of-channels-appointments',
+            name: '各渠道预约量',
+          },
+        ],
+      },
+      // 医联微信业务
+      {
+        path: '/yilian-wechat-business',
+        name: '医联微信业务',
+        icon: 'reconciliation',
+        children: [
+          {
+            path: '/yilian-wechat-business/query',
+            name: '业务查询',
+            icon: 'search',
+            children: [
+              {
+                path: '/yilian-wechat-business/query/appointments',
+                name: '预约查询',
+              },
+              {
+                path: '/yilian-wechat-business/query/performance',
+                name: '业绩查询',
+              },
+              {
+                path: '/yilian-wechat-business/query/members',
+                name: '会员查询',
+              },
+            ],
+          },
+          {
+            path: '/yilian-wechat-business/management',
+            name: '基础信息管理',
+            icon: 'appstore',
+          },
+          {
+            path: '/yilian-wechat-business/statistics',
+            name: '数据统计分析',
+            icon: 'bar-chart',
+            children: [
+              {
+                path: '/yilian-wechat-business/statistics/popularization',
+                name: '推广数据统计',
+              },
+              {
+                path: '/yilian-wechat-business/statistics/popularization-report',
+                name: '推广数据报表',
+              },
+              {
+                path: '/yilian-wechat-business/statistics/appointments',
+                name: '预约数据统计',
+              },
+              {
+                path: '/yilian-wechat-business/statistics/appointments-report',
+                name: '预约数据报表',
+              },
+            ],
+          },
+        ],
+      },
+      // 健康云业务
+      {
+        path: '/health-cloud-business',
+        name: '健康云业务',
+        icon: 'project',
+        children: [
+          {
+            path: '/health-cloud-business/statistics',
+            name: '数据统计分析',
+            icon: 'bar-chart',
+            children: [
+              {
+                path: '/health-cloud-business/statistics/popularization-report',
+                name: '推广数据报表',
+              },
+            ],
+          },
+        ],
+      },
+    ];
 ```
 
-### Use by docker
+## 数据状态管理(models)
 
-```bash
-// dev 
-$ npm run docker:dev
+- routing
+- global
+- setting
+- login(登录信息)
+- menu(系统管理-菜单管理)
+- account(系统管理-账号管理)
+- role(系统管理-角色管理)
+- businessYilianWechatManagement(医联微信业务-基础信息管理)
+- businessYilianWechatQuery(医联微信业务-业务查询)
+- businessYilianWechatStatistics(医联微信业务-业务统计)
+- statistics(统计分析数据)
+- loading
 
-// build 
-$ npm run docker:build
+## 目录清单
 
-
-// production dev 
-$ npm run docker-prod:dev
-
-// production build 
-$ npm run docker-prod:build
-```
-
-More instructions at [documentation](http://pro.ant.design/docs/getting-started).
-
-## Browsers support
-
-Modern browsers and IE11.
-
-| [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="IE / Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>IE / Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Safari | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png" alt="Opera" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Opera |
-| --------- | --------- | --------- | --------- | --------- |
-| IE11, Edge| last 2 versions| last 2 versions| last 2 versions| last 2 versions
-
-## Contributing
-
-Any type of contribution is welcome, here are some examples of how you may contribute to this project:
-
-- Use Ant Design Pro in your daily work.
-- Submit [issues](http://github.com/ant-design/ant-design-pro/issues) to report bugs or ask questions.
-- Propose [pull requests](http://github.com/ant-design/ant-design-pro/pulls) to improve our code.
+- config
+- dist
+- docker
+- functions
+- mock
+- node_modules
+- public
+- scripts
+- src
+  - assets(静态资源文件，存放图片等)
+  - components(组件)
+  - e2e
+  - layouts(布局)
+  - locales
+  - models(状态管理)
+  - pages(页面)
+  - services(数据请求)
+  - utils
+  - defaultSettings.js
+  - global.less
+- tests
+- package.json

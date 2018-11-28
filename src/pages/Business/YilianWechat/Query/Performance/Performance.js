@@ -2,11 +2,17 @@ import React, { Component } from 'react';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 
+import classes from './Performance.less';
+
 export class Performance extends Component {
   componentDidMount() {}
 
   render() {
-    return <PageHeaderWrapper>Performance</PageHeaderWrapper>;
+    return (
+      <PageHeaderWrapper>
+        <div className={classes.Container}>Performance</div>
+      </PageHeaderWrapper>
+    );
   }
 }
 

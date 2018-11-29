@@ -98,3 +98,12 @@ export async function deleteLocationService(id) {
     body: {},
   });
 }
+
+export async function getMemberService(postData) {
+  return request(`/yilian-cloud-backend-api/hos/base/person`, {
+    method: 'POST',
+    body: {
+      ...postData,
+    },
+  });
+}

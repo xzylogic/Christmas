@@ -4,14 +4,14 @@ import {
   fetchMemberListService,
   fetchLocationListService,
   createGroupService,
-  // createMemberService,
-  // createLocationService,
+  createMemberService,
+  createLocationService,
   modifyGroupService,
-  // modifyMemberService,
-  // modifyLocationService,
+  modifyMemberService,
+  modifyLocationService,
   deleteGroupService,
-  // deleteMemberService,
-  // deleteLocationService,
+  deleteMemberService,
+  deleteLocationService,
 } from '@/services/business/yilian-wechat/management/management';
 
 export default {
@@ -68,6 +68,7 @@ export default {
       if (searchParam && searchParam.memberName) {
         params += `name=${searchParam.memberName}`;
       }
+      console.log(params);
       const res = yield call(fetchMemberListService, params, page, 10);
       if (res && res.code === 200) {
         yield put({
@@ -135,6 +136,78 @@ export default {
         message.success('删除小组成功！');
       } else {
         message.error('删除小组失败！');
+      }
+    },
+    *createMember({ payload }, { call, put }) {
+      const { postData } = payload;
+      const res = yield call(createMemberService, postData);
+      let ifsuccess = false;
+      if (res && res.code === 200) {
+        ifsuccess = true;
+        yield put({ type: 'fetchMemberList', payload: { page: 0 } });
+        message.success('新增人员成功！');
+      } else {
+        message.error('新增人员失败！');
+      }
+      return ifsuccess;
+    },
+    *modifyMember({ payload }, { call, put }) {
+      const { postData } = payload;
+      const res = yield call(modifyMemberService, postData);
+      let ifsuccess = false;
+      if (res && res.code === 200) {
+        ifsuccess = true;
+        yield put({ type: 'fetchMemberList', payload: { page: 0 } });
+        message.success('修改人员信息成功！');
+      } else {
+        message.error('修改人员信息失败！');
+      }
+      return ifsuccess;
+    },
+    *deleteMember({ payload }, { call, put }) {
+      const { id } = payload;
+      const res = yield call(deleteMemberService, id);
+      if (res && res.code === 200) {
+        yield put({ type: 'fetchMemberList', payload: { page: 0 } });
+        message.success('删除人员成功！');
+      } else {
+        message.error('删除人员失败！');
+      }
+    },
+    *createLocation({ payload }, { call, put }) {
+      const { postData } = payload;
+      const res = yield call(createLocationService, postData);
+      let ifsuccess = false;
+      if (res && res.code === 200) {
+        ifsuccess = true;
+        yield put({ type: 'fetchLocationList', payload: { page: 0 } });
+        message.success('新增地点成功！');
+      } else {
+        message.error('新增地点失败！');
+      }
+      return ifsuccess;
+    },
+    *modifyLocation({ payload }, { call, put }) {
+      const { postData } = payload;
+      const res = yield call(modifyLocationService, postData);
+      let ifsuccess = false;
+      if (res && res.code === 200) {
+        ifsuccess = true;
+        yield put({ type: 'fetchLocationList', payload: { page: 0 } });
+        message.success('修改地点信息成功！');
+      } else {
+        message.error('修改地点信息失败！');
+      }
+      return ifsuccess;
+    },
+    *deleteLocation({ payload }, { call, put }) {
+      const { id } = payload;
+      const res = yield call(deleteLocationService, id);
+      if (res && res.code === 200) {
+        yield put({ type: 'fetchLocationList', payload: { page: 0 } });
+        message.success('删除地点成功！');
+      } else {
+        message.error('删除地点失败！');
       }
     },
   },

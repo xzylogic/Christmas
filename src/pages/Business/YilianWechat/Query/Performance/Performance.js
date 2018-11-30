@@ -8,14 +8,14 @@ import GroupContainer from './PerformanceComponent/GroupContainer';
 import classes from './Performance.less';
 
 const mapStateToProps = state => ({
-  queryTab: state.businessYilianWechatQuery.queryTab,
+  performanceTab: state.businessYilianWechatQuery.performanceTab,
 });
 
 const mapDispatchToProps = dispatch => ({
-  onUpdateQueryTab: queryTab =>
+  onUpdatePerformanceTab: performanceTab =>
     dispatch({
-      type: 'businessYilianWechatQuery/updateQueryTab',
-      payload: { queryTab },
+      type: 'businessYilianWechatQuery/updatePerformanceTab',
+      payload: { performanceTab },
     }),
 });
 
@@ -25,18 +25,18 @@ const mapDispatchToProps = dispatch => ({
 )
 class Performance extends Component {
   handleTabChange = tabKey => {
-    const { onUpdateQueryTab } = this.props;
-    onUpdateQueryTab(tabKey);
+    const { onUpdatePerformanceTab } = this.props;
+    onUpdatePerformanceTab(tabKey);
   };
 
   render() {
-    const { queryTab } = this.props;
+    const { performanceTab } = this.props;
     return (
       <PageHeaderWrapper>
         <Tabs
           className={classes.Container}
           animated={false}
-          defaultActiveKey={queryTab}
+          defaultActiveKey={performanceTab}
           onChange={this.handleTabChange}
         >
           <Tabs.TabPane tab="小组查询" key="1" className={classes.Content}>

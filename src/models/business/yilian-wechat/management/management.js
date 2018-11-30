@@ -85,7 +85,7 @@ export default {
       }
     },
 
-    *getMemberMessage({ call, put }) {
+    *getMemberMessage(_, { call, put }) {
       const res = yield call(getMemberService);
       if (res && res.code === 200) {
         yield put({

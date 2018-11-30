@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import { Form, Modal, Input, Select } from 'antd';
+import { Form, Modal, Input, Select, Checkbox } from 'antd';
 
 const mapStateToProps = state => ({
   createLoading: state.loading.effects['businessYilianWechatManagement/createMember'],
@@ -40,7 +40,7 @@ class MemberEditor extends Component {
           jobNumber: values.jobNumber,
           groupName: values.groupName,
           site: values.site,
-          promoCode: values.promoCode,
+          promoCode: values.promoCode.join(' '),
         };
         onCreateMember(postData).then(ifsuccess => {
           if (ifsuccess) {
@@ -56,7 +56,7 @@ class MemberEditor extends Component {
           jobNumber: values.jobNumber,
           groupName: values.groupName,
           site: values.site,
-          promoCode: values.promoCode,
+          promoCode: values.promoCode.join(' '),
         };
         onModifyMember(postData).then(ifsuccess => {
           if (ifsuccess) {
@@ -67,26 +67,6 @@ class MemberEditor extends Component {
     });
   };
 
-  // handleChange = (e, promoCodeArr) => {
-  //   if (e.target.checked) {
-  //     promoCodeArr.push(e.target.value);
-  //   } else {
-  //     for (let i = 0; i < promoCodeArr.length; i++) {
-  //       if (promoCodeArr.indexOf(e.target.value) !== -1) {
-  //         promoCodeArr.splice(promoCodeArr.indexOf(e.target.value), 1);
-  //       }
-  //     }
-  //   }
-  //   promoCodeArr = promoCodeArr.join(' ');
-  //   console.log(promoCodeArr);
-  //   const { setFieldsValue, getFieldDecorator } = this.props.form;
-  //   setFieldsValue({
-  //     promoCode: promoCodeArr,
-  //   });
-  //   console.log(getFieldDecorator('promoCode'));
-  //   return promoCodeArr;
-  // };
-
   render() {
     const {
       visible,
@@ -95,7 +75,6 @@ class MemberEditor extends Component {
       createLoading,
       modifyLoading,
       onClose,
-      // promoCodeArr,
       getMessage,
       form: { getFieldDecorator },
     } = this.props;
@@ -111,7 +90,12 @@ class MemberEditor extends Component {
         md: { span: 18 },
       },
     };
-
+    const options = [
+      { label: '医联微信', value: '医联微信' },
+      { label: '支付宝', value: '支付宝' },
+      { label: 'APP', value: 'APP' },
+      { label: '健康云', value: '健康云' },
+    ];
     return (
       <Modal
         title={showAdd ? '新增' : '编辑'}
@@ -129,13 +113,13 @@ class MemberEditor extends Component {
                 <Form.Item {...formItemLayout} label="姓名">
                   {getFieldDecorator('name', {
                     initialValue: (initialValue && initialValue.name) || '',
-                    rules: [{ required: true, message: '请填写姓名' }],
+                    rules: [{ required: true, message: '请填写姓名！' }],
                   })(<Input placeholder="请填写姓名" />)}
                 </Form.Item>
                 <Form.Item {...formItemLayout} label="性别">
                   {getFieldDecorator('sex', {
                     initialValue: (initialValue && `${initialValue.sex}`) || '男',
-                    rules: [{ required: true, message: '请选择性别' }],
+                    rules: [{ required: true, message: '请选择性别！' }],
                   })(
                     <Select>
                       <Select.Option value="男">男</Select.Option>
@@ -150,14 +134,14 @@ class MemberEditor extends Component {
             <Form.Item {...formItemLayout} label="手机">
               {getFieldDecorator('phone', {
                 initialValue: (initialValue && initialValue.phone) || '',
-                rules: [{ message: '请填写手机号' }],
+                rules: [{ message: '请填写手机号！' }],
               })(<Input placeholder="请填写手机号" />)}
             </Form.Item>
             {showAdd ? (
               <Form.Item {...formItemLayout} label="工号">
                 {getFieldDecorator('jobNumber', {
                   initialValue: (initialValue && initialValue.jobNumber) || '',
-                  rules: [{ required: true, message: '请填写工号' }],
+                  rules: [{ required: true, message: '请填写工号！' }],
                 })(<Input placeholder="请填写工号" />)}
               </Form.Item>
             ) : (
@@ -165,8 +149,8 @@ class MemberEditor extends Component {
             )}
             <Form.Item {...formItemLayout} label="所属小组">
               {getFieldDecorator('groupName', {
-                initialValue: (initialValue && initialValue.groupName) || 1,
-                rules: [{ required: true, message: '请选择小组' }],
+                initialValue: (initialValue && initialValue.groupName) || getMessage.groups[0].id,
+                rules: [{ required: true, message: '请选择小组！' }],
               })(
                 <Select>
                   {getMessage.groups.map(item => (
@@ -179,8 +163,8 @@ class MemberEditor extends Component {
             </Form.Item>
             <Form.Item {...formItemLayout} label="推广地址">
               {getFieldDecorator('site', {
-                initialValue: (initialValue && initialValue.site) || '龙华医院',
-                rules: [{ required: true, message: '请选择推广地址' }],
+                initialValue: (initialValue && initialValue.site) || getMessage.sites[0],
+                rules: [{ required: true, message: '请选择推广地址！' }],
               })(
                 <Select placeholder="请选择推广地址">
                   {getMessage.sites.map(item => (
@@ -191,41 +175,12 @@ class MemberEditor extends Component {
                 </Select>
               )}
             </Form.Item>
-            {/* <Form.Item {...formItemLayout} label="推广码">
+            <Form.Item {...formItemLayout} label="推广码">
               {getFieldDecorator('promoCode', {
-                initialValue: (initialValue && `${initialValue.promoCode}`) || '微信',
-                rules: [{ required: true, message: '请选择推广码' }],
-              })(
-                <div>
-                  <Checkbox value="医联微信" onChange={e => this.handleChange(e, promoCodeArr)}>
-                    医联微信
-                  </Checkbox>
-                  <Checkbox value="支付宝" onChange={e => this.handleChange(e, promoCodeArr)}>
-                    支付宝
-                  </Checkbox>
-                  <Checkbox value="APP" onChange={e => this.handleChange(e, promoCodeArr)}>
-                    APP
-                  </Checkbox>
-                  <Checkbox value="健康云" onChange={e => this.handleChange(e, promoCodeArr)}>
-                    健康云
-                  </Checkbox>
-                </div>
-              )}
-            </Form.Item> */}
-            {/* <Form.Item {...formItemLayout} label="推广码">
-              <Checkbox {...getFieldProps('微信', {
-                valuePropName: 'checked',
-              })} />医联微信 &nbsp;
-              <Checkbox {...getFieldProps('支付宝', {
-                valuePropName: 'checked',
-              })} />支付宝 &nbsp;
-              <Checkbox {...getFieldProps('APP', {
-                valuePropName: 'checked',
-              })} />APP &nbsp;
-              <Checkbox {...getFieldProps('健康云', {
-                valuePropName: 'checked',
-              })} />健康云 &nbsp;
-            </Form.Item> */}
+                initialValue: initialValue && initialValue.site,
+                rules: [{ required: true, message: '请选择推广码！' }],
+              })(<Checkbox.Group options={options} />)}
+            </Form.Item>
           </Form>
         ) : (
           ''

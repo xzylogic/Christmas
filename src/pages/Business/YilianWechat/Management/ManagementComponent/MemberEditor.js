@@ -177,7 +177,7 @@ class MemberEditor extends Component {
             </Form.Item>
             <Form.Item {...formItemLayout} label="推广码">
               {getFieldDecorator('promoCode', {
-                initialValue: initialValue && initialValue.site,
+                initialValue: initialValue && initialValue.promoCode.split(' '),
                 rules: [{ required: true, message: '请选择推广码！' }],
               })(<Checkbox.Group options={options} />)}
             </Form.Item>

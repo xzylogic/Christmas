@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import { Form, Modal, Input, Select, Cascader } from 'antd';
+import { Form, Modal, Input, Select } from 'antd';
 
 const mapStateToProps = state => ({
   createLoading: state.loading.effects['businessYilianWechatManagement/createMember'],
@@ -79,18 +79,13 @@ class MemberEditor extends Component {
   //   }
   //   promoCodeArr = promoCodeArr.join(' ');
   //   console.log(promoCodeArr);
-  //   // const {setFieldsValue,getFieldDecorator} = this.props.form;
-  //   // setFieldsValue({
-  //   //   promoCode: promoCodeArr,
-  //   // })
-  //   // console.log(getFieldDecorator('promoCode'))
-  //   // return promoCodeArr;
+  //   const { setFieldsValue, getFieldDecorator } = this.props.form;
+  //   setFieldsValue({
+  //     promoCode: promoCodeArr,
+  //   });
+  //   console.log(getFieldDecorator('promoCode'));
+  //   return promoCodeArr;
   // };
-
-  handleMessage = getMessage => {
-    console.log(getMessage.groups);
-    console.log(getMessage.sites);
-  };
 
   render() {
     const {
@@ -117,18 +112,6 @@ class MemberEditor extends Component {
       },
     };
 
-    const residences = [
-      {
-        value: '1',
-        label: '1',
-      },
-      {
-        value: '2',
-        label: '2',
-      },
-    ];
-    // const residences = [getMessage.groups]
-
     return (
       <Modal
         title={showAdd ? '新增' : '编辑'}
@@ -147,23 +130,16 @@ class MemberEditor extends Component {
                   {getFieldDecorator('name', {
                     initialValue: (initialValue && initialValue.name) || '',
                     rules: [{ required: true, message: '请填写姓名' }],
-                  })(
-                    <Input
-                      placeholder="请填写姓名"
-                      onChange={() => {
-                        this.handleMessage(getMessage);
-                      }}
-                    />
-                  )}
+                  })(<Input placeholder="请填写姓名" />)}
                 </Form.Item>
                 <Form.Item {...formItemLayout} label="性别">
                   {getFieldDecorator('sex', {
-                    initialValue: (initialValue && `${initialValue.sex}`) || 'true',
+                    initialValue: (initialValue && `${initialValue.sex}`) || '男',
                     rules: [{ required: true, message: '请选择性别' }],
                   })(
                     <Select>
-                      <Select.Option value="true">男</Select.Option>
-                      <Select.Option value="false">女</Select.Option>
+                      <Select.Option value="男">男</Select.Option>
+                      <Select.Option value="女">女</Select.Option>
                     </Select>
                   )}
                 </Form.Item>
@@ -189,27 +165,39 @@ class MemberEditor extends Component {
             )}
             <Form.Item {...formItemLayout} label="所属小组">
               {getFieldDecorator('groupName', {
-                initialValue: (initialValue && initialValue.groupName) || '',
+                initialValue: (initialValue && initialValue.groupName) || 1,
                 rules: [{ required: true, message: '请选择小组' }],
-              })(<Cascader options={residences} />)}
-            </Form.Item>
-            <Form.Item {...formItemLayout} label="推广地址">
-              {getFieldDecorator('site', {
-                initialValue: (initialValue && initialValue.site) || '',
-                rules: [{ required: true, message: '请选择推广地址' }],
               })(
                 <Select>
-                  <Select.Option value="11">推广地址11</Select.Option>
+                  {getMessage.groups.map(item => (
+                    <Select.Option id={item.id} key={item.id} value={item.id}>
+                      {item.name}
+                    </Select.Option>
+                  ))}
                 </Select>
               )}
             </Form.Item>
-            <Form.Item {...formItemLayout} label="推广码">
+            <Form.Item {...formItemLayout} label="推广地址">
+              {getFieldDecorator('site', {
+                initialValue: (initialValue && initialValue.site) || '龙华医院',
+                rules: [{ required: true, message: '请选择推广地址' }],
+              })(
+                <Select placeholder="请选择推广地址">
+                  {getMessage.sites.map(item => (
+                    <Select.Option id={item} key={item} value={item}>
+                      {item}
+                    </Select.Option>
+                  ))}
+                </Select>
+              )}
+            </Form.Item>
+            {/* <Form.Item {...formItemLayout} label="推广码">
               {getFieldDecorator('promoCode', {
                 initialValue: (initialValue && `${initialValue.promoCode}`) || '微信',
                 rules: [{ required: true, message: '请选择推广码' }],
               })(
                 <div>
-                  {/* <Checkbox value="医联微信" onChange={e => this.handleChange(e, promoCodeArr)}>
+                  <Checkbox value="医联微信" onChange={e => this.handleChange(e, promoCodeArr)}>
                     医联微信
                   </Checkbox>
                   <Checkbox value="支付宝" onChange={e => this.handleChange(e, promoCodeArr)}>
@@ -220,21 +208,23 @@ class MemberEditor extends Component {
                   </Checkbox>
                   <Checkbox value="健康云" onChange={e => this.handleChange(e, promoCodeArr)}>
                     健康云
-                  </Checkbox> */}
+                  </Checkbox>
                 </div>
               )}
-            </Form.Item>
-            {/* <Form.Item
-              {...formItemLayout} label="推广码">
-              <Checkbox {...getFieldProps('eat', {
+            </Form.Item> */}
+            {/* <Form.Item {...formItemLayout} label="推广码">
+              <Checkbox {...getFieldProps('微信', {
                 valuePropName: 'checked',
               })} />医联微信 &nbsp;
-              <Checkbox {...getFieldProps('alypay', {
+              <Checkbox {...getFieldProps('支付宝', {
                 valuePropName: 'checked',
               })} />支付宝 &nbsp;
-              <Checkbox {...getFieldProps('alypay', {
+              <Checkbox {...getFieldProps('APP', {
                 valuePropName: 'checked',
               })} />APP &nbsp;
+              <Checkbox {...getFieldProps('健康云', {
+                valuePropName: 'checked',
+              })} />健康云 &nbsp;
             </Form.Item> */}
           </Form>
         ) : (

@@ -67,7 +67,6 @@ class MemberContainer extends Component {
   componentDidMount() {
     const { memberList, onFetchMemberList, onGetMemberMessage } = this.props;
     if (!memberList) {
-      // console.log('componentDidMount');
       onFetchMemberList(0);
     }
     onGetMemberMessage(0);
@@ -80,7 +79,6 @@ class MemberContainer extends Component {
       showAdd: false,
       selectedData: record,
     });
-    console.log(record);
   };
 
   handleShowWechatCode = e => {

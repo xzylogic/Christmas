@@ -12,7 +12,11 @@ const mapStateToProps = state => ({
   memberList: state.businessYilianWechatManagement.list.member,
   currentPage: state.businessYilianWechatManagement.currentPage.member,
   totalElements: state.businessYilianWechatManagement.totalElements.member,
-  loading: state.loading.effects['businessYilianWechatManagement/fetchMemberList'],
+  loading:
+    state.loading.effects[
+      ('businessYilianWechatManagement/fetchMemberList',
+      'businessYilianWechatManagement/getMemberMessage')
+    ],
 });
 
 const mapDispatchProps = dispatch => ({
@@ -39,6 +43,12 @@ const mapDispatchProps = dispatch => ({
       type: 'businessYilianWechatManagement/deleteMember',
       payload: { id },
     }),
+
+  onGetMemberMessage: value =>
+    dispatch({
+      type: 'businessYilianWechatManagement/getMemberMessage',
+      payload: { value },
+    }),
 });
 
 @connect(
@@ -51,14 +61,16 @@ class MemberContainer extends Component {
     showEditor: false,
     showAdd: false,
     selectedData: null,
+    promoCodeArr: [],
   };
 
   componentDidMount() {
-    const { memberList, onFetchMemberList } = this.props;
+    const { memberList, onFetchMemberList, onGetMemberMessage } = this.props;
     if (!memberList) {
       // console.log('componentDidMount');
       onFetchMemberList(0);
     }
+    onGetMemberMessage(0);
   }
 
   handleEditor = (e, record) => {
@@ -68,6 +80,7 @@ class MemberContainer extends Component {
       showAdd: false,
       selectedData: record,
     });
+    console.log(record);
   };
 
   handleShowWechatCode = e => {
@@ -186,7 +199,7 @@ class MemberContainer extends Component {
 
   render() {
     const { memberList, currentPage, totalElements } = this.props;
-    const { param, showEditor, showAdd, selectedData } = this.state;
+    const { param, showEditor, showAdd, selectedData, promoCodeArr } = this.state;
     return (
       <div>
         <SearchBar
@@ -211,6 +224,7 @@ class MemberContainer extends Component {
           visible={showEditor}
           showAdd={showAdd}
           initialValue={selectedData}
+          promoCodeArr={promoCodeArr}
           onClose={() => this.setState({ showEditor: false })}
         />
       </div>

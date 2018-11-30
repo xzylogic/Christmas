@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import { Form, Modal, Input, Select, Checkbox } from 'antd';
+import { Form, Modal, Input, Select, Cascader } from 'antd';
 
 const mapStateToProps = state => ({
   createLoading: state.loading.effects['businessYilianWechatManagement/createMember'],
   modifyLoading: state.loading.effects['businessYilianWechatManagement/createMember'],
+  getMessage: state.businessYilianWechatManagement.list.person,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -30,6 +31,7 @@ class MemberEditor extends Component {
     e.preventDefault();
     const { form, onCreateMember, onModifyMember, onClose, initialValue } = this.props;
     form.validateFieldsAndScroll((err, values) => {
+      console.log(values);
       if (!err && !initialValue) {
         const postData = {
           name: values.name,
@@ -65,11 +67,29 @@ class MemberEditor extends Component {
     });
   };
 
-  handleChange = e => {
-    console.log('是否被选', e.target.checked);
-    // if(e.target.checked){
+  // handleChange = (e, promoCodeArr) => {
+  //   if (e.target.checked) {
+  //     promoCodeArr.push(e.target.value);
+  //   } else {
+  //     for (let i = 0; i < promoCodeArr.length; i++) {
+  //       if (promoCodeArr.indexOf(e.target.value) !== -1) {
+  //         promoCodeArr.splice(promoCodeArr.indexOf(e.target.value), 1);
+  //       }
+  //     }
+  //   }
+  //   promoCodeArr = promoCodeArr.join(' ');
+  //   console.log(promoCodeArr);
+  //   // const {setFieldsValue,getFieldDecorator} = this.props.form;
+  //   // setFieldsValue({
+  //   //   promoCode: promoCodeArr,
+  //   // })
+  //   // console.log(getFieldDecorator('promoCode'))
+  //   // return promoCodeArr;
+  // };
 
-    // }
+  handleMessage = getMessage => {
+    console.log(getMessage.groups);
+    console.log(getMessage.sites);
   };
 
   render() {
@@ -80,6 +100,8 @@ class MemberEditor extends Component {
       createLoading,
       modifyLoading,
       onClose,
+      // promoCodeArr,
+      getMessage,
       form: { getFieldDecorator },
     } = this.props;
 
@@ -94,6 +116,18 @@ class MemberEditor extends Component {
         md: { span: 18 },
       },
     };
+
+    const residences = [
+      {
+        value: '1',
+        label: '1',
+      },
+      {
+        value: '2',
+        label: '2',
+      },
+    ];
+    // const residences = [getMessage.groups]
 
     return (
       <Modal
@@ -113,7 +147,14 @@ class MemberEditor extends Component {
                   {getFieldDecorator('name', {
                     initialValue: (initialValue && initialValue.name) || '',
                     rules: [{ required: true, message: '请填写姓名' }],
-                  })(<Input placeholder="请填写姓名" />)}
+                  })(
+                    <Input
+                      placeholder="请填写姓名"
+                      onChange={() => {
+                        this.handleMessage(getMessage);
+                      }}
+                    />
+                  )}
                 </Form.Item>
                 <Form.Item {...formItemLayout} label="性别">
                   {getFieldDecorator('sex', {
@@ -150,11 +191,7 @@ class MemberEditor extends Component {
               {getFieldDecorator('groupName', {
                 initialValue: (initialValue && initialValue.groupName) || '',
                 rules: [{ required: true, message: '请选择小组' }],
-              })(
-                <Select>
-                  <Select.Option value="1">组名1</Select.Option>
-                </Select>
-              )}
+              })(<Cascader options={residences} />)}
             </Form.Item>
             <Form.Item {...formItemLayout} label="推广地址">
               {getFieldDecorator('site', {
@@ -172,13 +209,33 @@ class MemberEditor extends Component {
                 rules: [{ required: true, message: '请选择推广码' }],
               })(
                 <div>
-                  <Checkbox onChange={this.handleChange}>医联微信</Checkbox>
-                  <Checkbox onChange={this.handleChange}>支付宝</Checkbox>
-                  <Checkbox onChange={this.handleChange}>APP</Checkbox>
-                  <Checkbox onChange={this.handleChange}>健康云</Checkbox>
+                  {/* <Checkbox value="医联微信" onChange={e => this.handleChange(e, promoCodeArr)}>
+                    医联微信
+                  </Checkbox>
+                  <Checkbox value="支付宝" onChange={e => this.handleChange(e, promoCodeArr)}>
+                    支付宝
+                  </Checkbox>
+                  <Checkbox value="APP" onChange={e => this.handleChange(e, promoCodeArr)}>
+                    APP
+                  </Checkbox>
+                  <Checkbox value="健康云" onChange={e => this.handleChange(e, promoCodeArr)}>
+                    健康云
+                  </Checkbox> */}
                 </div>
               )}
             </Form.Item>
+            {/* <Form.Item
+              {...formItemLayout} label="推广码">
+              <Checkbox {...getFieldProps('eat', {
+                valuePropName: 'checked',
+              })} />医联微信 &nbsp;
+              <Checkbox {...getFieldProps('alypay', {
+                valuePropName: 'checked',
+              })} />支付宝 &nbsp;
+              <Checkbox {...getFieldProps('alypay', {
+                valuePropName: 'checked',
+              })} />APP &nbsp;
+            </Form.Item> */}
           </Form>
         ) : (
           ''

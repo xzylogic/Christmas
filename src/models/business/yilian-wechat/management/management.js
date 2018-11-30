@@ -12,6 +12,7 @@ import {
   deleteGroupService,
   deleteMemberService,
   deleteLocationService,
+  getMemberService,
 } from '@/services/business/yilian-wechat/management/management';
 
 export default {
@@ -27,6 +28,7 @@ export default {
       group: null,
       member: null,
       location: null,
+      person: null,
     },
     currentPage: {
       group: 0,
@@ -82,6 +84,20 @@ export default {
         });
       }
     },
+
+    *getMemberMessage({ call, put }) {
+      const res = yield call(getMemberService);
+      if (res && res.code === 200) {
+        yield put({
+          type: 'updateList',
+          payload: {
+            key: 'person',
+            list: res.data,
+          },
+        });
+      }
+    },
+
     *fetchLocationList({ payload }, { call, put, select }) {
       const searchParam = yield select(state => state.businessYilianWechatManagement.searchParam);
       const { page } = payload;
@@ -149,6 +165,7 @@ export default {
       } else {
         message.error('新增人员失败！');
       }
+      console.log(postData);
       return ifsuccess;
     },
     *modifyMember({ payload }, { call, put }) {

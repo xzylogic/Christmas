@@ -100,7 +100,7 @@ class GroupDetail extends Component {
         </Select>
         <Divider>{name}</Divider>
         <TableList
-          rowKey="date"
+          rowKey={(_, index) => index}
           list={groupDetailList}
           columns={this.setTableColumns()}
           currentPage={currentPage}

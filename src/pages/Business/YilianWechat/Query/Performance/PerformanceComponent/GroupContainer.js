@@ -64,7 +64,6 @@ class GroupContainer extends Component {
 
   handleDetail = (e, record) => {
     e.preventDefault();
-    console.log(record);
     this.setState({
       showDetail: true,
       selectedName: record.name,
@@ -103,7 +102,7 @@ class GroupContainer extends Component {
         title: '操作',
         dataIndex: 'id',
         key: 'action',
-        render: (text, record) => (
+        render: (_, record) => (
           <span>
             <a onClick={e => this.handleDetail(e, record)}>查看详情</a>
           </span>
@@ -167,11 +166,7 @@ class GroupContainer extends Component {
           totalElements={totalElements}
           onPageChange={this.handlePageChange}
         />
-        {/* {
-          showDetail ? ( */}
         <GroupDetail name={selectedName} visible={showDetail} onClose={this.handleDetailClose} />
-        {/* ) : ''
-        } */}
       </React.Fragment>
     );
   }

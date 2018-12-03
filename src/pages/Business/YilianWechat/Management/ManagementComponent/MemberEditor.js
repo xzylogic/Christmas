@@ -43,6 +43,7 @@ class MemberEditor extends Component {
           promoCode: values.promoCode.join(' '),
         };
         onCreateMember(postData).then(ifsuccess => {
+          console.log(ifsuccess);
           if (ifsuccess) {
             onClose();
           }

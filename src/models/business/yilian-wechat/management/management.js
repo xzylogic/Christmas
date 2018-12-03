@@ -159,13 +159,14 @@ export default {
       const res = yield call(createMemberService, postData);
       let ifsuccess = false;
       if (res && res.code === 200) {
+        // console.log("res",res)
         ifsuccess = true;
         yield put({ type: 'fetchMemberList', payload: { page: 0 } });
         message.success('新增人员成功！');
       } else {
         message.error('新增人员失败！');
       }
-      console.log(postData);
+      // console.log(postData);
       return ifsuccess;
     },
     *modifyMember({ payload }, { call, put }) {

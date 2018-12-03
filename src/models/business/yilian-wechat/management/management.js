@@ -40,9 +40,9 @@ export default {
       member: 0,
       location: 0,
     },
-    wechatCode: {
-      imgUrl: null,
-    },
+    // wechatCode: {
+    //   imgUrl: null,
+    // },
   },
 
   effects: {
@@ -162,13 +162,13 @@ export default {
       let ifsuccess = false;
       if (res && res.code === 200) {
         ifsuccess = true;
-        yield put({
-          type: 'updateList',
-          payload: {
-            key: 'imgUrl',
-            wechatCode: res.data,
-          },
-        });
+        // yield put({
+        //   type: 'updateList',
+        //   payload: {
+        //     key: 'imgUrl',
+        //     wechatCode: res.data,
+        //   },
+        // });
         yield put({ type: 'fetchMemberList', payload: { page: 0 } });
         message.success('新增人员成功！');
       } else {
@@ -262,10 +262,10 @@ export default {
           ...state.totalElements,
           [payload.key]: payload.totalElements,
         },
-        wechatCode: {
-          ...state.wechatCode,
-          [payload.key]: payload.wechatCode,
-        },
+        // wechatCode: {
+        //   ...state.wechatCode,
+        //   [payload.key]: payload.wechatCode,
+        // },
       };
     },
   },

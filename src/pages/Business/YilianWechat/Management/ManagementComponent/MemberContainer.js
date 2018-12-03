@@ -13,7 +13,7 @@ const mapStateToProps = state => ({
   memberList: state.businessYilianWechatManagement.list.member,
   currentPage: state.businessYilianWechatManagement.currentPage.member,
   totalElements: state.businessYilianWechatManagement.totalElements.member,
-  wechatCode: state.businessYilianWechatManagement.wechatCode,
+  // wechatCode: state.businessYilianWechatManagement.wechatCode,
   loading:
     state.loading.effects[
       ('businessYilianWechatManagement/fetchMemberList',
@@ -64,6 +64,7 @@ class MemberContainer extends Component {
     showAdd: false,
     selectedData: null,
     showCode: false,
+    url: '',
   };
 
   componentDidMount() {
@@ -130,7 +131,18 @@ class MemberContainer extends Component {
         title: '推广码',
         dataIndex: 'promoCode',
         key: 'promoCode',
-        render: (text, record) => <span>{record.promoCode}</span>,
+        render: (text, record) => (
+          <span>
+            {record.promoCode.indexOf('医联微信') > -1 ? (
+              <span>
+                <a onClick={e => this.handleShowCode(e, record)}>医联微信</a>
+                <span>{record.promoCode.replace('医联微信', '')}</span>
+              </span>
+            ) : (
+              <span>{record.promoCode}</span>
+            )}
+          </span>
+        ),
       },
       {
         title: '操作',
@@ -187,9 +199,17 @@ class MemberContainer extends Component {
     console.log('export');
   };
 
+  handleShowCode(e, record) {
+    e.preventDefault();
+    this.setState({
+      showCode: true,
+      url: record.url,
+    });
+  }
+
   render() {
-    const { memberList, currentPage, totalElements, wechatCode } = this.props;
-    const { param, showEditor, showAdd, selectedData, showCode } = this.state;
+    const { memberList, currentPage, totalElements } = this.props;
+    const { param, showEditor, showAdd, selectedData, showCode, url } = this.state;
     // console.log("this.props",this.props)
     return (
       <div>
@@ -219,7 +239,7 @@ class MemberContainer extends Component {
         />
         <WechatCode
           showCode={showCode}
-          wechatCode={wechatCode.imgUrl}
+          imgUrl={url}
           onClose={() => this.setState({ showCode: false })}
         />
       </div>

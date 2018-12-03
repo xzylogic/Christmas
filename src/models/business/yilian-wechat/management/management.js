@@ -40,6 +40,9 @@ export default {
       member: 0,
       location: 0,
     },
+    wechatCode: {
+      imgUrl: null,
+    },
   },
 
   effects: {
@@ -70,7 +73,6 @@ export default {
       if (searchParam && searchParam.memberName) {
         params += `name=${searchParam.memberName}`;
       }
-      console.log(params);
       const res = yield call(fetchMemberListService, params, page, 10);
       if (res && res.code === 200) {
         yield put({
@@ -159,14 +161,19 @@ export default {
       const res = yield call(createMemberService, postData);
       let ifsuccess = false;
       if (res && res.code === 200) {
-        // console.log("res",res)
         ifsuccess = true;
+        yield put({
+          type: 'updateList',
+          payload: {
+            key: 'imgUrl',
+            wechatCode: res.data,
+          },
+        });
         yield put({ type: 'fetchMemberList', payload: { page: 0 } });
         message.success('新增人员成功！');
       } else {
         message.error('新增人员失败！');
       }
-      // console.log(postData);
       return ifsuccess;
     },
     *modifyMember({ payload }, { call, put }) {
@@ -254,6 +261,10 @@ export default {
         totalElements: {
           ...state.totalElements,
           [payload.key]: payload.totalElements,
+        },
+        wechatCode: {
+          ...state.wechatCode,
+          [payload.key]: payload.wechatCode,
         },
       };
     },

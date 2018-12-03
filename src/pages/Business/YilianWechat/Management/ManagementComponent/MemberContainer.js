@@ -6,12 +6,14 @@ import debounce from 'lodash.debounce';
 import SearchBar from './SearchBar';
 import TableList from './TableList';
 import MemberEditor from './MemberEditor';
+import WechatCode from './WechatCode';
 
 const mapStateToProps = state => ({
   memberName: state.businessYilianWechatManagement.searchParam.memberName,
   memberList: state.businessYilianWechatManagement.list.member,
   currentPage: state.businessYilianWechatManagement.currentPage.member,
   totalElements: state.businessYilianWechatManagement.totalElements.member,
+  wechatCode: state.businessYilianWechatManagement.wechatCode,
   loading:
     state.loading.effects[
       ('businessYilianWechatManagement/fetchMemberList',
@@ -61,7 +63,7 @@ class MemberContainer extends Component {
     showEditor: false,
     showAdd: false,
     selectedData: null,
-    promoCodeArr: [],
+    showCode: false,
   };
 
   componentDidMount() {
@@ -79,11 +81,6 @@ class MemberContainer extends Component {
       showAdd: false,
       selectedData: record,
     });
-  };
-
-  handleShowWechatCode = e => {
-    e.preventDefault();
-    console.log('wechatCode');
   };
 
   handleDelete = (e, record) => {
@@ -170,11 +167,6 @@ class MemberContainer extends Component {
     await onSearchMemberList(0);
   };
 
-  // handleSearch = e => {
-  //   e.preventDefault();
-  //   console.log('search');
-  // };
-
   handleRefresh = e => {
     e.preventDefault();
     const { onFetchMemberList } = this.props;
@@ -196,8 +188,9 @@ class MemberContainer extends Component {
   };
 
   render() {
-    const { memberList, currentPage, totalElements } = this.props;
-    const { param, showEditor, showAdd, selectedData, promoCodeArr } = this.state;
+    const { memberList, currentPage, totalElements, wechatCode } = this.props;
+    const { param, showEditor, showAdd, selectedData, showCode } = this.state;
+    // console.log("this.props",this.props)
     return (
       <div>
         <SearchBar
@@ -222,8 +215,12 @@ class MemberContainer extends Component {
           visible={showEditor}
           showAdd={showAdd}
           initialValue={selectedData}
-          promoCodeArr={promoCodeArr}
           onClose={() => this.setState({ showEditor: false })}
+        />
+        <WechatCode
+          showCode={showCode}
+          wechatCode={wechatCode.imgUrl}
+          onClose={() => this.setState({ showCode: false })}
         />
       </div>
     );

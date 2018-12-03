@@ -31,7 +31,6 @@ class MemberEditor extends Component {
     e.preventDefault();
     const { form, onCreateMember, onModifyMember, onClose, initialValue } = this.props;
     form.validateFieldsAndScroll((err, values) => {
-      console.log(values);
       if (!err && !initialValue) {
         const postData = {
           name: values.name,
@@ -43,7 +42,6 @@ class MemberEditor extends Component {
           promoCode: values.promoCode.join(' '),
         };
         onCreateMember(postData).then(ifsuccess => {
-          console.log(ifsuccess);
           if (ifsuccess) {
             onClose();
           }
@@ -63,6 +61,7 @@ class MemberEditor extends Component {
           if (ifsuccess) {
             onClose();
           }
+          alert();
         });
       }
     });

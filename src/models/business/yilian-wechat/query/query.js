@@ -1,10 +1,39 @@
-// import { message } from 'antd';
 import moment from 'moment';
 
 import {
   fetchGroupPerformanceService,
   fetchGroupPerformanceDetailService,
+  fetchMembershipService,
 } from '@/services/business/yilian-wechat/query/query';
+
+const getListCounts = list => {
+  let listCopy = [];
+  if (list) {
+    listCopy = [...list];
+    const initialValue = {
+      counts: 0,
+      hos: 0,
+      online: 0,
+      person: 0,
+      unFollow: 0,
+    };
+    if (listCopy.length > 0) {
+      const listCounts = listCopy.reduce(
+        (preObj, obj) => ({
+          counts: Number(preObj && preObj.counts + obj && obj.counts),
+          hos: Number(preObj && preObj.hos + obj && obj.hos),
+          online: Number(preObj && preObj.online + obj && obj.online),
+          person: Number(preObj && preObj.person + obj && obj.person),
+          unFollow: Number(preObj && preObj.unFollow + obj && obj.unFollow),
+        }),
+        initialValue
+      );
+      listCounts.appName = '合计';
+      listCopy.push(listCounts);
+    }
+  }
+  return listCopy;
+};
 
 export default {
   namespace: 'businessYilianWechatQuery',
@@ -37,7 +66,13 @@ export default {
         source: 'wechat',
       },
       // 会员查询
-      membership: {},
+      membership: {
+        type: '0',
+        startTime: moment(new Date().valueOf() - 2592000000).format('YYYY-MM-DD'),
+        endTime: moment(new Date().valueOf()).format('YYYY-MM-DD'),
+        name: '',
+        hosName: '',
+      },
       // 预约查询
       appointment: {},
     },
@@ -146,6 +181,48 @@ export default {
             totalElements: res.data.totalElements,
           },
         });
+      }
+    },
+    *fetchMembership(_, { call, put, select }) {
+      try {
+        const { membership } = yield select(state => state.businessYilianWechatQuery.searchParam);
+        let params = '';
+        if (membership && membership.type !== '') {
+          params += `&type=${membership.type}`;
+        }
+        if (membership && membership.startTime) {
+          params += `&startTime=${membership.startTime}`;
+        }
+        if (membership && membership.endTime) {
+          params += `&endTime=${membership.endTime}`;
+        }
+        if (membership && membership.name) {
+          params += `&name=${membership.name}`;
+        }
+
+        const res = yield call(fetchMembershipService, params, 0, 10);
+        if (res && res.code === 200) {
+          yield put({
+            type: 'updateList',
+            payload: {
+              key: 'following',
+              list: getListCounts(res.data.focus),
+              currentPage: 0,
+              totalElements: 0,
+            },
+          });
+          yield put({
+            type: 'updateList',
+            payload: {
+              key: 'registration',
+              list: getListCounts(res.data.register),
+              currentPage: 0,
+              totalElements: 0,
+            },
+          });
+        }
+      } catch (err) {
+        console.log(err);
       }
     },
   },

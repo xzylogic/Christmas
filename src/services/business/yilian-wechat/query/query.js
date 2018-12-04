@@ -32,3 +32,11 @@ export async function fetchGroupPerformanceDetailService(way, params, page, size
   }
   return req;
 }
+
+export async function fetchMembershipService(params, page, size) {
+  let query = `?page=${page || 0}&size=${size || 10}`;
+  if (params) {
+    query += `${params}`;
+  }
+  return request(`/yilian-cloud-backend-api/member/search${query}`);
+}

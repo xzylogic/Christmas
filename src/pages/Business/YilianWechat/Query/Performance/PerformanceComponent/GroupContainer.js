@@ -157,6 +157,7 @@ class GroupContainer extends Component {
           onReset={this.handleReset}
           onExport={this.handleExport}
           onParamsChange={this.handleParamsChanged}
+          inputPlaceholder="请输入项目"
         />
         <TableList
           rowKey="name"

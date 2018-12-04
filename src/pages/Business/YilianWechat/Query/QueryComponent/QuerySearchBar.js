@@ -11,6 +11,7 @@ function querySearchBar(props) {
     onExport,
     params: { startTime, endTime, name, source },
     onParamsChange,
+    inputPlaceholder,
   } = props;
   return (
     <Row className={classes.Container}>
@@ -42,7 +43,7 @@ function querySearchBar(props) {
           name="name"
           value={name}
           onChange={e => onParamsChange(e.target.value, 'name')}
-          placeholder="请输入项目"
+          placeholder={inputPlaceholder}
           className={classes.Input}
         />
       </Col>

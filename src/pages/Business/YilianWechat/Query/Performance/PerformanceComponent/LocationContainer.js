@@ -1,0 +1,191 @@
+// import React, { Component } from 'react';
+// import { connect } from 'dva';
+// import moment from 'moment';
+// import debounce from 'lodash.debounce';
+
+// import QuerySearchBar from '../../QueryComponent/QuerySearchBar';
+// import TableList from '@/components/PageComponents/Table/TableList';
+// // import LocationDetail from './LocationDetail';
+
+// const mapStateToProps = state => ({
+//   locationList: state.businessYilianWechatQuery.list.location,
+//   currentPage: state.businessYilianWechatQuery.currentPage.location,
+//   totalElements: state.businessYilianWechatQuery.totalElements.location,
+//   searchParam: state.businessYilianWechatQuery.searchParam.location,
+//   loading: state.loading.effects['businessYilianWechatQuery/fetchLocationPerformance'],
+// });
+
+// const mapDispatchToProps = dispatch => ({
+//   onFetchLocationList: page =>
+//     dispatch({
+//       type: 'businessYilianWechatQuery/fetchLocationPerformance',
+//       payload: { page },
+//     }),
+//   onFetchLocationListDebounce: debounce(
+//     page =>
+//       dispatch({
+//         type: 'businessYilianWechatQuery/fetchLocationPerformance',
+//         payload: { page },
+//       }),
+//     500
+//   ),
+//   onSearchParamChange: (key, value) =>
+//     dispatch({
+//       type: 'businessYilianWechatQuery/updateSearchParam',
+//       payload: { origin: 'location', key, value },
+//     }),
+// });
+
+// @connect(
+//   mapStateToProps,
+//   mapDispatchToProps
+// )
+// class LocationContainer extends Component {
+//   state = {
+//     showDetail: false,
+//     selectedName: '',
+//   };
+
+//   componentDidMount() {
+//     const { onFetchLocationList } = this.props;
+//     onFetchLocationList(0);
+//   }
+
+//   handleParamsChanged = async (value, dataKey) => {
+//     const { onSearchParamChange, onFetchLocationListDebounce } = this.props;
+//     if (dataKey === 'date') {
+//       await onSearchParamChange('startTime', value[0]);
+//       await onSearchParamChange('endTime', value[1]);
+//     } else {
+//       await onSearchParamChange(dataKey, value);
+//     }
+//     await onFetchLocationListDebounce(0);
+//   };
+
+//   handleDetail = (e, record) => {
+//     e.preventDefault();
+//     this.setState({
+//       showDetail: true,
+//       selectedName: record.name,
+//     });
+//   };
+
+//   setTableColumns = () => {
+//     const columns = [
+//       {
+//         title: '姓名',
+//         dataIndex: 'name',
+//         key: 'name',
+//       },
+//       {
+//         title: '性别',
+//         dataIndex: 'sex',
+//         key: 'sex',
+//       },
+//       {
+//         title: '工号',
+//         dataIndex: 'jobNumber',
+//         key: 'jobNumber',
+//       },
+//       {
+//         title: '所在组',
+//         dataIndex: 'group',
+//         key: 'group',
+//       },
+//       {
+//         title: '推广地点',
+//         dataIndex: 'site',
+//         key: 'site',
+//       },
+//       {
+//         title: '渠道',
+//         dataIndex: 'origin',
+//         key: 'origin',
+//         render: () => '微信',
+//       },
+//       {
+//         title: '关注量',
+//         dataIndex: 'fansCount',
+//         key: 'fansCount',
+//       },
+//       {
+//         title: '注册量',
+//         dataIndex: 'regCount',
+//         key: 'regCount',
+//       },
+//       {
+//         title: '操作',
+//         dataIndex: 'id',
+//         key: 'action',
+//         render: (_, record) => (
+//           <span>
+//             <a onClick={e => this.handleDetail(e, record)}>查看详情</a>
+//           </span>
+//         ),
+//       },
+//     ];
+//     return columns;
+//   };
+
+//   handlePageChange = page => {
+//     const { onFetchLocationList } = this.props;
+//     onFetchLocationList(page - 1);
+//   };
+
+//   handleAmountSet = e => {
+//     e.preventDefault();
+//     console.log('amountset');
+//   };
+
+//   handleReset = async e => {
+//     e.preventDefault();
+//     const { onSearchParamChange, onFetchLocationList } = this.props;
+//     await onSearchParamChange(
+//       'startTime',
+//       moment(new Date().valueOf() - 604800000).format('YYYY-MM-DD')
+//     );
+//     await onSearchParamChange('endTime', moment(new Date().valueOf()).format('YYYY-MM-DD'));
+//     await onSearchParamChange('name', '');
+//     await onFetchLocationList(0);
+//   };
+
+//   handleExport = e => {
+//     e.preventDefault();
+//     console.log('export');
+//   };
+
+//   handleDetailClose = e => {
+//     e.preventDefault();
+//     this.setState({
+//       showDetail: false,
+//     });
+//   };
+
+//   render() {
+//     const { searchParam, locationList, currentPage, totalElements } = this.props;
+//     const { showDetail, selectedName } = this.state;
+//     return (
+//       <React.Fragment>
+//         <QuerySearchBar
+//           params={searchParam}
+//           onAmountSet={this.handleAmountSet}
+//           onReset={this.handleReset}
+//           onExport={this.handleExport}
+//           onParamsChange={this.handleParamsChanged}
+//           inputPlaceholder='请输入姓名'
+//         />
+//         <TableList
+//           rowKey="name"
+//           list={locationList}
+//           columns={this.setTableColumns()}
+//           currentPage={currentPage}
+//           totalElements={totalElements}
+//           onPageChange={this.handlePageChange}
+//         />
+//         {/* <LocationDetail name={selectedName} visible={showDetail} onClose={this.handleDetailClose} /> */}
+//       </React.Fragment>
+//     );
+//   }
+// }
+
+// export default LocationContainer;

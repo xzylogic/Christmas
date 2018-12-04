@@ -3,7 +3,10 @@ import moment from 'moment';
 import {
   fetchGroupPerformanceService,
   fetchGroupPerformanceDetailService,
-  fetchMembershipService,
+  fetchMemberService,
+  fetchMemberPerformanceDetailService,
+  fetchLocationService,
+  fetchLocationPerformanceDetailService,
 } from '@/services/business/yilian-wechat/query/query';
 
 const getListCounts = list => {
@@ -200,7 +203,7 @@ export default {
           params += `&name=${membership.name}`;
         }
 
-        const res = yield call(fetchMembershipService, params, 0, 10);
+        const res = yield call(fetchLocationPerformanceDetailService, params, 0, 10);
         if (res && res.code === 200) {
           yield put({
             type: 'updateList',
@@ -223,6 +226,116 @@ export default {
         }
       } catch (err) {
         console.log(err);
+      }
+    },
+    *fetchMemberPerformance({ payload }, { call, put, select }) {
+      const { member } = yield select(state => state.businessYilianWechatQuery.searchParam);
+      const { page } = payload;
+      let params = '';
+      if (member && member.startTime) {
+        params += `&startTime=${member.startTime}`;
+      }
+      if (member && member.endTime) {
+        params += `&endTime=${member.endTime}`;
+      }
+      if (member && member.name) {
+        params += `&name=${member.name}`;
+      }
+      // if (member && member.source) {
+      //   params += `&source=${member.source}`;
+      // }
+      const res = yield call(fetchMemberService, params, page, 10);
+      if (res && res.code === 200) {
+        yield put({
+          type: 'updateList',
+          payload: {
+            key: 'member',
+            list: res.data.content,
+            currentPage: page,
+            totalElements: res.data.totalElements,
+          },
+        });
+      }
+    },
+    *fetchMemberPerformanceDetail({ payload }, { call, select, put }) {
+      const { member } = yield select(state => state.businessYilianWechatQuery.searchParam);
+      const { way, name, page } = payload;
+      let params = '';
+      if (member && member.startTime) {
+        params += `&startTime=${member.startTime}`;
+      }
+      if (member && member.endTime) {
+        params += `&endTime=${member.endTime}`;
+      }
+      if (name) {
+        params += `&name=${name}`;
+      }
+      const res = yield call(fetchMemberPerformanceDetailService, way, params, page, 10);
+      if (res && res.code === 200) {
+        yield put({
+          type: 'updateDetailList',
+          payload: {
+            key: 'member',
+            list: res.data.content,
+            currentPage: page,
+            totalElements: res.data.totalElements,
+          },
+        });
+      }
+    },
+    *fetchLocationPerformance({ payload }, { call, put, select }) {
+      const { location } = yield select(state => state.businessYilianWechatQuery.searchParam);
+      const { page } = payload;
+      let params = '';
+      if (location && location.startTime) {
+        params += `&startTime=${location.startTime}`;
+      }
+      if (location && location.endTime) {
+        params += `&endTime=${location.endTime}`;
+      }
+      if (location && location.name) {
+        params += `&name=${location.name}`;
+      }
+      // if (location && location.source) {
+      //   params += `&source=${location.source}`;
+      // }
+      const res = yield call(fetchLocationService, params, page, 10);
+      if (res && res.code === 200) {
+        yield put({
+          type: 'updateList',
+          payload: {
+            key: 'location',
+            list: res.data.content,
+            currentPage: page,
+            totalElements: res.data.totalElements,
+          },
+        });
+      }
+    },
+    *fetchLocationPerformanceDetail({ payload }, { call, select, put }) {
+      const { location } = yield select(state => state.businessYilianWechatQuery.searchParam);
+      const { way, name, page } = payload;
+      let params = '';
+      if (location && location.startTime) {
+        params += `&startTime=${location.startTime}`;
+      }
+      if (location && location.endTime) {
+        params += `&endTime=${location.endTime}`;
+      }
+      if (name) {
+        params += `&name=${name}`;
+      }
+      const res = yield call(fetchLocationPerformanceDetailService, way, params, page, 10);
+      if (res && res.code === 200) {
+        yield put({
+          type: 'updateDetailList',
+          payload: {
+            key: 'location',
+            list: res.data.content,
+            currentPage: page,
+            totalElements: res.data.totalElements,
+          },
+        });
       }
     },
   },

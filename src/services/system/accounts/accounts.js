@@ -8,12 +8,15 @@ export async function fetchAccountListService(params, page, size) {
   return request(`/yilian-cloud-backend-api/user/getUsers${query}`);
 }
 
-export async function toggleAccountState(params) {
-  return request('/api/accounts/toggleState', {
+/**
+ * 启用禁用用户账号
+ * @param {*} userId 用户id
+ * @param {*} enable 【0:禁用】【1:启用】
+ */
+export async function toggleAccountState(userId, enable) {
+  return request(`/yilian-cloud-backend-api/user/enableUser?userId=${userId}&enable=${enable}`, {
     method: 'POST',
-    body: {
-      ...params,
-    },
+    body: {},
   });
 }
 

@@ -60,8 +60,8 @@ class AccountList extends React.PureComponent {
       },
       {
         title: '是否启用',
-        dataIndex: 'isDelete',
-        key: 'isDelete',
+        dataIndex: 'enabled',
+        key: 'enabled',
         render: text => (text === true ? '启用' : '禁用'),
       },
       {
@@ -71,13 +71,13 @@ class AccountList extends React.PureComponent {
       },
       {
         title: '操作',
-        dataIndex: 'isDelete',
+        dataIndex: 'deleted',
         key: 'action',
         render: (text, record) => (
           <span>
             <Popconfirm
               placement="topRight"
-              title={`是否要${record.isDelete === true ? '禁用' : '启用'}账号${record.username}？`}
+              title={`是否要${record.enabled === true ? '禁用' : '启用'}账号：${record.username}？`}
               onConfirm={e => this.handleState(e, record)}
               onCancel={e => e.preventDefault()}
               okText="是"

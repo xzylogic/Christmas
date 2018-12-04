@@ -54,7 +54,7 @@ class Menus extends Component {
   };
 
   render() {
-    const { menuList, onFetchMenuList } = this.props;
+    const { menuList, onFetchMenuList, selectedMenu } = this.props;
     const { type } = this.state;
     return (
       <PageHeaderWrapper>
@@ -62,6 +62,7 @@ class Menus extends Component {
           <Row gutter={24}>
             <Col className="gutter-row" span={12}>
               <MenuTree
+                selectedKeys={(selectedMenu && [selectedMenu.menuId]) || []}
                 menus={menuList}
                 onSelect={this.handleTreeSelected}
                 onRefresh={onFetchMenuList}

@@ -5,6 +5,7 @@ const reorderMenus = menusRoot => {
   const newMenusRoot = [];
   const newMenusParents = [];
   const newMenusChildren = [];
+  const newMenusCChildren = [];
   if (menusRoot && menusRoot[0]) {
     const newRootMenu = {
       menuId: menusRoot[0].menuId,
@@ -42,15 +43,29 @@ const reorderMenus = menusRoot => {
             exact: menuChild.exact,
           };
           newMenusChildren.push(newMenuChild);
+          if (menuChild.children) {
+            menuChild.children.forEach(menuCChild => {
+              const newMenuCChild = {
+                menuId: menuCChild.menuId,
+                name: menuCChild.name,
+                path: menuCChild.path,
+                isDeleted: menuCChild.isDeleted,
+                sort: menuCChild.sort,
+                enable: menuCChild.enable,
+                exact: menuCChild.exact,
+              };
+              newMenusCChildren.push(newMenuCChild);
+            });
+          }
         });
       }
     });
   }
   return {
-    menus: [...newMenusRoot, ...newMenusParents, ...newMenusChildren],
+    menus: [...newMenusRoot, ...newMenusParents, ...newMenusChildren, ...newMenusCChildren],
     root: newMenusRoot,
-    parents: [...newMenusRoot, ...newMenusParents],
-    children: newMenusChildren,
+    parents: [...newMenusRoot, ...newMenusParents, ...newMenusChildren],
+    children: newMenusCChildren,
   };
 };
 

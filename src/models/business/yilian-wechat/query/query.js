@@ -1,12 +1,17 @@
 import moment from 'moment';
+import { message } from 'antd';
 
 import {
   fetchGroupPerformanceService,
   fetchGroupPerformanceDetailService,
+  createGroupMonthService,
   fetchMemberService,
   fetchMemberPerformanceDetailService,
+  createMemberMonthService,
   fetchLocationService,
   fetchLocationPerformanceDetailService,
+  getQueryMessageService,
+  fetchGroupMonthService,
 } from '@/services/business/yilian-wechat/query/query';
 
 const getListCounts = list => {
@@ -92,6 +97,8 @@ export default {
       registration: null,
       // 预约列表
       appointment: null,
+      queryMessage: null,
+      fetchMessage: null,
     },
     currentPage: {
       group: 0,
@@ -144,9 +151,6 @@ export default {
       if (group && group.name) {
         params += `&name=${group.name}`;
       }
-      // if (group && group.source) {
-      //   params += `&source=${group.source}`;
-      // }
       const res = yield call(fetchGroupPerformanceService, params, page, 10);
       if (res && res.code === 200) {
         yield put({
@@ -185,6 +189,19 @@ export default {
           },
         });
       }
+    },
+    *createGroupMonthAmount({ payload }, { call, put }) {
+      const { postData } = payload;
+      const res = yield call(createGroupMonthService, postData);
+      let ifsuccess = false;
+      if (res && res.code === 200) {
+        ifsuccess = true;
+        yield put({ type: 'fetchGroupPerformance', payload: { page: 0 } });
+        message.success('设置小组月指标量成功！');
+      } else {
+        message.error('设置小组月指标量失败！');
+      }
+      return ifsuccess;
     },
     *fetchMembership(_, { call, put, select }) {
       try {
@@ -283,6 +300,19 @@ export default {
         });
       }
     },
+    *createMemberMonthAmount({ payload }, { call, put }) {
+      const { postData } = payload;
+      const res = yield call(createMemberMonthService, postData);
+      let ifsuccess = false;
+      if (res && res.code === 200) {
+        ifsuccess = true;
+        yield put({ type: 'fetchMemberPerformance', payload: { page: 0 } });
+        message.success('设置成员月指标量成功！');
+      } else {
+        message.error('设置成员月指标量失败！');
+      }
+      return ifsuccess;
+    },
     *fetchLocationPerformance({ payload }, { call, put, select }) {
       const { location } = yield select(state => state.businessYilianWechatQuery.searchParam);
       const { page } = payload;
@@ -334,6 +364,32 @@ export default {
             list: res.data.content,
             currentPage: page,
             totalElements: res.data.totalElements,
+          },
+        });
+      }
+    },
+    *getQueryMessage(_, { call, put }) {
+      const res = yield call(getQueryMessageService);
+      if (res && res.code === 200) {
+        yield put({
+          type: 'updateList',
+          payload: {
+            key: 'queryMessage',
+            list: res.data,
+          },
+        });
+      }
+    },
+    *fetchGroupMonth({ payload }, { call, put }) {
+      const { value } = payload;
+      const res = yield call(fetchGroupMonthService, value);
+      console.log(res);
+      if (res && res.code === 200) {
+        yield put({
+          type: 'updateList',
+          payload: {
+            key: 'fetchMessage',
+            list: res.data,
           },
         });
       }

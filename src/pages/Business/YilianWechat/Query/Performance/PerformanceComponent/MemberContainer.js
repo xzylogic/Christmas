@@ -5,14 +5,19 @@ import debounce from 'lodash.debounce';
 
 import QuerySearchBar from '../../QueryComponent/QuerySearchBar';
 import TableList from '@/components/PageComponents/Table/TableList';
-import MemberDetail from './MemberDetail';
+// import MemberDetail from './MemberDetail';
+import MemberSetMounthAmount from './MemberSetMounthAmount';
 
 const mapStateToProps = state => ({
   memberList: state.businessYilianWechatQuery.list.member,
   currentPage: state.businessYilianWechatQuery.currentPage.member,
   totalElements: state.businessYilianWechatQuery.totalElements.member,
   searchParam: state.businessYilianWechatQuery.searchParam.member,
-  loading: state.loading.effects['businessYilianWechatQuery/fetchMemberPerformance'],
+  loading:
+    state.loading.effects[
+      ('businessYilianWechatQuery/fetchMemberPerformance',
+      'businessYilianWechatQuery/getQueryMessage')
+    ],
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -34,6 +39,16 @@ const mapDispatchToProps = dispatch => ({
       type: 'businessYilianWechatQuery/updateSearchParam',
       payload: { origin: 'member', key, value },
     }),
+  onFetchGroupMonth: page =>
+    dispatch({
+      type: 'businessYilianWechatQuery/fetchGroupMonth',
+      payload: { page },
+    }),
+  onGetQueryMessage: value =>
+    dispatch({
+      type: 'businessYilianWechatQuery/getQueryMessage',
+      payload: { value },
+    }),
 });
 
 @connect(
@@ -42,13 +57,16 @@ const mapDispatchToProps = dispatch => ({
 )
 class MemberContainer extends Component {
   state = {
-    showDetail: false,
-    selectedName: '',
+    // showDetail: false,
+    // selectedName: '',
+    amountSetShow: true,
+    visible: false,
   };
 
   componentDidMount() {
-    const { onFetchMemberList } = this.props;
+    const { onFetchMemberList, onGetQueryMessage } = this.props;
     onFetchMemberList(0);
+    onGetQueryMessage(0);
   }
 
   handleParamsChanged = async (value, dataKey) => {
@@ -64,18 +82,21 @@ class MemberContainer extends Component {
 
   handleDetail = (e, record) => {
     e.preventDefault();
-    this.setState({
-      showDetail: true,
-      selectedName: record.name,
-    });
+    // this.setState({
+    //   showDetail: true,
+    //   selectedName: record.hosName,
+    // });
+    // console.log(record,e)
+    const { onFetchGroupMonth } = this.props;
+    onFetchGroupMonth(record.hosName);
   };
 
   setTableColumns = () => {
     const columns = [
       {
         title: '姓名',
-        dataIndex: 'name',
-        key: 'name',
+        dataIndex: 'hosName',
+        key: 'hosName',
       },
       {
         title: '性别',
@@ -89,7 +110,7 @@ class MemberContainer extends Component {
       },
       {
         title: '所在组',
-        dataIndex: 'group',
+        dataIndex: 'groupName',
         key: 'group',
       },
       {
@@ -99,8 +120,8 @@ class MemberContainer extends Component {
       },
       {
         title: '渠道',
-        dataIndex: 'origin',
-        key: 'origin',
+        dataIndex: 'promoCode',
+        key: 'promoCode',
         render: () => '微信',
       },
       {
@@ -134,6 +155,7 @@ class MemberContainer extends Component {
 
   handleAmountSet = e => {
     e.preventDefault();
+    this.setState({ visible: true });
     console.log('amountset');
   };
 
@@ -145,7 +167,7 @@ class MemberContainer extends Component {
       moment(new Date().valueOf() - 604800000).format('YYYY-MM-DD')
     );
     await onSearchParamChange('endTime', moment(new Date().valueOf()).format('YYYY-MM-DD'));
-    await onSearchParamChange('name', '');
+    await onSearchParamChange('hosName', '');
     await onFetchMemberList(0);
   };
 
@@ -156,14 +178,15 @@ class MemberContainer extends Component {
 
   handleDetailClose = e => {
     e.preventDefault();
-    this.setState({
-      showDetail: false,
-    });
+    // this.setState({
+    //   showDetail: false,
+    // });
   };
 
   render() {
     const { searchParam, memberList, currentPage, totalElements } = this.props;
-    const { showDetail, selectedName } = this.state;
+    // const { showDetail, selectedName, amountSetShow, visible } = this.state;
+    const { amountSetShow, visible } = this.state;
     return (
       <React.Fragment>
         <QuerySearchBar
@@ -173,16 +196,21 @@ class MemberContainer extends Component {
           onExport={this.handleExport}
           onParamsChange={this.handleParamsChanged}
           inputPlaceholder="请输入姓名"
+          amountSetShow={amountSetShow}
         />
         <TableList
-          rowKey="name"
+          rowKey="hosName"
           list={memberList}
           columns={this.setTableColumns()}
           currentPage={currentPage}
           totalElements={totalElements}
           onPageChange={this.handlePageChange}
         />
-        <MemberDetail name={selectedName} visible={showDetail} onClose={this.handleDetailClose} />
+        {/* <MemberDetail name={selectedName} visible={showDetail} onClose={this.handleDetailClose} /> */}
+        <MemberSetMounthAmount
+          visible={visible}
+          onClose={() => this.setState({ visible: false })}
+        />
       </React.Fragment>
     );
   }

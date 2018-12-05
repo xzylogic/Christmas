@@ -5,18 +5,17 @@ import { Modal, Select, Divider } from 'antd';
 import TableList from '@/components/PageComponents/Table/TableList';
 
 const mapStateToProps = state => ({
-  groupDetailList: state.businessYilianWechatQuery.detailList.group,
-  currentPage: state.businessYilianWechatQuery.detailCurrentPage.group,
-  totalElements: state.businessYilianWechatQuery.datailTotalElements.group,
-  searchParam: state.businessYilianWechatQuery.searchParam.group,
-  groupMonthAmount: state.businessYilianWechatQuery.list.fetchMessage,
-  loading: state.loading.effects['businessYilianWechatQuery/fetchGroupPerformanceDetail'],
+  locationDetailList: state.businessYilianWechatQuery.detailList.location,
+  currentPage: state.businessYilianWechatQuery.detailCurrentPage.location,
+  totalElements: state.businessYilianWechatQuery.datailTotalElements.location,
+  searchParam: state.businessYilianWechatQuery.searchParam.location,
+  loading: state.loading.effects['businessYilianWechatQuery/fetchLocationPerformanceDetail'],
 });
 
 const mapDispatchToProps = dispatch => ({
-  onFetchGroupPerformanceDetail: (way, name, page) =>
+  onFetchLocationPerformanceDetail: (way, name, page) =>
     dispatch({
-      type: 'businessYilianWechatQuery/fetchGroupPerformanceDetail',
+      type: 'businessYilianWechatQuery/fetchLocationPerformanceDetail',
       payload: { way, name, page },
     }),
 });
@@ -25,7 +24,7 @@ const mapDispatchToProps = dispatch => ({
   mapStateToProps,
   mapDispatchToProps
 )
-class GroupDetail extends Component {
+class LocationDetail extends Component {
   state = {
     way: 'day',
   };
@@ -38,10 +37,10 @@ class GroupDetail extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { onFetchGroupPerformanceDetail, name } = this.props;
+    const { onFetchLocationPerformanceDetail, name } = this.props;
     const { way } = this.state;
     if (name && prevProps.name !== name) {
-      onFetchGroupPerformanceDetail(way, name, 0);
+      onFetchLocationPerformanceDetail(way, name, 0);
     }
   }
 
@@ -73,24 +72,23 @@ class GroupDetail extends Component {
   };
 
   handlePageChange = page => {
-    const { onFetchGroupPerformanceDetail, name } = this.props;
+    const { onFetchLocationPerformanceDetail, name } = this.props;
     const { way } = this.state;
     if (name) {
-      onFetchGroupPerformanceDetail(way, name, page - 1);
+      onFetchLocationPerformanceDetail(way, name, page - 1);
     }
   };
 
   handleWayChange = value => {
-    const { onFetchGroupPerformanceDetail, name } = this.props;
+    const { onFetchLocationPerformanceDetail, name } = this.props;
     this.setState({ way: value });
     if (name) {
-      onFetchGroupPerformanceDetail(value, name, 0);
+      onFetchLocationPerformanceDetail(value, name, 0);
     }
   };
 
   render() {
-    const { groupDetailList, currentPage, totalElements, visible, name, onClose } = this.props;
-    // console.log(this.props)
+    const { locationDetailList, currentPage, totalElements, visible, name, onClose } = this.props;
     const { way } = this.state;
     return (
       <Modal title="查看详情" centered visible={visible} footer={null} onCancel={onClose}>
@@ -103,7 +101,7 @@ class GroupDetail extends Component {
         <Divider>{name}</Divider>
         <TableList
           rowKey={(_, index) => index}
-          list={groupDetailList}
+          list={locationDetailList}
           columns={this.setTableColumns()}
           currentPage={currentPage}
           totalElements={totalElements}
@@ -114,4 +112,4 @@ class GroupDetail extends Component {
   }
 }
 
-export default GroupDetail;
+export default LocationDetail;

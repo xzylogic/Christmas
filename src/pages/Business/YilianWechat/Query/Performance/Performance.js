@@ -5,7 +5,7 @@ import { Tabs } from 'antd';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import GroupContainer from './PerformanceComponent/GroupContainer';
 import MemberContainer from './PerformanceComponent/MemberContainer';
-// import LocationContainer from './PerformanceComponent/LocationContainer';
+import LocationContainer from './PerformanceComponent/LocationContainer';
 
 import classes from './Performance.less';
 
@@ -48,7 +48,7 @@ class Performance extends Component {
             <MemberContainer />
           </Tabs.TabPane>
           <Tabs.TabPane tab="推广地点查询" key="3" className={classes.Content}>
-            {/* <LocationContainer /> */}
+            <LocationContainer />
           </Tabs.TabPane>
         </Tabs>
       </PageHeaderWrapper>

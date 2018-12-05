@@ -12,6 +12,7 @@ function querySearchBar(props) {
     params: { startTime, endTime, name, source },
     onParamsChange,
     inputPlaceholder,
+    amountSetShow,
   } = props;
   return (
     <Row className={classes.Container}>
@@ -48,9 +49,13 @@ function querySearchBar(props) {
         />
       </Col>
       <Col span={8} className={classes.ColRight}>
-        <Button type="primary" htmlType="button" onClick={onAmountSet} className={classes.Gap}>
-          月指标量
-        </Button>
+        {amountSetShow ? (
+          <Button type="primary" htmlType="button" onClick={onAmountSet} className={classes.Gap}>
+            月指标量
+          </Button>
+        ) : (
+          ''
+        )}
         <Button type="primary" htmlType="button" onClick={onReset} className={classes.Gap}>
           重置
         </Button>

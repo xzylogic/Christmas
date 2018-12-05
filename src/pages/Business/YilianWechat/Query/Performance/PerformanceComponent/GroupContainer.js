@@ -6,13 +6,18 @@ import debounce from 'lodash.debounce';
 import QuerySearchBar from '../../QueryComponent/QuerySearchBar';
 import TableList from '@/components/PageComponents/Table/TableList';
 import GroupDetail from './GroupDetail';
+import GroupSetMounthAmount from './GroupSetMounthAmount';
 
 const mapStateToProps = state => ({
   groupList: state.businessYilianWechatQuery.list.group,
   currentPage: state.businessYilianWechatQuery.currentPage.group,
   totalElements: state.businessYilianWechatQuery.totalElements.group,
   searchParam: state.businessYilianWechatQuery.searchParam.group,
-  loading: state.loading.effects['businessYilianWechatQuery/fetchGroupPerformance'],
+  loading:
+    state.loading.effects[
+      ('businessYilianWechatQuery/fetchGroupPerformance',
+      'businessYilianWechatQuery/getQueryMessage')
+    ],
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -34,6 +39,16 @@ const mapDispatchToProps = dispatch => ({
       type: 'businessYilianWechatQuery/updateSearchParam',
       payload: { origin: 'group', key, value },
     }),
+  onFetchGroupMonth: value =>
+    dispatch({
+      type: 'businessYilianWechatQuery/fetchGroupMonth',
+      payload: { value },
+    }),
+  onGetQueryMessage: value =>
+    dispatch({
+      type: 'businessYilianWechatQuery/getQueryMessage',
+      payload: { value },
+    }),
 });
 
 @connect(
@@ -44,11 +59,13 @@ class GroupContainer extends Component {
   state = {
     showDetail: false,
     selectedName: '',
+    amountSetShow: true,
+    visible: false,
   };
 
   componentDidMount() {
-    const { onFetchGroupList } = this.props;
-    onFetchGroupList(0);
+    const { onGetQueryMessage } = this.props;
+    onGetQueryMessage(0);
   }
 
   handleParamsChanged = async (value, dataKey) => {
@@ -68,6 +85,9 @@ class GroupContainer extends Component {
       showDetail: true,
       selectedName: record.name,
     });
+    // console.log(record,e)
+    const { onFetchGroupMonth } = this.props;
+    onFetchGroupMonth(record.name);
   };
 
   setTableColumns = () => {
@@ -119,7 +139,8 @@ class GroupContainer extends Component {
 
   handleAmountSet = e => {
     e.preventDefault();
-    console.log('amountset');
+    this.setState({ visible: true });
+    // console.log('amountset');
   };
 
   handleReset = async e => {
@@ -148,7 +169,7 @@ class GroupContainer extends Component {
 
   render() {
     const { searchParam, groupList, currentPage, totalElements } = this.props;
-    const { showDetail, selectedName } = this.state;
+    const { showDetail, selectedName, amountSetShow, visible } = this.state;
     return (
       <React.Fragment>
         <QuerySearchBar
@@ -158,6 +179,7 @@ class GroupContainer extends Component {
           onExport={this.handleExport}
           onParamsChange={this.handleParamsChanged}
           inputPlaceholder="请输入项目"
+          amountSetShow={amountSetShow}
         />
         <TableList
           rowKey="name"
@@ -168,6 +190,7 @@ class GroupContainer extends Component {
           onPageChange={this.handlePageChange}
         />
         <GroupDetail name={selectedName} visible={showDetail} onClose={this.handleDetailClose} />
+        <GroupSetMounthAmount visible={visible} onClose={() => this.setState({ visible: false })} />
       </React.Fragment>
     );
   }

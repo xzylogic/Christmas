@@ -51,9 +51,13 @@ export default {
         });
       }
     },
-    *saveRole({ payload }, { call }) {
+    *saveRole({ payload }, { call, put }) {
       const res = yield call(saveRoleService, payload.data);
       if (res && res.code === 200) {
+        yield put({
+          type: 'fetchRoleList',
+          payload: { page: 0 },
+        });
         message.success(res.message || '保存角色成功！！！').then(() => {
           Router.goBack();
         });

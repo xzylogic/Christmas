@@ -15,6 +15,7 @@ const reorderMenus = menusRoot => {
       sort: menusRoot[0].sort,
       enable: menusRoot[0].enable,
       exact: menusRoot[0].exact,
+      level: '1',
     };
     newMenusRoot.push(newRootMenu);
   }
@@ -22,6 +23,7 @@ const reorderMenus = menusRoot => {
     const menus = menusRoot[0].children;
     menus.forEach(menu => {
       const newMenu = {
+        parentId: menusRoot[0].menuId,
         menuId: menu.menuId,
         name: menu.name,
         path: menu.path,
@@ -29,11 +31,13 @@ const reorderMenus = menusRoot => {
         sort: menu.sort,
         enable: menu.enable,
         exact: menu.exact,
+        level: '2',
       };
       newMenusParents.push(newMenu);
       if (menu.children) {
         menu.children.forEach(menuChild => {
           const newMenuChild = {
+            parentId: menu.menuId,
             menuId: menuChild.menuId,
             name: menuChild.name,
             path: menuChild.path,
@@ -41,11 +45,13 @@ const reorderMenus = menusRoot => {
             sort: menuChild.sort,
             enable: menuChild.enable,
             exact: menuChild.exact,
+            level: '3',
           };
           newMenusChildren.push(newMenuChild);
           if (menuChild.children) {
             menuChild.children.forEach(menuCChild => {
               const newMenuCChild = {
+                parentId: menuChild.menuId,
                 menuId: menuCChild.menuId,
                 name: menuCChild.name,
                 path: menuCChild.path,
@@ -53,6 +59,7 @@ const reorderMenus = menusRoot => {
                 sort: menuCChild.sort,
                 enable: menuCChild.enable,
                 exact: menuCChild.exact,
+                level: '4',
               };
               newMenusCChildren.push(newMenuCChild);
             });

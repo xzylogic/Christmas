@@ -1,9 +1,32 @@
 import React from 'react';
 import Router from 'umi/router';
+import { connect } from 'dva';
 import { Table, Divider, Popconfirm } from 'antd';
 
 import classes from '../Roles.less';
 
+const mapStateToProps = state => ({
+  loadingEnable: state.loading.effects['role/fetchRoleList'],
+  loadingDelete: state.loading.effects['role/fetchRoleList'],
+});
+
+const mapDispatchToProps = dispatch => ({
+  onFetchRoleList: page =>
+    dispatch({
+      type: 'role/fetchRoleList',
+      payload: { page },
+    }),
+  onUpdateSearchParam: (key, name) =>
+    dispatch({
+      type: 'role/updateSearchParam',
+      payload: { key, name },
+    }),
+});
+
+@connect(
+  mapStateToProps,
+  mapDispatchToProps
+)
 class RoleList extends React.PureComponent {
   handleState = (e, record) => {
     e.preventDefault();

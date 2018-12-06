@@ -112,9 +112,16 @@ export async function fetchLocationPerformanceDetailService(way, params, page, s
   }
   return req;
 }
+export async function fetchMembershipPerformanceDetail(params) {
+  return request(`/yilian-cloud-backend-api/member/search${params}`);
+}
 
 export async function getQueryMessageService() {
   return request(`/yilian-cloud-backend-api/performance/groupMonth/data`);
+}
+
+export async function fetchHosnameService() {
+  return request(`/yilian-cloud-backend-api/hos/base/person`);
 }
 
 export async function fetchGroupMonthService(params) {

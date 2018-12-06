@@ -13,6 +13,8 @@ import {
   getQueryMessageService,
   fetchGroupMonthService,
   fetchMemberMonthService,
+  fetchMembershipPerformanceDetail,
+  fetchHosnameService,
 } from '@/services/business/yilian-wechat/query/query';
 
 const getListCounts = list => {
@@ -101,6 +103,7 @@ export default {
       queryMessage: null,
       fetchMessage: null,
       fetchMemberMessage: null,
+      fetchhosName: null,
     },
     currentPage: {
       group: 0,
@@ -215,7 +218,7 @@ export default {
         const { membership } = yield select(state => state.businessYilianWechatQuery.searchParam);
         let params = '';
         if (membership && membership.type !== '') {
-          params += `&type=${membership.type}`;
+          params += `?type=${membership.type}`;
         }
         if (membership && membership.startTime) {
           params += `&startTime=${membership.startTime}`;
@@ -226,8 +229,10 @@ export default {
         if (membership && membership.name) {
           params += `&name=${membership.name}`;
         }
-
-        const res = yield call(fetchLocationPerformanceDetailService, params, 0, 10);
+        if (membership && membership.hosName) {
+          params += `&hosName=${membership.hosName}`;
+        }
+        const res = yield call(fetchMembershipPerformanceDetail, params, 0, 10);
         if (res && res.code === 200) {
           yield put({
             type: 'updateList',
@@ -412,6 +417,18 @@ export default {
           payload: {
             key: 'fetchMemberMessage',
             list: res.data,
+          },
+        });
+      }
+    },
+    *fetchHosname(_, { call, put }) {
+      const res = yield call(fetchHosnameService);
+      if (res && res.code === 200) {
+        yield put({
+          type: 'updateList',
+          payload: {
+            key: 'fetchhosName',
+            list: res.data.sites,
           },
         });
       }

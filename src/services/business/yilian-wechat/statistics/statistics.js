@@ -55,3 +55,7 @@ export async function fetchPopularizationReportType4Service(params, page, size) 
   }
   return request(`/yilian-cloud-backend-api/ylWeChatCount/extendData/weChatDailyCount${query}`);
 }
+
+export async function fetchSearchGroupListService() {
+  return request(`/yilian-cloud-backend-api/ylWeChatCount/search/allGroup`);
+}

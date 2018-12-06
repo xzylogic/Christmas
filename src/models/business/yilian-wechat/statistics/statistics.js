@@ -1,6 +1,9 @@
 import moment from 'moment';
 
-import { fetchPopularizationReportType1Service } from '@/services/business/yilian-wechat/statistics/statistics';
+import {
+  fetchSearchGroupListService,
+  fetchPopularizationReportType1Service,
+} from '@/services/business/yilian-wechat/statistics/statistics';
 
 export const POPULARIZATION_REPORT_TYPE = {
   TYPE1: 'TYPE1',
@@ -18,6 +21,7 @@ export default {
   namespace: 'businessYilianWechatStatistics',
 
   state: {
+    searchGroupList: [],
     reportType: {
       popularization: POPULARIZATION_REPORT_TYPE.TYPE1,
       appointments: APPOINTMENTS_REPORT_TYPE.TYPE1,
@@ -30,7 +34,7 @@ export default {
           startTime: moment(new Date().valueOf() - 11604800000).format('YYYY-MM-DD'),
           endTime: moment(new Date().valueOf()).format('YYYY-MM-DD'),
           countType: 'day',
-          groupName: '1组',
+          groupName: '',
           project: '',
         },
         [POPULARIZATION_REPORT_TYPE.TYPE2]: {
@@ -92,7 +96,29 @@ export default {
   },
 
   effects: {
+    *fetchSearchGroupList(_, { call, put, select }) {
+      const { searchGroupList } = yield select(state => state.businessYilianWechatStatistics);
+      if (searchGroupList && searchGroupList.length === 0) {
+        const res = yield call(fetchSearchGroupListService);
+        if (res && res.code === 200 && res.data && res.data[0]) {
+          yield put({
+            type: 'updateSearchGroupList',
+            payload: res.data,
+          });
+          yield put({
+            type: 'updateSearchParams',
+            payload: {
+              pageKey: 'popularization',
+              typeKey: POPULARIZATION_REPORT_TYPE.TYPE1,
+              key: 'groupName',
+              value: res.data[0].name,
+            },
+          });
+        }
+      }
+    },
     *fetchPopularizationReportType1({ payload }, { call, put, select }) {
+      yield put({ type: 'fetchSearchGroupList' });
       const searchParams = yield select(
         state =>
           state.businessYilianWechatStatistics.searchParams.popularization[
@@ -127,9 +153,47 @@ export default {
         });
       }
     },
+    *fetchPopularizationChartType1(_, { call, put, select }) {
+      const searchParams = yield select(
+        state =>
+          state.businessYilianWechatStatistics.searchParams.popularization[
+            POPULARIZATION_REPORT_TYPE.TYPE1
+          ]
+      );
+      let params = '';
+      if (searchParams && searchParams.startTime) {
+        params += `&startTime=${searchParams.startTime}`;
+      }
+      if (searchParams && searchParams.endTime) {
+        params += `&endTime=${searchParams.endTime}`;
+      }
+      if (searchParams && searchParams.countType) {
+        params += `&countType=${searchParams.countType}`;
+      }
+      if (searchParams && searchParams.groupName) {
+        params += `&groupName=${searchParams.groupName}`;
+      }
+      const res = yield call(fetchPopularizationReportType1Service, params, 0, 99999);
+      if (res && res.code === 200) {
+        yield put({
+          type: 'updateChart',
+          payload: {
+            pageKey: 'popularization',
+            typeKey: POPULARIZATION_REPORT_TYPE.TYPE1,
+            chart: res.data.content,
+          },
+        });
+      }
+    },
   },
 
   reducers: {
+    updateSearchGroupList(state, { payload }) {
+      return {
+        ...state,
+        searchGroupList: payload,
+      };
+    },
     updateReportType(state, { payload }) {
       return {
         ...state,

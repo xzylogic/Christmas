@@ -48,10 +48,8 @@ class GroupDetail extends Component {
   setFansCountColor = (record, setMonth, groupMonthAmount) => {
     if (setMonth) {
       if (
-        record.regCount > groupMonthAmount.mRegCount ||
-        (record.regCount === groupMonthAmount.mRegCount &&
-          record.fansCount > groupMonthAmount.mFansCount) ||
-        record.fansCount === groupMonthAmount.mFansCount
+        !(record.regCount < groupMonthAmount.mRegCount) &&
+        !(record.fansCount < groupMonthAmount.mFansCount)
       ) {
         return <span>{record.fansCount}</span>;
       }
@@ -63,10 +61,8 @@ class GroupDetail extends Component {
   setRegCountColor = (record, setMonth, groupMonthAmount) => {
     if (setMonth) {
       if (
-        record.regCount > groupMonthAmount.mRegCount ||
-        (record.regCount === groupMonthAmount.mRegCount &&
-          record.fansCount > groupMonthAmount.mFansCount) ||
-        record.fansCount === groupMonthAmount.mFansCount
+        !(record.regCount < groupMonthAmount.mRegCount) &&
+        !(record.fansCount < groupMonthAmount.mFansCount)
       ) {
         return <span>{record.regCount}</span>;
       }
@@ -81,6 +77,7 @@ class GroupDetail extends Component {
     if (groupDetailList instanceof Object) {
       const { groupMonthAmount } = this.props;
       const setMonth = Object.keys(groupDetailList[0])[0] === 'months';
+      // console.log(groupMonthAmount);
       columns = [
         {
           title: '日期',

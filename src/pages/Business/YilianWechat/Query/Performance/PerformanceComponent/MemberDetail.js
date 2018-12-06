@@ -48,10 +48,8 @@ class MemberDetail extends Component {
   setFansCountColor = (record, setMonth, memberMonthAmount) => {
     if (setMonth) {
       if (
-        record.regCount > memberMonthAmount.mRegCount ||
-        (record.regCount === memberMonthAmount.mRegCount &&
-          record.fansCount > memberMonthAmount.mFansCount) ||
-        record.fansCount === memberMonthAmount.mFansCount
+        !(record.regCount < memberMonthAmount.mRegCount) &&
+        !(record.fansCount < memberMonthAmount.mFansCount)
       ) {
         return <span>{record.fansCount}</span>;
       }
@@ -63,10 +61,8 @@ class MemberDetail extends Component {
   setRegCountColor = (record, setMonth, memberMonthAmount) => {
     if (setMonth) {
       if (
-        record.regCount > memberMonthAmount.mRegCount ||
-        (record.regCount === memberMonthAmount.mRegCount &&
-          record.fansCount > memberMonthAmount.mFansCount) ||
-        record.fansCount === memberMonthAmount.mFansCount
+        !(record.regCount < memberMonthAmount.mRegCount) &&
+        !(record.fansCount < memberMonthAmount.mFansCount)
       ) {
         return <span>{record.regCount}</span>;
       }
@@ -81,7 +77,7 @@ class MemberDetail extends Component {
     if (memberDetailList instanceof Object) {
       const { memberMonthAmount } = this.props;
       const setMonth = Object.keys(memberDetailList[0])[0] === 'months';
-      console.log(memberMonthAmount);
+      // console.log(memberMonthAmount);
       columns = [
         {
           title: '日期',

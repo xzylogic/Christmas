@@ -284,7 +284,6 @@ export default {
     *fetchMemberPerformanceDetail({ payload }, { call, select, put }) {
       try {
         const { member } = yield select(state => state.businessYilianWechatQuery.searchParam);
-        console.log(member);
         const { way, name } = payload;
         let params = '';
         if (member && member.startTime) {
@@ -407,7 +406,6 @@ export default {
     *fetchMemberMonth({ payload }, { call, put }) {
       const { value } = payload;
       const res = yield call(fetchMemberMonthService, value);
-      console.log(res, value);
       if (res && res.code === 200) {
         yield put({
           type: 'updateList',

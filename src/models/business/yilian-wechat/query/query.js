@@ -12,6 +12,7 @@ import {
   fetchLocationPerformanceDetailService,
   getQueryMessageService,
   fetchGroupMonthService,
+  fetchMemberMonthService,
 } from '@/services/business/yilian-wechat/query/query';
 
 const getListCounts = list => {
@@ -99,6 +100,7 @@ export default {
       appointment: null,
       queryMessage: null,
       fetchMessage: null,
+      fetchMemberMessage: null,
     },
     currentPage: {
       group: 0,
@@ -165,29 +167,34 @@ export default {
       }
     },
     *fetchGroupPerformanceDetail({ payload }, { call, select, put }) {
-      const { group } = yield select(state => state.businessYilianWechatQuery.searchParam);
-      const { way, name, page } = payload;
-      let params = '';
-      if (group && group.startTime) {
-        params += `&startTime=${group.startTime}`;
-      }
-      if (group && group.endTime) {
-        params += `&endTime=${group.endTime}`;
-      }
-      if (name) {
-        params += `&name=${name}`;
-      }
-      const res = yield call(fetchGroupPerformanceDetailService, way, params, page, 10);
-      if (res && res.code === 200) {
-        yield put({
-          type: 'updateDetailList',
-          payload: {
-            key: 'group',
-            list: res.data.content,
-            currentPage: page,
-            totalElements: res.data.totalElements,
-          },
-        });
+      try {
+        const { group } = yield select(state => state.businessYilianWechatQuery.searchParam);
+        const { way, name, page } = payload;
+        let params = '';
+        if (group && group.startTime) {
+          params += `&startTime=${group.startTime}`;
+        }
+        if (group && group.endTime) {
+          params += `&endTime=${group.endTime}`;
+        }
+        if (name) {
+          params += `&name=${name}`;
+        }
+        // console.log(fetchGroupPerformanceDetailService)
+        const res = yield call(fetchGroupPerformanceDetailService, way, params, page, 10);
+        if (res && res.code === 200) {
+          yield put({
+            type: 'updateDetailList',
+            payload: {
+              key: 'group',
+              list: res.data.content,
+              currentPage: page,
+              totalElements: res.data.totalElements,
+            },
+          });
+        }
+      } catch (err) {
+        console.log(err);
       }
     },
     *createGroupMonthAmount({ payload }, { call, put }) {
@@ -275,29 +282,32 @@ export default {
       }
     },
     *fetchMemberPerformanceDetail({ payload }, { call, select, put }) {
-      const { member } = yield select(state => state.businessYilianWechatQuery.searchParam);
-      const { way, name, page } = payload;
-      let params = '';
-      if (member && member.startTime) {
-        params += `&startTime=${member.startTime}`;
-      }
-      if (member && member.endTime) {
-        params += `&endTime=${member.endTime}`;
-      }
-      if (name) {
-        params += `&name=${name}`;
-      }
-      const res = yield call(fetchMemberPerformanceDetailService, way, params, page, 10);
-      if (res && res.code === 200) {
-        yield put({
-          type: 'updateDetailList',
-          payload: {
-            key: 'member',
-            list: res.data.content,
-            currentPage: page,
-            totalElements: res.data.totalElements,
-          },
-        });
+      try {
+        const { member } = yield select(state => state.businessYilianWechatQuery.searchParam);
+        console.log(member);
+        const { way, name } = payload;
+        let params = '';
+        if (member && member.startTime) {
+          params += `?startTime=${member.startTime}`;
+        }
+        if (member && member.endTime) {
+          params += `&endTime=${member.endTime}`;
+        }
+        if (name) {
+          params += `&name=${name}`;
+        }
+        const res = yield call(fetchMemberPerformanceDetailService, way, params);
+        if (res && res.code === 200) {
+          yield put({
+            type: 'updateDetailList',
+            payload: {
+              key: 'member',
+              list: res.data.content,
+            },
+          });
+        }
+      } catch (err) {
+        console.log(err);
       }
     },
     *createMemberMonthAmount({ payload }, { call, put }) {
@@ -383,12 +393,26 @@ export default {
     *fetchGroupMonth({ payload }, { call, put }) {
       const { value } = payload;
       const res = yield call(fetchGroupMonthService, value);
-      console.log(res);
+      // console.log(res);
       if (res && res.code === 200) {
         yield put({
           type: 'updateList',
           payload: {
             key: 'fetchMessage',
+            list: res.data,
+          },
+        });
+      }
+    },
+    *fetchMemberMonth({ payload }, { call, put }) {
+      const { value } = payload;
+      const res = yield call(fetchMemberMonthService, value);
+      console.log(res, value);
+      if (res && res.code === 200) {
+        yield put({
+          type: 'updateList',
+          payload: {
+            key: 'fetchMemberMessage',
             list: res.data,
           },
         });

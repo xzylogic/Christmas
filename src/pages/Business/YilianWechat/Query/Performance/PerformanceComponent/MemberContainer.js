@@ -5,7 +5,7 @@ import debounce from 'lodash.debounce';
 
 import QuerySearchBar from '../../QueryComponent/QuerySearchBar';
 import TableList from '@/components/PageComponents/Table/TableList';
-// import MemberDetail from './MemberDetail';
+import MemberDetail from './MemberDetail';
 import MemberSetMounthAmount from './MemberSetMounthAmount';
 
 const mapStateToProps = state => ({
@@ -39,10 +39,10 @@ const mapDispatchToProps = dispatch => ({
       type: 'businessYilianWechatQuery/updateSearchParam',
       payload: { origin: 'member', key, value },
     }),
-  onFetchGroupMonth: page =>
+  onFetchMemberMonth: value =>
     dispatch({
-      type: 'businessYilianWechatQuery/fetchGroupMonth',
-      payload: { page },
+      type: 'businessYilianWechatQuery/fetchMemberMonth',
+      payload: { value },
     }),
   onGetQueryMessage: value =>
     dispatch({
@@ -57,8 +57,8 @@ const mapDispatchToProps = dispatch => ({
 )
 class MemberContainer extends Component {
   state = {
-    // showDetail: false,
-    // selectedName: '',
+    showDetail: false,
+    selectedName: '',
     amountSetShow: true,
     visible: false,
   };
@@ -82,13 +82,12 @@ class MemberContainer extends Component {
 
   handleDetail = (e, record) => {
     e.preventDefault();
-    // this.setState({
-    //   showDetail: true,
-    //   selectedName: record.hosName,
-    // });
-    // console.log(record,e)
-    const { onFetchGroupMonth } = this.props;
-    onFetchGroupMonth(record.hosName);
+    this.setState({
+      showDetail: true,
+      selectedName: record.hosName,
+    });
+    const { onFetchMemberMonth } = this.props;
+    onFetchMemberMonth(record.hosName);
   };
 
   setTableColumns = () => {
@@ -178,15 +177,15 @@ class MemberContainer extends Component {
 
   handleDetailClose = e => {
     e.preventDefault();
-    // this.setState({
-    //   showDetail: false,
-    // });
+    this.setState({
+      showDetail: false,
+    });
   };
 
   render() {
     const { searchParam, memberList, currentPage, totalElements } = this.props;
     // const { showDetail, selectedName, amountSetShow, visible } = this.state;
-    const { amountSetShow, visible } = this.state;
+    const { amountSetShow, visible, selectedName, showDetail } = this.state;
     return (
       <React.Fragment>
         <QuerySearchBar
@@ -206,7 +205,7 @@ class MemberContainer extends Component {
           totalElements={totalElements}
           onPageChange={this.handlePageChange}
         />
-        {/* <MemberDetail name={selectedName} visible={showDetail} onClose={this.handleDetailClose} /> */}
+        <MemberDetail name={selectedName} visible={showDetail} onClose={this.handleDetailClose} />
         <MemberSetMounthAmount
           visible={visible}
           onClose={() => this.setState({ visible: false })}

@@ -18,12 +18,6 @@ class WechatCode extends Component {
           onOk={this.handleOk}
           footer={null}
         >
-          {/* {
-            <img
-              src="http://www.wwei.cn/qrcode-viewfile?type=qrcode_text&k=qN3Xz&hash=31d84c9c3a2e1e8d37e191a5ec90d648&timeout=1543827340&size=100"
-              alt=""
-            />
-          } */}
           <img src={imgUrl} alt="" style={{ display: 'block', margin: '0 auto' }} />
         </Modal>
       </div>

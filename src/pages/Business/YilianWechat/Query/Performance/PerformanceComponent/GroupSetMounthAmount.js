@@ -51,7 +51,6 @@ class GroupSetMounthAmount extends Component {
       //   getMessage,
       form: { getFieldDecorator },
     } = this.props;
-    console.log(this.props);
 
     const formItemLayout = {
       labelCol: {
@@ -64,7 +63,6 @@ class GroupSetMounthAmount extends Component {
         md: { span: 18 },
       },
     };
-    console.log(this.props);
 
     return (
       <Modal

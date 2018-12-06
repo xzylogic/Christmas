@@ -85,7 +85,6 @@ class GroupContainer extends Component {
       showDetail: true,
       selectedName: record.name,
     });
-    // console.log(record,e)
     const { onFetchGroupMonth } = this.props;
     onFetchGroupMonth(record.name);
   };

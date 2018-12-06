@@ -45,30 +45,69 @@ class GroupDetail extends Component {
     }
   }
 
+  setFansCountColor = (record, setMonth, groupMonthAmount) => {
+    if (setMonth) {
+      if (
+        record.regCount > groupMonthAmount.mRegCount ||
+        (record.regCount === groupMonthAmount.mRegCount &&
+          record.fansCount > groupMonthAmount.mFansCount) ||
+        record.fansCount === groupMonthAmount.mFansCount
+      ) {
+        return <span>{record.fansCount}</span>;
+      }
+      return <span style={{ color: 'red' }}>{record.fansCount}</span>;
+    }
+    return <span>{record.fansCount}</span>;
+  };
+
+  setRegCountColor = (record, setMonth, groupMonthAmount) => {
+    if (setMonth) {
+      if (
+        record.regCount > groupMonthAmount.mRegCount ||
+        (record.regCount === groupMonthAmount.mRegCount &&
+          record.fansCount > groupMonthAmount.mFansCount) ||
+        record.fansCount === groupMonthAmount.mFansCount
+      ) {
+        return <span>{record.regCount}</span>;
+      }
+      return <span style={{ color: 'red' }}>{record.regCount}</span>;
+    }
+    return <span>{record.regCount}</span>;
+  };
+
   setTableColumns = () => {
-    const columns = [
-      {
-        title: '日期',
-        dataIndex: 'date',
-        key: 'date',
-        render: (_, record) => record.date || record.weeks || record.months || record.years,
-      },
-      {
-        title: '渠道',
-        dataIndex: 'promoCode',
-        key: 'promoCode',
-      },
-      {
-        title: '关注量',
-        dataIndex: 'fansCount',
-        key: 'fansCount',
-      },
-      {
-        title: '注册量',
-        dataIndex: 'regCount',
-        key: 'regCount',
-      },
-    ];
+    const { groupDetailList } = this.props;
+    let columns;
+    if (groupDetailList instanceof Object) {
+      const { groupMonthAmount } = this.props;
+      const setMonth = Object.keys(groupDetailList[0])[0] === 'months';
+      console.log(groupMonthAmount);
+      columns = [
+        {
+          title: '日期',
+          dataIndex: 'date',
+          key: 'date',
+          render: (_, record) => record.date || record.weeks || record.months || record.years,
+        },
+        {
+          title: '渠道',
+          dataIndex: 'promoCode',
+          key: 'promoCode',
+        },
+        {
+          title: '关注量',
+          dataIndex: 'fansCount',
+          key: 'fansCount',
+          render: (_, record) => this.setFansCountColor(record, setMonth, groupMonthAmount),
+        },
+        {
+          title: '注册量',
+          dataIndex: 'regCount',
+          key: 'regCount',
+          render: (_, record) => this.setRegCountColor(record, setMonth, groupMonthAmount),
+        },
+      ];
+    }
     return columns;
   };
 
@@ -90,7 +129,6 @@ class GroupDetail extends Component {
 
   render() {
     const { groupDetailList, currentPage, totalElements, visible, name, onClose } = this.props;
-    // console.log(this.props)
     const { way } = this.state;
     return (
       <Modal title="查看详情" centered visible={visible} footer={null} onCancel={onClose}>

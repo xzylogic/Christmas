@@ -9,6 +9,7 @@ const mapStateToProps = state => ({
   currentPage: state.businessYilianWechatQuery.detailCurrentPage.member,
   totalElements: state.businessYilianWechatQuery.datailTotalElements.member,
   searchParam: state.businessYilianWechatQuery.searchParam.member,
+  memberMonthAmount: state.businessYilianWechatQuery.list.fetchMemberMessage,
   loading: state.loading.effects['businessYilianWechatQuery/fetchMemberPerformanceDetail'],
 });
 
@@ -44,30 +45,69 @@ class MemberDetail extends Component {
     }
   }
 
+  setFansCountColor = (record, setMonth, memberMonthAmount) => {
+    if (setMonth) {
+      if (
+        record.regCount > memberMonthAmount.mRegCount ||
+        (record.regCount === memberMonthAmount.mRegCount &&
+          record.fansCount > memberMonthAmount.mFansCount) ||
+        record.fansCount === memberMonthAmount.mFansCount
+      ) {
+        return <span>{record.fansCount}</span>;
+      }
+      return <span style={{ color: 'red' }}>{record.fansCount}</span>;
+    }
+    return <span>{record.fansCount}</span>;
+  };
+
+  setRegCountColor = (record, setMonth, memberMonthAmount) => {
+    if (setMonth) {
+      if (
+        record.regCount > memberMonthAmount.mRegCount ||
+        (record.regCount === memberMonthAmount.mRegCount &&
+          record.fansCount > memberMonthAmount.mFansCount) ||
+        record.fansCount === memberMonthAmount.mFansCount
+      ) {
+        return <span>{record.regCount}</span>;
+      }
+      return <span style={{ color: 'red' }}>{record.regCount}</span>;
+    }
+    return <span>{record.regCount}</span>;
+  };
+
   setTableColumns = () => {
-    const columns = [
-      {
-        title: '日期',
-        dataIndex: 'date',
-        key: 'date',
-        render: (_, record) => record.date || record.weeks || record.months || record.years,
-      },
-      {
-        title: '渠道',
-        dataIndex: 'promoCode',
-        key: 'promoCode',
-      },
-      {
-        title: '关注量',
-        dataIndex: 'fansCount',
-        key: 'fansCount',
-      },
-      {
-        title: '注册量',
-        dataIndex: 'regCount',
-        key: 'regCount',
-      },
-    ];
+    const { memberDetailList } = this.props;
+    let columns;
+    if (memberDetailList instanceof Object) {
+      const { memberMonthAmount } = this.props;
+      const setMonth = Object.keys(memberDetailList[0])[0] === 'months';
+      console.log(memberMonthAmount);
+      columns = [
+        {
+          title: '日期',
+          dataIndex: 'date',
+          key: 'date',
+          render: (_, record) => record.date || record.weeks || record.months || record.years,
+        },
+        {
+          title: '渠道',
+          dataIndex: 'promoCode',
+          key: 'promoCode',
+        },
+        {
+          title: '关注量',
+          dataIndex: 'fansCount',
+          key: 'fansCount',
+          render: (_, record) => this.setFansCountColor(record, setMonth, memberMonthAmount),
+        },
+        {
+          title: '注册量',
+          dataIndex: 'regCount',
+          key: 'regCount',
+          render: (_, record) => this.setRegCountColor(record, setMonth, memberMonthAmount),
+        },
+      ];
+    }
     return columns;
   };
 

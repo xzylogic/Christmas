@@ -47,7 +47,6 @@ class MemberSetMounthAmount extends Component {
       createLoading,
       form: { getFieldDecorator },
     } = this.props;
-    console.log(this.props);
 
     const formItemLayout = {
       labelCol: {
@@ -60,7 +59,6 @@ class MemberSetMounthAmount extends Component {
         md: { span: 18 },
       },
     };
-    console.log(this.props);
 
     return (
       <Modal

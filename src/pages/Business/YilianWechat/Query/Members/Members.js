@@ -4,7 +4,6 @@ import { Tabs, Radio, Table, Button } from 'antd';
 import debounce from 'lodash.debounce';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
-// import MemberSearch from './MemberComponent/MemberSearchBar';
 import MemberSearch from './MemberComponent/MemberSearch';
 
 import FollowChart from './MemberComponent/FollowChart';

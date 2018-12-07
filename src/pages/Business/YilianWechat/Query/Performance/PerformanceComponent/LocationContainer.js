@@ -120,6 +120,7 @@ class LocationContainer extends Component {
 
   handlePageChange = page => {
     const { onFetchLocationList } = this.props;
+    console.log(page);
     onFetchLocationList(page - 1);
   };
 

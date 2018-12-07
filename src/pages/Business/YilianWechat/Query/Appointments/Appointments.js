@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
-import AppointmentsContainer from './AppointmentsContainer';
+import AppointmentsContainer from './AppointmentsComponent/AppointmentsContainer';
+import classes from './Appointments.less';
 
 export class Appointments extends Component {
   componentDidMount() {}
@@ -9,7 +10,9 @@ export class Appointments extends Component {
   render() {
     return (
       <PageHeaderWrapper>
-        <AppointmentsContainer />
+        <div className={classes.Container}>
+          <AppointmentsContainer />
+        </div>
       </PageHeaderWrapper>
     );
   }

@@ -7,7 +7,7 @@ import AppointmentsBar from './AppointmentsBar';
 import TableList from '@/components/PageComponents/Table/TableList';
 
 const mapStateToProps = state => ({
-  groupList: state.businessYilianWechatQuery.list.appointment,
+  appointmentList: state.businessYilianWechatQuery.list.appointment,
   currentPage: state.businessYilianWechatQuery.currentPage.appointment,
   totalElements: state.businessYilianWechatQuery.totalElements.appointment,
   searchParam: state.businessYilianWechatQuery.searchParam.appointment,
@@ -33,16 +33,6 @@ const mapDispatchToProps = dispatch => ({
       type: 'businessYilianWechatQuery/updateSearchParam',
       payload: { origin: 'appointment', key, value },
     }),
-  // onFetchGroupMonth: value =>
-  //   dispatch({
-  //     type: 'businessYilianWechatQuery/fetchGroupMonth',
-  //     payload: { value },
-  //   }),
-  // onGetQueryMessage: value =>
-  //   dispatch({
-  //     type: 'businessYilianWechatQuery/getQueryMessage',
-  //     payload: { value },
-  //   }),
 });
 
 @connect(
@@ -50,19 +40,13 @@ const mapDispatchToProps = dispatch => ({
   mapDispatchToProps
 )
 class AppointmentsContainer extends Component {
-  state = {
-    // showDetail: false,
-    // selectedName: '',
-    amountSetShow: true,
-    // visible: false,
-  };
-
   componentDidMount() {
     const { onFetchAppointmentList } = this.props;
     onFetchAppointmentList(0);
   }
 
   handleParamsChanged = async (value, dataKey) => {
+    console.log(value);
     const { onSearchParamChange, onFetchAppointmentListDebounce } = this.props;
     if (dataKey === 'date') {
       await onSearchParamChange('startTime', value[0]);
@@ -73,18 +57,21 @@ class AppointmentsContainer extends Component {
     await onFetchAppointmentListDebounce(0);
   };
 
-  handleDetail = (e, record) => {
-    e.preventDefault();
-    console.log(record);
-    // this.setState({
-    //   showDetail: true,
-    //   selectedName: record.name,
-    // });
-    // const { onFetchGroupMonth } = this.props;
-    // onFetchGroupMonth(record.name);
-  };
-
   setTableColumns = () => {
+    const renderOrderStatus = record => {
+      let content = '';
+      if (record === '1') {
+        content = <span>无效</span>;
+      }
+      if (record === '2') {
+        content = <span>预约</span>;
+      }
+      if (record === '3') {
+        content = <span>撤销</span>;
+      }
+      return content;
+    };
+
     const columns = [
       {
         title: '预约日期',
@@ -169,6 +156,7 @@ class AppointmentsContainer extends Component {
         title: '预约状态',
         dataIndex: 'order_status',
         key: 'order_status',
+        render: record => renderOrderStatus(record),
       },
       // {
       //   title: '取消原因',
@@ -176,30 +164,15 @@ class AppointmentsContainer extends Component {
       //   key: 'order_status',
       //   render: () => '-',
       // },
-      {
-        title: '操作',
-        dataIndex: 'id',
-        key: 'action',
-        render: (_, record) => (
-          <span>
-            <a onClick={e => this.handleDetail(e, record)}>查看详情</a>
-          </span>
-        ),
-      },
     ];
     return columns;
   };
 
   handlePageChange = page => {
     const { onFetchAppointmentList } = this.props;
+    console.log(page);
     onFetchAppointmentList(page - 1);
   };
-
-  // handleAmountSet = e => {
-  //   e.preventDefault();
-  //   this.setState({ visible: true });
-  //   // console.log('amountset');
-  // };
 
   handleReset = async e => {
     e.preventDefault();
@@ -218,30 +191,19 @@ class AppointmentsContainer extends Component {
     console.log('export');
   };
 
-  // handleDetailClose = e => {
-  //   e.preventDefault();
-  //   this.setState({
-  //     showDetail: false,
-  //   });
-  // };
-
   render() {
-    const { searchParam, groupList, currentPage, totalElements } = this.props;
-    const { amountSetShow } = this.state;
+    const { searchParam, appointmentList, currentPage, totalElements } = this.props;
     return (
       <React.Fragment>
         <AppointmentsBar
           params={searchParam}
-          onAmountSet={this.handleAmountSet}
           onReset={this.handleReset}
           onExport={this.handleExport}
           onParamsChange={this.handleParamsChanged}
-          inputPlaceholder="请输入项目"
-          amountSetShow={amountSetShow}
         />
         <TableList
-          rowKey="update_time"
-          list={groupList}
+          rowKey="create_time"
+          list={appointmentList}
           columns={this.setTableColumns()}
           currentPage={currentPage}
           totalElements={totalElements}

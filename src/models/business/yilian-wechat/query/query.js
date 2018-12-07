@@ -88,12 +88,19 @@ export default {
       },
       // 预约查询
       appointment: {
-        // type: '0',
+        type: '0',
         // startTime: moment(new Date().valueOf() - 2592000000).format('YYYY-MM-DD'),
         startTime: moment(new Date().valueOf() - 31536000000).format('YYYY-MM-DD'),
         endTime: moment(new Date().valueOf()).format('YYYY-MM-DD'),
-        name: '',
-        way: 'day',
+        // name: '',
+        // way: 'day',
+        orderStatus: '',
+        orderChannel: '',
+        patientName: '',
+        patientPhone: '',
+        mediCardId: '',
+        patientCardId: '',
+        hosDocCode: '',
       },
     },
     list: {
@@ -458,8 +465,9 @@ export default {
         });
       }
     },
-    *fetchAppointmentPerformance(_, { call, put, select }) {
+    *fetchAppointmentPerformance({ payload }, { call, put, select }) {
       try {
+        const { page } = payload;
         const { appointment } = yield select(state => state.businessYilianWechatQuery.searchParam);
         let params = '';
         if (appointment && appointment.startTime) {
@@ -489,16 +497,17 @@ export default {
         if (appointment && appointment.hosDocCode) {
           params += `&hosDocCode=${appointment.hosDocCode}`;
         }
-        const res = yield call(fetchAppointmentService, params, 0, 10);
+        const res = yield call(fetchAppointmentService, params, page, 10);
         if (res && res.code === 200) {
-          console.log(res);
+          // console.log(res);
           yield put({
             type: 'updateList',
             payload: {
               key: 'appointment',
+              // list: res.data.content,
               list: getListCounts(res.data.content),
               currentPage: 0,
-              totalElements: 0,
+              totalElements: res.data.totalElements,
             },
           });
         }

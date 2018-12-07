@@ -1,9 +1,32 @@
 import React from 'react';
 import Router from 'umi/router';
+import { connect } from 'dva';
 import { Table, Divider, Popconfirm } from 'antd';
 
 import classes from '../Roles.less';
 
+const mapStateToProps = state => ({
+  loadingEnable: state.loading.effects['role/fetchRoleList'],
+  loadingDelete: state.loading.effects['role/fetchRoleList'],
+});
+
+const mapDispatchToProps = dispatch => ({
+  onFetchRoleList: page =>
+    dispatch({
+      type: 'role/fetchRoleList',
+      payload: { page },
+    }),
+  onUpdateSearchParam: (key, name) =>
+    dispatch({
+      type: 'role/updateSearchParam',
+      payload: { key, name },
+    }),
+});
+
+@connect(
+  mapStateToProps,
+  mapDispatchToProps
+)
 class RoleList extends React.PureComponent {
   handleState = (e, record) => {
     e.preventDefault();
@@ -45,7 +68,7 @@ class RoleList extends React.PureComponent {
         title: '是否启用',
         dataIndex: 'deleted',
         key: 'deleted',
-        render: text => (text === true ? '启用' : '禁用'),
+        render: text => (text === false ? '启用' : '禁用'),
       },
       {
         title: '更新时间',
@@ -60,13 +83,13 @@ class RoleList extends React.PureComponent {
           <span>
             <Popconfirm
               placement="topRight"
-              title={`是否要${record.deleted === true ? '禁用' : '启用'}账号${record.roleName}？`}
+              title={`是否要${record.deleted === false ? '禁用' : '启用'}账号${record.roleName}？`}
               onConfirm={e => this.handleState(e, record)}
               onCancel={e => e.preventDefault()}
               okText="是"
               cancelText="否"
             >
-              <a>{text === true ? '禁用' : '启用'}</a>
+              <a>{text === false ? '禁用' : '启用'}</a>
             </Popconfirm>
             <Divider type="vertical" />
             <a onClick={e => this.handleEditor(e, record)}>编辑</a>

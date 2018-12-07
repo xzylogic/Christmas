@@ -8,16 +8,27 @@ export async function fetchRoleListService(params, page, size) {
   return request(`/yilian-cloud-backend-api/role/getRoles${query}`);
 }
 
-export async function toggleRoleState(params) {
-  return request('/api/accounts/toggleState', {
+export async function fetchRoleService(roleId) {
+  return request(`/yilian-cloud-backend-api/role/getRoleMenus?roleId=${roleId}`);
+}
+
+export async function saveRoleService(postData) {
+  return request('/yilian-cloud-backend-api/role/addRole', {
     method: 'POST',
     body: {
-      ...params,
+      ...postData,
     },
   });
 }
 
-export async function deleteRole(params) {
+export async function toggleRoleStateService(roleId, enable) {
+  return request(`/yilian-cloud-backend-api/role/enableRol?roleId=${roleId}&enable=${enable}`, {
+    method: 'POST',
+    body: {},
+  });
+}
+
+export async function deleteRoleService(params) {
   return request('/api/accounts/resetPassword', {
     method: 'POST',
     body: {

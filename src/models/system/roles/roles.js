@@ -1,4 +1,12 @@
-import { fetchRoleListService } from '@/services/system/roles/roles';
+import { message } from 'antd';
+import Router from 'umi/router';
+import {
+  fetchRoleListService,
+  fetchRoleService,
+  saveRoleService,
+  toggleRoleStateService,
+  deleteRoleService,
+} from '@/services/system/roles/roles';
 
 export default {
   namespace: 'role',
@@ -10,6 +18,7 @@ export default {
     roleList: null,
     currentPage: 0,
     totalElements: 0,
+    currentRole: null,
   },
 
   effects: {
@@ -24,16 +33,58 @@ export default {
       if (res && res.code === 200) {
         yield put({
           type: 'updateRoleList',
-          payload: res.data.content,
+          payload: {
+            data: res.data.content,
+            currentPage: page,
+            totalElements: res.data.totalElements,
+          },
         });
+      }
+    },
+    *fetchRole({ payload }, { call, put }) {
+      const { roleId } = payload;
+      const res = yield call(fetchRoleService, roleId);
+      if (res && res.code === 200) {
         yield put({
-          type: 'updateCurrentPage',
-          payload: page,
+          type: 'updateCurrentRole',
+          payload: res.data,
         });
+      }
+    },
+    *saveRole({ payload }, { call, put }) {
+      const res = yield call(saveRoleService, payload.data);
+      if (res && res.code === 200) {
         yield put({
-          type: 'updateTotalElements',
-          payload: res.data.totalElements,
+          type: 'fetchRoleList',
+          payload: { page: 0 },
         });
+        message.success(res.message || '保存角色成功！！！').then(() => {
+          Router.goBack();
+        });
+      } else {
+        message.error((res && res.message) || '保存角色失败！！！');
+      }
+    },
+    *toggleRoleState({ payload }, { call, put }) {
+      const res = yield call(toggleRoleStateService, payload.menuId);
+      if (res && res.code === 200) {
+        message.success(res.message || '更改角色状态成功！！！');
+        yield put({
+          type: 'fetchMenuList',
+        });
+      } else {
+        message.error((res && res.message) || '更改角色状态失败！！！');
+      }
+    },
+    *deleteRole({ payload }, { call, put }) {
+      const res = yield call(deleteRoleService, payload.menuId);
+      if (res && res.code === 200) {
+        message.success(res.message || '删除角色成功！！！');
+        yield put({
+          type: 'fetchMenuList',
+        });
+      } else {
+        message.error((res && res.message) || '删除角色失败！！！');
       }
     },
   },
@@ -51,19 +102,15 @@ export default {
     updateRoleList(state, { payload }) {
       return {
         ...state,
-        roleList: payload,
+        roleList: payload.data,
+        currentPage: payload.currentPage,
+        totalElements: payload.totalElements,
       };
     },
-    updateCurrentPage(state, { payload }) {
+    updateCurrentRole(state, { payload }) {
       return {
         ...state,
-        currentPage: payload,
-      };
-    },
-    updateTotalElements(state, { payload }) {
-      return {
-        ...state,
-        totalElements: payload,
+        currentRole: payload,
       };
     },
   },

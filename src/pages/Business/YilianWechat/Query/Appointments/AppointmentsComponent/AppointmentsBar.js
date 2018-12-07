@@ -12,22 +12,19 @@ function AppointmentsBar(props) {
   return (
     <Row className={classes.Container}>
       <Col span={24} className={classes.Container}>
-        <span>
-          统计方式：
-          <Select
-            className={classes.Gap}
-            style={{ width: 115 }}
-            // name='type'
-            // value={params.type}
-            // onChange={value => onParamsChange(value, 'type')}
-            placeholder="--请选择--"
-          >
-            <Select.Option value="0">按日统计</Select.Option>
-            <Select.Option value="1">按周统计</Select.Option>
-            <Select.Option value="2">按月统计</Select.Option>
-            <Select.Option value="3">按年统计</Select.Option>
-          </Select>
-        </span>
+        <Select
+          className={classes.Gap}
+          style={{ width: 115 }}
+          // name='type'
+          // value={params.type}
+          // onChange={value => onParamsChange(value, 'type')}
+          placeholder="统计方式"
+        >
+          <Select.Option value="0">按日统计</Select.Option>
+          <Select.Option value="1">按周统计</Select.Option>
+          <Select.Option value="2">按月统计</Select.Option>
+          <Select.Option value="3">按年统计</Select.Option>
+        </Select>
         <span>
           预约日期：
           <DatePicker.RangePicker
@@ -53,14 +50,14 @@ function AppointmentsBar(props) {
         </span>
         <span className={classes.Span}>
           就诊日期：
-          <DatePicker placeholder="--请选择--" />
+          <DatePicker placeholder="就诊日期" />
         </span>
         <span className={classes.Span}>
           预约状态：
           <Select
             style={{ width: 115 }}
             className={classes.Gap}
-            placeholder="--请选择--"
+            placeholder="预约状态"
             // defaultValue='0'
             onChange={value => onParamsChange(value, 'orderStatus')}
           >
@@ -75,7 +72,7 @@ function AppointmentsBar(props) {
           <Select
             style={{ width: 115 }}
             className={classes.Gap}
-            placeholder="--请选择--"
+            placeholder="预约来源"
             // defaultValue='0'
             onChange={value => onParamsChange(value, 'orderChannel')}
           >

@@ -109,7 +109,7 @@ export default {
       // 人员列表
       member: null,
       // 推广地点列表
-      loaction: null,
+      location: null,
       // 会员关注列表
       following: null,
       // 会员注册列表
@@ -505,8 +505,8 @@ export default {
             payload: {
               key: 'appointment',
               // list: res.data.content,
-              list: getListCounts(res.data.content),
-              currentPage: 0,
+              list: res.data.content,
+              currentPage: page,
               totalElements: res.data.totalElements,
             },
           });

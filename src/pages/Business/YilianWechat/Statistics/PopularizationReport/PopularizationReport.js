@@ -4,6 +4,8 @@ import { Select } from 'antd';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import Type1Container from './Components/Type1Container';
+import Type2Container from './Components/Type2Container';
+import Type3Container from './Components/Type3Container';
 
 import { POPULARIZATION_REPORT_TYPE } from '@/models/business/yilian-wechat/statistics/statistics';
 
@@ -43,6 +45,10 @@ class PopularizationReoprt extends Component {
     let container = '';
     if (reportType === POPULARIZATION_REPORT_TYPE.TYPE1) {
       container = <Type1Container />;
+    } else if (reportType === POPULARIZATION_REPORT_TYPE.TYPE2) {
+      container = <Type2Container />;
+    } else if (reportType === POPULARIZATION_REPORT_TYPE.TYPE3) {
+      container = <Type3Container />;
     }
     return (
       <PageHeaderWrapper>

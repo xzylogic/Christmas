@@ -4,26 +4,8 @@ import moment from 'moment';
 
 import classes from '../PopularizationReport.less';
 
-function type1SearchBar(props) {
-  const { params, searchGroupList, onParamsChange, onReset, onExport } = props;
-
-  let options = '';
-  if (searchGroupList && Array.isArray(searchGroupList)) {
-    options = (
-      <Select
-        className={classes.Gap}
-        name="groupName"
-        value={params.groupName}
-        onChange={value => onParamsChange(value, 'groupName')}
-      >
-        {searchGroupList.map(data => (
-          <Select.Option key={data.id} value={data.name}>
-            {data.name}
-          </Select.Option>
-        ))}
-      </Select>
-    );
-  }
+function type2SearchBar(props) {
+  const { params, onParamsChange, onReset, onExport } = props;
 
   return (
     <div className={classes.Search}>
@@ -62,19 +44,6 @@ function type1SearchBar(props) {
           ],
         }}
       />
-      {options}
-      <Select
-        className={classes.Gap}
-        name="project"
-        value={params.project}
-        onChange={value => onParamsChange(value, 'project')}
-        style={{ width: 120 }}
-      >
-        <Select.Option value="">全部</Select.Option>
-        <Select.Option value="fansCount">关注量</Select.Option>
-        <Select.Option value="regCount">注册量</Select.Option>
-        <Select.Option value="conversionRate">注册转化率</Select.Option>
-      </Select>
       <Button type="primary" htmlType="button" onClick={onReset} className={classes.Gap}>
         重置
       </Button>
@@ -85,4 +54,4 @@ function type1SearchBar(props) {
   );
 }
 
-export default type1SearchBar;
+export default type2SearchBar;

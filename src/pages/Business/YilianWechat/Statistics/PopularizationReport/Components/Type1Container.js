@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'dva';
 import debounce from 'lodash.debounce';
 import { Radio } from 'antd';
+import moment from 'moment';
 
 import SearchBar from './Type1SearchBar';
 import ReportChart from './Type1Chart';
@@ -129,8 +130,28 @@ class Type1Container extends Component {
     onFetchPopularizationReport(page - 1);
   };
 
-  handleReset = () => {
-    console.log('reset');
+  handleReset = async e => {
+    const {
+      onUpdateSearchParams,
+      onFetchPopularizationReport,
+      onFetchPopularizationChart,
+    } = this.props;
+    e.preventDefault();
+    await onUpdateSearchParams(
+      'startTime',
+      moment(new Date().valueOf() - 604800000).format('YYYY-MM-DD')
+    );
+    await onUpdateSearchParams('endTime', moment(new Date().valueOf()).format('YYYY-MM-DD'));
+    await onUpdateSearchParams('countType', 'day');
+    await onUpdateSearchParams('groupName', '');
+    await onUpdateSearchParams('project', '');
+    await onFetchPopularizationReport(0);
+    await onFetchPopularizationChart();
+  };
+
+  handleExport = e => {
+    e.preventDefault();
+    console.log('export');
   };
 
   render() {
@@ -150,6 +171,7 @@ class Type1Container extends Component {
           searchGroupList={searchGroupList}
           onParamsChange={this.handleParamsChange}
           onReset={this.handleReset}
+          onExport={this.handleExport}
         />
         <div className={classes.Map}>
           <Radio.Group

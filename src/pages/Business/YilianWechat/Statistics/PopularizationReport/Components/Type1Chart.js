@@ -35,7 +35,6 @@ const Line3 = createG2(chart => {
     formatter: val => `${val}%`,
   });
   chart.col('site', { alias: '医院名称' });
-  chart.axis('dim', { formatter: val => `${val}%` });
   chart
     .line()
     .position('date*conversionRate')

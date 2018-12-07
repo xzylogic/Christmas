@@ -4,7 +4,8 @@ import { Tabs, Radio, Table, Button } from 'antd';
 import debounce from 'lodash.debounce';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
-import MemberSearch from './MemberComponent/MemberSearchBar';
+// import MemberSearch from './MemberComponent/MemberSearchBar';
+import MemberSearch from './MemberComponent/MemberSearch';
 
 import FollowChart from './MemberComponent/FollowChart';
 import RegisterChart from './MemberComponent/RegisterChart';
@@ -16,6 +17,7 @@ const mapStateToProps = state => ({
   followingList: state.businessYilianWechatQuery.list.following,
   registrationList: state.businessYilianWechatQuery.list.registration,
   allHosName: state.businessYilianWechatQuery.list.fetchhosName,
+  allPerson: state.businessYilianWechatQuery.list.fetchallPerson,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -42,6 +44,11 @@ const mapDispatchToProps = dispatch => ({
     dispatch({
       type: 'businessYilianWechatQuery/fetchHosname',
     }),
+
+  onFetchallPerson: () =>
+    dispatch({
+      type: 'businessYilianWechatQuery/fetchallPerson',
+    }),
 });
 
 const renderContent = (text, record, index, listLength) => {
@@ -65,9 +72,10 @@ class Member extends Component {
   };
 
   componentDidMount() {
-    const { onFetchMembershipList, onFetchHosname } = this.props;
+    const { onFetchMembershipList, onFetchHosname, onFetchallPerson } = this.props;
     onFetchMembershipList();
     onFetchHosname();
+    onFetchallPerson();
   }
 
   hangdleTab1Change = e => {
@@ -205,13 +213,14 @@ class Member extends Component {
   };
 
   render() {
-    const { followingList, registrationList, searchParam, allHosName } = this.props;
+    const { followingList, registrationList, searchParam, allHosName, allPerson } = this.props;
     const { tab1Show, tab2Show } = this.state;
     return (
       <PageHeaderWrapper>
         <div className={classes.Container}>
           <MemberSearch
             allHosName={allHosName}
+            allPerson={allPerson}
             params={searchParam}
             onParamsChange={this.handleParamsChange}
           />

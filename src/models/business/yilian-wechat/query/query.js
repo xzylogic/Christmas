@@ -15,6 +15,8 @@ import {
   fetchMemberMonthService,
   fetchMembershipPerformanceDetail,
   fetchHosnameService,
+  fetchallPersonService,
+  fetchAppointmentService,
 } from '@/services/business/yilian-wechat/query/query';
 
 const getListCounts = list => {
@@ -85,7 +87,14 @@ export default {
         hosName: '',
       },
       // 预约查询
-      appointment: {},
+      appointment: {
+        // type: '0',
+        // startTime: moment(new Date().valueOf() - 2592000000).format('YYYY-MM-DD'),
+        startTime: moment(new Date().valueOf() - 31536000000).format('YYYY-MM-DD'),
+        endTime: moment(new Date().valueOf()).format('YYYY-MM-DD'),
+        name: '',
+        way: 'day',
+      },
     },
     list: {
       // 小组列表
@@ -99,11 +108,15 @@ export default {
       // 会员注册列表
       registration: null,
       // 预约列表
-      appointment: null,
+      appointmentList: null,
+      // 小组列表
       queryMessage: null,
       fetchMessage: null,
       fetchMemberMessage: null,
+      // 医院列表
       fetchhosName: null,
+      // 所有推广人员列表
+      fetchallPerson: null,
     },
     currentPage: {
       group: 0,
@@ -431,6 +444,66 @@ export default {
             list: res.data.sites,
           },
         });
+      }
+    },
+    *fetchallPerson(_, { call, put }) {
+      const res = yield call(fetchallPersonService);
+      if (res && res.code === 200) {
+        yield put({
+          type: 'updateList',
+          payload: {
+            key: 'fetchallPerson',
+            list: res.data,
+          },
+        });
+      }
+    },
+    *fetchAppointmentPerformance(_, { call, put, select }) {
+      try {
+        const { appointment } = yield select(state => state.businessYilianWechatQuery.searchParam);
+        let params = '';
+        if (appointment && appointment.startTime) {
+          params += `&startTime=${appointment.startTime}`;
+        }
+        if (appointment && appointment.endTime) {
+          params += `&endTime=${appointment.endTime}`;
+        }
+        if (appointment && appointment.orderStatus) {
+          params += `&orderStatus=${appointment.orderStatus}`;
+        }
+        if (appointment && appointment.orderChannel) {
+          params += `&orderChannel=${appointment.orderChannel}`;
+        }
+        if (appointment && appointment.patientName) {
+          params += `&patientName=${appointment.patientName}`;
+        }
+        if (appointment && appointment.patientPhone) {
+          params += `&patientPhone=${appointment.patientPhone}`;
+        }
+        if (appointment && appointment.mediCardId) {
+          params += `&mediCardId=${appointment.mediCardId}`;
+        }
+        if (appointment && appointment.patientCardId) {
+          params += `&patientCardId=${appointment.patientCardId}`;
+        }
+        if (appointment && appointment.hosDocCode) {
+          params += `&hosDocCode=${appointment.hosDocCode}`;
+        }
+        const res = yield call(fetchAppointmentService, params, 0, 10);
+        if (res && res.code === 200) {
+          console.log(res);
+          yield put({
+            type: 'updateList',
+            payload: {
+              key: 'appointment',
+              list: getListCounts(res.data.content),
+              currentPage: 0,
+              totalElements: 0,
+            },
+          });
+        }
+      } catch (err) {
+        console.log(err);
       }
     },
   },

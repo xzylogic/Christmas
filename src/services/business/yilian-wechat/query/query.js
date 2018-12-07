@@ -112,6 +112,15 @@ export async function fetchLocationPerformanceDetailService(way, params, page, s
   }
   return req;
 }
+
+export async function fetchAppointmentService(params, page, size) {
+  let query = `?page=${page || 0}&size=${size || 10}`;
+  if (params) {
+    query += `${params}`;
+  }
+  return request(`/yilian-cloud-backend-api/ylWeChatCount/reservation/search${query}`);
+}
+
 export async function fetchMembershipPerformanceDetail(params) {
   return request(`/yilian-cloud-backend-api/member/search${params}`);
 }
@@ -122,6 +131,10 @@ export async function getQueryMessageService() {
 
 export async function fetchHosnameService() {
   return request(`/yilian-cloud-backend-api/hos/base/person`);
+}
+
+export async function fetchallPersonService() {
+  return request(`/yilian-cloud-backend-api/ylWeChatCount/search/allPerson`);
 }
 
 export async function fetchGroupMonthService(params) {

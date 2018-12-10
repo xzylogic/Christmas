@@ -85,21 +85,26 @@ export default {
         endTime: moment(new Date().valueOf()).format('YYYY-MM-DD'),
         name: '',
         hosName: '',
+        queryType: null,
       },
       // 预约查询
       appointment: {
         type: '0',
-        // startTime: moment(new Date().valueOf() - 2592000000).format('YYYY-MM-DD'),
-        startTime: moment(new Date().valueOf() - 31536000000).format('YYYY-MM-DD'),
+        startTime: moment(new Date().valueOf() - 2592000000).format('YYYY-MM-DD'),
         endTime: moment(new Date().valueOf()).format('YYYY-MM-DD'),
-        // name: '',
-        // way: 'day',
+        // 预约状态
         orderStatus: '',
+        // 预约来源
         orderChannel: '',
+        // 患者姓名
         patientName: '',
+        // 患者手机
         patientPhone: '',
+        // 患者卡号
         mediCardId: '',
+        // 患者身份证号
         patientCardId: '',
+        // 医生工号
         hosDocCode: '',
       },
     },
@@ -203,7 +208,6 @@ export default {
         if (name) {
           params += `&name=${name}`;
         }
-        // console.log(fetchGroupPerformanceDetailService)
         const res = yield call(fetchGroupPerformanceDetailService, way, params, page, 10);
         if (res && res.code === 200) {
           yield put({
@@ -251,6 +255,14 @@ export default {
         }
         if (membership && membership.hosName) {
           params += `&hosName=${membership.hosName}`;
+          // yield put({
+          //   type: 'updateSearchParam',
+          //   payload: {
+          //     key: 'membership',
+          //     hosName: membership.hosName,
+          //     name:'',
+          //   },
+          // });
         }
         const res = yield call(fetchMembershipPerformanceDetail, params, 0, 10);
         if (res && res.code === 200) {

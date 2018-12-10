@@ -18,15 +18,13 @@ function AppointmentsBar(props) {
           // name='type'
           // value={params.type}
           // onChange={value => onParamsChange(value, 'type')}
-          placeholder="统计方式"
+          defaultValue="0"
         >
-          <Select.Option value="0">按日统计</Select.Option>
-          <Select.Option value="1">按周统计</Select.Option>
-          <Select.Option value="2">按月统计</Select.Option>
-          <Select.Option value="3">按年统计</Select.Option>
+          <Select.Option value="0">预约日期</Select.Option>
+          <Select.Option value="1">就诊日期</Select.Option>
         </Select>
         <span>
-          预约日期：
+          {/* 预约日期： */}
           <DatePicker.RangePicker
             className={classes.Gap}
             value={[moment(params.startTime, 'YYYY-MM-DD'), moment(params.endTime, 'YYYY-MM-DD')]}
@@ -48,10 +46,10 @@ function AppointmentsBar(props) {
             }}
           />
         </span>
-        <span className={classes.Span}>
+        {/* <span className={classes.Span}>
           就诊日期：
-          <DatePicker placeholder="就诊日期" />
-        </span>
+          <DatePicker placeholder='就诊日期' />
+        </span> */}
         <span className={classes.Span}>
           预约状态：
           <Select

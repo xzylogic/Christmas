@@ -1,24 +1,36 @@
 import React, { Component } from 'react';
+import { connect } from 'dva';
 import { Select, Button, DatePicker, Divider } from 'antd';
 import moment from 'moment';
 import classes from '../Members.less';
 
+const mapDispatchToProps = dispatch => ({
+  onSearchParamChange: (key, value) =>
+    dispatch({
+      type: 'businessYilianWechatQuery/updateSearchParam',
+      payload: { origin: 'membership', key, value },
+    }),
+});
+
+@connect(
+  null,
+  mapDispatchToProps
+)
 class MemberSearch extends Component {
-  state = {
-    isHosNameShow: false,
-    hosNameType: '',
+  showAllHosName = value => {
+    const { onSearchParamChange } = this.props;
+    if (value) {
+      onSearchParamChange('queryType', value);
+    }
+    if (value === 'name') {
+      onSearchParamChange('hosName', '');
+    } else {
+      onSearchParamChange('name', '');
+    }
   };
 
   render() {
     const { params, onParamsChange, onReset, allHosName, allPerson } = this.props;
-    const { isHosNameShow, hosNameType } = this.state;
-
-    const showAllHosName = value => {
-      if (value) {
-        this.setState({ isHosNameShow: true, hosNameType: value });
-      }
-    };
-
     return (
       <div className={classes.Search}>
         <Select
@@ -60,22 +72,24 @@ class MemberSearch extends Component {
           类型：
           <Select
             className={classes.Gap}
-            onChange={showAllHosName}
+            onChange={this.showAllHosName}
             style={{ width: 115 }}
             placeholder="--请选择--"
+            value={params.queryType}
           >
             <Select.Option value="name">地推人员</Select.Option>
             <Select.Option value="hosName">医院二维码</Select.Option>
           </Select>
         </span>
-        {isHosNameShow ? (
+        {params.queryType ? (
           <span>
             请选择：
-            {hosNameType === 'hosName' ? (
+            {params.queryType === 'hosName' ? (
               <Select
                 style={{ width: 200 }}
                 className={classes.Gap}
                 placeholder="--请选择--"
+                value={params.hosName}
                 onChange={value => onParamsChange(value, 'hosName')}
               >
                 {allHosName.map(item => (
@@ -89,6 +103,7 @@ class MemberSearch extends Component {
                 style={{ width: 200 }}
                 className={classes.Gap}
                 placeholder="--请选择--"
+                value={params.name}
                 onChange={value => onParamsChange(value, 'name')}
               >
                 {allPerson.map(item => (

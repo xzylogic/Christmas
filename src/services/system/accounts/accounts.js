@@ -13,27 +13,31 @@ export async function fetchAccountListService(params, page, size) {
  * @param {*} userId 用户id
  * @param {*} enable 【0:禁用】【1:启用】
  */
-export async function toggleAccountState(userId, enable) {
+export async function toggleAccountStateService(userId, enable) {
   return request(`/yilian-cloud-backend-api/user/enableUser?userId=${userId}&enable=${enable}`, {
     method: 'POST',
     body: {},
   });
 }
 
-export async function deleteAccount(params) {
-  return request('/api/accounts/deleteAccount', {
+/**
+ *
+ * @param {*} userId 用户id
+ */
+export async function deleteAccountService(userId) {
+  return request(`/yilian-cloud-backend-api/user/deleteUser?userId=${userId}&deleted=true`, {
     method: 'POST',
-    body: {
-      ...params,
-    },
+    body: {},
   });
 }
 
-export async function resetAccountPassword(params) {
-  return request('/api/accounts/resetPassword', {
+export async function resetAccountPasswordService(userId) {
+  return request(`/yilian-cloud-backend-api/user/resetPassword?userId=${userId}`, {
     method: 'POST',
-    body: {
-      ...params,
-    },
+    body: {},
   });
+}
+
+export async function fetchAllRolesService() {
+  return request(`/yilian-cloud-backend-api/role/getAllRoles`);
 }

@@ -28,11 +28,9 @@ export async function toggleRoleStateService(roleId, enable) {
   });
 }
 
-export async function deleteRoleService(params) {
-  return request('/api/accounts/resetPassword', {
+export async function deleteRoleService(roleId) {
+  return request(`/yilian-cloud-backend-api/role/deleteRole?roleId=${roleId}&deleted=1`, {
     method: 'POST',
-    body: {
-      ...params,
-    },
+    body: {},
   });
 }

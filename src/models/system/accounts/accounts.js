@@ -1,6 +1,7 @@
 import { message } from 'antd';
 import {
   fetchAccountListService,
+  // fetchAccountDetailService
   toggleAccountState,
   resetAccountPassword,
   deleteAccount,
@@ -46,6 +47,10 @@ export default {
         });
       }
     },
+    // *fetchAccountDetail({ payload }, { call, put, select }) {
+    //   const { userId } = payload;
+
+    // },
     *toggleAccountState({ payload }, { call }) {
       const res = yield call(toggleAccountState, {
         id: payload.id,

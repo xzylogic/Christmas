@@ -5,18 +5,18 @@ import { Modal, Select, Divider } from 'antd';
 import TableList from '@/components/PageComponents/Table/TableList';
 
 const mapStateToProps = state => ({
-  groupDetailList: state.businessYilianWechatQuery.detailList.group,
-  currentPage: state.businessYilianWechatQuery.detailCurrentPage.group,
-  totalElements: state.businessYilianWechatQuery.datailTotalElements.group,
-  searchParam: state.businessYilianWechatQuery.searchParam.group,
-  groupMonthAmount: state.businessYilianWechatQuery.list.fetchMessage,
-  loading: state.loading.effects['businessYilianWechatQuery/fetchGroupPerformanceDetail'],
+  memberDetailList: state.businessYilianWechatQuery.detailList.member,
+  currentPage: state.businessYilianWechatQuery.detailCurrentPage.member,
+  totalElements: state.businessYilianWechatQuery.datailTotalElements.member,
+  searchParam: state.businessYilianWechatQuery.searchParam.member,
+  memberMonthAmount: state.businessYilianWechatQuery.list.fetchMemberMessage,
+  loading: state.loading.effects['businessYilianWechatQuery/fetchMemberPerformanceDetail'],
 });
 
 const mapDispatchToProps = dispatch => ({
-  onFetchGroupPerformanceDetail: (way, name, page) =>
+  onFetchMemberPerformanceDetail: (way, name, page) =>
     dispatch({
-      type: 'businessYilianWechatQuery/fetchGroupPerformanceDetail',
+      type: 'businessYilianWechatQuery/fetchMemberPerformanceDetail',
       payload: { way, name, page },
     }),
 });
@@ -25,7 +25,7 @@ const mapDispatchToProps = dispatch => ({
   mapStateToProps,
   mapDispatchToProps
 )
-class GroupDetail extends Component {
+class MemberDetail extends Component {
   state = {
     way: 'day',
   };
@@ -38,18 +38,18 @@ class GroupDetail extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { onFetchGroupPerformanceDetail, name } = this.props;
+    const { onFetchMemberPerformanceDetail, name } = this.props;
     const { way } = this.state;
     if (name && prevProps.name !== name) {
-      onFetchGroupPerformanceDetail(way, name, 0);
+      onFetchMemberPerformanceDetail(way, name, 0);
     }
   }
 
-  setFansCountColor = (record, setMonth, groupMonthAmount) => {
+  setFansCountColor = (record, setMonth, memberMonthAmount) => {
     if (setMonth) {
       if (
-        !(record.regCount < groupMonthAmount.mRegCount) &&
-        !(record.fansCount < groupMonthAmount.mFansCount)
+        !(record.regCount < memberMonthAmount.mRegCount) &&
+        !(record.fansCount < memberMonthAmount.mFansCount)
       ) {
         return <span>{record.fansCount}</span>;
       }
@@ -58,11 +58,11 @@ class GroupDetail extends Component {
     return <span>{record.fansCount}</span>;
   };
 
-  setRegCountColor = (record, setMonth, groupMonthAmount) => {
+  setRegCountColor = (record, setMonth, memberMonthAmount) => {
     if (setMonth) {
       if (
-        !(record.regCount < groupMonthAmount.mRegCount) &&
-        !(record.fansCount < groupMonthAmount.mFansCount)
+        !(record.regCount < memberMonthAmount.mRegCount) &&
+        !(record.fansCount < memberMonthAmount.mFansCount)
       ) {
         return <span>{record.regCount}</span>;
       }
@@ -72,12 +72,12 @@ class GroupDetail extends Component {
   };
 
   setTableColumns = () => {
-    const { groupDetailList } = this.props;
+    const { memberDetailList } = this.props;
     let columns;
-    if (groupDetailList instanceof Object) {
-      const { groupMonthAmount } = this.props;
-      const setMonth = Object.keys(groupDetailList[0])[0] === 'months';
-      // console.log(groupMonthAmount);
+    if (memberDetailList instanceof Object) {
+      const { memberMonthAmount } = this.props;
+      const setMonth = Object.keys(memberDetailList[0])[0] === 'months';
+      // console.log(memberMonthAmount);
       columns = [
         {
           title: '日期',
@@ -94,13 +94,13 @@ class GroupDetail extends Component {
           title: '关注量',
           dataIndex: 'fansCount',
           key: 'fansCount',
-          render: (_, record) => this.setFansCountColor(record, setMonth, groupMonthAmount),
+          render: (_, record) => this.setFansCountColor(record, setMonth, memberMonthAmount),
         },
         {
           title: '注册量',
           dataIndex: 'regCount',
           key: 'regCount',
-          render: (_, record) => this.setRegCountColor(record, setMonth, groupMonthAmount),
+          render: (_, record) => this.setRegCountColor(record, setMonth, memberMonthAmount),
         },
       ];
     }
@@ -108,23 +108,23 @@ class GroupDetail extends Component {
   };
 
   handlePageChange = page => {
-    const { onFetchGroupPerformanceDetail, name } = this.props;
+    const { onFetchMemberPerformanceDetail, name } = this.props;
     const { way } = this.state;
     if (name) {
-      onFetchGroupPerformanceDetail(way, name, page - 1);
+      onFetchMemberPerformanceDetail(way, name, page - 1);
     }
   };
 
   handleWayChange = value => {
-    const { onFetchGroupPerformanceDetail, name } = this.props;
+    const { onFetchMemberPerformanceDetail, name } = this.props;
     this.setState({ way: value });
     if (name) {
-      onFetchGroupPerformanceDetail(value, name, 0);
+      onFetchMemberPerformanceDetail(value, name, 0);
     }
   };
 
   render() {
-    const { groupDetailList, currentPage, totalElements, visible, name, onClose } = this.props;
+    const { memberDetailList, currentPage, totalElements, visible, name, onClose } = this.props;
     const { way } = this.state;
     return (
       <Modal title="查看详情" centered visible={visible} footer={null} onCancel={onClose}>
@@ -137,7 +137,7 @@ class GroupDetail extends Component {
         <Divider>{name}</Divider>
         <TableList
           rowKey={(_, index) => index}
-          list={groupDetailList}
+          list={memberDetailList}
           columns={this.setTableColumns()}
           currentPage={currentPage}
           totalElements={totalElements}
@@ -148,4 +148,4 @@ class GroupDetail extends Component {
   }
 }
 
-export default GroupDetail;
+export default MemberDetail;

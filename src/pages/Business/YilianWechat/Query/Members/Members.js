@@ -4,7 +4,8 @@ import { Tabs, Radio, Table, Button } from 'antd';
 import debounce from 'lodash.debounce';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
-import MemberSearch from './MemberComponent/MemberSearchBar';
+import MemberSearch from './MemberComponent/MemberSearch';
+
 import FollowChart from './MemberComponent/FollowChart';
 import RegisterChart from './MemberComponent/RegisterChart';
 
@@ -14,6 +15,8 @@ const mapStateToProps = state => ({
   searchParam: state.businessYilianWechatQuery.searchParam.membership,
   followingList: state.businessYilianWechatQuery.list.following,
   registrationList: state.businessYilianWechatQuery.list.registration,
+  allHosName: state.businessYilianWechatQuery.list.fetchhosName,
+  allPerson: state.businessYilianWechatQuery.list.fetchallPerson,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -29,10 +32,21 @@ const mapDispatchToProps = dispatch => ({
       }),
     500
   ),
+
   onSearchParamChange: (key, value) =>
     dispatch({
       type: 'businessYilianWechatQuery/updateSearchParam',
       payload: { origin: 'membership', key, value },
+    }),
+
+  onFetchHosname: () =>
+    dispatch({
+      type: 'businessYilianWechatQuery/fetchHosname',
+    }),
+
+  onFetchallPerson: () =>
+    dispatch({
+      type: 'businessYilianWechatQuery/fetchallPerson',
     }),
 });
 
@@ -57,8 +71,10 @@ class Member extends Component {
   };
 
   componentDidMount() {
-    const { onFetchMembershipList } = this.props;
+    const { onFetchMembershipList, onFetchHosname, onFetchallPerson } = this.props;
     onFetchMembershipList();
+    onFetchHosname();
+    onFetchallPerson();
   }
 
   hangdleTab1Change = e => {
@@ -196,12 +212,17 @@ class Member extends Component {
   };
 
   render() {
-    const { followingList, registrationList, searchParam } = this.props;
+    const { followingList, registrationList, searchParam, allHosName, allPerson } = this.props;
     const { tab1Show, tab2Show } = this.state;
     return (
       <PageHeaderWrapper>
         <div className={classes.Container}>
-          <MemberSearch params={searchParam} onParamsChange={this.handleParamsChange} />
+          <MemberSearch
+            allHosName={allHosName}
+            allPerson={allPerson}
+            params={searchParam}
+            onParamsChange={this.handleParamsChange}
+          />
           <Tabs className={classes.Content} animated={false}>
             <Tabs.TabPane tab="会员关注" key="1">
               <div className={classes.Map}>

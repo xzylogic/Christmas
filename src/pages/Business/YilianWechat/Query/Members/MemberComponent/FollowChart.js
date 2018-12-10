@@ -52,7 +52,7 @@ class FollowChart extends Component {
     width: 1000,
     height: 500,
     plotCfg: {
-      margin: [10, 100, 200, 120],
+      margin: [10, 200, 200, 120],
     },
   };
 

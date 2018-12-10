@@ -4,6 +4,8 @@ import { Tabs } from 'antd';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import GroupContainer from './PerformanceComponent/GroupContainer';
+import MemberContainer from './PerformanceComponent/MemberContainer';
+import LocationContainer from './PerformanceComponent/LocationContainer';
 
 import classes from './Performance.less';
 
@@ -43,10 +45,10 @@ class Performance extends Component {
             <GroupContainer />
           </Tabs.TabPane>
           <Tabs.TabPane tab="人员查询" key="2" className={classes.Content}>
-            人员查询
+            <MemberContainer />
           </Tabs.TabPane>
           <Tabs.TabPane tab="推广地点查询" key="3" className={classes.Content}>
-            推广地点查询
+            <LocationContainer />
           </Tabs.TabPane>
         </Tabs>
       </PageHeaderWrapper>

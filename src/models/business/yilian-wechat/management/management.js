@@ -4,14 +4,15 @@ import {
   fetchMemberListService,
   fetchLocationListService,
   createGroupService,
-  // createMemberService,
-  // createLocationService,
+  createMemberService,
+  createLocationService,
   modifyGroupService,
-  // modifyMemberService,
-  // modifyLocationService,
+  modifyMemberService,
+  modifyLocationService,
   deleteGroupService,
-  // deleteMemberService,
-  // deleteLocationService,
+  deleteMemberService,
+  deleteLocationService,
+  getMemberService,
 } from '@/services/business/yilian-wechat/management/management';
 
 export default {
@@ -27,6 +28,7 @@ export default {
       group: null,
       member: null,
       location: null,
+      person: null,
     },
     currentPage: {
       group: 0,
@@ -38,6 +40,9 @@ export default {
       member: 0,
       location: 0,
     },
+    // wechatCode: {
+    //   imgUrl: null,
+    // },
   },
 
   effects: {
@@ -81,6 +86,20 @@ export default {
         });
       }
     },
+
+    *getMemberMessage(_, { call, put }) {
+      const res = yield call(getMemberService);
+      if (res && res.code === 200) {
+        yield put({
+          type: 'updateList',
+          payload: {
+            key: 'person',
+            list: res.data,
+          },
+        });
+      }
+    },
+
     *fetchLocationList({ payload }, { call, put, select }) {
       const searchParam = yield select(state => state.businessYilianWechatManagement.searchParam);
       const { page } = payload;
@@ -137,6 +156,85 @@ export default {
         message.error('删除小组失败！');
       }
     },
+    *createMember({ payload }, { call, put }) {
+      const { postData } = payload;
+      const res = yield call(createMemberService, postData);
+      let ifsuccess = false;
+      if (res && res.code === 200) {
+        ifsuccess = true;
+        // yield put({
+        //   type: 'updateList',
+        //   payload: {
+        //     key: 'imgUrl',
+        //     wechatCode: res.data,
+        //   },
+        // });
+        yield put({ type: 'fetchMemberList', payload: { page: 0 } });
+        message.success('新增人员成功！');
+      } else {
+        message.error('新增人员失败！');
+      }
+      return ifsuccess;
+    },
+    *modifyMember({ payload }, { call, put }) {
+      const { postData } = payload;
+      const res = yield call(modifyMemberService, postData);
+      let ifsuccess = false;
+      if (res && res.code === 200) {
+        ifsuccess = true;
+        yield put({ type: 'fetchMemberList', payload: { page: 0 } });
+        message.success('修改人员信息成功！');
+      } else {
+        message.error('修改人员信息失败！');
+      }
+      return ifsuccess;
+    },
+    *deleteMember({ payload }, { call, put }) {
+      const { id } = payload;
+      const res = yield call(deleteMemberService, id);
+      if (res && res.code === 200) {
+        yield put({ type: 'fetchMemberList', payload: { page: 0 } });
+        message.success('删除人员成功！');
+      } else {
+        message.error('删除人员失败！');
+      }
+    },
+    *createLocation({ payload }, { call, put }) {
+      const { postData } = payload;
+      const res = yield call(createLocationService, postData);
+      let ifsuccess = false;
+      if (res && res.code === 200) {
+        ifsuccess = true;
+        yield put({ type: 'fetchLocationList', payload: { page: 0 } });
+        message.success('新增地点成功！');
+      } else {
+        message.error('新增地点失败！');
+      }
+      return ifsuccess;
+    },
+    *modifyLocation({ payload }, { call, put }) {
+      const { postData } = payload;
+      const res = yield call(modifyLocationService, postData);
+      let ifsuccess = false;
+      if (res && res.code === 200) {
+        ifsuccess = true;
+        yield put({ type: 'fetchLocationList', payload: { page: 0 } });
+        message.success('修改地点信息成功！');
+      } else {
+        message.error('修改地点信息失败！');
+      }
+      return ifsuccess;
+    },
+    *deleteLocation({ payload }, { call, put }) {
+      const { id } = payload;
+      const res = yield call(deleteLocationService, id);
+      if (res && res.code === 200) {
+        yield put({ type: 'fetchLocationList', payload: { page: 0 } });
+        message.success('删除地点成功！');
+      } else {
+        message.error('删除地点失败！');
+      }
+    },
   },
 
   reducers: {
@@ -164,6 +262,10 @@ export default {
           ...state.totalElements,
           [payload.key]: payload.totalElements,
         },
+        // wechatCode: {
+        //   ...state.wechatCode,
+        //   [payload.key]: payload.wechatCode,
+        // },
       };
     },
   },

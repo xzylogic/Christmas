@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
+import AppointmentsContainer from './AppointmentsComponent/AppointmentsContainer';
+import classes from './Appointments.less';
 
 export class Appointments extends Component {
   componentDidMount() {}
 
   render() {
-    return <PageHeaderWrapper>Appointments</PageHeaderWrapper>;
+    return (
+      <PageHeaderWrapper>
+        <div className={classes.Container}>
+          <AppointmentsContainer />
+        </div>
+      </PageHeaderWrapper>
+    );
   }
 }
 

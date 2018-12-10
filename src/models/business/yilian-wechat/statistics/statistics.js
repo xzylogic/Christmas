@@ -328,7 +328,7 @@ export default {
           payload: {
             pageKey: 'popularization',
             typeKey: POPULARIZATION_REPORT_TYPE.TYPE4,
-            list: res.data.content,
+            list: res.data,
             currentPage: 0,
             totalElements: 0,
           },

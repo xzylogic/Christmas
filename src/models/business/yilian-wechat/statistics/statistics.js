@@ -92,7 +92,6 @@ export default {
         [POPULARIZATION_REPORT_TYPE.TYPE1]: null,
         [POPULARIZATION_REPORT_TYPE.TYPE2]: null,
         [POPULARIZATION_REPORT_TYPE.TYPE3]: null,
-        [POPULARIZATION_REPORT_TYPE.TYPE4]: null,
       },
       appointments: {},
     },
@@ -319,11 +318,8 @@ export default {
       );
       const { page } = payload;
       let params = '';
-      if (searchParams && searchParams.startTime) {
-        params += `&startTime=${searchParams.startTime}`;
-      }
-      if (searchParams && searchParams.endTime) {
-        params += `&endTime=${searchParams.endTime}`;
+      if (searchParams && searchParams.time) {
+        params += `&time=${searchParams.time}`;
       }
       const res = yield call(fetchPopularizationReportType4Service, params, page, 10);
       if (res && res.code === 200) {
@@ -333,8 +329,8 @@ export default {
             pageKey: 'popularization',
             typeKey: POPULARIZATION_REPORT_TYPE.TYPE4,
             list: res.data.content,
-            currentPage: page,
-            totalElements: res.data.totalElements,
+            currentPage: 0,
+            totalElements: 0,
           },
         });
       }

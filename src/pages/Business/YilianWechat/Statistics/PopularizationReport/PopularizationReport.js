@@ -6,6 +6,7 @@ import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import Type1Container from './Components/Type1Container';
 import Type2Container from './Components/Type2Container';
 import Type3Container from './Components/Type3Container';
+import Type4Container from './Components/Type4Container';
 
 import { POPULARIZATION_REPORT_TYPE } from '@/models/business/yilian-wechat/statistics/statistics';
 
@@ -49,6 +50,8 @@ class PopularizationReoprt extends Component {
       container = <Type2Container />;
     } else if (reportType === POPULARIZATION_REPORT_TYPE.TYPE3) {
       container = <Type3Container />;
+    } else if (reportType === POPULARIZATION_REPORT_TYPE.TYPE4) {
+      container = <Type4Container />;
     }
     return (
       <PageHeaderWrapper>

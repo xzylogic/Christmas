@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import createG2 from 'g2-react';
-import 'g2-plugin-slider';
 import G2 from 'g2';
-
-// const Slider = G2.Plugin.slider;
+import { Slider } from 'antd';
 
 const Chart = createG2(chart => {
   chart.col('date', { alias: ' ', type: 'cat' });
@@ -28,56 +26,61 @@ const Chart = createG2(chart => {
     .color('#ff4d4f')
     .size(2);
   chart.render();
-  // const slider = new Slider({
-  //   domId: 'range',
-  //   height: 30,
-  //   charts: chart,
-  //   xDim: 'date'
-  // });
-  // slider.render();
 });
-
-const getDataSource = data => {
-  const { Frame } = G2;
-  const dataCopy = data.map(obj => {
-    const objCopy = { ...obj };
-    objCopy.date = obj.sub_date || obj.weeks || obj.months || obj.years || '';
-    objCopy.conversionRate = (obj.conversionRate && Number(obj.conversionRate.split('%')[0])) || 0;
-    objCopy['关注量'] = objCopy.fansCount;
-    objCopy['注册量'] = objCopy.regCount;
-    return objCopy;
-  });
-  let frame = new Frame(dataCopy);
-  frame = Frame.combinColumns(frame, ['关注量', '注册量'], 'value', 'type', [
-    'date',
-    'conversionRate',
-  ]);
-  return frame;
-};
 
 class Type3Chart extends Component {
   state = {
+    range: [0, 100],
     width: 1000,
     height: 500,
     plotCfg: {
-      margin: [50, 200, 200, 120],
+      margin: [50, 200, 150, 120],
     },
   };
 
+  getDataSource = (data, range) => {
+    const { Frame } = G2;
+    const dataCopy = data
+      .slice(
+        ((range[0] * data.length) / 100).toFixed(0),
+        ((range[1] * data.length) / 100).toFixed(0)
+      )
+      .map(obj => {
+        const objCopy = { ...obj };
+        objCopy.date = obj.sub_date || obj.weeks || obj.months || obj.years || '';
+        objCopy.conversionRate =
+          (obj.conversionRate && Number(obj.conversionRate.split('%')[0])) || 0;
+        objCopy['关注量'] = objCopy.fansCount;
+        objCopy['注册量'] = objCopy.regCount;
+        return objCopy;
+      });
+    let frame = new Frame(dataCopy);
+    frame = Frame.combinColumns(frame, ['关注量', '注册量'], 'value', 'type', [
+      'date',
+      'conversionRate',
+    ]);
+    return frame;
+  };
+
+  handleRangeChanged = value => {
+    this.setState({ range: value });
+  };
+
   render() {
-    const { width, height, plotCfg } = this.state;
+    const { width, height, plotCfg, range } = this.state;
     const { data } = this.props;
+
+    const dataSource = (data && this.getDataSource(data, range)) || [];
 
     return (
       <React.Fragment>
-        <Chart
-          data={(data && getDataSource(data)) || []}
-          width={width}
-          height={height}
-          plotCfg={plotCfg}
-          forceFit
+        <Chart data={dataSource} width={width} height={height} plotCfg={plotCfg} forceFit />
+        <Slider
+          range
+          value={range}
+          onChange={this.handleRangeChanged}
+          style={{ margin: '0 200px 0 120px' }}
         />
-        <div id="range" />
       </React.Fragment>
     );
   }

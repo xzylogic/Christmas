@@ -1,5 +1,5 @@
 import React from 'react';
-import { Select, Button, DatePicker } from 'antd';
+import { Button, DatePicker } from 'antd';
 import moment from 'moment';
 
 import classes from '../PopularizationReport.less';
@@ -9,7 +9,7 @@ function type2SearchBar(props) {
 
   return (
     <div className={classes.Search}>
-      <Select
+      {/* <Select
         className={classes.Gap}
         name="countType"
         value={params.countType}
@@ -19,7 +19,7 @@ function type2SearchBar(props) {
         <Select.Option value="week">按周统计</Select.Option>
         <Select.Option value="month">按月统计</Select.Option>
         <Select.Option value="year">按年统计</Select.Option>
-      </Select>
+      </Select> */}
       <DatePicker.RangePicker
         className={classes.Gap}
         value={[moment(params.startTime, 'YYYY-MM-DD'), moment(params.endTime, 'YYYY-MM-DD')]}

@@ -266,20 +266,22 @@ export default {
         });
       }
     },
-    *addHosToGroup({ payload }, { call, put }) {
-      // console.log(payload)
+    *addHosToGroup({ payload }, { call }) {
       const { postData } = payload;
-      // const { name , hosName } = postData;
-      console.log(postData.hosName.join(','));
-      let params = '';
-      if (postData.name && postData.hosName) {
-        params += `name=${postData.name}&hosName=${postData.hosName}`;
-      }
-      const res = yield call(addHosToGroupService, params);
+      const { name, hosName } = postData;
+      // 小组名转字符串
+      const newname = name.toString();
+      // 医院id转字符串
+      const newhosName = hosName.join(',');
+      // 定义新参数
+      const newPostData = {
+        name: newname,
+        hosName: newhosName,
+      };
+      const res = yield call(addHosToGroupService, newPostData);
       let ifsuccess = false;
       if (res && res.code === 200) {
         ifsuccess = true;
-        yield put({ type: 'fetchGroupList', payload: { page: 0 } });
         message.success('编辑小组信息成功！');
       } else {
         message.error('编辑小组信息失败！');

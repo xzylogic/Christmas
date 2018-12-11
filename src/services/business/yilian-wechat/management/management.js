@@ -25,6 +25,8 @@ export async function fetchLocationListService(params, page, size) {
 }
 
 export async function createGroupService(postData) {
+  console.log(postData);
+  console.log({ ...postData });
   return request(`/yilian-cloud-backend-api/hos/create/group`, {
     method: 'POST',
     body: {
@@ -111,12 +113,16 @@ export async function fetchAllGroupNameService() {
   return request(`/yilian-cloud-backend-api/ylWeChatCount/search/allGroup`);
 }
 
-export async function addHosToGroupService(params, page, size) {
-  // console.log(params)
-  let query = `?page=${page || 0}&size=${size || 10}`;
-  if (params) {
-    query += `&${params}`;
-  }
-  // console.log(query)
-  return request(`/yilian-cloud-backend-api/ylWeChatCount/addHosToGroup${query}`);
+export async function addHosToGroupService(newPostData) {
+  console.log(newPostData);
+  // {name: "1组", leader: "11", remark: "", valid: "false"}
+  return request(
+    `/yilian-cloud-backend-api/ylWeChatCount/add/HosToGroup?groupId=${newPostData.name}&hosId=${
+      newPostData.hosName
+    }`,
+    {
+      method: 'POST',
+      body: {},
+    }
+  );
 }

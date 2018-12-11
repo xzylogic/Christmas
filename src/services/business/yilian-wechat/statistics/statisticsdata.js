@@ -34,3 +34,15 @@ export async function fetchPromoteAttentionAmountService(way, params, page, size
   }
   return req;
 }
+
+export async function fetchAppointmentsDataService(way, params, page, size) {
+  let query = `?page=${page}&size=${size || 10}`;
+
+  if (way) {
+    query += `&${way}`;
+  }
+  if (params) {
+    query += `&${params}`;
+  }
+  return request(`/yilian-cloud-backend-api/ylWeChatCount/reservation/count${query}`);
+}

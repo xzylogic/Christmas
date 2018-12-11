@@ -60,14 +60,14 @@ class AppointmentsContainer extends Component {
   setTableColumns = () => {
     const renderOrderStatus = record => {
       let content = '';
+      // if (record === '1') {
+      //   content = <span>无效</span>;
+      // }
       if (record === '1') {
-        content = <span>无效</span>;
-      }
-      if (record === '2') {
-        content = <span>预约</span>;
+        content = <span>已预约</span>;
       }
       if (record === '3') {
-        content = <span>撤销</span>;
+        content = <span>已取消</span>;
       }
       return content;
     };
@@ -75,95 +75,95 @@ class AppointmentsContainer extends Component {
     const columns = [
       {
         title: '预约日期',
-        dataIndex: 'schedule_date',
+        dataIndex: 'createTime',
         key: 'schedule_date',
       },
-      // {
-      //   title: '就诊日期',
-      //   dataIndex: 'schedule_date',
-      //   key: 'schedule_date',
-      //   render: () => '-',
-      // },
       {
-        title: '预约时段',
-        dataIndex: 'order_time',
-        key: 'order_time',
+        title: '就诊日期',
+        dataIndex: 'scheduleDate',
+        key: 'scheduleDate',
+        render: () => '-',
+      },
+      {
+        title: '就诊时段',
+        dataIndex: 'scheduleTime',
+        key: 'scheduleTime',
       },
       {
         title: '预约科室',
-        dataIndex: 'dept_name',
-        key: 'dept_name',
+        dataIndex: 'deptName',
+        key: 'deptName',
       },
       {
         title: '预约医院',
-        dataIndex: 'hos_org_name',
-        key: 'hos_org_name',
+        dataIndex: 'hosOrgName',
+        key: 'hosOrgName',
       },
       {
         title: '预约医生',
-        dataIndex: 'doct_name',
-        key: 'doct_name',
+        dataIndex: 'doctName',
+        key: 'doctName',
       },
       {
         title: '预约来源',
-        dataIndex: 'order_channel',
-        key: 'order_channel',
+        dataIndex: 'regChannel',
+        key: 'regChannel',
       },
       {
         title: '患者姓名',
-        dataIndex: 'patient_name',
-        key: 'patient_name',
+        dataIndex: 'patientName',
+        key: 'patientName',
       },
       // {
       //   title: '性别',
-      //   dataIndex: 'patient_name',
-      //   key: 'patient_name',
+      //   dataIndex: 'sex',
+      //   key: 'sex',
       //   render: () => '-',
       // },
       {
         title: '患者卡号',
-        dataIndex: 'medi_card_id',
-        key: 'medi_card_id',
+        dataIndex: 'mediCardId',
+        key: 'mediCardId',
       },
       {
         title: '卡类型',
-        dataIndex: 'medi_card_id_type',
-        key: 'medi_card_id_type',
+        dataIndex: 'mediCardIdType',
+        key: 'mediCardIdType',
       },
       // {
       //   title: '手机',
-      //   dataIndex: 'medi_card_id',
-      //   key: 'medi_card_id',
+      //   dataIndex: 'patientPhone',
+      //   key: 'patientPhone',
       //   render: () => '-',
       // },
       {
         title: '身份证号',
-        dataIndex: 'patient_card_id',
-        key: 'patient_card_id',
+        dataIndex: 'patientCardId',
+        key: 'patientCardId',
       },
       {
         title: '订单号',
-        dataIndex: 'order_id',
-        key: 'order_id',
+        dataIndex: 'orderId',
+        key: 'orderId',
       },
-      // {
-      //   title: '预约编号',
-      //   dataIndex: 'order_id',
-      //   key: 'order_id',
-      //   render: () => '-',
-      // },
+      {
+        title: '预约编号',
+        dataIndex: 'orderNumber',
+        key: 'orderNumber',
+        render: () => '-',
+      },
       {
         title: '预约状态',
-        dataIndex: 'order_status',
-        key: 'order_status',
+        dataIndex: 'orderStatus',
+        key: 'orderStatus',
         render: record => renderOrderStatus(record),
       },
-      // {
-      //   title: '取消原因',
-      //   dataIndex: 'order_status',
-      //   key: 'order_status',
-      //   render: () => '-',
-      // },
+      {
+        title: '取消原因',
+        dataIndex: 'cancelReason',
+        key: 'cancelReason',
+        render: () => '-',
+      },
     ];
     return columns;
   };

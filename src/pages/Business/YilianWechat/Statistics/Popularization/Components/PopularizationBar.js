@@ -51,7 +51,7 @@ function PopularizationBar(props) {
               defaultValue={allGroupName[0].name}
             >
               {allGroupName.map(item => (
-                <Select.Option id={item.id} key={item.id} value={item.name}>
+                <Select.Option id={item.id} key={item.id} value={item.id.toString()}>
                   {item.name}
                 </Select.Option>
               ))}

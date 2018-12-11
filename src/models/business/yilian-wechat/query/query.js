@@ -89,13 +89,13 @@ export default {
       },
       // 预约查询
       appointment: {
-        type: '0',
+        type: 'create_time',
         startTime: moment(new Date().valueOf() - 2592000000).format('YYYY-MM-DD'),
         endTime: moment(new Date().valueOf()).format('YYYY-MM-DD'),
         // 预约状态
         orderStatus: '',
         // 预约来源
-        orderChannel: '',
+        regChannel: '',
         // 患者姓名
         patientName: '',
         // 患者手机
@@ -488,11 +488,14 @@ export default {
         if (appointment && appointment.endTime) {
           params += `&endTime=${appointment.endTime}`;
         }
+        if (appointment && appointment.type) {
+          params += `&dateType=${appointment.type}`;
+        }
         if (appointment && appointment.orderStatus) {
           params += `&orderStatus=${appointment.orderStatus}`;
         }
-        if (appointment && appointment.orderChannel) {
-          params += `&orderChannel=${appointment.orderChannel}`;
+        if (appointment && appointment.regChannel) {
+          params += `&regChannel=${appointment.regChannel}`;
         }
         if (appointment && appointment.patientName) {
           params += `&patientName=${appointment.patientName}`;

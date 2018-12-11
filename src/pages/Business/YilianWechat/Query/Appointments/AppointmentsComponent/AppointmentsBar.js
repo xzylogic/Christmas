@@ -17,11 +17,11 @@ function AppointmentsBar(props) {
           style={{ width: 115 }}
           // name='type'
           // value={params.type}
-          // onChange={value => onParamsChange(value, 'type')}
-          defaultValue="0"
+          onChange={value => onParamsChange(value, 'type')}
+          defaultValue="create_time"
         >
-          <Select.Option value="0">预约日期</Select.Option>
-          <Select.Option value="1">就诊日期</Select.Option>
+          <Select.Option value="create_time">预约日期</Select.Option>
+          <Select.Option value="schedule_date">就诊日期</Select.Option>
         </Select>
         <span>
           {/* 预约日期： */}
@@ -59,10 +59,8 @@ function AppointmentsBar(props) {
             // defaultValue='0'
             onChange={value => onParamsChange(value, 'orderStatus')}
           >
-            <Select.Option value="0">全部</Select.Option>
-            <Select.Option value="1">无效</Select.Option>
-            <Select.Option value="2">预约</Select.Option>
-            <Select.Option value="3">撤销</Select.Option>
+            <Select.Option value="1">已预约</Select.Option>
+            <Select.Option value="3">已撤销</Select.Option>
           </Select>
         </span>
         <span>
@@ -72,14 +70,13 @@ function AppointmentsBar(props) {
             className={classes.Gap}
             placeholder="预约来源"
             // defaultValue='0'
-            onChange={value => onParamsChange(value, 'orderChannel')}
+            onChange={value => onParamsChange(value, 'regChannel')}
           >
-            <Select.Option value="0">全部</Select.Option>
-            <Select.Option value="1">APP</Select.Option>
-            <Select.Option value="2">微信服务号</Select.Option>
-            <Select.Option value="3">支付宝服务窗</Select.Option>
+            <Select.Option value="app">APP</Select.Option>
+            <Select.Option value="wechat">微信服务号</Select.Option>
+            {/* <Select.Option value="3">支付宝服务窗</Select.Option>
             <Select.Option value="4">窗口</Select.Option>
-            <Select.Option value="5">自助机</Select.Option>
+            <Select.Option value="5">自助机</Select.Option> */}
           </Select>
         </span>
       </Col>

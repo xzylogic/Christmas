@@ -4,6 +4,7 @@ import {
   fetchPromoteAttentionAmountService,
   fetchAllHosNameService,
   fetchAllGroupNameService,
+  fetchAppointmentsDataService,
 } from '@/services/business/yilian-wechat/statistics/statisticsdata';
 
 export default {
@@ -12,12 +13,22 @@ export default {
   state: {
     searchParam: {
       // 预约数据统计
-      appointmentAttention: null,
+      appointmentAttention: {
+        // startTime: moment(new Date().valueOf() - 604800000).format('YYYY-MM-DD'),
+        startTime: moment(new Date().valueOf() - 31536000000).format('YYYY-MM-DD'),
+        endTime: moment(new Date().valueOf()).format('YYYY-MM-DD'),
+        countType: null,
+        cityName: null,
+        hosOrgCode: null,
+        visitLevelCode: null,
+        orderStatus: null,
+        regChannel: null,
+      },
       // 推广数据统计
       promoteAttention: {
         way: 'week',
-        // startTime: moment(new Date().valueOf() - 604800000).format('YYYY-MM-DD'),
-        startTime: moment(new Date().valueOf() - 31536000000).format('YYYY-MM-DD'),
+        startTime: moment(new Date().valueOf() - 604800000).format('YYYY-MM-DD'),
+        // startTime: moment(new Date().valueOf() - 31536000000).format('YYYY-MM-DD'),
         endTime: moment(new Date().valueOf()).format('YYYY-MM-DD'),
         origin: '',
         // 医院名字
@@ -118,7 +129,7 @@ export default {
           params += `&channel=${promoteAttention.channel}`;
         }
         if (promoteAttention && promoteAttention.group) {
-          params += `&group=${promoteAttention.group}`;
+          params += `&groupId=${promoteAttention.group}`;
         }
         const res = yield call(fetchPromoteAttentionAmountService, way, params, page, 10);
         if (res && res.code === 200) {
@@ -179,6 +190,93 @@ export default {
         }
       } catch (err) {
         console.log(err);
+      }
+    },
+    *fetchAppointmentsData({ payload }, { call, select, put }) {
+      const { appointmentAttention } = yield select(
+        state => state.businessYilianWechatStatisticDatas.searchParam
+      );
+      console.log(appointmentAttention);
+      const { page } = payload;
+      let params = '';
+      if (appointmentAttention && appointmentAttention.startTime) {
+        params += `&startTime=${appointmentAttention.startTime}`;
+      }
+      if (appointmentAttention && appointmentAttention.endTime) {
+        params += `&endTime=${appointmentAttention.endTime}`;
+      }
+      if (appointmentAttention && appointmentAttention.countType) {
+        params += `&countType=${appointmentAttention.countType}`;
+      }
+      if (appointmentAttention && appointmentAttention.cityName) {
+        params += `&cityName=${appointmentAttention.cityName}`;
+      }
+      if (appointmentAttention && appointmentAttention.hosOrgCode) {
+        params += `&hosOrgCode=${appointmentAttention.hosOrgCode}`;
+      }
+      if (appointmentAttention && appointmentAttention.visitLevelCode) {
+        params += `&visitLevelCode=${appointmentAttention.visitLevelCode}`;
+      }
+      if (appointmentAttention && appointmentAttention.orderStatus) {
+        params += `&orderStatus=${appointmentAttention.orderStatus}`;
+      }
+      if (appointmentAttention && appointmentAttention.regChannel) {
+        params += `&regChannel=${appointmentAttention.regChannel}`;
+      }
+      const res = yield call(fetchAppointmentsDataService, params, page, 10);
+      if (res && res.code === 200) {
+        yield put({
+          type: 'updateDetailList',
+          payload: {
+            key: 'appointmentAttention',
+            list: res.data.content,
+            currentPage: page,
+            totalElements: res.data.totalElements,
+          },
+        });
+      }
+    },
+    *fetchAppointmentsDataDetail({ payload }, { call, select, put }) {
+      const { appointmentAttention } = yield select(
+        state => state.businessYilianWechatStatisticDatas.searchParam
+      );
+      const { way, page } = payload;
+      let params = '';
+      if (appointmentAttention && appointmentAttention.startTime) {
+        params += `&startTime=${appointmentAttention.startTime}`;
+      }
+      if (appointmentAttention && appointmentAttention.endTime) {
+        params += `&endTime=${appointmentAttention.endTime}`;
+      }
+      if (appointmentAttention && appointmentAttention.countType) {
+        params += `&countType=${appointmentAttention.countType}`;
+      }
+      if (appointmentAttention && appointmentAttention.cityName) {
+        params += `&cityName=${appointmentAttention.cityName}`;
+      }
+      if (appointmentAttention && appointmentAttention.hosOrgCode) {
+        params += `&hosOrgCode=${appointmentAttention.hosOrgCode}`;
+      }
+      if (appointmentAttention && appointmentAttention.visitLevelCode) {
+        params += `&visitLevelCode=${appointmentAttention.visitLevelCode}`;
+      }
+      if (appointmentAttention && appointmentAttention.orderStatus) {
+        params += `&orderStatus=${appointmentAttention.orderStatus}`;
+      }
+      if (appointmentAttention && appointmentAttention.regChannel) {
+        params += `&regChannel=${appointmentAttention.regChannel}`;
+      }
+      const res = yield call(fetchAppointmentsDataService, way, params, page, 10);
+      if (res && res.code === 200) {
+        yield put({
+          type: 'updateDetailList',
+          payload: {
+            key: 'appointmentAttention',
+            list: res.data.content,
+            currentPage: page,
+            totalElements: res.data.totalElements,
+          },
+        });
       }
     },
   },

@@ -99,7 +99,7 @@ class GroupHosEditor extends Component {
                   style={{ width: 230 }}
                 >
                   {allHosName.map(item => (
-                    <Select.Option id={item.id} key={item.id} value={item.hos_name}>
+                    <Select.Option id={item.id} key={item.id} value={item.id}>
                       {item.hos_name}
                     </Select.Option>
                   ))}
@@ -117,7 +117,7 @@ class GroupHosEditor extends Component {
                   style={{ width: 115 }}
                 >
                   {allGroupName.map(item => (
-                    <Select.Option id={item.id} key={item.id} value={item.name}>
+                    <Select.Option id={item.id} key={item.id} value={item.id}>
                       {item.name}
                     </Select.Option>
                   ))}

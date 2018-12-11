@@ -93,13 +93,13 @@ class AppointmentsContainer extends Component {
     await onFetchWeChatAttentionAmountDebounce(0);
   };
 
-  setTableColumns = () => {
+  setTableColumnsWechat = () => {
     const columns = [
-      // {
-      //   title: '日期/周期/月份/年份',
-      //   dataIndex: 'week' || 'date' || 'months' || 'years',
-      //   key: 'week' || 'date' || 'months' || 'years',
-      // },
+      {
+        title: '日期/周期/月份/年份',
+        dataIndex: 'weeks' || 'date' || 'months' || 'years',
+        key: 'weeks' || 'date' || 'months' || 'years',
+      },
       //   {
       //     title: '预约状态',
       //     dataIndex: 'order_status',
@@ -143,6 +143,68 @@ class AppointmentsContainer extends Component {
       },
       // {
       //   title: '组别',
+      //   dataIndex: 'weeks',
+      //   key: 'weeks',
+      // },
+      // {
+      //   title: '二维码',
+      //   dataIndex: 'weeks',
+      //   key: 'weeks',
+      // },
+    ];
+    return columns;
+  };
+
+  setTableColumnsApp = () => {
+    const columns = [
+      {
+        title: '日期/周期/月份/年份',
+        dataIndex: 'weeks' || 'date' || 'months' || 'years',
+        key: 'weeks' || 'date' || 'months' || 'years',
+      },
+      //   {
+      //     title: '预约状态',
+      //     dataIndex: 'order_status',
+      //     key: 'order_status',
+      //     render: record => renderOrderStatus(record),
+      //   },
+      {
+        title: '医院名称',
+        dataIndex: 'hosName',
+        key: 'hosName',
+      },
+      {
+        title: '渠道',
+        dataIndex: 'promoCode',
+        key: 'promoCode',
+      },
+      {
+        title: '注册量',
+        dataIndex: 'regCount',
+        key: 'regCount',
+      },
+      {
+        title: '实名量',
+        dataIndex: 'realCount',
+        key: 'realCount',
+      },
+      {
+        title: '明细',
+        dataIndex: 'id',
+        key: 'action',
+        render: (_, record) => (
+          <span>
+            <a onClick={e => this.handleDetail(e, record)}>查看</a>
+          </span>
+        ),
+      },
+      // {
+      //   title: '组别',
+      //   dataIndex: 'weeks',
+      //   key: 'weeks',
+      // },
+      // {
+      //   title: '二维码',
       //   dataIndex: 'weeks',
       //   key: 'weeks',
       // },
@@ -207,7 +269,7 @@ class AppointmentsContainer extends Component {
       allGroupName,
     } = this.props;
     const { showDetail, selectedName } = this.state;
-    // console.log(allHosNameArr)
+    // console.log(searchParam.orderStatus==='0')
     // const { way } = this.state;
     return (
       <React.Fragment>
@@ -221,14 +283,33 @@ class AppointmentsContainer extends Component {
           onChangeWay={this.handleChangeWay}
           onParamsChange={this.handleParamsChanged}
         />
-        <TableList
+        {/* <TableList
           rowKey="aaa"
           list={promoteAttentionList}
-          columns={this.setTableColumns()}
+          columns={this.setTableColumnsWechat()}
           currentPage={currentPage}
           totalElements={totalElements}
           onPageChange={this.handlePageChange}
-        />
+        /> */}
+        {searchParam.channel === '1' ? (
+          <TableList
+            rowKey="aaa"
+            list={promoteAttentionList}
+            columns={this.setTableColumnsApp()}
+            currentPage={currentPage}
+            totalElements={totalElements}
+            onPageChange={this.handlePageChange}
+          />
+        ) : (
+          <TableList
+            rowKey="aaa"
+            list={promoteAttentionList}
+            columns={this.setTableColumnsWechat()}
+            currentPage={currentPage}
+            totalElements={totalElements}
+            onPageChange={this.handlePageChange}
+          />
+        )}
         <PopularizationDetail
           name={selectedName}
           visible={showDetail}

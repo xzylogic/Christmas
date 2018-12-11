@@ -1,13 +1,5 @@
 import request from '@/utils/request';
 
-// export async function fetchPromoteAttentionAmountService(params, page, size) {
-//   let query = `?page=${page || 0}&size=${size || 10}`;
-//   if (params) {
-//     query += `${params}`;
-//   }
-//   return request(`/yilian-cloud-backend-api/ylWeChatCount/extendData/count/week${query}`);
-// }
-
 export async function fetchAllHosNameService() {
   return request(`/yilian-cloud-backend-api/ylWeChatCount/search/allHos`);
 }
@@ -17,7 +9,7 @@ export async function fetchAllGroupNameService() {
 }
 
 export async function fetchPromoteAttentionAmountService(way, params, page, size) {
-  console.log(way);
+  console.log(way, params, page, size);
   let query = `?page=${page || 0}&size=${size || 10}`;
   let req = '';
   if (params) {

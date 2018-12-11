@@ -92,12 +92,12 @@ export default {
       }
     },
     *fetchPromoteAttentionAmount({ payload }, { call, put, select }) {
-      console.log(payload);
       try {
+        // console.log(payload);
         const { promoteAttention } = yield select(
           state => state.businessYilianWechatStatisticDatas.searchParam
         );
-        const { way, name, page } = payload;
+        const { way, page } = payload;
         let params = '';
         if (promoteAttention && promoteAttention.startTime) {
           params += `&startTime=${promoteAttention.startTime}`;
@@ -117,10 +117,58 @@ export default {
         if (promoteAttention && promoteAttention.channel) {
           params += `&channel=${promoteAttention.channel}`;
         }
-        const res = yield call(fetchPromoteAttentionAmountService, way, name, params, page, 10);
+        if (promoteAttention && promoteAttention.group) {
+          params += `&group=${promoteAttention.group}`;
+        }
+        const res = yield call(fetchPromoteAttentionAmountService, way, params, page, 10);
         if (res && res.code === 200) {
           yield put({
             type: 'updateList',
+            payload: {
+              key: 'promoteAttention',
+              list: res.data.content,
+              currentPage: page,
+              totalElements: res.data.totalElements,
+            },
+          });
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    *fetchPromoteAttentionAmountDetail({ payload }, { call, put, select }) {
+      console.log(payload);
+      try {
+        const { promoteAttention } = yield select(
+          state => state.businessYilianWechatStatisticDatas.searchParam
+        );
+        const { way, page } = payload;
+        let params = '';
+        if (promoteAttention && promoteAttention.startTime) {
+          params += `&startTime=${promoteAttention.startTime}`;
+        }
+        if (promoteAttention && promoteAttention.endTime) {
+          params += `&endTime=${promoteAttention.endTime}`;
+        }
+        if (promoteAttention && promoteAttention.origin) {
+          params += `&origin=${promoteAttention.origin}`;
+        }
+        if (promoteAttention && promoteAttention.hosName) {
+          params += `&hosName=${promoteAttention.hosName}`;
+        }
+        if (promoteAttention && promoteAttention.hosGrade) {
+          params += `&hosGrade=${promoteAttention.hosGrade}`;
+        }
+        if (promoteAttention && promoteAttention.channel) {
+          params += `&channel=${promoteAttention.channel}`;
+        }
+        if (promoteAttention && promoteAttention.group) {
+          params += `&group=${promoteAttention.group}`;
+        }
+        const res = yield call(fetchPromoteAttentionAmountService, way, params, page, 10);
+        if (res && res.code === 200) {
+          yield put({
+            type: 'updateDetailList',
             payload: {
               key: 'promoteAttention',
               list: res.data.content,

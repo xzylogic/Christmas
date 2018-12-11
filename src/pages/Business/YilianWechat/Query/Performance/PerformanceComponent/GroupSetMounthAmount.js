@@ -23,7 +23,6 @@ const mapDispatchToProps = dispatch => ({
 class GroupSetMounthAmount extends Component {
   handleSubmit = e => {
     e.preventDefault();
-    console.log('OK');
     const { form, onCreateGroupMonthAmount, onClose } = this.props;
     form.validateFieldsAndScroll((err, values) => {
       if (!err) {

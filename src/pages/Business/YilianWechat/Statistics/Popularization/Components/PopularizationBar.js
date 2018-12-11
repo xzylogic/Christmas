@@ -7,6 +7,11 @@ import classes from './PopularizationBar.less';
 function PopularizationBar(props) {
   const { onExport, allHosName, allGroupName, params, onParamsChange, onReset } = props;
   // const { allHosNameArr } = this.state;
+  // const handleChange = (e) => {
+  //   console.log(e)
+  // }
+
+  // console.log(params)
 
   return (
     <Row className={classes.Container}>
@@ -41,6 +46,8 @@ function PopularizationBar(props) {
               placeholder="请选择推广地址"
               className={classes.Gap}
               // placeholder="组别"
+              onChange={value => onParamsChange(value, 'group')}
+              // onChange={e => handleChange(e)}
               defaultValue={allGroupName[0].name}
             >
               {allGroupName.map(item => (
@@ -60,6 +67,7 @@ function PopularizationBar(props) {
               placeholder="请选择推广地址"
               className={classes.Gap}
               // placeholder="医院名称"
+              onChange={value => onParamsChange(value, 'hosName')}
               defaultValue={allHosName[0].hos_name}
             >
               {allHosName.map(item => (
@@ -82,19 +90,19 @@ function PopularizationBar(props) {
           style={{ width: 115 }}
           className={classes.Gap}
           placeholder="数据来源"
-          value={params.orderStatus}
+          value={params.channel}
           // defaultValue='0'
-          onChange={value => onParamsChange(value, 'orderStatus')}
+          onChange={value => onParamsChange(value, 'channel')}
         >
           <Select.Option value="0">医联微信</Select.Option>
           <Select.Option value="1">医联APP</Select.Option>
         </Select>
       </span>
-      {params.orderStatus ? (
+      {params.channel ? (
         <span className={classes.Span}>
           渠道：
           <span>
-            {params.orderStatus === '0' ? (
+            {params.channel === '0' ? (
               <Select
                 style={{ width: 200 }}
                 className={classes.Gap}
@@ -122,41 +130,8 @@ function PopularizationBar(props) {
       ) : (
         ''
       )}
-      {/* <span className={classes.Span}>
-        医院名称：
-        {allHosName instanceof Object?<Select
-          placeholder="请选择推广地址"
-          className={classes.Gap}
-          placeholder="医院名称"
-          defaultValue={allHosName[0].hos_name}
-        >
-          {allHosName.map(item => (
-            <Select.Option id={item.id} key={item.id} value={item.hos_name}>
-              {item.hos_name}
-            </Select.Option>
-          ))}
-        </Select>:''}
-      </span>
-      <span className={classes.Span}>
-        组别：
-        {allGroupName instanceof Object?<Select
-          placeholder="请选择推广地址"
-          className={classes.Gap}
-          placeholder="医院名称"
-          defaultValue={allGroupName[0].name}
-        >
-          {allGroupName.map(item => (
-            <Select.Option id={item.id} key={item.id} value={item.name}>
-              {item.name}
-            </Select.Option>
-          ))}
-        </Select>:''}
-      </span> */}
 
       <span className={classes.BtnRight}>
-        {/* <Button type='primary' htmlType='button' onClick={onReset} className={classes.Gap}>
-            查询
-          </Button> */}
         <Button type="primary" htmlType="button" onClick={onReset} className={classes.Gap}>
           重置
         </Button>

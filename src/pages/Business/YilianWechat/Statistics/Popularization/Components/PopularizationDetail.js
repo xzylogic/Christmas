@@ -5,25 +5,19 @@ import { Modal, Select, Divider } from 'antd';
 import TableList from '@/components/PageComponents/Table/TableList';
 
 const mapStateToProps = state => ({
-  // promoteAttentionList: state.businessYilianWechatQuery.detailList.location,
-
-  // currentPage: state.businessYilianWechatQuery.detailCurrentPage.location,
-
-  // totalElements: state.businessYilianWechatQuery.datailTotalElements.location,
-
-  // searchParam: state.businessYilianWechatQuery.searchParam.location,
-  promoteAttentionList: state.businessYilianWechatStatisticDatas.list.promoteAttention,
+  promoteAttentionList: state.businessYilianWechatStatisticDatas.detailList.promoteAttention,
   currentPage: state.businessYilianWechatStatisticDatas.currentPage.promoteAttention,
   totalElements: state.businessYilianWechatStatisticDatas.totalElements.promoteAttention,
   searchParam: state.businessYilianWechatStatisticDatas.searchParam.promoteAttention,
 
-  loading: state.loading.effects['businessYilianWechatStatisticDatas/fetchPromoteAttentionAmount'],
+  loading:
+    state.loading.effects['businessYilianWechatStatisticDatas/fetchPromoteAttentionAmountDetail'],
 });
 
 const mapDispatchToProps = dispatch => ({
   onFetchPromoteAttentionAmount: (way, name, page) =>
     dispatch({
-      type: 'businessYilianWechatStatisticDatas/fetchPromoteAttentionAmount',
+      type: 'businessYilianWechatStatisticDatas/fetchPromoteAttentionAmountDetail',
       payload: { way, name, page },
     }),
 });
@@ -58,8 +52,8 @@ class PopularizationDetail extends Component {
         title: '日期',
         // dataIndex: 'week' || 'date' || 'months' || 'years',
         // key: 'week',
-        dataIndex: 'week' || 'date' || 'months' || 'years',
-        key: 'week' || 'date' || 'months' || 'years',
+        dataIndex: 'weeks' || 'date' || 'months' || 'years',
+        key: 'weeks' || 'date' || 'months' || 'years',
         render: (_, record) => record.date || record.weeks || record.months || record.years,
       },
       {
@@ -104,9 +98,17 @@ class PopularizationDetail extends Component {
 
   render() {
     const { promoteAttentionList, currentPage, totalElements, visible, name, onClose } = this.props;
+    console.log(this.props);
     const { way } = this.state;
     return (
-      <Modal title="查看详情" centered visible={visible} footer={null} onCancel={onClose}>
+      <Modal
+        title="查看详情"
+        width={600}
+        centered
+        visible={visible}
+        footer={null}
+        onCancel={onClose}
+      >
         <Select name="way" value={way} onChange={this.handleWayChange}>
           <Select.Option value="day">按日统计</Select.Option>
           <Select.Option value="week">按周统计</Select.Option>

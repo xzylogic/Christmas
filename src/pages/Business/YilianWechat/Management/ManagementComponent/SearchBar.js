@@ -11,6 +11,8 @@ function searchBar(props) {
     onRefreshClick,
     onNewClick,
     onExportClick,
+    editorBarShow,
+    onEditorGroupHosClick,
   } = props;
 
   return (
@@ -34,6 +36,13 @@ function searchBar(props) {
         <Button type="primary" htmlType="button" onClick={onExportClick}>
           导出Excel
         </Button>
+        {editorBarShow ? (
+          <Button type="primary" htmlType="button" onClick={onEditorGroupHosClick}>
+            编辑小组
+          </Button>
+        ) : (
+          ''
+        )}
       </Col>
     </Row>
   );

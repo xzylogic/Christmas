@@ -11,7 +11,7 @@ function AppointmentsBar(props) {
   // }
   return (
     <Row className={classes.Container}>
-      <Col span={24} className={classes.Container}>
+      <Col span={24}>
         <Select
           className={classes.Gap}
           style={{ width: 115 }}
@@ -85,7 +85,7 @@ function AppointmentsBar(props) {
       </Col>
       {/* <Col span={15}> */}
       <span className={classes.Span}>
-        患者姓名：
+        姓名：
         <Input
           name="patientName"
           value={params.patientName}
@@ -95,7 +95,7 @@ function AppointmentsBar(props) {
         />
       </span>
       <span className={classes.Span}>
-        患者手机：
+        手机：
         <Input
           name="patientPhone"
           value={params.patientPhone}
@@ -105,7 +105,7 @@ function AppointmentsBar(props) {
         />
       </span>
       <span className={classes.Span}>
-        患者卡号：
+        卡号：
         <Input
           name="mediCardId"
           value={params.mediCardId}
@@ -125,7 +125,7 @@ function AppointmentsBar(props) {
         />
       </span>
       <span className={classes.Span}>
-        医生工号：
+        工号：
         <Input
           name="hosDocCode"
           value={params.hosDocCode}
@@ -143,7 +143,7 @@ function AppointmentsBar(props) {
         <Button type="primary" htmlType="button" onClick={onReset} className={classes.Gap}>
           重置
         </Button>
-        <Button type="primary" htmlType="button" onClick={onExport}>
+        <Button type="primary" htmlType="button" onClick={onExport} className={classes.Gap}>
           导出Excel
         </Button>
       </span>

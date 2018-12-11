@@ -1,8 +1,9 @@
 import moment from 'moment';
 
 import {
-  // fetchWeChatAttentionAmountService,
   fetchPromoteAttentionAmountService,
+  fetchAllHosNameService,
+  fetchAllGroupNameService,
 } from '@/services/business/yilian-wechat/statistics/statisticsdata';
 
 export default {
@@ -14,14 +15,22 @@ export default {
       appointmentAttention: null,
       // 推广数据统计
       promoteAttention: {
+        way: 'week',
         // startTime: moment(new Date().valueOf() - 604800000).format('YYYY-MM-DD'),
         startTime: moment(new Date().valueOf() - 31536000000).format('YYYY-MM-DD'),
         endTime: moment(new Date().valueOf()).format('YYYY-MM-DD'),
         origin: '',
+        // 医院名字
         hosName: '',
+        // 医院等级
         hosGrade: null,
         group: null,
         channel: null,
+        orderStatus: null,
+        // 医联微信
+        orderStatusWechat: null,
+        // 医联App
+        orderStatusApp: null,
       },
     },
     list: {
@@ -29,6 +38,10 @@ export default {
       appointmentAttention: null,
       // 推广数据统计
       promoteAttention: null,
+      // 所有医院名称
+      allHosName: null,
+      // 所有小组类别
+      allGroupName: null,
     },
     currentPage: {
       appointmentAttention: 0,
@@ -54,13 +67,37 @@ export default {
   },
 
   effects: {
+    *fetchAllHosName(_, { call, put }) {
+      const res = yield call(fetchAllHosNameService);
+      if (res && res.code === 200) {
+        yield put({
+          type: 'updateList',
+          payload: {
+            key: 'allHosName',
+            list: res.data,
+          },
+        });
+      }
+    },
+    *fetchAllGroupName(_, { call, put }) {
+      const res = yield call(fetchAllGroupNameService);
+      if (res && res.code === 200) {
+        yield put({
+          type: 'updateList',
+          payload: {
+            key: 'allGroupName',
+            list: res.data,
+          },
+        });
+      }
+    },
     *fetchPromoteAttentionAmount({ payload }, { call, put, select }) {
+      console.log(payload);
       try {
         const { promoteAttention } = yield select(
           state => state.businessYilianWechatStatisticDatas.searchParam
         );
-        const { page } = payload;
-        console.log(payload);
+        const { way, name, page } = payload;
         let params = '';
         if (promoteAttention && promoteAttention.startTime) {
           params += `&startTime=${promoteAttention.startTime}`;
@@ -80,7 +117,7 @@ export default {
         if (promoteAttention && promoteAttention.channel) {
           params += `&channel=${promoteAttention.channel}`;
         }
-        const res = yield call(fetchPromoteAttentionAmountService, params, page, 10);
+        const res = yield call(fetchPromoteAttentionAmountService, way, name, params, page, 10);
         if (res && res.code === 200) {
           yield put({
             type: 'updateList',

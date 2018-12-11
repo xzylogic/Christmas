@@ -102,3 +102,21 @@ export async function deleteLocationService(id) {
 export async function getMemberService() {
   return request(`/yilian-cloud-backend-api/hos/base/person`);
 }
+
+export async function fetchAllHosNameService() {
+  return request(`/yilian-cloud-backend-api/ylWeChatCount/search/allHos`);
+}
+
+export async function fetchAllGroupNameService() {
+  return request(`/yilian-cloud-backend-api/ylWeChatCount/search/allGroup`);
+}
+
+export async function addHosToGroupService(params, page, size) {
+  // console.log(params)
+  let query = `?page=${page || 0}&size=${size || 10}`;
+  if (params) {
+    query += `&${params}`;
+  }
+  // console.log(query)
+  return request(`/yilian-cloud-backend-api/ylWeChatCount/addHosToGroup${query}`);
+}

@@ -13,6 +13,9 @@ import {
   deleteMemberService,
   deleteLocationService,
   getMemberService,
+  fetchAllHosNameService,
+  fetchAllGroupNameService,
+  addHosToGroupService,
 } from '@/services/business/yilian-wechat/management/management';
 
 export default {
@@ -29,6 +32,10 @@ export default {
       member: null,
       location: null,
       person: null,
+      // 所有医院名称
+      allHosName: null,
+      // 所有小组类别
+      allGroupName: null,
     },
     currentPage: {
       group: 0,
@@ -234,6 +241,50 @@ export default {
       } else {
         message.error('删除地点失败！');
       }
+    },
+    *fetchAllHosName(_, { call, put }) {
+      const res = yield call(fetchAllHosNameService);
+      if (res && res.code === 200) {
+        yield put({
+          type: 'updateList',
+          payload: {
+            key: 'allHosName',
+            list: res.data,
+          },
+        });
+      }
+    },
+    *fetchAllGroupName(_, { call, put }) {
+      const res = yield call(fetchAllGroupNameService);
+      if (res && res.code === 200) {
+        yield put({
+          type: 'updateList',
+          payload: {
+            key: 'allGroupName',
+            list: res.data,
+          },
+        });
+      }
+    },
+    *addHosToGroup({ payload }, { call, put }) {
+      // console.log(payload)
+      const { postData } = payload;
+      // const { name , hosName } = postData;
+      console.log(postData.hosName.join(','));
+      let params = '';
+      if (postData.name && postData.hosName) {
+        params += `name=${postData.name}&hosName=${postData.hosName}`;
+      }
+      const res = yield call(addHosToGroupService, params);
+      let ifsuccess = false;
+      if (res && res.code === 200) {
+        ifsuccess = true;
+        yield put({ type: 'fetchGroupList', payload: { page: 0 } });
+        message.success('编辑小组信息成功！');
+      } else {
+        message.error('编辑小组信息失败！');
+      }
+      return ifsuccess;
     },
   },
 

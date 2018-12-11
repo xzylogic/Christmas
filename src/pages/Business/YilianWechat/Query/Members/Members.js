@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
+import moment from 'moment';
 import { Tabs, Radio, Table, Button } from 'antd';
 import debounce from 'lodash.debounce';
 
@@ -211,6 +212,17 @@ class Member extends Component {
     console.log('register download');
   };
 
+  handleReset = async e => {
+    e.preventDefault();
+    const { onSearchParamChange, onFetchMembershipListDebounce } = this.props;
+    await onSearchParamChange(
+      'startTime',
+      moment(new Date().valueOf() - 604800000).format('YYYY-MM-DD')
+    );
+    await onSearchParamChange('endTime', moment(new Date().valueOf()).format('YYYY-MM-DD'));
+    await onFetchMembershipListDebounce(0);
+  };
+
   render() {
     const { followingList, registrationList, searchParam, allHosName, allPerson } = this.props;
     const { tab1Show, tab2Show } = this.state;
@@ -222,6 +234,7 @@ class Member extends Component {
             allPerson={allPerson}
             params={searchParam}
             onParamsChange={this.handleParamsChange}
+            onReset={this.handleReset}
           />
           <Tabs className={classes.Content} animated={false}>
             <Tabs.TabPane tab="会员关注" key="1">

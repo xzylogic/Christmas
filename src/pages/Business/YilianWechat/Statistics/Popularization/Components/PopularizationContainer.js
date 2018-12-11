@@ -4,6 +4,7 @@ import moment from 'moment';
 import debounce from 'lodash.debounce';
 
 import PopularizationBar from './PopularizationBar';
+import PopularizationDetail from './PopularizationDetail';
 import TableList from '@/components/PageComponents/Table/TableList';
 
 const mapStateToProps = state => ({
@@ -11,6 +12,8 @@ const mapStateToProps = state => ({
   currentPage: state.businessYilianWechatStatisticDatas.currentPage.promoteAttention,
   totalElements: state.businessYilianWechatStatisticDatas.totalElements.promoteAttention,
   searchParam: state.businessYilianWechatStatisticDatas.searchParam.promoteAttention,
+  allHosName: state.businessYilianWechatStatisticDatas.list.allHosName,
+  allGroupName: state.businessYilianWechatStatisticDatas.list.allGroupName,
   loading: state.loading.effects['businessYilianWechatStatisticDatas/fetchPromoteAttentionAmount'],
 });
 
@@ -33,6 +36,14 @@ const mapDispatchToProps = dispatch => ({
       type: 'businessYilianWechatStatisticDatas/updateSearchParam',
       payload: { origin: 'promoteAttention', key, value },
     }),
+  onFetchAllHosName: () =>
+    dispatch({
+      type: 'businessYilianWechatStatisticDatas/fetchAllHosName',
+    }),
+  onFetchAllGroupName: () =>
+    dispatch({
+      type: 'businessYilianWechatStatisticDatas/fetchAllGroupName',
+    }),
 });
 
 @connect(
@@ -40,16 +51,20 @@ const mapDispatchToProps = dispatch => ({
   mapDispatchToProps
 )
 class AppointmentsContainer extends Component {
-  // state = {
-  //   // way: 'week',
-  //   // showDetail: false,
-  // };
+  state = {
+    // allHosNameArr: false,
+    //   // way: 'week',
+    selectedName: '',
+    showDetail: false,
+  };
 
   componentDidMount() {
-    const { onFetchWeChatAttentionAmount } = this.props;
+    const { onFetchWeChatAttentionAmount, onFetchAllHosName, onFetchAllGroupName } = this.props;
     // const { way } = this.state;
     // onFetchWeChatAttentionAmount(way, 0);
     onFetchWeChatAttentionAmount(0);
+    onFetchAllHosName();
+    onFetchAllGroupName();
   }
 
   // componentDidUpdate(prevProps) {
@@ -79,26 +94,12 @@ class AppointmentsContainer extends Component {
   };
 
   setTableColumns = () => {
-    // const renderOrderStatus = record => {
-    //   let content = '';
-    //   if (record === '1') {
-    //     content = <span>无效</span>;
-    //   }
-    //   if (record === '2') {
-    //     content = <span>预约</span>;
-    //   }
-    //   if (record === '3') {
-    //     content = <span>撤销</span>;
-    //   }
-    //   return content;
-    // };
-
     const columns = [
-      {
-        title: '日期/周期/月份/年份',
-        dataIndex: 'weeks',
-        key: 'weeks',
-      },
+      // {
+      //   title: '日期/周期/月份/年份',
+      //   dataIndex: 'week' || 'date' || 'months' || 'years',
+      //   key: 'week' || 'date' || 'months' || 'years',
+      // },
       //   {
       //     title: '预约状态',
       //     dataIndex: 'order_status',
@@ -134,9 +135,9 @@ class AppointmentsContainer extends Component {
         title: '明细',
         dataIndex: 'id',
         key: 'action',
-        render: (text, record) => (
+        render: (_, record) => (
           <span>
-            <a onClick={e => this.handleShowDetail(e, record)}>查看</a>
+            <a onClick={e => this.handleDetail(e, record)}>查看</a>
           </span>
         ),
       },
@@ -174,11 +175,19 @@ class AppointmentsContainer extends Component {
     console.log('export');
   };
 
-  handleShowDetail = e => {
+  handleDetail = (e, record) => {
     e.preventDefault();
-    // this.setState({
-    //   showDetail: true,
-    // });
+    this.setState({
+      showDetail: true,
+      selectedName: record.hosName,
+    });
+  };
+
+  handleDetailClose = e => {
+    e.preventDefault();
+    this.setState({
+      showDetail: false,
+    });
   };
 
   handleChangeWay = value => {
@@ -189,17 +198,28 @@ class AppointmentsContainer extends Component {
   };
 
   render() {
-    const { searchParam, promoteAttentionList, currentPage, totalElements } = this.props;
+    const {
+      searchParam,
+      promoteAttentionList,
+      currentPage,
+      totalElements,
+      allHosName,
+      allGroupName,
+    } = this.props;
+    const { showDetail, selectedName } = this.state;
+    // console.log(allHosNameArr)
     // const { way } = this.state;
     return (
       <React.Fragment>
         <PopularizationBar
           // way={way}
+          allHosName={allHosName}
+          allGroupName={allGroupName}
           params={searchParam}
-          // onReset={this.handleReset}
+          onReset={this.handleReset}
           onExport={this.handleExport}
-          // onChangeWay={this.handleChangeWay}
-          // onParamsChange={this.handleParamsChanged}
+          onChangeWay={this.handleChangeWay}
+          onParamsChange={this.handleParamsChanged}
         />
         <TableList
           rowKey="aaa"
@@ -208,6 +228,11 @@ class AppointmentsContainer extends Component {
           currentPage={currentPage}
           totalElements={totalElements}
           onPageChange={this.handlePageChange}
+        />
+        <PopularizationDetail
+          name={selectedName}
+          visible={showDetail}
+          onClose={this.handleDetailClose}
         />
       </React.Fragment>
     );

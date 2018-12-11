@@ -6,10 +6,38 @@ import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 
 import classes from '../Accounts.less';
 
-@connect(({ account }) => ({
-  accountList: account.accountList,
-  searchParam: account.searchParam,
-}))
+const mapStateToProps = state => ({
+  selectedAccount: state.account.selectedAccount,
+  roles: state.account.roles,
+  loading: state.loading.effects['account/saveAccount'],
+});
+
+const mapDispatchToProps = dispatch => ({
+  onFetchAccountDetail: userId =>
+    dispatch({
+      type: 'account/fetchAccountDetail',
+      payload: { userId },
+    }),
+  onFetchAllRoles: () =>
+    dispatch({
+      type: 'account/fetchAllRoles',
+    }),
+  onSaveAccount: data =>
+    dispatch({
+      type: 'account/saveAccount',
+      payload: { data },
+    }),
+  onUpdateSelectedAccount: data =>
+    dispatch({
+      type: 'account/updateSelectedAccount',
+      payload: data,
+    }),
+});
+
+@connect(
+  mapStateToProps,
+  mapDispatchToProps
+)
 @Form.create()
 class AccountDetail extends Component {
   state = {
@@ -17,7 +45,23 @@ class AccountDetail extends Component {
   };
 
   componentDidMount() {
-    console.log(this.props);
+    const {
+      roles,
+      onFetchAllRoles,
+      match: {
+        params: { id },
+      },
+      onFetchAccountDetail,
+      onUpdateSelectedAccount,
+    } = this.props;
+    if (!roles) {
+      onFetchAllRoles();
+    }
+    if (id !== '0') {
+      onFetchAccountDetail(id);
+    } else {
+      onUpdateSelectedAccount(null);
+    }
   }
 
   compareToFirstPassword = (rule, value, callback) => {
@@ -46,10 +90,21 @@ class AccountDetail extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const { form } = this.props;
+    const {
+      form,
+      match: {
+        params: { id },
+      },
+      onSaveAccount,
+    } = this.props;
     form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        const postData = { ...values };
+        delete postData.confirm;
+        if (id !== '0') {
+          postData.userId = id;
+        }
+        onSaveAccount(postData);
       }
     });
   };
@@ -58,6 +113,8 @@ class AccountDetail extends Component {
     const {
       form: { getFieldDecorator },
       history: { goBack },
+      selectedAccount,
+      roles,
     } = this.props;
 
     const formItemLayout = {
@@ -85,16 +142,19 @@ class AccountDetail extends Component {
           <Form className={classes.AccountFormContainer} onSubmit={this.handleSubmit}>
             <Form.Item {...formItemLayout} label="姓名">
               {getFieldDecorator('realName', {
+                initialValue: selectedAccount && selectedAccount.realName,
                 rules: [{ required: true, message: '请填写真实姓名' }],
               })(<Input placeholder="请填写真实姓名" />)}
             </Form.Item>
             <Form.Item {...formItemLayout} label="账号">
               {getFieldDecorator('username', {
+                initialValue: selectedAccount && selectedAccount.username,
                 rules: [{ required: true, message: '请填写用户账号' }],
               })(<Input placeholder="请填写用户账号" />)}
             </Form.Item>
             <Form.Item {...formItemLayout} label="密码">
               {getFieldDecorator('password', {
+                initialValue: selectedAccount && selectedAccount.password,
                 rules: [
                   {
                     required: true,
@@ -108,6 +168,7 @@ class AccountDetail extends Component {
             </Form.Item>
             <Form.Item {...formItemLayout} label="确认密码">
               {getFieldDecorator('confirm', {
+                initialValue: selectedAccount && selectedAccount.password,
                 rules: [
                   {
                     required: true,
@@ -122,12 +183,19 @@ class AccountDetail extends Component {
               )}
             </Form.Item>
             <Form.Item {...formItemLayout} label="角色">
-              {getFieldDecorator('role', {
+              {getFieldDecorator('roleId', {
+                initialValue:
+                  (selectedAccount && selectedAccount.role && selectedAccount.role.roleId) ||
+                  ((roles && roles[0] && roles[0].roleId) || ''),
                 rules: [{ required: true, message: '请选择角色' }],
               })(
                 <Select>
-                  <Select.Option value="1">角色1</Select.Option>
-                  <Select.Option value="2">角色2</Select.Option>
+                  {roles &&
+                    roles.map(role => (
+                      <Select.Option key={role.roleId} value={role.roleId}>
+                        {role.roleName}
+                      </Select.Option>
+                    ))}
                 </Select>
               )}
             </Form.Item>

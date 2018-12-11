@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Spin, Menu, Icon, Dropdown, Avatar } from 'antd';
+import { Spin, Menu, Icon, Dropdown } from 'antd';
 import styles from './index.less';
 
 export default class GlobalHeaderRight extends PureComponent {
@@ -7,10 +7,10 @@ export default class GlobalHeaderRight extends PureComponent {
     const { currentUser, onMenuClick, theme } = this.props;
     const menu = (
       <Menu className={styles.menu} selectedKeys={[]} onClick={onMenuClick}>
-        <Menu.Item key="resetPassword">
+        {/* <Menu.Item key="changePassword">
           <Icon type="user" />
-          重置密码
-        </Menu.Item>
+          修改密码
+        </Menu.Item> */}
         <Menu.Item key="logout">
           <Icon type="logout" />
           退出
@@ -23,15 +23,15 @@ export default class GlobalHeaderRight extends PureComponent {
     }
     return (
       <div className={className}>
-        {currentUser.realName ? (
+        {currentUser && currentUser.realName ? (
           <Dropdown overlay={menu}>
             <span className={`${styles.action} ${styles.account}`}>
-              <Avatar
+              {/* <Avatar
                 size="small"
                 className={styles.avatar}
                 src={currentUser.avatar}
                 alt="avatar"
-              />
+              /> */}
               <span className={styles.name}>{currentUser.realName || currentUser.username}</span>
             </span>
           </Dropdown>

@@ -27,6 +27,16 @@ const mapDispatchToProps = dispatch => ({
       type: 'role/updateSearchParam',
       payload: { key, name },
     }),
+  onToggleRoleState: (roleId, enable) =>
+    dispatch({
+      type: 'role/toggleRoleState',
+      payload: { roleId, enable },
+    }),
+  onDeleteRole: roleId =>
+    dispatch({
+      type: 'role/deleteRole',
+      payload: { roleId },
+    }),
 });
 
 @connect(
@@ -35,7 +45,6 @@ const mapDispatchToProps = dispatch => ({
 )
 class Roles extends Component {
   componentDidMount() {
-    console.log('role');
     const { roleList, onFetchRoleList } = this.props;
     if (roleList === null) {
       onFetchRoleList(0);
@@ -59,18 +68,16 @@ class Roles extends Component {
   };
 
   handleSelectedChange = (record, type) => {
-    console.log(record, type);
-    // const { onChangeAccountState, onResetAccountPwd, onDeleteAccount } = this.props;
-    // if (type === 'state') {
-    //   onChangeRoleState(record.id, !record.isDelete);
-    // }
-    // if (type === 'delete') {
-    //   onDeleteRole(record.id);
-    // }
+    const { onToggleRoleState, onDeleteRole } = this.props;
+    if (type === 'state') {
+      onToggleRoleState(record.roleId, record.enabled ? 0 : 1);
+    }
+    if (type === 'delete') {
+      onDeleteRole(record.roleId);
+    }
   };
 
   render() {
-    console.log('render');
     const { searchParam, roleList, currentPage, totalElements, onFetchRoleList } = this.props;
     return (
       <PageHeaderWrapper>

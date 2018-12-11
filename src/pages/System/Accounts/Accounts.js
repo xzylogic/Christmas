@@ -27,20 +27,20 @@ const mapDispatchToProps = dispatch => ({
       type: 'account/updateSearchParam',
       payload: { key, name },
     }),
-  onChangeAccountState: (id, state) =>
+  onChangeAccountState: (userId, enable) =>
     dispatch({
       type: 'account/toggleAccountState',
-      payload: { id, state },
+      payload: { userId, enable },
     }),
-  onResetAccountPwd: id =>
+  onResetAccountPwd: userId =>
     dispatch({
       type: 'account/resetAccountPassword',
-      payload: { id },
+      payload: { userId },
     }),
-  onDeleteAccount: id =>
+  onDeleteAccount: userId =>
     dispatch({
       type: 'account/deleteAccount',
-      payload: { id },
+      payload: { userId },
     }),
 });
 
@@ -75,13 +75,14 @@ class Accounts extends Component {
   handleSelectedChange = (record, type) => {
     const { onChangeAccountState, onResetAccountPwd, onDeleteAccount } = this.props;
     if (type === 'state') {
-      onChangeAccountState(record.id, !record.isDelete);
+      const enable = record.enabled ? 0 : 1;
+      onChangeAccountState(record.userId, enable);
     }
     if (type === 'reset') {
-      onResetAccountPwd(record.id);
+      onResetAccountPwd(record.userId);
     }
     if (type === 'delete') {
-      onDeleteAccount(record.id);
+      onDeleteAccount(record.userId);
     }
   };
 

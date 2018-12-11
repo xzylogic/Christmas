@@ -27,7 +27,7 @@ export default {
       const { page } = payload;
       let params = '';
       if (searchParam && searchParam.name) {
-        params += `name=${searchParam.name}`;
+        params += `&name=${searchParam.name}`;
       }
       const res = yield call(fetchRoleListService, params, page, 10);
       if (res && res.code === 200) {
@@ -66,22 +66,24 @@ export default {
       }
     },
     *toggleRoleState({ payload }, { call, put }) {
-      const res = yield call(toggleRoleStateService, payload.menuId);
+      const res = yield call(toggleRoleStateService, payload.roleId, payload.enable);
       if (res && res.code === 200) {
         message.success(res.message || '更改角色状态成功！！！');
         yield put({
-          type: 'fetchMenuList',
+          type: 'fetchRoleList',
+          payload: { page: 0 },
         });
       } else {
         message.error((res && res.message) || '更改角色状态失败！！！');
       }
     },
     *deleteRole({ payload }, { call, put }) {
-      const res = yield call(deleteRoleService, payload.menuId);
+      const res = yield call(deleteRoleService, payload.roleId);
       if (res && res.code === 200) {
         message.success(res.message || '删除角色成功！！！');
         yield put({
-          type: 'fetchMenuList',
+          type: 'fetchRoleList',
+          payload: { page: 0 },
         });
       } else {
         message.error((res && res.message) || '删除角色失败！！！');

@@ -10,9 +10,7 @@ export default {
 
   state: {
     status: undefined,
-    currentUser: {
-      name: 'admin',
-    },
+    currentUser: null,
   },
 
   effects: {
@@ -20,7 +18,6 @@ export default {
       const response = yield call(login, payload.userName, payload.password);
       // Login successfully
       if (response.code === 200) {
-        console.log(response.data);
         yield put({
           type: 'changeLoginStatus',
           payload: {
@@ -61,6 +58,10 @@ export default {
           currentAuthority: 'guest',
         },
       });
+      yield put({
+        type: 'saveCurrentUser',
+        payload: null,
+      });
       reloadAuthorized();
       yield put(
         routerRedux.push({
@@ -75,17 +76,18 @@ export default {
 
   reducers: {
     changeLoginStatus(state, { payload }) {
-      setAuthority(payload.currentAuthority);
+      // setAuthority(payload.currentAuthority);
       return {
         ...state,
         status: payload.status,
         type: payload.type,
       };
     },
-    saveCurrentUser(state, action) {
+    saveCurrentUser(state, { payload }) {
+      setAuthority(payload);
       return {
         ...state,
-        currentUser: action.payload || {},
+        currentUser: payload,
       };
     },
   },

@@ -105,242 +105,257 @@ class BasicLayout extends React.PureComponent {
   }
 
   getMenuData() {
-    const { location } = this.props;
-    console.log(location);
-    return [
-      {
-        path: '/',
-      },
-      // 系统管理
-      {
-        path: '/system',
-        name: '系统管理',
-        icon: 'setting',
-        children: [
-          {
-            path: '/system/accounts',
-            name: '账号管理',
-          },
-          {
-            path: '/system/roles',
-            name: '角色管理',
-          },
-          {
-            path: '/system/menus',
-            name: '菜单管理',
-          },
-        ],
-      },
-      // 市平台统计分析
-      {
-        path: '/shi-statistics',
-        name: '市平台统计分析',
-        icon: 'bar-chart',
-        children: [
-          {
-            path: '/shi-statistics/usage-of-hospitals-numbers',
-            name: '各医院号源使用情况',
-          },
-          {
-            path: '/shi-statistics/amount-of-hospitals-appointments',
-            name: '各医院预约量',
-          },
-          {
-            path: '/shi-statistics/amount-of-hospitals-refunds',
-            name: '各医院退号量',
-          },
-          {
-            path: '/shi-statistics/amount-of-hospitals-failures',
-            name: '各医院爽约量',
-          },
-          {
-            path: '/shi-statistics/amount-of-channels-registration',
-            name: '各渠道注册量',
-          },
-          {
-            path: '/shi-statistics/amount-of-channels-refunds',
-            name: '各渠道退号量',
-          },
-          {
-            path: '/shi-statistics/amount-of-channels-failures',
-            name: '各渠道爽约量',
-          },
-          {
-            path: '/shi-statistics/amount-of-channels-appointments',
-            name: '各渠道预约量',
-          },
-        ],
-      },
-      // 医联统计分析
-      {
-        path: '/yilian-statistics',
-        name: '医联统计分析',
-        icon: 'bar-chart',
-        children: [
-          {
-            path: '/yilian-statistics/usage-of-hospitals-numbers',
-            name: '各医院号源使用情况',
-          },
-          {
-            path: '/yilian-statistics/amount-of-hospitals-appointments',
-            name: '各医院预约量',
-          },
-          {
-            path: '/yilian-statistics/amount-of-hospitals-refunds',
-            name: '各医院退号量',
-          },
-          {
-            path: '/yilian-statistics/amount-of-hospitals-failures',
-            name: '各医院爽约量',
-          },
-          {
-            path: '/yilian-statistics/amount-of-channels-registration',
-            name: '各渠道注册量',
-          },
-          {
-            path: '/yilian-statistics/amount-of-channels-refunds',
-            name: '各渠道退号量',
-          },
-          {
-            path: '/yilian-statistics/amount-of-channels-failures',
-            name: '各渠道爽约量',
-          },
-          {
-            path: '/yilian-statistics/amount-of-channels-appointments',
-            name: '各渠道预约量',
-          },
-          {
-            path: '/yilian-statistics/amount-of-daily-activeness',
-            name: '各渠道日活量',
-          },
-          {
-            path: '/yilian-statistics/amount-of-monthly-activeness',
-            name: '各渠道月活量',
-          },
-          {
-            path: '/yilian-statistics/amount-of-download',
-            name: '各渠道下载量',
-          },
-        ],
-      },
-      // 区平台统计分析
-      {
-        path: '/qu-statistics',
-        name: '区平台统计分析',
-        icon: 'bar-chart',
-        children: [
-          {
-            path: '/qu-statistics/usage-of-hospitals-numbers',
-            name: '各医院号源使用情况',
-          },
-          {
-            path: '/qu-statistics/amount-of-hospitals-appointments',
-            name: '各医院预约量',
-          },
-          {
-            path: '/qu-statistics/amount-of-hospitals-refunds',
-            name: '各医院退号量',
-          },
-          {
-            path: '/qu-statistics/amount-of-hospitals-failures',
-            name: '各医院爽约量',
-          },
-          {
-            path: '/qu-statistics/amount-of-channels-registration',
-            name: '各渠道注册量',
-          },
-          {
-            path: '/qu-statistics/amount-of-channels-refunds',
-            name: '各渠道退号量',
-          },
-          {
-            path: '/qu-statistics/amount-of-channels-failures',
-            name: '各渠道爽约量',
-          },
-          {
-            path: '/qu-statistics/amount-of-channels-appointments',
-            name: '各渠道预约量',
-          },
-        ],
-      },
-      // 医联微信业务
-      {
-        path: '/yilian-wechat-business',
-        name: '医联微信业务',
-        icon: 'reconciliation',
-        children: [
-          {
-            path: '/yilian-wechat-business/query',
-            name: '业务查询',
-            icon: 'search',
-            children: [
-              {
-                path: '/yilian-wechat-business/query/appointments',
-                name: '预约查询',
-              },
-              {
-                path: '/yilian-wechat-business/query/performance',
-                name: '业绩查询',
-              },
-              {
-                path: '/yilian-wechat-business/query/members',
-                name: '会员查询',
-              },
-            ],
-          },
-          {
-            path: '/yilian-wechat-business/management',
-            name: '基础信息管理',
-            icon: 'appstore',
-          },
-          {
-            path: '/yilian-wechat-business/statistics',
-            name: '数据统计分析',
-            icon: 'bar-chart',
-            children: [
-              {
-                path: '/yilian-wechat-business/statistics/popularization',
-                name: '推广数据统计',
-              },
-              {
-                path: '/yilian-wechat-business/statistics/popularization-report',
-                name: '推广数据报表',
-              },
-              {
-                path: '/yilian-wechat-business/statistics/appointments',
-                name: '预约数据统计',
-              },
-              {
-                path: '/yilian-wechat-business/statistics/appointments-report',
-                name: '预约数据报表',
-              },
-            ],
-          },
-        ],
-      },
-      // 健康云业务
-      {
-        path: '/health-cloud-business',
-        name: '健康云业务',
-        icon: 'project',
-        children: [
-          {
-            path: '/health-cloud-business/statistics',
-            name: '数据统计分析',
-            icon: 'bar-chart',
-            children: [
-              {
-                path: '/health-cloud-business/statistics/popularization-report',
-                name: '推广数据报表',
-              },
-            ],
-          },
-        ],
-      },
-    ];
+    const { dispatch } = this.props;
+    let currentUser = null;
+    const authority = sessionStorage.getItem('antd-pro-authority');
+    try {
+      currentUser = JSON.parse(authority);
+      dispatch({
+        type: 'login/saveCurrentUser',
+        payload: currentUser,
+      });
+    } catch {
+      console.log('GET USER ERROR');
+    }
+    let menu = [];
+    if (currentUser && currentUser.role && currentUser.role.menus) {
+      menu = currentUser.role.menus[0].children;
+    }
+    // let u = [
+    //   {
+    //     path: '/',
+    //   },
+    //   // 系统管理
+    //   {
+    //     path: '/system',
+    //     name: '系统管理',
+    //     icon: 'setting',
+    //     children: [
+    //       {
+    //         path: '/system/accounts',
+    //         name: '账号管理',
+    //       },
+    //       {
+    //         path: '/system/roles',
+    //         name: '角色管理',
+    //       },
+    //       {
+    //         path: '/system/menus',
+    //         name: '菜单管理',
+    //       },
+    //     ],
+    //   },
+    //   // 市平台统计分析
+    //   {
+    //     path: '/shi-statistics',
+    //     name: '市平台统计分析',
+    //     icon: 'bar-chart',
+    //     children: [
+    //       {
+    //         path: '/shi-statistics/usage-of-hospitals-numbers',
+    //         name: '各医院号源使用情况',
+    //       },
+    //       {
+    //         path: '/shi-statistics/amount-of-hospitals-appointments',
+    //         name: '各医院预约量',
+    //       },
+    //       {
+    //         path: '/shi-statistics/amount-of-hospitals-refunds',
+    //         name: '各医院退号量',
+    //       },
+    //       {
+    //         path: '/shi-statistics/amount-of-hospitals-failures',
+    //         name: '各医院爽约量',
+    //       },
+    //       {
+    //         path: '/shi-statistics/amount-of-channels-registration',
+    //         name: '各渠道注册量',
+    //       },
+    //       {
+    //         path: '/shi-statistics/amount-of-channels-refunds',
+    //         name: '各渠道退号量',
+    //       },
+    //       {
+    //         path: '/shi-statistics/amount-of-channels-failures',
+    //         name: '各渠道爽约量',
+    //       },
+    //       {
+    //         path: '/shi-statistics/amount-of-channels-appointments',
+    //         name: '各渠道预约量',
+    //       },
+    //     ],
+    //   },
+    //   // 医联统计分析
+    //   {
+    //     path: '/yilian-statistics',
+    //     name: '医联统计分析',
+    //     icon: 'bar-chart',
+    //     children: [
+    //       {
+    //         path: '/yilian-statistics/usage-of-hospitals-numbers',
+    //         name: '各医院号源使用情况',
+    //       },
+    //       {
+    //         path: '/yilian-statistics/amount-of-hospitals-appointments',
+    //         name: '各医院预约量',
+    //       },
+    //       {
+    //         path: '/yilian-statistics/amount-of-hospitals-refunds',
+    //         name: '各医院退号量',
+    //       },
+    //       {
+    //         path: '/yilian-statistics/amount-of-hospitals-failures',
+    //         name: '各医院爽约量',
+    //       },
+    //       {
+    //         path: '/yilian-statistics/amount-of-channels-registration',
+    //         name: '各渠道注册量',
+    //       },
+    //       {
+    //         path: '/yilian-statistics/amount-of-channels-refunds',
+    //         name: '各渠道退号量',
+    //       },
+    //       {
+    //         path: '/yilian-statistics/amount-of-channels-failures',
+    //         name: '各渠道爽约量',
+    //       },
+    //       {
+    //         path: '/yilian-statistics/amount-of-channels-appointments',
+    //         name: '各渠道预约量',
+    //       },
+    //       {
+    //         path: '/yilian-statistics/amount-of-daily-activeness',
+    //         name: '各渠道日活量',
+    //       },
+    //       {
+    //         path: '/yilian-statistics/amount-of-monthly-activeness',
+    //         name: '各渠道月活量',
+    //       },
+    //       {
+    //         path: '/yilian-statistics/amount-of-download',
+    //         name: '各渠道下载量',
+    //       },
+    //     ],
+    //   },
+    //   // 区平台统计分析
+    //   {
+    //     path: '/qu-statistics',
+    //     name: '区平台统计分析',
+    //     icon: 'bar-chart',
+    //     children: [
+    //       {
+    //         path: '/qu-statistics/usage-of-hospitals-numbers',
+    //         name: '各医院号源使用情况',
+    //       },
+    //       {
+    //         path: '/qu-statistics/amount-of-hospitals-appointments',
+    //         name: '各医院预约量',
+    //       },
+    //       {
+    //         path: '/qu-statistics/amount-of-hospitals-refunds',
+    //         name: '各医院退号量',
+    //       },
+    //       {
+    //         path: '/qu-statistics/amount-of-hospitals-failures',
+    //         name: '各医院爽约量',
+    //       },
+    //       {
+    //         path: '/qu-statistics/amount-of-channels-registration',
+    //         name: '各渠道注册量',
+    //       },
+    //       {
+    //         path: '/qu-statistics/amount-of-channels-refunds',
+    //         name: '各渠道退号量',
+    //       },
+    //       {
+    //         path: '/qu-statistics/amount-of-channels-failures',
+    //         name: '各渠道爽约量',
+    //       },
+    //       {
+    //         path: '/qu-statistics/amount-of-channels-appointments',
+    //         name: '各渠道预约量',
+    //       },
+    //     ],
+    //   },
+    //   // 医联微信业务
+    //   {
+    //     path: '/yilian-wechat-business',
+    //     name: '医联微信业务',
+    //     icon: 'reconciliation',
+    //     children: [
+    //       {
+    //         path: '/yilian-wechat-business/query',
+    //         name: '业务查询',
+    //         icon: 'search',
+    //         children: [
+    //           {
+    //             path: '/yilian-wechat-business/query/appointments',
+    //             name: '预约查询',
+    //           },
+    //           {
+    //             path: '/yilian-wechat-business/query/performance',
+    //             name: '业绩查询',
+    //           },
+    //           {
+    //             path: '/yilian-wechat-business/query/members',
+    //             name: '会员查询',
+    //           },
+    //         ],
+    //       },
+    //       {
+    //         path: '/yilian-wechat-business/management',
+    //         name: '基础信息管理',
+    //         icon: 'appstore',
+    //       },
+    //       {
+    //         path: '/yilian-wechat-business/statistics',
+    //         name: '数据统计分析',
+    //         icon: 'bar-chart',
+    //         children: [
+    //           {
+    //             path: '/yilian-wechat-business/statistics/popularization',
+    //             name: '推广数据统计',
+    //           },
+    //           {
+    //             path: '/yilian-wechat-business/statistics/popularization-report',
+    //             name: '推广数据报表',
+    //           },
+    //           {
+    //             path: '/yilian-wechat-business/statistics/appointments',
+    //             name: '预约数据统计',
+    //           },
+    //           {
+    //             path: '/yilian-wechat-business/statistics/appointments-report',
+    //             name: '预约数据报表',
+    //           },
+    //         ],
+    //       },
+    //     ],
+    //   },
+    //   // 健康云业务
+    //   {
+    //     path: '/health-cloud-business',
+    //     name: '健康云业务',
+    //     icon: 'project',
+    //     children: [
+    //       {
+    //         path: '/health-cloud-business/statistics',
+    //         name: '数据统计分析',
+    //         icon: 'bar-chart',
+    //         children: [
+    //           {
+    //             path: '/health-cloud-business/statistics/popularization-report',
+    //             name: '推广数据报表',
+    //           },
+    //         ],
+    //       },
+    //     ],
+    //   },
+    // ];
     // console.log(JSON.stringify(memoizeOneFormatter(routes)));
     // return memoizeOneFormatter(routes);
     // return data;
+    return menu;
   }
 
   /**
@@ -486,8 +501,9 @@ class BasicLayout extends React.PureComponent {
   }
 }
 
-export default connect(({ global, setting }) => ({
+export default connect(({ global, setting, login }) => ({
   collapsed: global.collapsed,
   layout: setting.layout,
+  currentUser: login.currentUser,
   ...setting,
 }))(BasicLayout);

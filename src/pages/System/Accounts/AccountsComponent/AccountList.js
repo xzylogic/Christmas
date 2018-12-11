@@ -71,7 +71,7 @@ class AccountList extends React.PureComponent {
       },
       {
         title: '操作',
-        dataIndex: 'deleted',
+        dataIndex: 'enabled',
         key: 'action',
         render: (text, record) => (
           <span>

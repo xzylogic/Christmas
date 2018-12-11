@@ -116,6 +116,17 @@ class MenuForm extends Component {
               ],
             })(<Input placeholder="请填写菜单链接" />)}
           </Form.Item>
+          <Form.Item {...formItemLayout} label="菜单图标">
+            {getFieldDecorator('icon', {
+              initialValue: selectedMenu.icon,
+              rules: [
+                {
+                  required: false,
+                  message: '请填写菜单图标',
+                },
+              ],
+            })(<Input placeholder="请填写菜单图标" />)}
+          </Form.Item>
           <Form.Item {...formItemLayout} label="菜单排序">
             {getFieldDecorator('sort', {
               initialValue: selectedMenu.sort,
@@ -175,6 +186,17 @@ class MenuForm extends Component {
                   },
                 ],
               })(<Input placeholder="请填写菜单链接" />)}
+            </Form.Item>
+            <Form.Item {...formItemLayout} label="菜单图标">
+              {getFieldDecorator('icon', {
+                initialValue: selectedMenu.icon,
+                rules: [
+                  {
+                    required: false,
+                    message: '请填写菜单图标',
+                  },
+                ],
+              })(<Input placeholder="请填写菜单图标" />)}
             </Form.Item>
             <Form.Item {...formItemLayout} label="菜单排序">
               {getFieldDecorator('sort', {

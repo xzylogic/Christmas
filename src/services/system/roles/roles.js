@@ -3,7 +3,7 @@ import request from '@/utils/request';
 export async function fetchRoleListService(params, page, size) {
   let query = `?page=${page}&size=${size || 10}`;
   if (params) {
-    query += `&${params}`;
+    query += `${params}`;
   }
   return request(`/yilian-cloud-backend-api/role/getRoles${query}`);
 }
@@ -22,7 +22,7 @@ export async function saveRoleService(postData) {
 }
 
 export async function toggleRoleStateService(roleId, enable) {
-  return request(`/yilian-cloud-backend-api/role/enableRol?roleId=${roleId}&enable=${enable}`, {
+  return request(`/yilian-cloud-backend-api/role/enableRole?roleId=${roleId}&enable=${enable}`, {
     method: 'POST',
     body: {},
   });

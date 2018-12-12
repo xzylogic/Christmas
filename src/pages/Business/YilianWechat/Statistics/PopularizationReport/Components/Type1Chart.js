@@ -12,6 +12,12 @@ const Line1 = createG2(chart => {
     .color('site', ['#36cfc9', '#ffc53d', '#40a9ff', '#ff4d4f', '#9254de'])
     .size(2)
     .animate(false);
+  chart
+    .point()
+    .position('date*fansCount')
+    .color('site', ['#36cfc9', '#ffc53d', '#40a9ff', '#ff4d4f', '#9254de'])
+    .size(2)
+    .animate(false);
   chart.render();
 });
 

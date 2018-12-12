@@ -9,7 +9,11 @@ const Line = createG2(chart => {
     .line()
     .position('date*value')
     .color('type', ['#36cfc9', '#ffc53d', '#40a9ff', '#ff4d4f'])
-    .shape('line')
+    .size(2);
+  chart
+    .point()
+    .position('date*value')
+    .color('type', ['#36cfc9', '#ffc53d', '#40a9ff', '#ff4d4f'])
     .size(2);
   chart.render();
 });

@@ -25,6 +25,11 @@ const Chart = createG2(chart => {
     .position('date*conversionRate')
     .color('#ff4d4f')
     .size(2);
+  chart
+    .point()
+    .position('date*conversionRate')
+    .color('#ff4d4f')
+    .size(2);
   chart.render();
 });
 

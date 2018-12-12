@@ -74,9 +74,6 @@ function AppointmentsBar(props) {
           >
             <Select.Option value="app">APP</Select.Option>
             <Select.Option value="wechat">微信服务号</Select.Option>
-            {/* <Select.Option value="3">支付宝服务窗</Select.Option>
-            <Select.Option value="4">窗口</Select.Option>
-            <Select.Option value="5">自助机</Select.Option> */}
           </Select>
         </span>
       </Col>

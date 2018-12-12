@@ -58,9 +58,6 @@ function AppointmentsBar(props) {
               // onChange={value => onParamsChange(value, 'hosName')}
               defaultValue={allHosName[0].hos_name}
             >
-              {/* <Select.Option value='0'>1组</Select.Option>
-              <Select.Option value='1'>2组</Select.Option>
-              <Select.Option value='2'>3组</Select.Option> */}
               {allHosName.map(item => (
                 <Select.Option id={item.id} key={item.id} value={item.hos_name}>
                   {item.hos_name}

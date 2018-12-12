@@ -1,9 +1,11 @@
 import request from '@/utils/request';
 
+// 获取所有医院
 export async function fetchAllHosNameService() {
   return request(`/yilian-cloud-backend-api/ylWeChatCount/search/allHos`);
 }
 
+// 获取所有小组
 export async function fetchAllGroupNameService() {
   return request(`/yilian-cloud-backend-api/ylWeChatCount/search/allGroup`);
 }
@@ -45,4 +47,13 @@ export async function fetchAppointmentsDataService(way, params, page, size) {
     query += `&${params}`;
   }
   return request(`/yilian-cloud-backend-api/ylWeChatCount/reservation/count${query}`);
+}
+
+// 按小组显示各医院预约量对比
+export async function fetchAppointmentReportService(params, page, size) {
+  let query = `?page=${page || 0}&size=${size || 10}`;
+  if (params) {
+    query += `${params}`;
+  }
+  return request(`/yilian-cloud-backend-api/ylWeChatCount/reservation/groupHosCount${query}`);
 }

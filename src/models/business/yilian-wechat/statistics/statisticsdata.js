@@ -5,6 +5,7 @@ import {
   fetchAllHosNameService,
   fetchAllGroupNameService,
   fetchAppointmentsDataService,
+  fetchAppointmentReportService,
 } from '@/services/business/yilian-wechat/statistics/statisticsdata';
 
 export default {
@@ -43,6 +44,13 @@ export default {
         // 医联App
         orderStatusApp: null,
       },
+      appointmentReport: {
+        startTime: moment(new Date().valueOf() - 604800000).format('YYYY-MM-DD'),
+        // startTime: moment(new Date().valueOf() - 31536000000).format('YYYY-MM-DD'),
+        endTime: moment(new Date().valueOf()).format('YYYY-MM-DD'),
+        groupId: '',
+        show: 'chart',
+      },
     },
     list: {
       // 预约数据统计
@@ -53,14 +61,21 @@ export default {
       allHosName: null,
       // 所有小组类别
       allGroupName: null,
+      // 按小组显示各医院预约量对比
+      appointmentReport: null,
     },
     currentPage: {
       appointmentAttention: 0,
       promoteAttention: 0,
+      appointmentReport: 0,
     },
     totalElements: {
       appointmentAttention: 0,
       promoteAttention: 0,
+      appointmentReport: 0,
+    },
+    chart: {
+      appointmentReport: null,
     },
     // 详情页列表
     detailList: {
@@ -279,6 +294,76 @@ export default {
         });
       }
     },
+    *fetchAppointmentReport({ payload }, { call, put, select }) {
+      const { appointmentReport } = yield select(
+        state => state.businessYilianWechatStatisticDatas.searchParam
+      );
+      // const searchParams = yield select(
+      //   state =>
+      //     state.businessYilianWechatStatisticDatas.searchParams.popularization[
+      //       POPULARIZATION_REPORT_TYPE.TYPE4
+      //     ]
+      // );
+      const { page } = payload;
+      let params = '';
+      if (appointmentReport && appointmentReport.startTime) {
+        params += `&startTime=${appointmentReport.startTime}`;
+      }
+      if (appointmentReport && appointmentReport.endTime) {
+        params += `&endTime=${appointmentReport.endTime}`;
+      }
+      if (appointmentReport && appointmentReport.groupId) {
+        params += `&groupId=${appointmentReport.groupId}`;
+      }
+      // if (searchParams && searchParams.time) {
+      //   params += `&time=${searchParams.time}`;
+      // }
+      const res = yield call(fetchAppointmentReportService, params, page, 10);
+      if (res && res.code === 200) {
+        yield put({
+          type: 'updateList',
+          payload: {
+            key: 'appointmentReport',
+            // typeKey: POPULARIZATION_REPORT_TYPE.TYPE4,
+            list: res.data.content,
+            currentPage: page,
+            totalElements: res.data.totalElements,
+          },
+        });
+      }
+    },
+    *fetchAppointmentChart(_, { call, put, select }) {
+      try {
+        const { appointmentReport } = yield select(
+          state => state.businessYilianWechatStatisticDatas.searchParam
+        );
+        // const { page } = payload;
+        let params = '';
+        if (appointmentReport && appointmentReport.startTime) {
+          params += `&startTime=${appointmentReport.startTime}`;
+        }
+        if (appointmentReport && appointmentReport.endTime) {
+          params += `&endTime=${appointmentReport.endTime}`;
+        }
+        if (appointmentReport && appointmentReport.groupId) {
+          params += `&groupId=${appointmentReport.groupId}`;
+        }
+        const res = yield call(fetchAppointmentReportService, params, 0, 99999);
+        if (res && res.code === 200) {
+          yield put({
+            type: 'updateChart',
+            payload: {
+              key: 'appointmentReport',
+              chart: res.data.content,
+              currentPage: 0,
+              totalElements: res.data.totalElements,
+            },
+          });
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    },
   },
 
   reducers: {
@@ -300,6 +385,15 @@ export default {
         list: {
           ...state.list,
           [payload.key]: payload.list,
+        },
+      };
+    },
+    updateChart(state, { payload }) {
+      return {
+        ...state,
+        chart: {
+          ...state.chart,
+          [payload.key]: payload.chart,
         },
       };
     },

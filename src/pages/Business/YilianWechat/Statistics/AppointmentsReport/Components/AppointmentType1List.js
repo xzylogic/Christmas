@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import TableList from '@/components/PageComponents/Table/TableList';
 
-class AppointmentsReportList extends Component {
+class AppointmentType1List extends Component {
   componentDidMount() {}
 
   setTableColumns = () => {
@@ -41,4 +41,4 @@ class AppointmentsReportList extends Component {
   }
 }
 
-export default AppointmentsReportList;
+export default AppointmentType1List;

@@ -20,7 +20,7 @@ const Line = createG2(chart => {
   chart.render();
 });
 
-class AppointmentsReportChart extends Component {
+class AppointmentType1Chart extends Component {
   state = {
     width: 1000,
     height: 500,
@@ -42,4 +42,4 @@ class AppointmentsReportChart extends Component {
   }
 }
 
-export default AppointmentsReportChart;
+export default AppointmentType1Chart;

@@ -7,6 +7,7 @@ import classes from './QuerySearchBar.less';
 function querySearchBar(props) {
   const {
     onAmountSet,
+    onSearch,
     onReset,
     onExport,
     params: { startTime, endTime, name, source },
@@ -47,6 +48,9 @@ function querySearchBar(props) {
           placeholder={inputPlaceholder}
           className={classes.Input}
         />
+        <Button type="primary" htmlType="button" onClick={onSearch} className={classes.SearchGap}>
+          查询
+        </Button>
       </Col>
       <Col span={8} className={classes.ColRight}>
         {amountSetShow ? (

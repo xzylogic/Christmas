@@ -1,25 +1,33 @@
 import React from 'react';
-import { Button, DatePicker } from 'antd';
+import { Select, Button, DatePicker } from 'antd';
 import moment from 'moment';
 
-import classes from '../PopularizationReport.less';
+import classes from '../AppointmentsReport.less';
 
-function type2SearchBar(props) {
-  const { params, onParamsChange, onReset, onExport, onSearch } = props;
+function AppointmentType1SearchBar(props) {
+  const { params, searchGroupList, onParamsChange, onReset, onExport, onSearch } = props;
+
+  let options = '';
+  if (searchGroupList && Array.isArray(searchGroupList)) {
+    options = (
+      <Select
+        className={classes.Gap}
+        style={{ width: 100 }}
+        name="groupName"
+        value={params.groupName}
+        onChange={value => onParamsChange(value, 'groupName')}
+      >
+        {searchGroupList.map(data => (
+          <Select.Option key={data.id} value={data.name}>
+            {data.name}
+          </Select.Option>
+        ))}
+      </Select>
+    );
+  }
 
   return (
     <div className={classes.Search}>
-      {/* <Select
-        className={classes.Gap}
-        name="countType"
-        value={params.countType}
-        onChange={value => onParamsChange(value, 'countType')}
-      >
-        <Select.Option value="day">按日统计</Select.Option>
-        <Select.Option value="week">按周统计</Select.Option>
-        <Select.Option value="month">按月统计</Select.Option>
-        <Select.Option value="year">按年统计</Select.Option>
-      </Select> */}
       <DatePicker.RangePicker
         className={classes.Gap}
         value={[moment(params.startTime, 'YYYY-MM-DD'), moment(params.endTime, 'YYYY-MM-DD')]}
@@ -44,6 +52,10 @@ function type2SearchBar(props) {
           ],
         }}
       />
+      <span>
+        小组：
+        {options}
+      </span>
       <span className={classes.BtnRight}>
         <Button type="primary" htmlType="button" onClick={onSearch} className={classes.Gap}>
           查询
@@ -59,4 +71,4 @@ function type2SearchBar(props) {
   );
 }
 
-export default type2SearchBar;
+export default AppointmentType1SearchBar;

@@ -11,6 +11,9 @@ function searchBar(props) {
     onRefreshClick,
     onNewClick,
     onExportClick,
+    editorBarShow,
+    onEditorGroupHosClick,
+    onSearchClick,
   } = props;
 
   return (
@@ -22,6 +25,9 @@ function searchBar(props) {
           value={inputValue}
           onChange={onInputChange}
         />
+        <Button type="primary" htmlType="button" onClick={onSearchClick}>
+          查询
+        </Button>
         {/* <Button type="primary" htmlType="button" onClick={onSearchClick}>查询</Button> */}
       </Col>
       <Col span={12} className={classes.ColRight}>
@@ -34,6 +40,13 @@ function searchBar(props) {
         <Button type="primary" htmlType="button" onClick={onExportClick}>
           导出Excel
         </Button>
+        {editorBarShow ? (
+          <Button type="primary" htmlType="button" onClick={onEditorGroupHosClick}>
+            编辑小组
+          </Button>
+        ) : (
+          ''
+        )}
       </Col>
     </Row>
   );

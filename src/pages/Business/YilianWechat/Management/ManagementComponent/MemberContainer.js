@@ -13,7 +13,6 @@ const mapStateToProps = state => ({
   memberList: state.businessYilianWechatManagement.list.member,
   currentPage: state.businessYilianWechatManagement.currentPage.member,
   totalElements: state.businessYilianWechatManagement.totalElements.member,
-  // wechatCode: state.businessYilianWechatManagement.wechatCode,
   loading:
     state.loading.effects[
       ('businessYilianWechatManagement/fetchMemberList',
@@ -179,6 +178,12 @@ class MemberContainer extends Component {
     await onSearchMemberList(0);
   };
 
+  handleSearch = async e => {
+    e.preventDefault();
+    const { onSearchMemberList } = this.props;
+    onSearchMemberList(0);
+  };
+
   handleRefresh = e => {
     e.preventDefault();
     const { onFetchMemberList } = this.props;
@@ -210,14 +215,13 @@ class MemberContainer extends Component {
   render() {
     const { memberList, currentPage, totalElements } = this.props;
     const { param, showEditor, showAdd, selectedData, showCode, url } = this.state;
-    // console.log("this.props",this.props)
     return (
       <div>
         <SearchBar
           inputValue={param}
           inputPlaceholder="请输入姓名"
           onInputChange={this.handleParamChange}
-          // onSearchClick={this.handleSearch}
+          onSearchClick={this.handleSearch}
           onRefreshClick={this.handleRefresh}
           onNewClick={this.handleNew}
           onExportClick={this.handleExport}

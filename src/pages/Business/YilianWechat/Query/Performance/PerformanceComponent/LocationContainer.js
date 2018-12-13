@@ -120,13 +120,17 @@ class LocationContainer extends Component {
 
   handlePageChange = page => {
     const { onFetchLocationList } = this.props;
-    console.log(page);
     onFetchLocationList(page - 1);
   };
 
   handleAmountSet = e => {
     e.preventDefault();
-    console.log('amountset');
+  };
+
+  handleSearch = async e => {
+    e.preventDefault();
+    const { onFetchLocationList } = this.props;
+    onFetchLocationList(0);
   };
 
   handleReset = async e => {
@@ -161,6 +165,7 @@ class LocationContainer extends Component {
         <QuerySearchBar
           params={searchParam}
           onAmountSet={this.handleAmountSet}
+          onSearch={this.handleSearch}
           onReset={this.handleReset}
           onExport={this.handleExport}
           onParamsChange={this.handleParamsChanged}

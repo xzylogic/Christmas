@@ -7,6 +7,7 @@ import debounce from 'lodash.debounce';
 import SearchBar from './SearchBar';
 import TableList from './TableList';
 import GroupEditor from './GroupEditor';
+import GroupHosEditor from './GroupHosEditor';
 
 const mapStateToProps = state => ({
   groupName: state.businessYilianWechatManagement.searchParam.groupName,
@@ -14,6 +15,8 @@ const mapStateToProps = state => ({
   currentPage: state.businessYilianWechatManagement.currentPage.group,
   totalElements: state.businessYilianWechatManagement.totalElements.group,
   loading: state.loading.effects['businessYilianWechatManagement/fetchGroupList'],
+  allGroupName: state.businessYilianWechatManagement.list.allGroupName,
+  allHosName: state.businessYilianWechatManagement.list.allHosName,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -40,6 +43,14 @@ const mapDispatchToProps = dispatch => ({
       type: 'businessYilianWechatManagement/deleteGroup',
       payload: { id },
     }),
+  onFetchAllGroupName: () =>
+    dispatch({
+      type: 'businessYilianWechatManagement/fetchAllGroupName',
+    }),
+  onFetchAllHosName: () =>
+    dispatch({
+      type: 'businessYilianWechatManagement/fetchAllHosName',
+    }),
 });
 
 @connect(
@@ -50,13 +61,17 @@ class GroupContainer extends Component {
   state = {
     showEditor: false,
     selectedData: null,
+    editorBarShow: true,
+    showEditorGroupHos: false,
   };
 
   componentDidMount() {
-    const { groupList, onFetchGroupList } = this.props;
+    const { groupList, onFetchGroupList, onFetchAllGroupName, onFetchAllHosName } = this.props;
     if (!groupList) {
       onFetchGroupList(0);
     }
+    onFetchAllGroupName();
+    onFetchAllHosName();
   }
 
   handleEditor = (e, record) => {
@@ -150,6 +165,12 @@ class GroupContainer extends Component {
     await onSearchGroupList(0);
   };
 
+  handleSearch = async e => {
+    e.preventDefault();
+    const { onSearchGroupList } = this.props;
+    onSearchGroupList(0);
+  };
+
   handleRefresh = e => {
     e.preventDefault();
     const { onFetchGroupList } = this.props;
@@ -169,18 +190,35 @@ class GroupContainer extends Component {
     console.log('export');
   };
 
+  handlEditorGroupHos = e => {
+    e.preventDefault();
+    this.setState({
+      showEditorGroupHos: true,
+    });
+  };
+
   render() {
-    const { groupName, groupList, currentPage, totalElements } = this.props;
-    const { showEditor, selectedData } = this.state;
+    const {
+      groupName,
+      groupList,
+      currentPage,
+      totalElements,
+      allGroupName,
+      allHosName,
+    } = this.props;
+    const { showEditor, selectedData, editorBarShow, showEditorGroupHos } = this.state;
     return (
       <div>
         <SearchBar
           inputValue={groupName}
           inputPlaceholder="输入小组名称进行检索"
           onInputChange={this.handleParamChange}
+          onSearchClick={this.handleSearch}
           onRefreshClick={this.handleRefresh}
           onNewClick={this.handleNew}
           onExportClick={this.handleExport}
+          onEditorGroupHosClick={this.handlEditorGroupHos}
+          editorBarShow={editorBarShow}
         />
         <Divider />
         <TableList
@@ -195,6 +233,12 @@ class GroupContainer extends Component {
           visible={showEditor}
           initialValue={selectedData}
           onClose={() => this.setState({ showEditor: false })}
+        />
+        <GroupHosEditor
+          allGroupName={allGroupName}
+          allHosName={allHosName}
+          visible={showEditorGroupHos}
+          onClose={() => this.setState({ showEditorGroupHos: false })}
         />
       </div>
     );

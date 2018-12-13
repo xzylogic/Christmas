@@ -77,7 +77,6 @@ class GroupDetail extends Component {
     if (groupDetailList instanceof Object) {
       const { groupMonthAmount } = this.props;
       const setMonth = Object.keys(groupDetailList[0])[0] === 'months';
-      // console.log(groupMonthAmount);
       columns = [
         {
           title: '日期',

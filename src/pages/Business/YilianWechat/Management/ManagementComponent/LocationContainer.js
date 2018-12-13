@@ -55,7 +55,6 @@ class LocationContainer extends Component {
   componentDidMount() {
     const { locationList, onFetchLocationList } = this.props;
     if (!locationList) {
-      // console.log('componentDidMount');
       onFetchLocationList(0);
     }
   }
@@ -66,11 +65,6 @@ class LocationContainer extends Component {
       showEditor: true,
       selectedData: record,
     });
-  };
-
-  handleShowWechatCode = e => {
-    e.preventDefault();
-    console.log('wechatCode');
   };
 
   handleDelete = (e, record) => {
@@ -136,15 +130,16 @@ class LocationContainer extends Component {
     await onSearchLocationList(0);
   };
 
-  // handleSearch = e => {
-  //   e.preventDefault();
-  //   console.log('search');
-  // };
+  handleSearch = async e => {
+    e.preventDefault();
+    const { onSearchLocationList } = this.props;
+    onSearchLocationList(0);
+  };
 
   handleRefresh = e => {
     e.preventDefault();
-    const { onFetchLocationList } = this.props;
-    onFetchLocationList(0);
+    const { onSearchLocationList } = this.props;
+    onSearchLocationList(0);
   };
 
   handleNew = e => {

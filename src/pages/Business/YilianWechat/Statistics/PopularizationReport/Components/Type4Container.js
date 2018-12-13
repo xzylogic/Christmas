@@ -63,6 +63,12 @@ class Type3Container extends Component {
     await onFetchPopularizationReportDebounce();
   };
 
+  handleSearch = async e => {
+    e.preventDefault();
+    const { onFetchPopularizationReport } = this.props;
+    onFetchPopularizationReport(0);
+  };
+
   handleReset = async e => {
     const { onUpdateSearchParams, onFetchPopularizationReport } = this.props;
     e.preventDefault();
@@ -83,6 +89,7 @@ class Type3Container extends Component {
           params={searchParam}
           searchGroupList={searchGroupList}
           onParamsChange={this.handleParamsChange}
+          onSearch={this.handleSearch}
           onReset={this.handleReset}
           onExport={this.handleExport}
         />

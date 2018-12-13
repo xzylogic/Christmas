@@ -7,7 +7,7 @@ class StatisticsIntervalChart extends Component {
     width: 1000,
     height: 500,
     plotCfg: {
-      margin: [0, 100, 30, 50],
+      margin: [0, 120, 30, 50],
     },
   };
 

@@ -128,6 +128,13 @@ class Type2Container extends Component {
     onFetchPopularizationReport(page - 1);
   };
 
+  handleSearch = async e => {
+    e.preventDefault();
+    const { onFetchPopularizationReport, onFetchPopularizationChart } = this.props;
+    onFetchPopularizationReport(0);
+    onFetchPopularizationChart(0);
+  };
+
   handleReset = async e => {
     const {
       onUpdateSearchParams,
@@ -166,6 +173,7 @@ class Type2Container extends Component {
           params={searchParam}
           searchGroupList={searchGroupList}
           onParamsChange={this.handleParamsChange}
+          onSearch={this.handleSearch}
           onReset={this.handleReset}
           onExport={this.handleExport}
         />

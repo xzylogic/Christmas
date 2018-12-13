@@ -5,23 +5,21 @@ import moment from 'moment';
 import classes from './AppointmentsBar.less';
 
 function AppointmentsBar(props) {
-  const { onReset, onExport, params, onParamsChange } = props;
-  // const handleChange = value =>{
-  //   console.log(value)
-  // }
+  const { onReset, onExport, params, onParamsChange, onSearch } = props;
+
   return (
     <Row className={classes.Container}>
-      <Col span={24} className={classes.Container}>
+      <Col span={24}>
         <Select
           className={classes.Gap}
           style={{ width: 115 }}
           // name='type'
           // value={params.type}
-          // onChange={value => onParamsChange(value, 'type')}
-          defaultValue="0"
+          onChange={value => onParamsChange(value, 'type')}
+          defaultValue="create_time"
         >
-          <Select.Option value="0">预约日期</Select.Option>
-          <Select.Option value="1">就诊日期</Select.Option>
+          <Select.Option value="create_time">预约日期</Select.Option>
+          <Select.Option value="schedule_date">就诊日期</Select.Option>
         </Select>
         <span>
           {/* 预约日期： */}
@@ -59,10 +57,8 @@ function AppointmentsBar(props) {
             // defaultValue='0'
             onChange={value => onParamsChange(value, 'orderStatus')}
           >
-            <Select.Option value="0">全部</Select.Option>
-            <Select.Option value="1">无效</Select.Option>
-            <Select.Option value="2">预约</Select.Option>
-            <Select.Option value="3">撤销</Select.Option>
+            <Select.Option value="1">已预约</Select.Option>
+            <Select.Option value="3">已撤销</Select.Option>
           </Select>
         </span>
         <span>
@@ -72,20 +68,16 @@ function AppointmentsBar(props) {
             className={classes.Gap}
             placeholder="预约来源"
             // defaultValue='0'
-            onChange={value => onParamsChange(value, 'orderChannel')}
+            onChange={value => onParamsChange(value, 'regChannel')}
           >
-            <Select.Option value="0">全部</Select.Option>
-            <Select.Option value="1">APP</Select.Option>
-            <Select.Option value="2">微信服务号</Select.Option>
-            <Select.Option value="3">支付宝服务窗</Select.Option>
-            <Select.Option value="4">窗口</Select.Option>
-            <Select.Option value="5">自助机</Select.Option>
+            <Select.Option value="app">APP</Select.Option>
+            <Select.Option value="wechat">微信服务号</Select.Option>
           </Select>
         </span>
       </Col>
       {/* <Col span={15}> */}
       <span className={classes.Span}>
-        患者姓名：
+        姓名：
         <Input
           name="patientName"
           value={params.patientName}
@@ -95,7 +87,7 @@ function AppointmentsBar(props) {
         />
       </span>
       <span className={classes.Span}>
-        患者手机：
+        手机：
         <Input
           name="patientPhone"
           value={params.patientPhone}
@@ -105,7 +97,7 @@ function AppointmentsBar(props) {
         />
       </span>
       <span className={classes.Span}>
-        患者卡号：
+        卡号：
         <Input
           name="mediCardId"
           value={params.mediCardId}
@@ -125,7 +117,7 @@ function AppointmentsBar(props) {
         />
       </span>
       <span className={classes.Span}>
-        医生工号：
+        工号：
         <Input
           name="hosDocCode"
           value={params.hosDocCode}
@@ -137,13 +129,13 @@ function AppointmentsBar(props) {
       {/* </Col> */}
       {/* <Col span={8} className={classes.ColRight}> */}
       <span className={classes.BtnRight}>
-        {/* <Button type='primary' htmlType='button' onClick={onReset} className={classes.Gap}>
-            查询
-          </Button> */}
+        <Button type="primary" htmlType="button" onClick={onSearch} className={classes.Gap}>
+          查询
+        </Button>
         <Button type="primary" htmlType="button" onClick={onReset} className={classes.Gap}>
           重置
         </Button>
-        <Button type="primary" htmlType="button" onClick={onExport}>
+        <Button type="primary" htmlType="button" onClick={onExport} className={classes.Gap}>
           导出Excel
         </Button>
       </span>

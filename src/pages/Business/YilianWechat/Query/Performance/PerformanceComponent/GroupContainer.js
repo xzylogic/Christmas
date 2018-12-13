@@ -139,7 +139,12 @@ class GroupContainer extends Component {
   handleAmountSet = e => {
     e.preventDefault();
     this.setState({ visible: true });
-    // console.log('amountset');
+  };
+
+  handleSearch = async e => {
+    e.preventDefault();
+    const { onFetchGroupList } = this.props;
+    onFetchGroupList(0);
   };
 
   handleReset = async e => {
@@ -174,6 +179,7 @@ class GroupContainer extends Component {
         <QuerySearchBar
           params={searchParam}
           onAmountSet={this.handleAmountSet}
+          onSearch={this.handleSearch}
           onReset={this.handleReset}
           onExport={this.handleExport}
           onParamsChange={this.handleParamsChanged}

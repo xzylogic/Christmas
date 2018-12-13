@@ -98,7 +98,6 @@ class PopularizationDetail extends Component {
 
   render() {
     const { promoteAttentionList, currentPage, totalElements, visible, name, onClose } = this.props;
-    console.log(this.props);
     const { way } = this.state;
     return (
       <Modal

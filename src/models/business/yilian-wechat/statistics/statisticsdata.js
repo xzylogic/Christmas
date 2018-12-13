@@ -60,7 +60,7 @@ export default {
         startTime: moment(new Date().valueOf() - 604800000).format('YYYY-MM-DD'),
         // startTime: moment(new Date().valueOf() - 31536000000).format('YYYY-MM-DD'),
         endTime: moment(new Date().valueOf()).format('YYYY-MM-DD'),
-        groupId: '',
+        groupId: '1组',
         show: 'chart',
       },
     },
@@ -79,6 +79,12 @@ export default {
       typeHosName: null,
       // 按小组查询到的医院名
       groupHosName: null,
+      // 修改预约数据统计
+      appointments: {
+        // 预约数据统计列表
+        origin: null,
+        [APPOINTMENTS_REPORT_TYPE.TYPE1]: null,
+      },
     },
     currentPage: {
       appointmentAttention: 0,
@@ -92,6 +98,10 @@ export default {
     },
     chart: {
       appointmentReport: null,
+      appointments: {
+        origin: 0,
+        [APPOINTMENTS_REPORT_TYPE.TYPE1]: 0,
+      },
     },
     // 详情页列表
     detailList: {
@@ -111,44 +121,43 @@ export default {
     reportType: {
       appointments: APPOINTMENTS_REPORT_TYPE.TYPE1,
     },
-    searchParams: {
-      appointments: {
-        // 预约数据统计搜索条件
-        origin: {},
-        [APPOINTMENTS_REPORT_TYPE.TYPE1]: {
-          startTime: moment(new Date().valueOf() - 604800000).format('YYYY-MM-DD'),
-          endTime: moment(new Date().valueOf()).format('YYYY-MM-DD'),
-          countType: 'day',
-          groupName: '',
-        },
-      },
-    },
-    lists: {
-      appointments: {
-        // 预约数据统计列表
-        origin: null,
-        [APPOINTMENTS_REPORT_TYPE.TYPE1]: null,
-      },
-    },
-    currentPages: {
-      popularization: {
-        origin: 0,
-        [APPOINTMENTS_REPORT_TYPE.TYPE1]: 0,
-      },
-      appointments: {},
-    },
-    totalElement: {
-      appointments: {
-        origin: 0,
-        [APPOINTMENTS_REPORT_TYPE.TYPE1]: 0,
-      },
-    },
-    charts: {
-      appointments: {
-        origin: 0,
-        [APPOINTMENTS_REPORT_TYPE.TYPE1]: 0,
-      },
-    },
+    // searchParams: {
+    //   appointments: {
+    //     // 预约数据统计搜索条件
+    //     origin: {},
+    //     [APPOINTMENTS_REPORT_TYPE.TYPE1]: {
+    //       startTime: moment(new Date().valueOf() - 604800000).format('YYYY-MM-DD'),
+    //       endTime: moment(new Date().valueOf()).format('YYYY-MM-DD'),
+    //       countType: 'day',
+    //       groupName: '',
+    //     },
+    //   },
+    // },
+    // lists: {
+    //   appointments: {
+    //     // 预约数据统计列表
+    //     origin: null,
+    //     [APPOINTMENTS_REPORT_TYPE.TYPE1]: null,
+    //   },
+    // },
+    // currentPages: {
+    //   appointments: {
+    //     origin: 0,
+    //     [APPOINTMENTS_REPORT_TYPE.TYPE1]: 0,
+    //   },
+    // },
+    // totalElement: {
+    //   appointments: {
+    //     origin: 0,
+    //     [APPOINTMENTS_REPORT_TYPE.TYPE1]: 0,
+    //   },
+    // },
+    // charts: {
+    //   appointments: {
+    //     origin: 0,
+    //     [APPOINTMENTS_REPORT_TYPE.TYPE1]: 0,
+    //   },
+    // },
   },
 
   effects: {
@@ -464,11 +473,11 @@ export default {
         const res = yield call(fetchAllGroupNameService);
         if (res && res.code === 200 && res.data && res.data[0]) {
           yield put({
-            type: 'updateSearchGroupLists',
+            type: 'updateSearchGroupList',
             payload: res.data,
           });
           yield put({
-            type: 'updateSearchParams',
+            type: 'updateSearchParam',
             payload: {
               pageKey: 'appointments',
               typeKey: APPOINTMENTS_REPORT_TYPE.TYPE1,
@@ -480,70 +489,77 @@ export default {
       }
     },
     *fetchAppointmentReportType1({ payload }, { call, put, select }) {
-      const searchParams = yield select(
+      console.log('report');
+      yield put({ type: 'fetchSearchGroupList' });
+      const searchParam = yield select(
         state =>
-          state.businessYilianWechatStatisticDatas.searchParams.appointments[
+          state.businessYilianWechatStatisticDatas.searchParam.appointments[
             APPOINTMENTS_REPORT_TYPE.TYPE1
           ]
       );
       const { page } = payload;
       let params = '';
-      if (searchParams && searchParams.startTime) {
-        params += `&startTime=${searchParams.startTime}`;
+      if (searchParam && searchParam.startTime) {
+        params += `&startTime=${searchParam.startTime}`;
       }
-      if (searchParams && searchParams.endTime) {
-        params += `&endTime=${searchParams.endTime}`;
+      if (searchParam && searchParam.endTime) {
+        params += `&endTime=${searchParam.endTime}`;
       }
-      if (searchParams && searchParams.groupName) {
-        params += `&groupId=${searchParams.groupName}`;
+      if (searchParam && searchParam.groupName) {
+        params += `&groupId=${searchParam.groupName}`;
       }
       const res = yield call(fetchAppointmentReportType1Service, params, page, 10);
       if (res && res.code === 200) {
         yield put({
-          type: 'updateLists',
+          type: 'updateList',
           payload: {
             pageKey: 'appointments',
             typeKey: APPOINTMENTS_REPORT_TYPE.TYPE1,
             list: res.data.content,
-            currentPages: page,
-            totalElement: res.data.totalElements,
+            currentPage: page,
+            totalElements: res.data.totalElements,
           },
         });
       }
     },
     *fetchAppointmentChartType1(_, { call, put, select }) {
-      const searchParams = yield select(
-        state =>
-          state.businessYilianWechatStatisticDatas.searchParams.appointments[
-            APPOINTMENTS_REPORT_TYPE.TYPE1
-          ]
-      );
-      let params = '';
-      if (searchParams && searchParams.startTime) {
-        params += `&startTime=${searchParams.startTime}`;
-      }
-      if (searchParams && searchParams.endTime) {
-        params += `&endTime=${searchParams.endTime}`;
-      }
-      if (searchParams && searchParams.groupName) {
-        params += `&groupId=${searchParams.groupName}`;
-      }
-      const res = yield call(fetchAppointmentReportType1Service, params, 0, 99999);
-      if (res && res.code === 200) {
-        yield put({
-          type: 'updateCharts',
-          payload: {
-            pageKey: 'appointments',
-            typeKey: APPOINTMENTS_REPORT_TYPE.TYPE1,
-            chart: res.data.content,
-          },
-        });
+      try {
+        const searchParam = yield select(
+          state =>
+            state.businessYilianWechatStatisticDatas.searchParam.appointments[
+              APPOINTMENTS_REPORT_TYPE.TYPE1
+            ]
+        );
+        let params = '';
+        if (searchParam && searchParam.startTime) {
+          params += `&startTime=${searchParam.startTime}`;
+        }
+        if (searchParam && searchParam.endTime) {
+          params += `&endTime=${searchParam.endTime}`;
+        }
+        if (searchParam && searchParam.groupName) {
+          params += `&groupId=${searchParam.groupName}`;
+        }
+        const res = yield call(fetchAppointmentReportType1Service, params, 0, 99999);
+        if (res && res.code === 200) {
+          yield put({
+            type: 'updateChart',
+            payload: {
+              pageKey: 'appointments',
+              typeKey: APPOINTMENTS_REPORT_TYPE.TYPE1,
+              chart: res.data.content,
+            },
+          });
+        }
+      } catch (err) {
+        console.log(err);
       }
     },
   },
 
   reducers: {
     updateSearchParam(state, { payload }) {
+      console.log(payload);
       return {
         ...state,
         searchParam: {
@@ -552,6 +568,14 @@ export default {
             ...state.searchParam[payload.origin],
             [payload.key]: payload.value,
           },
+
+          // [payload.pageKey]: {
+          //   ...state.searchParam[payload.pageKey],
+          //   [payload.typeKey]: {
+          //     ...state.searchParam[payload.pageKey][payload.typeKey],
+          //     [payload.key]: payload.value,
+          //   },
+          // },
         },
       };
     },
@@ -562,6 +586,14 @@ export default {
           ...state.list,
           [payload.key]: payload.list,
         },
+        detailCurrentPage: {
+          ...state.currentPage,
+          [payload.key]: payload.currentPage,
+        },
+        datailTotalElements: {
+          ...state.totalElements,
+          [payload.key]: payload.totalElements,
+        },
       };
     },
     updateChart(state, { payload }) {
@@ -570,6 +602,10 @@ export default {
         chart: {
           ...state.chart,
           [payload.key]: payload.chart,
+          [payload.pageKey]: {
+            ...state.chart[payload.pageKey],
+            [payload.typeKey]: payload.chart,
+          },
         },
       };
     },
@@ -606,58 +642,58 @@ export default {
         },
       };
     },
-    updateSearchParams(state, { payload }) {
-      return {
-        ...state,
-        searchParams: {
-          ...state.searchParams,
-          [payload.pageKey]: {
-            ...state.searchParams[payload.pageKey],
-            [payload.typeKey]: {
-              ...state.searchParams[payload.pageKey][payload.typeKey],
-              [payload.key]: payload.value,
-            },
-          },
-        },
-      };
-    },
-    updateLists(state, { payload }) {
-      return {
-        ...state,
-        lists: {
-          ...state.list,
-          [payload.pageKey]: {
-            ...state.lists[payload.pageKey],
-            [payload.typeKey]: payload.lists,
-          },
-        },
-        currentPages: {
-          ...state.currentPages,
-          [payload.pageKey]: {
-            ...state.currentPages[payload.pageKey],
-            [payload.typeKey]: payload.currentPages,
-          },
-        },
-        totalElements: {
-          ...state.totalElements,
-          [payload.pageKey]: {
-            ...state.totalElements[payload.pageKey],
-            [payload.typeKey]: payload.totalElements,
-          },
-        },
-      };
-    },
-    updateCharts(state, { payload }) {
-      return {
-        ...state,
-        chart: {
-          ...state.chart,
-          [payload.pageKey]: {
-            ...state.chart[payload.pageKey],
-            [payload.typeKey]: payload.chart,
-          },
-        },
-      };
-    },
+    // updateSearchParams(state, { payload }) {
+    //   return {
+    //     ...state,
+    //     searchParams: {
+    //       ...state.searchParams,
+    //       [payload.pageKey]: {
+    //         ...state.searchParams[payload.pageKey],
+    //         [payload.typeKey]: {
+    //           ...state.searchParams[payload.pageKey][payload.typeKey],
+    //           [payload.key]: payload.value,
+    //         },
+    //       },
+    //     },
+    //   };
+    // },
+    // updateLists(state, { payload }) {
+    //   return {
+    //     ...state,
+    //     lists: {
+    //       ...state.list,
+    //       [payload.pageKey]: {
+    //         ...state.lists[payload.pageKey],
+    //         [payload.typeKey]: payload.lists,
+    //       },
+    //     },
+    //     currentPages: {
+    //       ...state.currentPages,
+    //       [payload.pageKey]: {
+    //         ...state.currentPages[payload.pageKey],
+    //         [payload.typeKey]: payload.currentPages,
+    //       },
+    //     },
+    //     totalElements: {
+    //       ...state.totalElements,
+    //       [payload.pageKey]: {
+    //         ...state.totalElements[payload.pageKey],
+    //         [payload.typeKey]: payload.totalElements,
+    //       },
+    //     },
+    //   };
+    // },
+    // updateCharts(state, { payload }) {
+    //   return {
+    //     ...state,
+    //     chart: {
+    //       ...state.chart,
+    //       [payload.pageKey]: {
+    //         ...state.chart[payload.pageKey],
+    //         [payload.typeKey]: payload.chart,
+    //       },
+    //     },
+    //   };
+    // },
   },
 };

@@ -89,37 +89,6 @@ function AppointmentsBar(props) {
         <span className={classes.Span}>
           医院名称：
           {renderHosName()}
-          {/* {typeHosName instanceof Object ? (
-            <Select
-              className={classes.Gap}
-              style={{ width: 115 }}
-              placeholder="医院名称"
-              value={params.hosOrgCode}
-              onChange={value => onParamsChange(value, 'hosOrgCode')}
-            >
-              {typeHosName.map(item => (
-                <Select.Option id={item.id} key={item.id} value={item.hos_name}>
-                  {item.hos_name}
-                </Select.Option>
-              ))}
-            </Select>
-          ) : allHosName instanceof Object ? (
-            <Select
-              className={classes.Gap}
-              style={{ width: 115 }}
-              placeholder="医院名称"
-              value={params.hosOrgCode}
-              onChange={value => onParamsChange(value, 'hosOrgCode')}
-            >
-              {allHosName.map(item => (
-                <Select.Option id={item.id} key={item.id} value={item.hos_name}>
-                  {item.hos_name}
-                </Select.Option>
-              ))}
-            </Select>
-          ) : (
-            ''
-          )} */}
         </span>
         <span className={classes.Span}>
           门诊类型：

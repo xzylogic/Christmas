@@ -104,37 +104,6 @@ function PopularizationBar(props) {
         <span className={classes.Span}>
           医院名称：
           {renderHosName()}
-          {/* {groupHosName instanceof Object && Object.keys(groupHosName).length > 0 ? (
-            <Select
-              className={classes.Gap}
-              style={{ width: 115 }}
-              placeholder="医院名称"
-              onChange={value => onParamsChange(value, 'hosName')}
-              value={params.hosName}
-            >
-              {groupHosName.map(item => (
-                <Select.Option id={item.id} key={item.id} value={item.hos_name}>
-                  {item.hos_name}
-                </Select.Option>
-              ))}
-            </Select>
-          ) : allHosName instanceof Object ? (
-            <Select
-              className={classes.Gap}
-              style={{ width: 115 }}
-              placeholder="医院名称"
-              onChange={value => onParamsChange(value, 'hosName')}
-              value={params.hosName}
-            >
-              {allHosName.map(item => (
-                <Select.Option id={item.id} key={item.id} value={item.hos_name}>
-                  {item.hos_name}
-                </Select.Option>
-              ))}
-            </Select>
-          ) : (
-            ''
-          )} */}
         </span>
       </Col>
       {/* <Col span={15}> */}

@@ -114,8 +114,6 @@ function AppointmentsBar(props) {
           className={classes.Gap}
           value={params.regChannel}
           onChange={value => onParamsChange(value, 'regChannel')}
-          // onChange={e => handleChange(e)}
-          // defaultValue={allGroupName[0].name}
         >
           <Select.Option value="wechat">医联微信</Select.Option>
           <Select.Option value="app">医联App</Select.Option>
@@ -129,8 +127,6 @@ function AppointmentsBar(props) {
           className={classes.Gap}
           value={params.orderStatus}
           onChange={value => onParamsChange(value, 'orderStatus')}
-          // onChange={e => handleChange(e)}
-          // defaultValue={allGroupName[0].name}
         >
           <Select.Option value="1">已预约</Select.Option>
           <Select.Option value="3">已取消</Select.Option>

@@ -4,9 +4,6 @@ import { Select } from 'antd';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import AppointmentType1Container from './Components/AppointmentType1Container';
-// import Type2Container from './Components/Type2Container';
-// import Type3Container from './Components/Type3Container';
-// import Type4Container from './Components/Type4Container';
 
 import { APPOINTMENTS_REPORT_TYPE } from '@/models/business/yilian-wechat/statistics/statisticsdata';
 

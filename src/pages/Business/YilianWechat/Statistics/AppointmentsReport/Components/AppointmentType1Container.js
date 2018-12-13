@@ -173,7 +173,6 @@ class AppointmentType1Container extends Component {
   };
 
   render() {
-    const { show } = this.state;
     const {
       searchParams,
       searchGroupList,
@@ -203,7 +202,7 @@ class AppointmentType1Container extends Component {
           </Radio.Group>
         </div>
         <div className={classes.Content}>
-          {show === 'chart' ? (
+          {searchParams.show === 'chart' ? (
             <AppointmentType1Chart data={reportChart} />
           ) : (
             <AppointmentType1List

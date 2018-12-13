@@ -127,7 +127,7 @@ function PopularizationBar(props) {
         <span className={classes.Span}>
           渠道：
           <span>
-            {params.channel === '0' ? (
+            {params.channel === '微信' ? (
               <Select
                 style={{ width: 200 }}
                 className={classes.Gap}

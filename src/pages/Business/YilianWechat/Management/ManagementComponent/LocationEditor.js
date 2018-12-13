@@ -26,10 +26,6 @@ const mapDispatchToProps = dispatch => ({
 )
 @Form.create()
 class LocationEditor extends Component {
-  componentDidMount() {
-    console.log(123);
-  }
-
   handleSubmit = e => {
     e.preventDefault();
     const { form, onCreateLocation, onModifyLocation, onClose, initialValue } = this.props;

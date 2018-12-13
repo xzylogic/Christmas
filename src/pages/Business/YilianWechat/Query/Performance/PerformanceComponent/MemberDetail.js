@@ -77,7 +77,6 @@ class MemberDetail extends Component {
     if (memberDetailList instanceof Object) {
       const { memberMonthAmount } = this.props;
       const setMonth = Object.keys(memberDetailList[0])[0] === 'months';
-      // console.log(memberMonthAmount);
       columns = [
         {
           title: '日期',

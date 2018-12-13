@@ -160,7 +160,6 @@ export default {
       };
     },
     updateSearchParams(state, { payload }) {
-      console.log(payload);
       return {
         ...state,
         searchParams: {

@@ -206,7 +206,6 @@ export default {
       const { appointmentAttention } = yield select(
         state => state.businessYilianWechatStatisticDatas.searchParam
       );
-      // console.log(appointmentAttention);
       const { page } = payload;
       let params = '';
       if (appointmentAttention && appointmentAttention.startTime) {

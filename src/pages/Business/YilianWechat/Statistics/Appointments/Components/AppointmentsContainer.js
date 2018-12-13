@@ -69,29 +69,12 @@ class AppointmentsContainer extends Component {
 
   componentDidMount() {
     const { onFetchAppointmentsData, onFetchAllHosName, onFetchHosType } = this.props;
-    // const { way } = this.state;
-    // onFetchAppointmentsData(way, 0);
     onFetchAppointmentsData(0);
     onFetchAllHosName();
     onFetchHosType(0);
   }
 
-  // componentDidUpdate(prevProps) {
-  //   // const { onFetchAppointmentsData, name } = this.props;
-  //   // const { way } = this.state;
-  //   // if (name && prevProps.name !== name) {
-  //   //   onFetchLocationPerformanceDetail(way, name, 0);
-  //   // }
-
-  //   const { onFetchAppointmentsData } = this.props;
-  //   const { way } = this.state;
-  //   // if (name && prevProps.name !== name) {
-  //     onFetchAppointmentsData(way, 0);
-  //   // }
-  // };
-
   handleParamsChanged = async (value, dataKey) => {
-    // console.log(value);
     const {
       onSearchParamChange,
       onFetchAppointmentsDataDebounce,
@@ -256,10 +239,9 @@ class AppointmentsContainer extends Component {
       allHosName,
       typeHosName,
     } = this.props;
-    // const { showDetail, selectedName } = this.state;
+
     const { selectedName, showDetail } = this.state;
-    // console.log(searchParam.orderStatus==='0')
-    // const { way } = this.state;
+
     return (
       <React.Fragment>
         <AppointmentsBar

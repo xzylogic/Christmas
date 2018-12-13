@@ -118,7 +118,6 @@ class AppointmentType1Container extends Component {
   }
 
   handleParamsChange = async (value, dataKey) => {
-    console.log(value, dataKey);
     const {
       onUpdateSearchParams,
       onFetchAppointmentReportDebounce,

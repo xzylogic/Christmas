@@ -139,7 +139,6 @@ class GroupContainer extends Component {
   handleAmountSet = e => {
     e.preventDefault();
     this.setState({ visible: true });
-    // console.log('amountset');
   };
 
   handleSearch = async e => {

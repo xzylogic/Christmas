@@ -46,7 +46,6 @@ class AppointmentsContainer extends Component {
   }
 
   handleParamsChanged = async (value, dataKey) => {
-    // console.log(value);
     const { onSearchParamChange, onFetchAppointmentListDebounce } = this.props;
     if (dataKey === 'date') {
       await onSearchParamChange('startTime', value[0]);
@@ -167,7 +166,6 @@ class AppointmentsContainer extends Component {
 
   handlePageChange = page => {
     const { onFetchAppointmentList } = this.props;
-    // console.log(page);
     onFetchAppointmentList(page - 1);
   };
 

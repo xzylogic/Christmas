@@ -39,7 +39,6 @@ class GroupHosEditor extends Component {
           name: values.name,
           hosName: values.hosName,
         };
-        // console.log(postData)
         onAddHosToGroup(postData).then(ifsuccess => {
           if (ifsuccess) {
             onClose();
@@ -60,8 +59,6 @@ class GroupHosEditor extends Component {
       allHosName,
     } = this.props;
     const { size } = this.state;
-
-    // console.log(allGroupName,allHosName)
 
     const formItemLayout = {
       labelCol: {

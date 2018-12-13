@@ -13,7 +13,6 @@ const mapStateToProps = state => ({
   memberList: state.businessYilianWechatManagement.list.member,
   currentPage: state.businessYilianWechatManagement.currentPage.member,
   totalElements: state.businessYilianWechatManagement.totalElements.member,
-  // wechatCode: state.businessYilianWechatManagement.wechatCode,
   loading:
     state.loading.effects[
       ('businessYilianWechatManagement/fetchMemberList',
@@ -216,7 +215,6 @@ class MemberContainer extends Component {
   render() {
     const { memberList, currentPage, totalElements } = this.props;
     const { param, showEditor, showAdd, selectedData, showCode, url } = this.state;
-    // console.log("this.props",this.props)
     return (
       <div>
         <SearchBar

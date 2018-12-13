@@ -55,7 +55,6 @@ class LocationContainer extends Component {
   componentDidMount() {
     const { locationList, onFetchLocationList } = this.props;
     if (!locationList) {
-      // console.log('componentDidMount');
       onFetchLocationList(0);
     }
   }
@@ -66,11 +65,6 @@ class LocationContainer extends Component {
       showEditor: true,
       selectedData: record,
     });
-  };
-
-  handleShowWechatCode = e => {
-    e.preventDefault();
-    console.log('wechatCode');
   };
 
   handleDelete = (e, record) => {

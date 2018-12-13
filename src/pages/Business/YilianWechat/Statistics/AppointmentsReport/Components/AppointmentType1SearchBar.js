@@ -7,8 +7,6 @@ import classes from '../AppointmentsReport.less';
 function AppointmentType1SearchBar(props) {
   const { params, searchGroupList, onParamsChange, onReset, onExport, onSearch } = props;
 
-  // console.log('params',params)
-
   let options = '';
   if (searchGroupList && Array.isArray(searchGroupList)) {
     options = (

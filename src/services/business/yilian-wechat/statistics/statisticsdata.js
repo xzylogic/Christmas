@@ -67,15 +67,6 @@ export async function fetchHosGroupService(params, page, size) {
   return request(`/yilian-cloud-backend-api/ylWeChatCount/search/hosByGroupId${query}`);
 }
 
-// // 按小组显示各医院预约量对比（医院总量）
-// export async function fetchAppointmentReportService(params, page, size) {
-//   let query = `?page=${page || 0}&size=${size || 10}`;
-//   if (params) {
-//     query += `${params}`;
-//   }
-//   return request(`/yilian-cloud-backend-api/ylWeChatCount/reservation/groupHosCount${query}`);
-// }
-
 /**
  * 按小组显示各医院预约量对比（医院总量）
  * @param {*} params [startTime | endTime | groupId]

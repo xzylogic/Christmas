@@ -79,30 +79,13 @@ class AppointmentsContainer extends Component {
       onFetchAllGroupName,
       onFetchHosGroup,
     } = this.props;
-    // const { way } = this.state;
-    // onFetchWeChatAttentionAmount(way, 0);
     onFetchWeChatAttentionAmount(0);
     onFetchAllHosName();
     onFetchAllGroupName();
     onFetchHosGroup(0);
   }
 
-  // componentDidUpdate(prevProps) {
-  //   // const { onFetchWeChatAttentionAmount, name } = this.props;
-  //   // const { way } = this.state;
-  //   // if (name && prevProps.name !== name) {
-  //   //   onFetchLocationPerformanceDetail(way, name, 0);
-  //   // }
-
-  //   const { onFetchWeChatAttentionAmount } = this.props;
-  //   const { way } = this.state;
-  //   // if (name && prevProps.name !== name) {
-  //     onFetchWeChatAttentionAmount(way, 0);
-  //   // }
-  // };
-
   handleParamsChanged = async (value, dataKey) => {
-    // console.log(value);
     const {
       onSearchParamChange,
       onFetchWeChatAttentionAmountDebounce,
@@ -239,9 +222,6 @@ class AppointmentsContainer extends Component {
 
   handlePageChange = page => {
     const { onFetchWeChatAttentionAmount } = this.props;
-    // const { way } = this.state;
-    // console.log(page);
-    // onFetchWeChatAttentionAmount(way, page - 1);
     onFetchWeChatAttentionAmount(page - 1);
   };
 
@@ -285,9 +265,6 @@ class AppointmentsContainer extends Component {
   };
 
   handleChangeWay = value => {
-    // this.setState({
-    //   way:value,
-    // })
     console.log(value);
   };
 
@@ -301,9 +278,9 @@ class AppointmentsContainer extends Component {
       allGroupName,
       groupHosName,
     } = this.props;
+
     const { showDetail, selectedName } = this.state;
-    // console.log(searchParam.orderStatus==='0')
-    // const { way } = this.state;
+
     return (
       <React.Fragment>
         <PopularizationBar

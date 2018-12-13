@@ -6,9 +6,7 @@ import classes from './AppointmentsBar.less';
 
 function AppointmentsBar(props) {
   const { onReset, onExport, params, onParamsChange, onSearch } = props;
-  // const handleChange = value =>{
-  //   console.log(value)
-  // }
+
   return (
     <Row className={classes.Container}>
       <Col span={24}>

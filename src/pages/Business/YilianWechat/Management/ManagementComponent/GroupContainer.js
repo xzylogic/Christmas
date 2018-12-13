@@ -165,6 +165,12 @@ class GroupContainer extends Component {
     await onSearchGroupList(0);
   };
 
+  handleSearch = async e => {
+    e.preventDefault();
+    const { onSearchGroupList } = this.props;
+    onSearchGroupList(0);
+  };
+
   handleRefresh = e => {
     e.preventDefault();
     const { onFetchGroupList } = this.props;
@@ -207,6 +213,7 @@ class GroupContainer extends Component {
           inputValue={groupName}
           inputPlaceholder="输入小组名称进行检索"
           onInputChange={this.handleParamChange}
+          onSearchClick={this.handleSearch}
           onRefreshClick={this.handleRefresh}
           onNewClick={this.handleNew}
           onExportClick={this.handleExport}

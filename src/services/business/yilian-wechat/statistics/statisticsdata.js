@@ -10,8 +10,8 @@ export async function fetchAllGroupNameService() {
   return request(`/yilian-cloud-backend-api/ylWeChatCount/search/allGroup`);
 }
 
-export async function fetchPromoteAttentionAmountService(way, params, page, size) {
-  console.log(way, params, page, size);
+// 获取推广数据统计
+export async function fetchPromoteAttentionAmountService(params, page, size, way) {
   let query = `?page=${page || 0}&size=${size || 10}`;
   let req = '';
   if (params) {
@@ -37,20 +37,52 @@ export async function fetchPromoteAttentionAmountService(way, params, page, size
   return req;
 }
 
-export async function fetchAppointmentsDataService(way, params, page, size) {
-  let query = `?page=${page}&size=${size || 10}`;
-
+// 获取预约数据统计
+export async function fetchAppointmentsDataService(params, page, size, way) {
+  let query = `?page=${page || 0}&size=${size || 10}`;
   if (way) {
-    query += `&${way}`;
+    query += `${way}`;
   }
   if (params) {
-    query += `&${params}`;
+    query += `${params}`;
   }
   return request(`/yilian-cloud-backend-api/ylWeChatCount/reservation/count${query}`);
 }
 
-// 按小组显示各医院预约量对比
+// 根据医院类型查询医院
+export async function fetchHosTypeService(params, page, size) {
+  let query = `?page=${page || 0}&size=${size || 10}`;
+  if (params) {
+    query += `${params}`;
+  }
+  return request(`/yilian-cloud-backend-api/ylWeChatCount/search/hosByHosType${query}`);
+}
+
+// 根据组别查询推广医院
+export async function fetchHosGroupService(params, page, size) {
+  let query = `?page=${page || 0}&size=${size || 10}`;
+  if (params) {
+    query += `${params}`;
+  }
+  return request(`/yilian-cloud-backend-api/ylWeChatCount/search/hosByGroupId${query}`);
+}
+
+// 按小组显示各医院预约量对比（医院总量）
 export async function fetchAppointmentReportService(params, page, size) {
+  let query = `?page=${page || 0}&size=${size || 10}`;
+  if (params) {
+    query += `${params}`;
+  }
+  return request(`/yilian-cloud-backend-api/ylWeChatCount/reservation/groupHosCount${query}`);
+}
+
+/**
+ * 按小组显示各医院预约量对比（医院总量）
+ * @param {*} params [startTime | endTime | groupId]
+ * @param {*} page
+ * @param {*} size
+ */
+export async function fetchAppointmentReportType1Service(params, page, size) {
   let query = `?page=${page || 0}&size=${size || 10}`;
   if (params) {
     query += `${params}`;

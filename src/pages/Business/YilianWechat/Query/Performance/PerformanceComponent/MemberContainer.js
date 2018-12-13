@@ -158,6 +158,12 @@ class MemberContainer extends Component {
     console.log('amountset');
   };
 
+  handleSearch = async e => {
+    e.preventDefault();
+    const { onFetchMemberList } = this.props;
+    onFetchMemberList(0);
+  };
+
   handleReset = async e => {
     e.preventDefault();
     const { onSearchParamChange, onFetchMemberList } = this.props;
@@ -191,6 +197,7 @@ class MemberContainer extends Component {
         <QuerySearchBar
           params={searchParam}
           onAmountSet={this.handleAmountSet}
+          onSearch={this.handleSearch}
           onReset={this.handleReset}
           onExport={this.handleExport}
           onParamsChange={this.handleParamsChanged}

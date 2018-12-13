@@ -212,6 +212,12 @@ class Member extends Component {
     console.log('register download');
   };
 
+  handleSearch = async e => {
+    e.preventDefault();
+    const { onFetchMembershipList } = this.props;
+    onFetchMembershipList(0);
+  };
+
   handleReset = async e => {
     e.preventDefault();
     const { onSearchParamChange, onFetchMembershipListDebounce } = this.props;
@@ -234,6 +240,7 @@ class Member extends Component {
             allPerson={allPerson}
             params={searchParam}
             onParamsChange={this.handleParamsChange}
+            onSearch={this.handleSearch}
             onReset={this.handleReset}
           />
           <Tabs className={classes.Content} animated={false}>

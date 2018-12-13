@@ -5,7 +5,7 @@ import moment from 'moment';
 import classes from './AppointmentsBar.less';
 
 function AppointmentsBar(props) {
-  const { onReset, onExport, params, onParamsChange } = props;
+  const { onReset, onExport, params, onParamsChange, onSearch } = props;
   // const handleChange = value =>{
   //   console.log(value)
   // }
@@ -131,9 +131,9 @@ function AppointmentsBar(props) {
       {/* </Col> */}
       {/* <Col span={8} className={classes.ColRight}> */}
       <span className={classes.BtnRight}>
-        {/* <Button type='primary' htmlType='button' onClick={onReset} className={classes.Gap}>
-            查询
-          </Button> */}
+        <Button type="primary" htmlType="button" onClick={onSearch} className={classes.Gap}>
+          查询
+        </Button>
         <Button type="primary" htmlType="button" onClick={onReset} className={classes.Gap}>
           重置
         </Button>

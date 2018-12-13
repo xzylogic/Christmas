@@ -4,8 +4,8 @@ import moment from 'moment';
 import debounce from 'lodash.debounce';
 
 import AppointmentsBar from './AppointmentsBar';
-// import PopularizationDetail from './PopularizationDetail';
 import TableList from '@/components/PageComponents/Table/TableList';
+import AppointmentsDetail from './AppointmentsDetail';
 
 const mapStateToProps = state => ({
   appointmentAttentionList: state.businessYilianWechatStatisticDatas.list.appointmentAttention,
@@ -13,6 +13,7 @@ const mapStateToProps = state => ({
   totalElements: state.businessYilianWechatStatisticDatas.totalElements.appointmentAttention,
   searchParam: state.businessYilianWechatStatisticDatas.searchParam.appointmentAttention,
   allHosName: state.businessYilianWechatStatisticDatas.list.allHosName,
+  typeHosName: state.businessYilianWechatStatisticDatas.list.typeHosName,
   loading: state.loading.effects['businessYilianWechatStatisticDatas/fetchAppointmentsData'],
 });
 
@@ -26,6 +27,19 @@ const mapDispatchToProps = dispatch => ({
     page =>
       dispatch({
         type: 'businessYilianWechatStatisticDatas/fetchAppointmentsData',
+        payload: { page },
+      }),
+    500
+  ),
+  onFetchHosType: page =>
+    dispatch({
+      type: 'businessYilianWechatStatisticDatas/fetchHosType',
+      payload: { page },
+    }),
+  onFetchHosTypeDebounce: debounce(
+    page =>
+      dispatch({
+        type: 'businessYilianWechatStatisticDatas/fetchHosType',
         payload: { page },
       }),
     500
@@ -50,15 +64,16 @@ class AppointmentsContainer extends Component {
     // allHosNameArr: false,
     //   // way: 'week',
     selectedName: '',
-    // showDetail: false,
+    showDetail: false,
   };
 
   componentDidMount() {
-    const { onFetchAppointmentsData, onFetchAllHosName } = this.props;
+    const { onFetchAppointmentsData, onFetchAllHosName, onFetchHosType } = this.props;
     // const { way } = this.state;
     // onFetchAppointmentsData(way, 0);
     onFetchAppointmentsData(0);
     onFetchAllHosName();
+    onFetchHosType(0);
   }
 
   // componentDidUpdate(prevProps) {
@@ -77,7 +92,11 @@ class AppointmentsContainer extends Component {
 
   handleParamsChanged = async (value, dataKey) => {
     // console.log(value);
-    const { onSearchParamChange, onFetchAppointmentsDataDebounce } = this.props;
+    const {
+      onSearchParamChange,
+      onFetchAppointmentsDataDebounce,
+      onFetchHosTypeDebounce,
+    } = this.props;
     if (dataKey === 'date') {
       await onSearchParamChange('startTime', value[0]);
       await onSearchParamChange('endTime', value[1]);
@@ -85,21 +104,57 @@ class AppointmentsContainer extends Component {
       await onSearchParamChange(dataKey, value);
     }
     await onFetchAppointmentsDataDebounce(0);
+    await onFetchHosTypeDebounce(0);
   };
 
   setTableColumns = () => {
+    const renderVisitLevelCode = record => {
+      let content = '';
+      if (record === '1') {
+        content = <span>专家</span>;
+      }
+      if (record === '2') {
+        content = <span>专病</span>;
+      }
+      if (record === '3') {
+        content = <span>普通</span>;
+      }
+      return content;
+    };
+
+    const renderOrderStatus = record => {
+      let content = '';
+      if (record === '1') {
+        content = <span>已预约</span>;
+      }
+      if (record === '3') {
+        content = <span>已取消</span>;
+      }
+      return content;
+    };
+
+    const renderRegChannel = record => {
+      let content = '';
+      if (record === 'wechat') {
+        content = <span>医联微信</span>;
+      }
+      if (record === 'app') {
+        content = <span>医联App</span>;
+      }
+      return content;
+    };
+
     const columns = [
       {
         title: '日期/周期/月份/年份',
-        dataIndex: 'weeks' || 'date' || 'months' || 'years',
-        key: 'weeks' || 'date' || 'months' || 'years',
+        dataIndex: 'date',
+        key: 'date',
       },
-      // {
-      //   title: '医院类型',
-      //   dataIndex: 'order_status',
-      //   key: 'order_status',
-      //   render: record => renderOrderStatus(record),
-      // },
+      {
+        title: '医院类型',
+        dataIndex: 'cityName',
+        key: 'cityName',
+      },
       {
         title: '医院名称',
         dataIndex: 'hosName',
@@ -107,23 +162,26 @@ class AppointmentsContainer extends Component {
       },
       {
         title: '门诊类型',
-        dataIndex: 'promoCode',
-        key: 'promoCode',
+        dataIndex: 'visitLevelCode',
+        key: 'visitLevelCode',
+        render: record => renderVisitLevelCode(record),
       },
       {
         title: '订单状态',
-        dataIndex: 'regCount',
-        key: 'regCount',
+        dataIndex: 'orderStatus',
+        key: 'orderStatus',
+        render: record => renderOrderStatus(record),
       },
       {
         title: '预约渠道',
-        dataIndex: 'realCount',
-        key: 'realCount',
+        dataIndex: 'regChannel',
+        key: 'regChannel',
+        render: record => renderRegChannel(record),
       },
       {
         title: '预约量',
-        dataIndex: 'fansCount',
-        key: 'fansCount',
+        dataIndex: 'reservationCount',
+        key: 'reservationCount',
       },
       {
         title: '明细',
@@ -141,10 +199,20 @@ class AppointmentsContainer extends Component {
 
   handlePageChange = page => {
     const { onFetchAppointmentsData } = this.props;
-    // const { way } = this.state;
-    // console.log(page);
-    // onFetchAppointmentsData(way, page - 1);
     onFetchAppointmentsData(page - 1);
+  };
+
+  handleSearch = async e => {
+    e.preventDefault();
+    const { onFetchAppointmentsData, onFetchHosType } = this.props;
+    onFetchAppointmentsData(0);
+    onFetchHosType(0);
+  };
+
+  handleSearch = async e => {
+    e.preventDefault();
+    const { onFetchGroupList } = this.props;
+    onFetchGroupList(0);
   };
 
   handleReset = async e => {
@@ -166,25 +234,17 @@ class AppointmentsContainer extends Component {
 
   handleDetail = (e, record) => {
     e.preventDefault();
-    console.log(record);
-    // this.setState({
-    //   showDetail: true,
-    //   selectedName: record.hosName,
-    // });
+    this.setState({
+      showDetail: true,
+      selectedName: record.hosName,
+    });
   };
 
   handleDetailClose = e => {
     e.preventDefault();
-    // this.setState({
-    //   showDetail: false,
-    // });
-  };
-
-  handleChangeWay = value => {
-    // this.setState({
-    //   way:value,
-    // })
-    console.log(value);
+    this.setState({
+      showDetail: false,
+    });
   };
 
   render() {
@@ -194,9 +254,10 @@ class AppointmentsContainer extends Component {
       currentPage,
       totalElements,
       allHosName,
+      typeHosName,
     } = this.props;
     // const { showDetail, selectedName } = this.state;
-    const { selectedName } = this.state;
+    const { selectedName, showDetail } = this.state;
     // console.log(searchParam.orderStatus==='0')
     // const { way } = this.state;
     return (
@@ -204,10 +265,12 @@ class AppointmentsContainer extends Component {
         <AppointmentsBar
           // way={way}
           allHosName={allHosName}
+          typeHosName={typeHosName}
           params={searchParam}
+          onSearch={this.handleSearch}
           onReset={this.handleReset}
           onExport={this.handleExport}
-          onChangeWay={this.handleChangeWay}
+          // onChangeWay={this.handleChangeWay}
           onParamsChange={this.handleParamsChanged}
         />
         <TableList
@@ -219,11 +282,11 @@ class AppointmentsContainer extends Component {
           onPageChange={this.handlePageChange}
           name={selectedName}
         />
-        {/* <PopularizationDetail
+        <AppointmentsDetail
           name={selectedName}
           visible={showDetail}
           onClose={this.handleDetailClose}
-        /> */}
+        />
       </React.Fragment>
     );
   }

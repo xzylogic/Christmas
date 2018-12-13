@@ -60,9 +60,6 @@ class AppointmentsContainer extends Component {
   setTableColumns = () => {
     const renderOrderStatus = record => {
       let content = '';
-      // if (record === '1') {
-      //   content = <span>无效</span>;
-      // }
       if (record === '1') {
         content = <span>已预约</span>;
       }
@@ -174,6 +171,12 @@ class AppointmentsContainer extends Component {
     onFetchAppointmentList(page - 1);
   };
 
+  handleSearch = async e => {
+    e.preventDefault();
+    const { onFetchAppointmentList } = this.props;
+    onFetchAppointmentList(0);
+  };
+
   handleReset = async e => {
     e.preventDefault();
     const { onSearchParamChange, onFetchAppointmentList } = this.props;
@@ -197,6 +200,7 @@ class AppointmentsContainer extends Component {
       <React.Fragment>
         <AppointmentsBar
           params={searchParam}
+          onSearch={this.handleSearch}
           onReset={this.handleReset}
           onExport={this.handleExport}
           onParamsChange={this.handleParamsChanged}

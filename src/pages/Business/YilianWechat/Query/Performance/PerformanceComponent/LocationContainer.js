@@ -129,6 +129,12 @@ class LocationContainer extends Component {
     console.log('amountset');
   };
 
+  handleSearch = async e => {
+    e.preventDefault();
+    const { onFetchLocationList } = this.props;
+    onFetchLocationList(0);
+  };
+
   handleReset = async e => {
     e.preventDefault();
     const { onSearchParamChange, onFetchLocationList } = this.props;
@@ -161,6 +167,7 @@ class LocationContainer extends Component {
         <QuerySearchBar
           params={searchParam}
           onAmountSet={this.handleAmountSet}
+          onSearch={this.handleSearch}
           onReset={this.handleReset}
           onExport={this.handleExport}
           onParamsChange={this.handleParamsChanged}

@@ -5,7 +5,7 @@ import moment from 'moment';
 import classes from '../PopularizationReport.less';
 
 function type2SearchBar(props) {
-  const { params, onParamsChange, onReset, onExport } = props;
+  const { params, onParamsChange, onReset, onExport, onSearch } = props;
 
   return (
     <div className={classes.Search}>
@@ -44,12 +44,17 @@ function type2SearchBar(props) {
           ],
         }}
       />
-      <Button type="primary" htmlType="button" onClick={onReset} className={classes.Gap}>
-        重置
-      </Button>
-      <Button type="primary" htmlType="button" onClick={onExport}>
-        导出
-      </Button>
+      <span className={classes.BtnRight}>
+        <Button type="primary" htmlType="button" onClick={onSearch} className={classes.Gap}>
+          查询
+        </Button>
+        <Button type="primary" htmlType="button" onClick={onReset} className={classes.Gap}>
+          重置
+        </Button>
+        <Button type="primary" htmlType="button" onClick={onExport}>
+          导出
+        </Button>
+      </span>
     </div>
   );
 }

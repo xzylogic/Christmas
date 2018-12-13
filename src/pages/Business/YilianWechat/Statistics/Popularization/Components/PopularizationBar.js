@@ -5,13 +5,54 @@ import moment from 'moment';
 import classes from './PopularizationBar.less';
 
 function PopularizationBar(props) {
-  const { onExport, allHosName, allGroupName, params, onParamsChange, onReset } = props;
-  // const { allHosNameArr } = this.state;
-  // const handleChange = (e) => {
-  //   console.log(e)
-  // }
+  const {
+    onSearch,
+    onReset,
+    onExport,
+    allHosName,
+    allGroupName,
+    params,
+    onParamsChange,
+    groupHosName,
+  } = props;
 
-  // console.log(params)
+  const renderHosName = () => {
+    let content = '';
+    if (groupHosName instanceof Object && Object.keys(groupHosName).length > 0) {
+      content = (
+        <Select
+          className={classes.Gap}
+          style={{ width: 115 }}
+          placeholder="医院名称"
+          onChange={value => onParamsChange(value, 'hosName')}
+          value={params.hosName}
+        >
+          {groupHosName.map(item => (
+            <Select.Option id={item.id} key={item.id} value={item.hos_name}>
+              {item.hos_name}
+            </Select.Option>
+          ))}
+        </Select>
+      );
+    } else if (allHosName instanceof Object) {
+      content = (
+        <Select
+          className={classes.Gap}
+          style={{ width: 115 }}
+          placeholder="医院名称"
+          onChange={value => onParamsChange(value, 'hosName')}
+          value={params.hosName}
+        >
+          {allHosName.map(item => (
+            <Select.Option id={item.id} key={item.id} value={item.hos_name}>
+              {item.hos_name}
+            </Select.Option>
+          ))}
+        </Select>
+      );
+    }
+    return content;
+  };
 
   return (
     <Row className={classes.Container}>
@@ -43,11 +84,11 @@ function PopularizationBar(props) {
           组别：
           {allGroupName instanceof Object ? (
             <Select
-              placeholder="请选择推广地址"
               className={classes.Gap}
-              // placeholder="组别"
+              style={{ width: 115 }}
+              placeholder="组别"
               onChange={value => onParamsChange(value, 'group')}
-              // onChange={e => handleChange(e)}
+              value={params.group}
               defaultValue={allGroupName[0].name}
             >
               {allGroupName.map(item => (
@@ -62,13 +103,28 @@ function PopularizationBar(props) {
         </span>
         <span className={classes.Span}>
           医院名称：
-          {allHosName instanceof Object ? (
+          {renderHosName()}
+          {/* {groupHosName instanceof Object && Object.keys(groupHosName).length > 0 ? (
             <Select
-              placeholder="请选择推广地址"
               className={classes.Gap}
-              // placeholder="医院名称"
+              style={{ width: 115 }}
+              placeholder="医院名称"
               onChange={value => onParamsChange(value, 'hosName')}
-              defaultValue={allHosName[0].hos_name}
+              value={params.hosName}
+            >
+              {groupHosName.map(item => (
+                <Select.Option id={item.id} key={item.id} value={item.hos_name}>
+                  {item.hos_name}
+                </Select.Option>
+              ))}
+            </Select>
+          ) : allHosName instanceof Object ? (
+            <Select
+              className={classes.Gap}
+              style={{ width: 115 }}
+              placeholder="医院名称"
+              onChange={value => onParamsChange(value, 'hosName')}
+              value={params.hosName}
             >
               {allHosName.map(item => (
                 <Select.Option id={item.id} key={item.id} value={item.hos_name}>
@@ -78,7 +134,7 @@ function PopularizationBar(props) {
             </Select>
           ) : (
             ''
-          )}
+          )} */}
         </span>
       </Col>
       {/* <Col span={15}> */}
@@ -94,8 +150,8 @@ function PopularizationBar(props) {
           // defaultValue='0'
           onChange={value => onParamsChange(value, 'channel')}
         >
-          <Select.Option value="0">医联微信</Select.Option>
-          <Select.Option value="1">医联APP</Select.Option>
+          <Select.Option value="微信">医联微信</Select.Option>
+          <Select.Option value="app">医联APP</Select.Option>
         </Select>
       </span>
       {params.channel ? (
@@ -132,6 +188,9 @@ function PopularizationBar(props) {
       )}
 
       <span className={classes.BtnRight}>
+        <Button type="primary" htmlType="button" onClick={onSearch} className={classes.Gap}>
+          查询
+        </Button>
         <Button type="primary" htmlType="button" onClick={onReset} className={classes.Gap}>
           重置
         </Button>

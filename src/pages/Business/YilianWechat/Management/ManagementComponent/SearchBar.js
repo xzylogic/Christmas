@@ -13,6 +13,7 @@ function searchBar(props) {
     onExportClick,
     editorBarShow,
     onEditorGroupHosClick,
+    onSearchClick,
   } = props;
 
   return (
@@ -24,6 +25,9 @@ function searchBar(props) {
           value={inputValue}
           onChange={onInputChange}
         />
+        <Button type="primary" htmlType="button" onClick={onSearchClick}>
+          查询
+        </Button>
         {/* <Button type="primary" htmlType="button" onClick={onSearchClick}>查询</Button> */}
       </Col>
       <Col span={12} className={classes.ColRight}>

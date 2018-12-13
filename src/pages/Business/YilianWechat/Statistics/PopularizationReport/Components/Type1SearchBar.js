@@ -5,7 +5,7 @@ import moment from 'moment';
 import classes from '../PopularizationReport.less';
 
 function type1SearchBar(props) {
-  const { params, searchGroupList, onParamsChange, onReset, onExport } = props;
+  const { params, searchGroupList, onParamsChange, onReset, onExport, onSearch } = props;
 
   let options = '';
   if (searchGroupList && Array.isArray(searchGroupList)) {
@@ -75,12 +75,17 @@ function type1SearchBar(props) {
         <Select.Option value="regCount">注册量</Select.Option>
         <Select.Option value="conversionRate">注册转化率</Select.Option>
       </Select>
-      <Button type="primary" htmlType="button" onClick={onReset} className={classes.Gap}>
-        重置
-      </Button>
-      <Button type="primary" htmlType="button" onClick={onExport}>
-        导出
-      </Button>
+      <span className={classes.BtnRight}>
+        <Button type="primary" htmlType="button" onClick={onSearch} className={classes.Gap}>
+          查询
+        </Button>
+        <Button type="primary" htmlType="button" onClick={onReset} className={classes.Gap}>
+          重置
+        </Button>
+        <Button type="primary" htmlType="button" onClick={onExport}>
+          导出
+        </Button>
+      </span>
     </div>
   );
 }

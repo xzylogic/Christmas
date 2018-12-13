@@ -14,6 +14,7 @@ const mapStateToProps = state => ({
   searchParam: state.businessYilianWechatStatisticDatas.searchParam.promoteAttention,
   allHosName: state.businessYilianWechatStatisticDatas.list.allHosName,
   allGroupName: state.businessYilianWechatStatisticDatas.list.allGroupName,
+  groupHosName: state.businessYilianWechatStatisticDatas.list.groupHosName,
   loading: state.loading.effects['businessYilianWechatStatisticDatas/fetchPromoteAttentionAmount'],
 });
 
@@ -27,6 +28,19 @@ const mapDispatchToProps = dispatch => ({
     page =>
       dispatch({
         type: 'businessYilianWechatStatisticDatas/fetchPromoteAttentionAmount',
+        payload: { page },
+      }),
+    500
+  ),
+  onFetchHosGroup: page =>
+    dispatch({
+      type: 'businessYilianWechatStatisticDatas/fetchHosGroup',
+      payload: { page },
+    }),
+  onFetchHosGroupDebounce: debounce(
+    page =>
+      dispatch({
+        type: 'businessYilianWechatStatisticDatas/fetchHosGroup',
         payload: { page },
       }),
     500
@@ -59,12 +73,18 @@ class AppointmentsContainer extends Component {
   };
 
   componentDidMount() {
-    const { onFetchWeChatAttentionAmount, onFetchAllHosName, onFetchAllGroupName } = this.props;
+    const {
+      onFetchWeChatAttentionAmount,
+      onFetchAllHosName,
+      onFetchAllGroupName,
+      onFetchHosGroup,
+    } = this.props;
     // const { way } = this.state;
     // onFetchWeChatAttentionAmount(way, 0);
     onFetchWeChatAttentionAmount(0);
     onFetchAllHosName();
     onFetchAllGroupName();
+    onFetchHosGroup(0);
   }
 
   // componentDidUpdate(prevProps) {
@@ -83,7 +103,12 @@ class AppointmentsContainer extends Component {
 
   handleParamsChanged = async (value, dataKey) => {
     // console.log(value);
-    const { onSearchParamChange, onFetchWeChatAttentionAmountDebounce } = this.props;
+    const {
+      onSearchParamChange,
+      onFetchWeChatAttentionAmountDebounce,
+      onFetchHosGroupDebounce,
+    } = this.props;
+
     if (dataKey === 'date') {
       await onSearchParamChange('startTime', value[0]);
       await onSearchParamChange('endTime', value[1]);
@@ -91,21 +116,23 @@ class AppointmentsContainer extends Component {
       await onSearchParamChange(dataKey, value);
     }
     await onFetchWeChatAttentionAmountDebounce(0);
+    await onFetchHosGroupDebounce(0);
   };
 
   setTableColumnsWechat = () => {
+    const renderGroupId = record => {
+      let content = '';
+      if (record) {
+        content = <span>{record}组</span>;
+      }
+      return content;
+    };
     const columns = [
       {
         title: '日期/周期/月份/年份',
         dataIndex: 'weeks' || 'date' || 'months' || 'years',
         key: 'weeks' || 'date' || 'months' || 'years',
       },
-      //   {
-      //     title: '预约状态',
-      //     dataIndex: 'order_status',
-      //     key: 'order_status',
-      //     render: record => renderOrderStatus(record),
-      //   },
       {
         title: '医院名称',
         dataIndex: 'hosName',
@@ -141,33 +168,30 @@ class AppointmentsContainer extends Component {
           </span>
         ),
       },
-      // {
-      //   title: '组别',
-      //   dataIndex: 'weeks',
-      //   key: 'weeks',
-      // },
-      // {
-      //   title: '二维码',
-      //   dataIndex: 'weeks',
-      //   key: 'weeks',
-      // },
+      {
+        title: '组别',
+        dataIndex: 'groupId',
+        key: 'groupId',
+        render: record => renderGroupId(record),
+      },
     ];
     return columns;
   };
 
   setTableColumnsApp = () => {
+    const renderGroupId = record => {
+      let content = '';
+      if (record) {
+        content = <span>{record}组</span>;
+      }
+      return content;
+    };
     const columns = [
       {
         title: '日期/周期/月份/年份',
         dataIndex: 'weeks' || 'date' || 'months' || 'years',
         key: 'weeks' || 'date' || 'months' || 'years',
       },
-      //   {
-      //     title: '预约状态',
-      //     dataIndex: 'order_status',
-      //     key: 'order_status',
-      //     render: record => renderOrderStatus(record),
-      //   },
       {
         title: '医院名称',
         dataIndex: 'hosName',
@@ -198,11 +222,12 @@ class AppointmentsContainer extends Component {
           </span>
         ),
       },
-      // {
-      //   title: '组别',
-      //   dataIndex: 'weeks',
-      //   key: 'weeks',
-      // },
+      {
+        title: '组别',
+        dataIndex: 'groupId',
+        key: 'groupId',
+        render: record => renderGroupId(record),
+      },
       // {
       //   title: '二维码',
       //   dataIndex: 'weeks',
@@ -218,6 +243,13 @@ class AppointmentsContainer extends Component {
     // console.log(page);
     // onFetchWeChatAttentionAmount(way, page - 1);
     onFetchWeChatAttentionAmount(page - 1);
+  };
+
+  handleSearch = async e => {
+    e.preventDefault();
+    const { onFetchWeChatAttentionAmount, onFetchHosGroup } = this.props;
+    onFetchWeChatAttentionAmount(0);
+    onFetchHosGroup(0);
   };
 
   handleReset = async e => {
@@ -267,6 +299,7 @@ class AppointmentsContainer extends Component {
       totalElements,
       allHosName,
       allGroupName,
+      groupHosName,
     } = this.props;
     const { showDetail, selectedName } = this.state;
     // console.log(searchParam.orderStatus==='0')
@@ -277,21 +310,15 @@ class AppointmentsContainer extends Component {
           // way={way}
           allHosName={allHosName}
           allGroupName={allGroupName}
+          groupHosName={groupHosName}
           params={searchParam}
+          onSearch={this.handleSearch}
           onReset={this.handleReset}
           onExport={this.handleExport}
           onChangeWay={this.handleChangeWay}
           onParamsChange={this.handleParamsChanged}
         />
-        {/* <TableList
-          rowKey="aaa"
-          list={promoteAttentionList}
-          columns={this.setTableColumnsWechat()}
-          currentPage={currentPage}
-          totalElements={totalElements}
-          onPageChange={this.handlePageChange}
-        /> */}
-        {searchParam.channel === '1' ? (
+        {searchParam.channel === 'app' ? (
           <TableList
             rowKey="aaa"
             list={promoteAttentionList}

@@ -5,8 +5,45 @@ import moment from 'moment';
 import classes from './AppointmentsBar.less';
 
 function AppointmentsBar(props) {
-  const { onExport, allHosName, params, onParamsChange, onReset } = props;
-  // console.log(allHosName)
+  const { onSearch, onReset, onExport, allHosName, params, onParamsChange, typeHosName } = props;
+
+  const renderHosName = () => {
+    let content = '';
+    if (typeHosName instanceof Object) {
+      content = (
+        <Select
+          className={classes.Gap}
+          style={{ width: 115 }}
+          placeholder="医院名称"
+          value={params.hosOrgCode}
+          onChange={value => onParamsChange(value, 'hosOrgCode')}
+        >
+          {typeHosName.map(item => (
+            <Select.Option id={item.id} key={item.id} value={item.hos_name}>
+              {item.hos_name}
+            </Select.Option>
+          ))}
+        </Select>
+      );
+    } else if (allHosName instanceof Object) {
+      content = (
+        <Select
+          className={classes.Gap}
+          style={{ width: 115 }}
+          placeholder="医院名称"
+          value={params.hosOrgCode}
+          onChange={value => onParamsChange(value, 'hosOrgCode')}
+        >
+          {allHosName.map(item => (
+            <Select.Option id={item.id} key={item.id} value={item.hos_name}>
+              {item.hos_name}
+            </Select.Option>
+          ))}
+        </Select>
+      );
+    }
+    return content;
+  };
 
   return (
     <Row className={classes.Container}>
@@ -37,26 +74,42 @@ function AppointmentsBar(props) {
         <span className={classes.Span}>
           医院类型：
           <Select
-            placeholder="请选择推广地址"
+            placeholder="医院类型"
             className={classes.Gap}
-            // placeholder="组别"
-            // onChange={value => onParamsChange(value, 'group')}
-            // onChange={e => handleChange(e)}
-            // defaultValue={allGroupName[0].name}
+            style={{ width: 115 }}
+            value={params.cityName}
+            onChange={value => onParamsChange(value, 'cityName')}
           >
-            <Select.Option value="0">1组</Select.Option>
-            <Select.Option value="1">2组</Select.Option>
-            <Select.Option value="2">3组</Select.Option>
+            <Select.Option value="all">全部</Select.Option>
+            <Select.Option value="专科医院">专科医院</Select.Option>
+            <Select.Option value="综合医院">综合医院</Select.Option>
+            <Select.Option value="中医医院">中医医院</Select.Option>
           </Select>
         </span>
         <span className={classes.Span}>
           医院名称：
-          {allHosName instanceof Object ? (
+          {renderHosName()}
+          {/* {typeHosName instanceof Object ? (
             <Select
               className={classes.Gap}
+              style={{ width: 115 }}
               placeholder="医院名称"
-              // onChange={value => onParamsChange(value, 'hosName')}
-              defaultValue={allHosName[0].hos_name}
+              value={params.hosOrgCode}
+              onChange={value => onParamsChange(value, 'hosOrgCode')}
+            >
+              {typeHosName.map(item => (
+                <Select.Option id={item.id} key={item.id} value={item.hos_name}>
+                  {item.hos_name}
+                </Select.Option>
+              ))}
+            </Select>
+          ) : allHosName instanceof Object ? (
+            <Select
+              className={classes.Gap}
+              style={{ width: 115 }}
+              placeholder="医院名称"
+              value={params.hosOrgCode}
+              onChange={value => onParamsChange(value, 'hosOrgCode')}
             >
               {allHosName.map(item => (
                 <Select.Option id={item.id} key={item.id} value={item.hos_name}>
@@ -66,56 +119,59 @@ function AppointmentsBar(props) {
             </Select>
           ) : (
             ''
-          )}
+          )} */}
         </span>
         <span className={classes.Span}>
           门诊类型：
           <Select
-            placeholder="请选择推广地址"
+            style={{ width: 115 }}
+            placeholder="门诊类型"
             className={classes.Gap}
-            // placeholder="组别"
-            // onChange={value => onParamsChange(value, 'group')}
-            // onChange={e => handleChange(e)}
+            value={params.visitLevelCode}
+            onChange={value => onParamsChange(value, 'visitLevelCode')}
             // defaultValue={allGroupName[0].name}
           >
-            <Select.Option value="0">1组</Select.Option>
-            <Select.Option value="1">2组</Select.Option>
-            <Select.Option value="2">3组</Select.Option>
+            <Select.Option value="1">专家</Select.Option>
+            <Select.Option value="2">专病</Select.Option>
+            <Select.Option value="3">普通</Select.Option>
           </Select>
         </span>
       </Col>
       <span className={classes.Span}>
         预约渠道：
         <Select
-          placeholder="请选择推广地址"
+          style={{ width: 115 }}
+          placeholder="预约渠道"
           className={classes.Gap}
-          // placeholder="组别"
-          // onChange={value => onParamsChange(value, 'group')}
+          value={params.regChannel}
+          onChange={value => onParamsChange(value, 'regChannel')}
           // onChange={e => handleChange(e)}
           // defaultValue={allGroupName[0].name}
         >
-          <Select.Option value="0">1组</Select.Option>
-          <Select.Option value="1">2组</Select.Option>
-          <Select.Option value="2">3组</Select.Option>
+          <Select.Option value="wechat">医联微信</Select.Option>
+          <Select.Option value="app">医联App</Select.Option>
         </Select>
       </span>
       <span className={classes.Span}>
         订单状态：
         <Select
-          placeholder="请选择推广地址"
+          style={{ width: 115 }}
+          placeholder="订单状态"
           className={classes.Gap}
-          // placeholder="组别"
-          // onChange={value => onParamsChange(value, 'group')}
+          value={params.orderStatus}
+          onChange={value => onParamsChange(value, 'orderStatus')}
           // onChange={e => handleChange(e)}
           // defaultValue={allGroupName[0].name}
         >
-          <Select.Option value="0">1组</Select.Option>
-          <Select.Option value="1">2组</Select.Option>
-          <Select.Option value="2">3组</Select.Option>
+          <Select.Option value="1">已预约</Select.Option>
+          <Select.Option value="3">已取消</Select.Option>
         </Select>
       </span>
 
       <span className={classes.BtnRight}>
+        <Button type="primary" htmlType="button" onClick={onSearch} className={classes.Gap}>
+          查询
+        </Button>
         <Button type="primary" htmlType="button" onClick={onReset} className={classes.Gap}>
           重置
         </Button>

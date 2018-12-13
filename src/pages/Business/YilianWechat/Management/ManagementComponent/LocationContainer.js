@@ -136,15 +136,16 @@ class LocationContainer extends Component {
     await onSearchLocationList(0);
   };
 
-  // handleSearch = e => {
-  //   e.preventDefault();
-  //   console.log('search');
-  // };
+  handleSearch = async e => {
+    e.preventDefault();
+    const { onSearchLocationList } = this.props;
+    onSearchLocationList(0);
+  };
 
   handleRefresh = e => {
     e.preventDefault();
-    const { onFetchLocationList } = this.props;
-    onFetchLocationList(0);
+    const { onSearchLocationList } = this.props;
+    onSearchLocationList(0);
   };
 
   handleNew = e => {

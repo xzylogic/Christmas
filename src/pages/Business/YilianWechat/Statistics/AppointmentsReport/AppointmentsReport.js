@@ -131,6 +131,13 @@ class AppointmentsReport extends Component {
     await onFetchAppointmentChart();
   };
 
+  handleSearch = async e => {
+    e.preventDefault();
+    const { onFetchAppointmentReport, onFetchAppointmentChart } = this.props;
+    onFetchAppointmentReport(0);
+    onFetchAppointmentChart(0);
+  };
+
   handleExport = e => {
     e.preventDefault();
     console.log('export');
@@ -141,10 +148,6 @@ class AppointmentsReport extends Component {
     this.setState({ show: e.target.value });
     const { onSearchParamChange } = this.props;
     onSearchParamChange('show', e.target.value);
-  };
-
-  onParams = e => {
-    console.log(e);
   };
 
   render() {
@@ -164,6 +167,7 @@ class AppointmentsReport extends Component {
           <AppointmentsReportBar
             params={searchParam}
             allGroupName={allGroupName}
+            onSearch={this.handleSearch}
             onExport={this.handleExport}
             onReset={this.handleReset}
             onParamsChange={this.handleParamsChanged}

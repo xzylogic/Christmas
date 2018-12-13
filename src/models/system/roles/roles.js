@@ -27,7 +27,7 @@ export default {
       const { page } = payload;
       let params = '';
       if (searchParam && searchParam.name) {
-        params += `&name=${searchParam.name}`;
+        params += `&roleName=${searchParam.name}`;
       }
       const res = yield call(fetchRoleListService, params, page, 10);
       if (res && res.code === 200) {

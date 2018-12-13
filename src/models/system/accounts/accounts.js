@@ -32,10 +32,10 @@ export default {
       const { page } = payload;
       let params = '';
       if (searchParam && searchParam.name) {
-        params += `&name=${searchParam.name}`;
+        params += `&realName=${searchParam.name}`;
       }
       if (searchParam && searchParam.state) {
-        params += `&state=${searchParam.state}`;
+        params += `&enable=${searchParam.state}`;
       }
       const res = yield call(fetchAccountListService, params, page, 10);
       if (res && res.code === 200) {

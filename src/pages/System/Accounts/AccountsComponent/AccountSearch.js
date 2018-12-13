@@ -18,8 +18,8 @@ const accountSearch = props => {
         className={classes.InputContainer}
         allowClear
       >
-        <Select.Option value="true">是</Select.Option>
-        <Select.Option value="false">否</Select.Option>
+        <Select.Option value="1">是</Select.Option>
+        <Select.Option value="0">否</Select.Option>
       </Select>
       <div className={classes.InputContainer}>
         <Input type="text" placeholder="姓名" value={name} onChange={onNameChange} />

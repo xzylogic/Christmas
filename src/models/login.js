@@ -4,6 +4,7 @@ import { login } from '@/services/auth';
 import { setAuthority } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
 import { reloadAuthorized } from '@/utils/Authorized';
+import { message } from 'antd';
 
 export default {
   namespace: 'login',
@@ -47,6 +48,8 @@ export default {
           }
         }
         yield put(routerRedux.replace(redirect || '/'));
+      } else {
+        message.error((response && response.msg) || '登录错误！');
       }
     },
 

@@ -1,0 +1,166 @@
+import React from 'react';
+import { Select, Button, DatePicker } from 'antd';
+import moment from 'moment';
+
+import classes from './QuerySearchBar.less';
+
+// class QuerySearchBar extends Component {
+// state = {
+//   mode: 'date',
+//   formatString: 'YYYY-MM-DD',
+//   // open: false,
+//   // counts: 0,
+// }
+
+// componentWillMount() {
+//   const { params: { countType } } = this.props;
+//   if (countType === 'day') {
+//     this.setState({ mode: 'date', formatString: 'YYYY-MM-DD' });
+//   } else if (countType === 'month') {
+//     this.setState({ mode: 'month', formatString: 'YYYY-MM' });
+//   } else if (countType === 'year') {
+//     this.setState({ mode: 'year', formatString: 'YYYY' });
+//   }
+// }
+
+// componentWillReceiveProps(nextProps) {
+//   const { params: { countType } } = nextProps;
+//   if (countType === 'day') {
+//     this.setState({ mode: 'date', formatString: 'YYYY-MM-DD' });
+//   } else if (countType === 'month') {
+//     this.setState({ mode: 'month', formatString: 'YYYY-MM' });
+//   } else if (countType === 'year') {
+//     this.setState({ mode: 'year', formatString: 'YYYY' });
+//   }
+// }
+
+// handlePanelChange = (value) => {
+//   const { onParamsChange } = this.props;
+//   const { counts } = this.state;
+//   console.log(value[0].format('YYYY'))
+//   console.log(value[1].format('YYYY'))
+//   onParamsChange(value, 'date');
+//   if (counts) {
+//     this.setState({ counts: 0, open: false });
+//   } else {
+//     this.setState({ counts: 1 });
+//   }
+// }
+
+// handleOpenChange = (state) => {
+//   this.setState({ open: state });
+// }
+
+function querySearchBar(props) {
+  const {
+    onSearch,
+    onReset,
+    onExport,
+    params: { countType, startDate, endDate, cityCode, orgId, isExclusive },
+    onParamsChange,
+    hospitals,
+  } = props;
+  // const { mode, formatString } = this.state;
+  const mode = 'date';
+  const formatString = 'YYYY-MM-DD';
+
+  return (
+    <div className={classes.Container}>
+      <Select
+        placeholder="统计方式"
+        className={[classes.Gap, classes.Select].join(' ')}
+        name="countType"
+        value={countType}
+        onChange={value => onParamsChange(value, 'countType')}
+      >
+        <Select.Option value="day">按日统计</Select.Option>
+        <Select.Option value="month">按月统计</Select.Option>
+        <Select.Option value="year">按年统计</Select.Option>
+      </Select>
+      <DatePicker.RangePicker
+        className={classes.Gap}
+        value={[startDate, endDate]}
+        onChange={date => onParamsChange(date, 'date')}
+        // onPanelChange={this.handlePanelChange}
+        // onOpenChange={this.handleOpenChange}
+        // open={open}
+        allowClear={false}
+        // format={formatString}
+        mode={[mode, mode]}
+        ranges={{
+          最近一周: [
+            moment(new Date(new Date().valueOf() - 604800000), formatString),
+            moment(new Date(), formatString),
+          ],
+          最近30天: [
+            moment(new Date(new Date().valueOf() - 2592000000), formatString),
+            moment(new Date(), formatString),
+          ],
+          最近90天: [
+            moment(new Date(new Date().valueOf() - 7776000000), formatString),
+            moment(new Date(), formatString),
+          ],
+          最近一年: [
+            moment(new Date(new Date().valueOf() - 31536000000), formatString),
+            moment(new Date(), formatString),
+          ],
+        }}
+      />
+      {hospitals ? (
+        <React.Fragment>
+          <Select
+            placeholder="医院类型"
+            className={[classes.Gap, classes.Select].join(' ')}
+            name="cityCode"
+            value={cityCode}
+            onChange={value => onParamsChange(value, 'cityCode')}
+          >
+            <Select.Option value="">全部医院类型</Select.Option>
+            <Select.Option value="专科医院">专科医院</Select.Option>
+            <Select.Option value="中医医院">中医医院</Select.Option>
+            <Select.Option value="综合医院">综合医院</Select.Option>
+          </Select>
+          <Select
+            placeholder="医院名称"
+            className={[classes.Gap, classes.Hospital].join(' ')}
+            name="orgId"
+            value={orgId}
+            onChange={value => onParamsChange(value, 'orgId')}
+          >
+            <Select.Option value="">全部医院</Select.Option>
+            {hospitals.map(hospital => (
+              <Select.Option key={hospital.hos_org_code} value={hospital.hos_org_code}>
+                {hospital.hos_name}
+              </Select.Option>
+            ))}
+          </Select>
+          <Select
+            placeholder="号源类型"
+            className={[classes.Gap, classes.Select].join(' ')}
+            name="isExclusive"
+            value={isExclusive}
+            onChange={value => onParamsChange(value, 'isExclusive')}
+          >
+            <Select.Option value="">全部号源</Select.Option>
+            <Select.Option value="0">独享</Select.Option>
+            <Select.Option value="1">共享</Select.Option>
+          </Select>
+        </React.Fragment>
+      ) : (
+        ''
+      )}
+      <Button type="primary" htmlType="button" onClick={onSearch} className={classes.Gap}>
+        查询
+      </Button>
+      <Button type="primary" htmlType="button" onClick={onReset} className={classes.Gap}>
+        重置
+      </Button>
+      <Button type="primary" htmlType="button" onClick={onExport} className={classes.Gap}>
+        导出Excel
+      </Button>
+    </div>
+  );
+}
+// }
+
+export default querySearchBar;

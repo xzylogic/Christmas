@@ -23,7 +23,7 @@ export default {
 
   effects: {
     *fetchRoleList({ payload }, { call, put, select }) {
-      const searchParam = yield select(state => state.account.searchParam);
+      const searchParam = yield select(state => state.role.searchParam);
       const { page } = payload;
       let params = '';
       if (searchParam && searchParam.name) {

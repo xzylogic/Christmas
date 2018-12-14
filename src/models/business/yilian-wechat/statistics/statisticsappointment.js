@@ -26,7 +26,7 @@ export default {
           endTime: moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD'),
           groupName: '1组',
           show: 'chart',
-          isExport: '',
+          isExport: false,
         },
       },
     },
@@ -99,6 +99,9 @@ export default {
       if (searchParams && searchParams.groupName) {
         params += `&groupId=${searchParams.groupName}`;
       }
+      if (searchParams && !searchParams.isExport) {
+        params += `&isExport=${searchParams.isExport}`;
+      }
       const res = yield call(fetchAppointmentReportType1Service, params, page, 10);
       if (res && res.code === 200) {
         yield put({
@@ -165,6 +168,9 @@ export default {
       }
       if (searchParams && searchParams.groupName) {
         params += `&groupId=${searchParams.groupName}`;
+      }
+      if (searchParams && !searchParams.isExport) {
+        params += `&isExport=${searchParams.isExport}`;
       }
       const res = yield call(fetchAppointmentReportType1Service, params, 0, 99999);
       if (res && res.code === 200) {

@@ -232,12 +232,8 @@ class AppointmentsContainer extends Component {
 
   handleSearch = async e => {
     e.preventDefault();
-    // const { onFetchWeChatAttentionAmount, onFetchHosGroup } = this.props;
-    // onFetchWeChatAttentionAmount(0);
-    // onFetchHosGroup(0);
-    const { onDowloadPromoteAttentionAmount, onSearchParamChange } = this.props;
-    onSearchParamChange('isExport', false);
-    onDowloadPromoteAttentionAmount();
+    const { onFetchWeChatAttentionAmount } = this.props;
+    onFetchWeChatAttentionAmount(0);
   };
 
   handleReset = async e => {
@@ -258,7 +254,7 @@ class AppointmentsContainer extends Component {
     await onSearchParamChange('orderStatus', null);
     await onSearchParamChange('orderStatusWechat', null);
     await onSearchParamChange('orderStatusApp', null);
-    await onSearchParamChange('isExport', '');
+    await onSearchParamChange('isExport', false);
     await onFetchWeChatAttentionAmount(0);
   };
 
@@ -268,6 +264,7 @@ class AppointmentsContainer extends Component {
     const { onDowloadPromoteAttentionAmount, onSearchParamChange } = this.props;
     onSearchParamChange('isExport', true);
     onDowloadPromoteAttentionAmount();
+    onSearchParamChange('isExport', false);
   };
 
   handleDetail = (e, record) => {

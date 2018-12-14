@@ -39,23 +39,23 @@ export default {
           countType: 'day',
           groupName: '1组',
           project: '',
-          isExport: '',
+          isExport: false,
         },
         [POPULARIZATION_REPORT_TYPE.TYPE2]: {
           startTime: moment(new Date().valueOf() - 2678400000).format('YYYY-MM-DD'),
           endTime: moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD'),
           countType: 'day',
-          isExport: '',
+          isExport: false,
         },
         [POPULARIZATION_REPORT_TYPE.TYPE3]: {
           startTime: moment(new Date().valueOf() - 2678400000).format('YYYY-MM-DD'),
           endTime: moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD'),
           countType: 'day',
-          isExport: '',
+          isExport: false,
         },
         [POPULARIZATION_REPORT_TYPE.TYPE4]: {
           time: moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD'),
-          isExport: '',
+          isExport: false,
         },
       },
       appointments: {},
@@ -145,6 +145,9 @@ export default {
       if (searchParams && searchParams.groupName) {
         params += `&groupName=${searchParams.groupName}`;
       }
+      if (searchParams && !searchParams.isExport) {
+        params += `&isExport=${searchParams.isExport}`;
+      }
       const res = yield call(fetchPopularizationReportType1Service, params, page, 10);
       if (res && res.code === 200) {
         yield put({
@@ -218,6 +221,9 @@ export default {
       if (searchParams && searchParams.groupName) {
         params += `&groupName=${searchParams.groupName}`;
       }
+      if (searchParams && !searchParams.isExport) {
+        params += `&isExport=${searchParams.isExport}`;
+      }
       const res = yield call(fetchPopularizationReportType1Service, params, 0, 99999);
       if (res && res.code === 200) {
         yield put({
@@ -247,6 +253,9 @@ export default {
       }
       if (searchParams && searchParams.countType) {
         params += `&countType=${searchParams.countType}`;
+      }
+      if (searchParams && !searchParams.isExport) {
+        params += `&isExport=${searchParams.isExport}`;
       }
       const res = yield call(fetchPopularizationReportType2Service, params, page, 10);
       if (res && res.code === 200) {
@@ -314,6 +323,9 @@ export default {
       if (searchParams && searchParams.countType) {
         params += `&countType=${searchParams.countType}`;
       }
+      if (searchParams && !searchParams.isExport) {
+        params += `&isExport=${searchParams.isExport}`;
+      }
       const res = yield call(fetchPopularizationReportType2Service, params, 0, 99999);
       if (res && res.code === 200) {
         yield put({
@@ -343,6 +355,9 @@ export default {
       }
       if (searchParams && searchParams.countType) {
         params += `&countType=${searchParams.countType}`;
+      }
+      if (searchParams && !searchParams.isExport) {
+        params += `&isExport=${searchParams.isExport}`;
       }
       const res = yield call(fetchPopularizationReportType3Service, params, page, 10);
       if (res && res.code === 200) {
@@ -410,6 +425,9 @@ export default {
       if (searchParams && searchParams.countType) {
         params += `&countType=${searchParams.countType}`;
       }
+      if (searchParams && !searchParams.isExport) {
+        params += `&isExport=${searchParams.isExport}`;
+      }
       const res = yield call(fetchPopularizationReportType3Service, params, 0, 99999);
       if (res && res.code === 200) {
         yield put({
@@ -433,6 +451,9 @@ export default {
       let params = '';
       if (searchParams && searchParams.time) {
         params += `&time=${searchParams.time}`;
+      }
+      if (searchParams && !searchParams.isExport) {
+        params += `&isExport=${searchParams.isExport}`;
       }
       const res = yield call(fetchPopularizationReportType4Service, params, page, 10);
       if (res && res.code === 200) {

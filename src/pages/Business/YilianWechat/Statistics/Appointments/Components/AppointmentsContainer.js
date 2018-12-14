@@ -199,11 +199,8 @@ class AppointmentsContainer extends Component {
 
   handleSearch = async e => {
     e.preventDefault();
-    // const { onFetchAppointmentsData } = this.props;
-    // onFetchAppointmentsData(0);
-    const { onDownloadAppointmentsData, onSearchParamChange } = this.props;
-    onSearchParamChange('isExport', false);
-    onDownloadAppointmentsData();
+    const { onFetchAppointmentsData } = this.props;
+    onFetchAppointmentsData(0);
   };
 
   handleReset = async e => {
@@ -214,7 +211,14 @@ class AppointmentsContainer extends Component {
       moment(new Date().valueOf() - 604800000).format('YYYY-MM-DD')
     );
     await onSearchParamChange('endTime', moment(new Date().valueOf()).format('YYYY-MM-DD'));
-    // await onSearchParamChange('name', '');
+    await onSearchParamChange('countType', 'week');
+    await onSearchParamChange('cityName', '');
+    await onSearchParamChange('hosOrgCode', null);
+    await onSearchParamChange('visitLevelCode', null);
+    await onSearchParamChange('orderStatus', null);
+    await onSearchParamChange('regChannel', null);
+    await onSearchParamChange('type', 'day');
+    await onSearchParamChange('isExport', false);
     await onFetchAppointmentsData(0);
   };
 
@@ -224,6 +228,7 @@ class AppointmentsContainer extends Component {
     const { onDownloadAppointmentsData, onSearchParamChange } = this.props;
     onSearchParamChange('isExport', true);
     onDownloadAppointmentsData();
+    onSearchParamChange('isExport', false);
   };
 
   handleDetail = (e, record) => {

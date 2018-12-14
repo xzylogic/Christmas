@@ -148,9 +148,6 @@ class AppointmentType1Container extends Component {
     const { onFetchAppointmentReport, onFetchAppointmentChart } = this.props;
     onFetchAppointmentReport(0);
     onFetchAppointmentChart(0);
-    // const { onDownloadAppointmentReport, onUpdateSearchParams } = this.props;
-    // onUpdateSearchParams('isExport', false);
-    // onDownloadAppointmentReport();
   };
 
   handleReset = async e => {
@@ -163,7 +160,7 @@ class AppointmentType1Container extends Component {
     await onUpdateSearchParams('endTime', moment(new Date().valueOf()).format('YYYY-MM-DD'));
     await onUpdateSearchParams('groupName', '1组');
     await onUpdateSearchParams('show', 'chart');
-    await onUpdateSearchParams('isExport', '');
+    await onUpdateSearchParams('isExport', false);
     await onFetchAppointmentReport(0);
     await onFetchAppointmentChart();
   };
@@ -174,6 +171,7 @@ class AppointmentType1Container extends Component {
     const { onDownloadAppointmentReport, onUpdateSearchParams } = this.props;
     onUpdateSearchParams('isExport', true);
     onDownloadAppointmentReport();
+    onUpdateSearchParams('isExport', false);
   };
 
   handleChange = e => {

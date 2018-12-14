@@ -83,7 +83,6 @@ class AppointmentsContainer extends Component {
         title: '就诊日期',
         dataIndex: 'scheduleDate',
         key: 'scheduleDate',
-        render: () => '-',
       },
       {
         title: '就诊时段',
@@ -149,7 +148,6 @@ class AppointmentsContainer extends Component {
         title: '预约编号',
         dataIndex: 'orderNumber',
         key: 'orderNumber',
-        render: () => '-',
       },
       {
         title: '预约状态',
@@ -161,7 +159,6 @@ class AppointmentsContainer extends Component {
         title: '取消原因',
         dataIndex: 'cancelReason',
         key: 'cancelReason',
-        render: () => '-',
       },
     ];
     return columns;
@@ -175,9 +172,8 @@ class AppointmentsContainer extends Component {
   handleSearch = async e => {
     e.preventDefault();
     console.log('export');
-    const { onDownloadAppointmentList, onSearchParamChange } = this.props;
-    onSearchParamChange('isExport', false);
-    onDownloadAppointmentList();
+    const { onFetchAppointmentList } = this.props;
+    onFetchAppointmentList(0);
   };
 
   handleReset = async e => {
@@ -195,7 +191,7 @@ class AppointmentsContainer extends Component {
     await onSearchParamChange('mediCardId', '');
     await onSearchParamChange('patientCardId', '');
     await onSearchParamChange('hosDocCode', '');
-    await onSearchParamChange('isExport', '');
+    await onSearchParamChange('isExport', false);
     await onFetchAppointmentList(0);
   };
 
@@ -205,6 +201,7 @@ class AppointmentsContainer extends Component {
     const { onDownloadAppointmentList, onSearchParamChange } = this.props;
     onSearchParamChange('isExport', true);
     onDownloadAppointmentList();
+    onSearchParamChange('isExport', false);
   };
 
   render() {

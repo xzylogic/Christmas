@@ -39,6 +39,11 @@ const mapDispatchProps = dispatch => ({
       type: 'businessYilianWechatManagement/deleteLocation',
       payload: { id },
     }),
+  // onDownloadLocationList: page =>
+  //   dispatch({
+  //     type: 'businessYilianWechatManagement/downloadLocationList',
+  //     payload: { page },
+  //   }),
 });
 
 @connect(
@@ -153,6 +158,8 @@ class LocationContainer extends Component {
   handleExport = e => {
     e.preventDefault();
     console.log('export');
+    // const { onDownloadLocationList } = this.props;
+    // onDownloadLocationList();
   };
 
   render() {

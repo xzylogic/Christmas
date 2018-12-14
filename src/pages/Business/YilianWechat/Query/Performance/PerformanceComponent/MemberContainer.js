@@ -171,7 +171,7 @@ class MemberContainer extends Component {
       moment(new Date().valueOf() - 604800000).format('YYYY-MM-DD')
     );
     await onSearchParamChange('endTime', moment(new Date().valueOf()).format('YYYY-MM-DD'));
-    await onSearchParamChange('hosName', '');
+    await onSearchParamChange('name', '');
     await onFetchMemberList(0);
   };
 

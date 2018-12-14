@@ -22,10 +22,11 @@ export default {
         // 推广数据统计搜索条件
         origin: {},
         [APPOINTMENTS_REPORT_TYPE.TYPE1]: {
-          startTime: moment(new Date().valueOf() - 604800000).format('YYYY-MM-DD'),
+          startTime: moment(new Date().valueOf() - 2592000000).format('YYYY-MM-DD'),
           endTime: moment(new Date().valueOf()).format('YYYY-MM-DD'),
           groupName: '1组',
           show: 'chart',
+          isExport: '',
         },
       },
     },
@@ -97,6 +98,42 @@ export default {
       }
       if (searchParams && searchParams.groupName) {
         params += `&groupId=${searchParams.groupName}`;
+      }
+      const res = yield call(fetchAppointmentReportType1Service, params, page, 10);
+      if (res && res.code === 200) {
+        yield put({
+          type: 'updateList',
+          payload: {
+            pageKey: 'appointments',
+            typeKey: APPOINTMENTS_REPORT_TYPE.TYPE1,
+            list: res.data.content,
+            currentPage: page,
+            totalElements: res.data.totalElements,
+          },
+        });
+      }
+    },
+    *downloadAppointmentReportType1({ payload }, { call, put, select }) {
+      yield put({ type: 'fetchSearchGroupList' });
+      const searchParams = yield select(
+        state =>
+          state.businessYilianWechatStatisticsAppointment.searchParams.appointments[
+            APPOINTMENTS_REPORT_TYPE.TYPE1
+          ]
+      );
+      const { page } = payload;
+      let params = '';
+      if (searchParams && searchParams.startTime) {
+        params += `&startTime=${searchParams.startTime}`;
+      }
+      if (searchParams && searchParams.endTime) {
+        params += `&endTime=${searchParams.endTime}`;
+      }
+      if (searchParams && searchParams.groupName) {
+        params += `&groupId=${searchParams.groupName}`;
+      }
+      if (searchParams && searchParams.isExport) {
+        params += `&isExport=${searchParams.isExport}`;
       }
       const res = yield call(fetchAppointmentReportType1Service, params, page, 10);
       if (res && res.code === 200) {

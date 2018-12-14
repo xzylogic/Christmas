@@ -74,6 +74,11 @@ const mapDispatchToProps = dispatch => ({
     dispatch({
       type: 'businessYilianWechatStatisticsAppointment/fetchSearchGroupList',
     }),
+  onDownloadAppointmentReport: page =>
+    dispatch({
+      type: 'businessYilianWechatStatisticsAppointment/downloadAppointmentReportType1',
+      payload: { page },
+    }),
 });
 
 @connect(
@@ -143,6 +148,9 @@ class AppointmentType1Container extends Component {
     const { onFetchAppointmentReport, onFetchAppointmentChart } = this.props;
     onFetchAppointmentReport(0);
     onFetchAppointmentChart(0);
+    // const { onDownloadAppointmentReport, onUpdateSearchParams } = this.props;
+    // onUpdateSearchParams('isExport', false);
+    // onDownloadAppointmentReport();
   };
 
   handleReset = async e => {
@@ -153,8 +161,9 @@ class AppointmentType1Container extends Component {
       moment(new Date().valueOf() - 604800000).format('YYYY-MM-DD')
     );
     await onUpdateSearchParams('endTime', moment(new Date().valueOf()).format('YYYY-MM-DD'));
-    await onUpdateSearchParams('countType', 'day');
-    await onUpdateSearchParams('groupName', '');
+    await onUpdateSearchParams('groupName', '1组');
+    await onUpdateSearchParams('show', 'chart');
+    await onUpdateSearchParams('isExport', '');
     await onFetchAppointmentReport(0);
     await onFetchAppointmentChart();
   };
@@ -162,6 +171,9 @@ class AppointmentType1Container extends Component {
   handleExport = e => {
     e.preventDefault();
     console.log('export');
+    const { onDownloadAppointmentReport, onUpdateSearchParams } = this.props;
+    onUpdateSearchParams('isExport', true);
+    onDownloadAppointmentReport();
   };
 
   handleChange = e => {

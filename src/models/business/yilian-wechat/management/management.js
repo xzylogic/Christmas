@@ -26,6 +26,9 @@ export default {
       groupName: '',
       memberName: '',
       locationName: '',
+      groupDownload: '',
+      memberDownload: '',
+      locationDownload: '',
     },
     list: {
       group: null,
@@ -47,9 +50,6 @@ export default {
       member: 0,
       location: 0,
     },
-    // wechatCode: {
-    //   imgUrl: null,
-    // },
   },
 
   effects: {
@@ -93,7 +93,6 @@ export default {
         });
       }
     },
-
     *getMemberMessage(_, { call, put }) {
       const res = yield call(getMemberService);
       if (res && res.code === 200) {
@@ -106,7 +105,6 @@ export default {
         });
       }
     },
-
     *fetchLocationList({ payload }, { call, put, select }) {
       const searchParam = yield select(state => state.businessYilianWechatManagement.searchParam);
       const { page } = payload;
@@ -169,13 +167,6 @@ export default {
       let ifsuccess = false;
       if (res && res.code === 200) {
         ifsuccess = true;
-        // yield put({
-        //   type: 'updateList',
-        //   payload: {
-        //     key: 'imgUrl',
-        //     wechatCode: res.data,
-        //   },
-        // });
         yield put({ type: 'fetchMemberList', payload: { page: 0 } });
         message.success('新增人员成功！');
       } else {

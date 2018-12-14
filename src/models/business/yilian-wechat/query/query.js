@@ -59,21 +59,22 @@ export default {
     searchParam: {
       // 小组查询
       group: {
-        startTime: moment(new Date().valueOf() - 604800000).format('YYYY-MM-DD'),
+        // startTime: moment(new Date().valueOf() - 604800000).format('YYYY-MM-DD'),
+        startTime: moment(new Date().valueOf() - 2592000000).format('YYYY-MM-DD'),
         endTime: moment(new Date().valueOf()).format('YYYY-MM-DD'),
         name: '',
         source: 'wechat',
       },
       // 人员查询
       member: {
-        startTime: moment(new Date().valueOf() - 604800000).format('YYYY-MM-DD'),
+        startTime: moment(new Date().valueOf() - 2592000000).format('YYYY-MM-DD'),
         endTime: moment(new Date().valueOf()).format('YYYY-MM-DD'),
         name: '',
         source: 'wechat',
       },
       // 推广地点查询
       location: {
-        startTime: moment(new Date().valueOf() - 604800000).format('YYYY-MM-DD'),
+        startTime: moment(new Date().valueOf() - 2592000000).format('YYYY-MM-DD'),
         endTime: moment(new Date().valueOf()).format('YYYY-MM-DD'),
         name: '',
         source: 'wechat',
@@ -106,6 +107,8 @@ export default {
         patientCardId: '',
         // 医生工号
         hosDocCode: '',
+        // 导出
+        isExport: '',
       },
     },
     list: {
@@ -372,9 +375,6 @@ export default {
       if (location && location.name) {
         params += `&name=${location.name}`;
       }
-      // if (location && location.source) {
-      //   params += `&source=${location.source}`;
-      // }
       const res = yield call(fetchLocationService, params, page, 10);
       if (res && res.code === 200) {
         yield put({
@@ -520,6 +520,60 @@ export default {
             payload: {
               key: 'appointment',
               // list: res.data.content,
+              list: res.data.content,
+              currentPage: page,
+              totalElements: res.data.totalElements,
+            },
+          });
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    *downloadAppointmentList({ payload }, { call, put, select }) {
+      try {
+        const { page } = payload;
+        const { appointment } = yield select(state => state.businessYilianWechatQuery.searchParam);
+        let params = '';
+        if (appointment && appointment.startTime) {
+          params += `&startTime=${appointment.startTime}`;
+        }
+        if (appointment && appointment.endTime) {
+          params += `&endTime=${appointment.endTime}`;
+        }
+        if (appointment && appointment.type) {
+          params += `&dateType=${appointment.type}`;
+        }
+        if (appointment && appointment.orderStatus) {
+          params += `&orderStatus=${appointment.orderStatus}`;
+        }
+        if (appointment && appointment.regChannel) {
+          params += `&regChannel=${appointment.regChannel}`;
+        }
+        if (appointment && appointment.patientName) {
+          params += `&patientName=${appointment.patientName}`;
+        }
+        if (appointment && appointment.patientPhone) {
+          params += `&patientPhone=${appointment.patientPhone}`;
+        }
+        if (appointment && appointment.mediCardId) {
+          params += `&mediCardId=${appointment.mediCardId}`;
+        }
+        if (appointment && appointment.patientCardId) {
+          params += `&patientCardId=${appointment.patientCardId}`;
+        }
+        if (appointment && appointment.hosDocCode) {
+          params += `&hosDocCode=${appointment.hosDocCode}`;
+        }
+        if (appointment && appointment.isExport) {
+          params += `&isExport=${appointment.isExport}`;
+        }
+        const res = yield call(fetchAppointmentService, params, page, 10);
+        if (res && res.code === 200) {
+          yield put({
+            type: 'updateList',
+            payload: {
+              key: 'appointment',
               list: res.data.content,
               currentPage: page,
               totalElements: res.data.totalElements,

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
 import { Table, Radio } from 'antd';
+import moment from 'moment';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import SearchBar from '../../ZStatisticsComponent/QuerySearchBar';
@@ -140,6 +141,26 @@ class Index extends Component {
     return columns;
   };
 
+  handleSearch = () => {
+    const { onFetchYilianStatistics } = this.props;
+    onFetchYilianStatistics();
+  };
+
+  handleReset = async () => {
+    const { onUpdateSearchParams, onFetchYilianStatistics } = this.props;
+    await onUpdateSearchParams('countType', 'day');
+    await onUpdateSearchParams('startDate', moment(new Date().valueOf() - 2678400000));
+    await onUpdateSearchParams('endDate', moment(new Date().valueOf() - 86400000));
+    await onUpdateSearchParams('cityCode', '');
+    await onUpdateSearchParams('orgId', '');
+    await onUpdateSearchParams('isExclusive', '');
+    await onFetchYilianStatistics();
+  };
+
+  handelExport = () => {
+    console.log('export');
+  };
+
   render() {
     const { show } = this.state;
     const { searchParam, list, hospitals } = this.props;
@@ -152,6 +173,9 @@ class Index extends Component {
             params={searchParam}
             onParamsChange={this.handleParamsChange}
             hospitals={hospitals}
+            onSearch={this.handleSearch}
+            onReset={this.handleReset}
+            onExport={this.handelExport}
           />
           <div className={classes.Map}>
             <Radio.Group

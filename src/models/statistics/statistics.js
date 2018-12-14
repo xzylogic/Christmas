@@ -227,33 +227,24 @@ export default {
       });
       postData.queryType = 1;
       const res = yield call(fetchYilianStatisticsService, postData);
-      if (res && res.code === 200) {
-        console.log('success');
+      let returnData = '';
+      if (res && res.code === 200 && res.data) {
+        returnData = res.data;
       }
+      return returnData;
     },
     *fetchSearchHospitals({ payload }, { select, call, put }) {
       const { type, origin } = payload;
       const searchParam = yield select(state => state.statistics.searchParams[type][origin]);
       const { cityCode } = searchParam;
-      if (cityCode) {
-        const res = yield call(fetchSearchHospitalsService, cityCode);
-        if (res && res.code === 200) {
-          yield put({
-            type: 'updateHospitals',
-            payload: {
-              type,
-              origin,
-              value: res.data,
-            },
-          });
-        }
-      } else {
+      const res = yield call(fetchSearchHospitalsService, cityCode);
+      if (res && res.code === 200) {
         yield put({
           type: 'updateHospitals',
           payload: {
             type,
             origin,
-            value: [],
+            value: res.data,
           },
         });
       }

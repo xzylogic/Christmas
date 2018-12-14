@@ -9,6 +9,6 @@ export async function fetchYilianStatisticsService(searchData) {
 
 export async function fetchSearchHospitalsService(cityCode) {
   return request(
-    `/yilian-cloud-backend-api/ylWeChatCount/search/hosByHosType?cityName=${cityCode}`
+    `/yilian-cloud-backend-api/ylWeChatCount/search/hosByHosType?cityCode=${cityCode}`
   );
 }

@@ -66,6 +66,11 @@ const mapDispatchToProps = dispatch => ({
         value,
       },
     }),
+  onDownloadPopularizationReport: page =>
+    dispatch({
+      type: 'businessYilianWechatStatistics/downloadPopularizationReportType1',
+      payload: { page },
+    }),
 });
 
 @connect(
@@ -135,6 +140,9 @@ class Type1Container extends Component {
     const { onFetchPopularizationReport, onFetchPopularizationChart } = this.props;
     onFetchPopularizationReport(0);
     onFetchPopularizationChart(0);
+    // const { onDownloadPopularizationReport, onUpdateSearchParams } = this.props;
+    // onUpdateSearchParams('isExport', false);
+    // onDownloadPopularizationReport(0);
   };
 
   handleReset = async e => {
@@ -150,7 +158,7 @@ class Type1Container extends Component {
     );
     await onUpdateSearchParams('endTime', moment(new Date().valueOf()).format('YYYY-MM-DD'));
     await onUpdateSearchParams('countType', 'day');
-    await onUpdateSearchParams('groupName', '');
+    await onUpdateSearchParams('groupName', '1组');
     await onUpdateSearchParams('project', '');
     await onFetchPopularizationReport(0);
     await onFetchPopularizationChart();
@@ -159,6 +167,9 @@ class Type1Container extends Component {
   handleExport = e => {
     e.preventDefault();
     console.log('export');
+    const { onDownloadPopularizationReport, onUpdateSearchParams } = this.props;
+    onUpdateSearchParams('isExport', true);
+    onDownloadPopularizationReport();
   };
 
   render() {

@@ -58,6 +58,11 @@ const mapDispatchToProps = dispatch => ({
     dispatch({
       type: 'businessYilianWechatStatisticDatas/fetchAllGroupName',
     }),
+  onDowloadPromoteAttentionAmount: page =>
+    dispatch({
+      type: 'businessYilianWechatStatisticDatas/dowloadPromoteAttentionAmount',
+      payload: { page },
+    }),
 });
 
 @connect(
@@ -227,9 +232,12 @@ class AppointmentsContainer extends Component {
 
   handleSearch = async e => {
     e.preventDefault();
-    const { onFetchWeChatAttentionAmount, onFetchHosGroup } = this.props;
-    onFetchWeChatAttentionAmount(0);
-    onFetchHosGroup(0);
+    // const { onFetchWeChatAttentionAmount, onFetchHosGroup } = this.props;
+    // onFetchWeChatAttentionAmount(0);
+    // onFetchHosGroup(0);
+    const { onDowloadPromoteAttentionAmount, onSearchParamChange } = this.props;
+    onSearchParamChange('isExport', false);
+    onDowloadPromoteAttentionAmount();
   };
 
   handleReset = async e => {
@@ -240,13 +248,26 @@ class AppointmentsContainer extends Component {
       moment(new Date().valueOf() - 604800000).format('YYYY-MM-DD')
     );
     await onSearchParamChange('endTime', moment(new Date().valueOf()).format('YYYY-MM-DD'));
-    // await onSearchParamChange('name', '');
+    await onSearchParamChange('way', 'week');
+    await onSearchParamChange('origin', '');
+    await onSearchParamChange('hosName', '');
+    await onSearchParamChange('hosGrade', null);
+    await onSearchParamChange('group', null);
+    await onSearchParamChange('channel', '微信');
+    await onSearchParamChange('hosType', null);
+    await onSearchParamChange('orderStatus', null);
+    await onSearchParamChange('orderStatusWechat', null);
+    await onSearchParamChange('orderStatusApp', null);
+    await onSearchParamChange('isExport', '');
     await onFetchWeChatAttentionAmount(0);
   };
 
   handleExport = e => {
     e.preventDefault();
     console.log('export');
+    const { onDowloadPromoteAttentionAmount, onSearchParamChange } = this.props;
+    onSearchParamChange('isExport', true);
+    onDowloadPromoteAttentionAmount();
   };
 
   handleDetail = (e, record) => {
@@ -297,7 +318,7 @@ class AppointmentsContainer extends Component {
         />
         {searchParam.channel === 'app' ? (
           <TableList
-            rowKey="aaa"
+            rowKey={(_, index) => index}
             list={promoteAttentionList}
             columns={this.setTableColumnsApp()}
             currentPage={currentPage}
@@ -306,7 +327,7 @@ class AppointmentsContainer extends Component {
           />
         ) : (
           <TableList
-            rowKey="aaa"
+            rowKey={(_, index) => index}
             list={promoteAttentionList}
             columns={this.setTableColumnsWechat()}
             currentPage={currentPage}

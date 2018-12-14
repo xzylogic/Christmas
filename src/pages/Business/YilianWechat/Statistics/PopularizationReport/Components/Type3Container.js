@@ -66,6 +66,11 @@ const mapDispatchToProps = dispatch => ({
         value,
       },
     }),
+  onDownloadPopularizationReport: page =>
+    dispatch({
+      type: 'businessYilianWechatStatistics/downloadPopularizationReportType3',
+      payload: { page },
+    }),
 });
 
 @connect(
@@ -133,6 +138,9 @@ class Type3Container extends Component {
     const { onFetchPopularizationReport, onFetchPopularizationChart } = this.props;
     onFetchPopularizationReport(0);
     onFetchPopularizationChart(0);
+    // const { onDownloadPopularizationReport, onUpdateSearchParams } = this.props;
+    // onUpdateSearchParams('isExport', false);
+    // onDownloadPopularizationReport();
   };
 
   handleReset = async e => {
@@ -155,6 +163,9 @@ class Type3Container extends Component {
   handleExport = e => {
     e.preventDefault();
     console.log('export');
+    const { onDownloadPopularizationReport, onUpdateSearchParams } = this.props;
+    onUpdateSearchParams('isExport', true);
+    onDownloadPopularizationReport();
   };
 
   render() {

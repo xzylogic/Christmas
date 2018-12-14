@@ -33,6 +33,11 @@ const mapDispatchToProps = dispatch => ({
       type: 'businessYilianWechatQuery/updateSearchParam',
       payload: { origin: 'appointment', key, value },
     }),
+  onDownloadAppointmentList: page =>
+    dispatch({
+      type: 'businessYilianWechatQuery/downloadAppointmentList',
+      payload: { page },
+    }),
 });
 
 @connect(
@@ -110,12 +115,11 @@ class AppointmentsContainer extends Component {
         dataIndex: 'patientName',
         key: 'patientName',
       },
-      // {
-      //   title: '性别',
-      //   dataIndex: 'sex',
-      //   key: 'sex',
-      //   render: () => '-',
-      // },
+      {
+        title: '性别',
+        dataIndex: 'sex',
+        key: 'sex',
+      },
       {
         title: '患者卡号',
         dataIndex: 'mediCardId',
@@ -126,12 +130,11 @@ class AppointmentsContainer extends Component {
         dataIndex: 'mediCardIdType',
         key: 'mediCardIdType',
       },
-      // {
-      //   title: '手机',
-      //   dataIndex: 'patientPhone',
-      //   key: 'patientPhone',
-      //   render: () => '-',
-      // },
+      {
+        title: '手机',
+        dataIndex: 'patientPhone',
+        key: 'patientPhone',
+      },
       {
         title: '身份证号',
         dataIndex: 'patientCardId',
@@ -171,8 +174,10 @@ class AppointmentsContainer extends Component {
 
   handleSearch = async e => {
     e.preventDefault();
-    const { onFetchAppointmentList } = this.props;
-    onFetchAppointmentList(0);
+    console.log('export');
+    const { onDownloadAppointmentList, onSearchParamChange } = this.props;
+    onSearchParamChange('isExport', false);
+    onDownloadAppointmentList();
   };
 
   handleReset = async e => {
@@ -183,17 +188,28 @@ class AppointmentsContainer extends Component {
       moment(new Date().valueOf() - 604800000).format('YYYY-MM-DD')
     );
     await onSearchParamChange('endTime', moment(new Date().valueOf()).format('YYYY-MM-DD'));
-    await onSearchParamChange('name', '');
+    await onSearchParamChange('orderStatus', '');
+    await onSearchParamChange('regChannel', '');
+    await onSearchParamChange('patientName', '');
+    await onSearchParamChange('patientPhone', '');
+    await onSearchParamChange('mediCardId', '');
+    await onSearchParamChange('patientCardId', '');
+    await onSearchParamChange('hosDocCode', '');
+    await onSearchParamChange('isExport', '');
     await onFetchAppointmentList(0);
   };
 
   handleExport = e => {
     e.preventDefault();
     console.log('export');
+    const { onDownloadAppointmentList, onSearchParamChange } = this.props;
+    onSearchParamChange('isExport', true);
+    onDownloadAppointmentList();
   };
 
   render() {
     const { searchParam, appointmentList, currentPage, totalElements } = this.props;
+
     return (
       <React.Fragment>
         <AppointmentsBar
@@ -204,7 +220,7 @@ class AppointmentsContainer extends Component {
           onParamsChange={this.handleParamsChanged}
         />
         <TableList
-          rowKey="create_time"
+          rowKey={(_, index) => index}
           list={appointmentList}
           columns={this.setTableColumns()}
           currentPage={currentPage}

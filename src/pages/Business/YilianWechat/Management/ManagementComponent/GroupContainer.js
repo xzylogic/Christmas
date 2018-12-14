@@ -51,6 +51,11 @@ const mapDispatchToProps = dispatch => ({
     dispatch({
       type: 'businessYilianWechatManagement/fetchAllHosName',
     }),
+  // onDownloadGroupList: page =>
+  //   dispatch({
+  //     type: 'businessYilianWechatManagement/downloadGroupList',
+  //     payload: { page },
+  //   }),
 });
 
 @connect(
@@ -188,6 +193,8 @@ class GroupContainer extends Component {
   handleExport = e => {
     e.preventDefault();
     console.log('export');
+    // const { onDownloadGroupList } = this.props;
+    // onDownloadGroupList();
   };
 
   handlEditorGroupHos = e => {

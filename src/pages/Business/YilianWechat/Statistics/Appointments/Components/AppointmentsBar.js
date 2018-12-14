@@ -63,6 +63,10 @@ function AppointmentsBar(props) {
                 moment(new Date(new Date().valueOf() - 2592000000), 'YYYY-MM-DD'),
                 moment(new Date(), 'YYYY-MM-DD'),
               ],
+              最近90天: [
+                moment(new Date(new Date().valueOf() - 7776000000), 'YYYY-MM-DD'),
+                moment(new Date(), 'YYYY-MM-DD'),
+              ],
               最近一年: [
                 moment(new Date(new Date().valueOf() - 31536000000), 'YYYY-MM-DD'),
                 moment(new Date(), 'YYYY-MM-DD'),

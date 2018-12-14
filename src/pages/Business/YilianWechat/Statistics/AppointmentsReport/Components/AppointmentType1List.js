@@ -30,7 +30,7 @@ class AppointmentType1List extends Component {
     const { data, currentPage, totalElements, onPageChange } = this.props;
     return (
       <TableList
-        rowKey="index"
+        rowKey={(_, index) => index}
         list={data}
         columns={this.setTableColumns()}
         currentPage={currentPage}

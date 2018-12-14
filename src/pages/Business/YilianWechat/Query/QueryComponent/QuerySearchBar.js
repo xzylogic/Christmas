@@ -35,6 +35,10 @@ function querySearchBar(props) {
               moment(new Date(new Date().valueOf() - 2592000000), 'YYYY-MM-DD'),
               moment(new Date(), 'YYYY-MM-DD'),
             ],
+            最近90天: [
+              moment(new Date(new Date().valueOf() - 7776000000), 'YYYY-MM-DD'),
+              moment(new Date(), 'YYYY-MM-DD'),
+            ],
             最近一年: [
               moment(new Date(new Date().valueOf() - 31536000000), 'YYYY-MM-DD'),
               moment(new Date(), 'YYYY-MM-DD'),
@@ -48,11 +52,11 @@ function querySearchBar(props) {
           placeholder={inputPlaceholder}
           className={classes.Input}
         />
-        <Button type="primary" htmlType="button" onClick={onSearch} className={classes.SearchGap}>
-          查询
-        </Button>
       </Col>
       <Col span={8} className={classes.ColRight}>
+        <Button type="primary" htmlType="button" onClick={onSearch} className={classes.Gap}>
+          查询
+        </Button>
         {amountSetShow ? (
           <Button type="primary" htmlType="button" onClick={onAmountSet} className={classes.Gap}>
             月指标量

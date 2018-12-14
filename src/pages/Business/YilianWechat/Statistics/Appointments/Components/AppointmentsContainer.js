@@ -53,6 +53,11 @@ const mapDispatchToProps = dispatch => ({
     dispatch({
       type: 'businessYilianWechatStatisticDatas/fetchAllHosName',
     }),
+  onDownloadAppointmentsData: page =>
+    dispatch({
+      type: 'businessYilianWechatStatisticDatas/downloadAppointmentsData',
+      payload: { page },
+    }),
 });
 
 @connect(
@@ -194,8 +199,11 @@ class AppointmentsContainer extends Component {
 
   handleSearch = async e => {
     e.preventDefault();
-    const { onFetchGroupList } = this.props;
-    onFetchGroupList(0);
+    // const { onFetchAppointmentsData } = this.props;
+    // onFetchAppointmentsData(0);
+    const { onDownloadAppointmentsData, onSearchParamChange } = this.props;
+    onSearchParamChange('isExport', false);
+    onDownloadAppointmentsData();
   };
 
   handleReset = async e => {
@@ -213,6 +221,9 @@ class AppointmentsContainer extends Component {
   handleExport = e => {
     e.preventDefault();
     console.log('export');
+    const { onDownloadAppointmentsData, onSearchParamChange } = this.props;
+    onSearchParamChange('isExport', true);
+    onDownloadAppointmentsData();
   };
 
   handleDetail = (e, record) => {
@@ -256,7 +267,7 @@ class AppointmentsContainer extends Component {
           onParamsChange={this.handleParamsChanged}
         />
         <TableList
-          rowKey="aaa"
+          rowKey={(_, index) => index}
           list={appointmentAttentionList}
           columns={this.setTableColumns()}
           currentPage={currentPage}

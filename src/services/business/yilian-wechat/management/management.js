@@ -114,8 +114,6 @@ export async function fetchAllGroupNameService() {
 }
 
 export async function addHosToGroupService(newPostData) {
-  console.log(newPostData);
-  // {name: "1组", leader: "11", remark: "", valid: "false"}
   return request(
     `/yilian-cloud-backend-api/ylWeChatCount/add/HosToGroup?groupId=${newPostData.name}&hosId=${
       newPostData.hosName

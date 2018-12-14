@@ -22,8 +22,8 @@ export default {
         // 推广数据统计搜索条件
         origin: {},
         [APPOINTMENTS_REPORT_TYPE.TYPE1]: {
-          startTime: moment(new Date().valueOf() - 2592000000).format('YYYY-MM-DD'),
-          endTime: moment(new Date().valueOf()).format('YYYY-MM-DD'),
+          startTime: moment(new Date().valueOf() - 2678400000).format('YYYY-MM-DD'),
+          endTime: moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD'),
           groupName: '1组',
           show: 'chart',
           isExport: '',

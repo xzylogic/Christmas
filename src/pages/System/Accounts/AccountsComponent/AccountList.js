@@ -126,6 +126,7 @@ class AccountList extends React.PureComponent {
             pageSize: 10,
             onChange: this.handlePageChange,
           }}
+          bordered
         />
       </div>
     );

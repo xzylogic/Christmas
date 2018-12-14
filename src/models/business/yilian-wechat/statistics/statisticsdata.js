@@ -20,9 +20,8 @@ export default {
     searchParam: {
       // 预约数据统计
       appointmentAttention: {
-        startTime: moment(new Date().valueOf() - 2592000000).format('YYYY-MM-DD'),
-        // startTime: moment(new Date().valueOf() - 31536000000).format('YYYY-MM-DD'),
-        endTime: moment(new Date().valueOf()).format('YYYY-MM-DD'),
+        startTime: moment(new Date().valueOf() - 2678400000).format('YYYY-MM-DD'),
+        endTime: moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD'),
         countType: 'week',
         cityName: null,
         hosOrgCode: null,
@@ -35,8 +34,7 @@ export default {
       // 推广数据统计
       promoteAttention: {
         way: 'week',
-        startTime: moment(new Date().valueOf() - 2592000000).format('YYYY-MM-DD'),
-        // startTime: moment(new Date().valueOf() - 31536000000).format('YYYY-MM-DD'),
+        startTime: moment(new Date().valueOf() - 2678400000).format('YYYY-MM-DD'),
         endTime: moment(new Date().valueOf()).format('YYYY-MM-DD'),
         origin: '',
         // 医院名字

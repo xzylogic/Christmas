@@ -88,6 +88,7 @@ class AccountList extends React.PureComponent {
           dataSource={accounts}
           columns={columns}
           pagination={{ current: 0, total: 100 }}
+          bordered
         />
       </div>
     );

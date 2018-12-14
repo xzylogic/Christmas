@@ -143,8 +143,8 @@ class Index extends Component {
   render() {
     const { show } = this.state;
     const { searchParam, list, hospitals } = this.props;
-    // const chartData = list && list.filter(obj => obj.orgName!== '预约量总计') || [];
-    const chartData = list || [];
+    const chartData = (list && list.filter(obj => obj.orgName !== '预约量总计')) || [];
+    // const chartData = list || [];
     return (
       <PageHeaderWrapper>
         <div className={classes.Container}>

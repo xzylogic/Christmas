@@ -59,31 +59,30 @@ export default {
     searchParam: {
       // 小组查询
       group: {
-        // startTime: moment(new Date().valueOf() - 604800000).format('YYYY-MM-DD'),
-        startTime: moment(new Date().valueOf() - 2592000000).format('YYYY-MM-DD'),
-        endTime: moment(new Date().valueOf()).format('YYYY-MM-DD'),
+        startTime: moment(new Date().valueOf() - 2678400000).format('YYYY-MM-DD'),
+        endTime: moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD'),
         name: '',
         source: 'wechat',
       },
       // 人员查询
       member: {
-        startTime: moment(new Date().valueOf() - 2592000000).format('YYYY-MM-DD'),
-        endTime: moment(new Date().valueOf()).format('YYYY-MM-DD'),
+        startTime: moment(new Date().valueOf() - 2678400000).format('YYYY-MM-DD'),
+        endTime: moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD'),
         name: '',
         source: 'wechat',
       },
       // 推广地点查询
       location: {
-        startTime: moment(new Date().valueOf() - 2592000000).format('YYYY-MM-DD'),
-        endTime: moment(new Date().valueOf()).format('YYYY-MM-DD'),
+        startTime: moment(new Date().valueOf() - 2678400000).format('YYYY-MM-DD'),
+        endTime: moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD'),
         name: '',
         source: 'wechat',
       },
       // 会员查询
       membership: {
         type: '0',
-        startTime: moment(new Date().valueOf() - 2592000000).format('YYYY-MM-DD'),
-        endTime: moment(new Date().valueOf()).format('YYYY-MM-DD'),
+        startTime: moment(new Date().valueOf() - 2678400000).format('YYYY-MM-DD'),
+        endTime: moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD'),
         name: '',
         hosName: '',
         queryType: null,
@@ -91,8 +90,8 @@ export default {
       // 预约查询
       appointment: {
         type: 'create_time',
-        startTime: moment(new Date().valueOf() - 2592000000).format('YYYY-MM-DD'),
-        endTime: moment(new Date().valueOf()).format('YYYY-MM-DD'),
+        startTime: moment(new Date().valueOf() - 2678400000).format('YYYY-MM-DD'),
+        endTime: moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD'),
         // 预约状态
         orderStatus: '',
         // 预约来源

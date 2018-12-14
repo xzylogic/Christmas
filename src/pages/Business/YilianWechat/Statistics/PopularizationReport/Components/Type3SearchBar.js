@@ -27,20 +27,20 @@ function type3SearchBar(props) {
         allowClear={false}
         ranges={{
           最近一周: [
-            moment(new Date(new Date().valueOf() - 604800000), 'YYYY-MM-DD'),
-            moment(new Date(), 'YYYY-MM-DD'),
+            moment(new Date(new Date().valueOf() - 691200000), 'YYYY-MM-DD'),
+            moment(new Date(new Date().valueOf() - 86400000), 'YYYY-MM-DD'),
           ],
           最近30天: [
-            moment(new Date(new Date().valueOf() - 2592000000), 'YYYY-MM-DD'),
-            moment(new Date(), 'YYYY-MM-DD'),
+            moment(new Date(new Date().valueOf() - 2678400000), 'YYYY-MM-DD'),
+            moment(new Date(new Date().valueOf() - 86400000), 'YYYY-MM-DD'),
           ],
           最近90天: [
-            moment(new Date(new Date().valueOf() - 7776000000), 'YYYY-MM-DD'),
-            moment(new Date(), 'YYYY-MM-DD'),
+            moment(new Date(new Date().valueOf() - 7862400000), 'YYYY-MM-DD'),
+            moment(new Date(new Date().valueOf() - 86400000), 'YYYY-MM-DD'),
           ],
           最近一年: [
-            moment(new Date(new Date().valueOf() - 31536000000), 'YYYY-MM-DD'),
-            moment(new Date(), 'YYYY-MM-DD'),
+            moment(new Date(new Date().valueOf() - 31622400000), 'YYYY-MM-DD'),
+            moment(new Date(new Date().valueOf() - 86400000), 'YYYY-MM-DD'),
           ],
         }}
       />

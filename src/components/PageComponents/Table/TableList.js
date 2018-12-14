@@ -15,6 +15,7 @@ function tableList(props) {
         pageSize: pageSize || 10,
         onChange: onPageChange,
       }}
+      bordered
     />
   );
 }

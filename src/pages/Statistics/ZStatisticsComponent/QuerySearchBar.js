@@ -89,42 +89,42 @@ function querySearchBar(props) {
         mode={[mode, mode]}
         ranges={{
           最近一周: [
-            moment(new Date(new Date().valueOf() - 604800000), formatString),
-            moment(new Date(), formatString),
+            moment(new Date(new Date().valueOf() - 691200000), formatString),
+            moment(new Date(new Date().valueOf() - 86400000), formatString),
           ],
           最近30天: [
-            moment(new Date(new Date().valueOf() - 2592000000), formatString),
-            moment(new Date(), formatString),
+            moment(new Date(new Date().valueOf() - 2678400000), formatString),
+            moment(new Date(new Date().valueOf() - 86400000), formatString),
           ],
           最近90天: [
-            moment(new Date(new Date().valueOf() - 7776000000), formatString),
-            moment(new Date(), formatString),
+            moment(new Date(new Date().valueOf() - 7862400000), formatString),
+            moment(new Date(new Date().valueOf() - 86400000), formatString),
           ],
           最近一年: [
-            moment(new Date(new Date().valueOf() - 31536000000), formatString),
-            moment(new Date(), formatString),
+            moment(new Date(new Date().valueOf() - 31622400000), formatString),
+            moment(new Date(new Date().valueOf() - 86400000), formatString),
           ],
         }}
       />
       {hospitals ? (
         <React.Fragment>
+          <span style={{ display: 'inline-block', whiteSpace: 'nowrap' }}>
+            医院类型：
+            <Select
+              id="cityCode"
+              placeholder="医院类型"
+              className={[classes.Gap, classes.Select].join(' ')}
+              name="cityCode"
+              value={cityCode}
+              onChange={value => onParamsChange(value, 'cityCode')}
+            >
+              <Select.Option value="all">所有医院类型</Select.Option>
+              <Select.Option value="专科医院">专科医院</Select.Option>
+              <Select.Option value="中医医院">中医医院</Select.Option>
+              <Select.Option value="综合医院">综合医院</Select.Option>
+            </Select>
+          </span>
           {/* <span style={{display: 'inline-block', whiteSpace: 'nowrap'}}>
-            医院类型： */}
-          <Select
-            id="cityCode"
-            placeholder="医院类型"
-            className={[classes.Gap, classes.Select].join(' ')}
-            name="cityCode"
-            value={cityCode}
-            onChange={value => onParamsChange(value, 'cityCode')}
-          >
-            <Select.Option value="">全部医院类型</Select.Option>
-            <Select.Option value="专科医院">专科医院</Select.Option>
-            <Select.Option value="中医医院">中医医院</Select.Option>
-            <Select.Option value="综合医院">综合医院</Select.Option>
-          </Select>
-          {/* </span>
-          <span style={{display: 'inline-block', whiteSpace: 'nowrap'}}>
             医院名称： */}
           <Select
             placeholder="医院名称"
@@ -133,7 +133,7 @@ function querySearchBar(props) {
             value={orgId}
             onChange={value => onParamsChange(value, 'orgId')}
           >
-            <Select.Option value="">全部医院</Select.Option>
+            <Select.Option value="">所有医院</Select.Option>
             {hospitals.map(hospital => (
               <Select.Option key={hospital.hos_org_code} value={hospital.hos_org_code}>
                 {hospital.hos_name}

@@ -189,7 +189,6 @@ class MenuForm extends Component {
             </Form.Item>
             <Form.Item {...formItemLayout} label="菜单图标">
               {getFieldDecorator('icon', {
-                initialValue: selectedMenu.icon,
                 rules: [
                   {
                     required: false,

@@ -6,6 +6,7 @@ import defaultSettings from '../src/defaultSettings';
 
 export default {
   base: '/shdc-management/',
+  publicPath: '/shdc-management/',
   outputPath: './shdc-management',
   // add for transfer to umi
   plugins: [

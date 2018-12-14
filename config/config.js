@@ -5,6 +5,8 @@ import webpackPlugin from './plugin.config';
 import defaultSettings from '../src/defaultSettings';
 
 export default {
+  base: '/shdc-management/',
+  outputPath: './shdc-management',
   // add for transfer to umi
   plugins: [
     [

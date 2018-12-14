@@ -65,6 +65,10 @@ export default {
       typeHosName: null,
       // 按小组查询到的医院名
       groupHosName: null,
+      // 预约数据统计下载
+      appointmentDownload: null,
+      // 推广数据统计下载
+      promoteDownload: null,
     },
     currentPage: {
       appointmentAttention: 0,
@@ -161,7 +165,7 @@ export default {
         console.log(err);
       }
     },
-    *dowloadPromoteAttentionAmount({ payload }, { call, put, select }) {
+    *downloadPromoteAttentionAmount({ payload }, { call, put, select }) {
       try {
         const { promoteAttention } = yield select(
           state => state.businessYilianWechatStatisticDatas.searchParam
@@ -197,7 +201,7 @@ export default {
           yield put({
             type: 'updateList',
             payload: {
-              key: 'promoteAttention',
+              key: 'promoteDownload',
               list: res.data.content,
               currentPage: page,
               totalElements: res.data.totalElements,
@@ -339,7 +343,7 @@ export default {
         yield put({
           type: 'updateList',
           payload: {
-            key: 'appointmentAttention',
+            key: 'appointmentDownload',
             list: res.data.content,
             currentPage: page,
             totalElements: res.data.totalElements,

@@ -60,7 +60,7 @@ const mapDispatchToProps = dispatch => ({
     }),
   onDowloadPromoteAttentionAmount: page =>
     dispatch({
-      type: 'businessYilianWechatStatisticDatas/dowloadPromoteAttentionAmount',
+      type: 'businessYilianWechatStatisticDatas/downloadPromoteAttentionAmount',
       payload: { page },
     }),
 });

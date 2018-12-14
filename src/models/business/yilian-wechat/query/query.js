@@ -122,7 +122,7 @@ export default {
       // 会员注册列表
       registration: null,
       // 预约列表
-      appointmentList: null,
+      appointment: null,
       // 小组列表
       queryMessage: null,
       fetchMessage: null,
@@ -131,6 +131,8 @@ export default {
       fetchhosName: null,
       // 所有推广人员列表
       fetchallPerson: null,
+      // 预约查询导出链接
+      appointmentDownload: null,
     },
     currentPage: {
       group: 0,
@@ -575,7 +577,7 @@ export default {
           yield put({
             type: 'updateList',
             payload: {
-              key: 'appointment',
+              key: 'appointmentDownload',
               list: res.data.content,
               currentPage: page,
               totalElements: res.data.totalElements,

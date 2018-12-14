@@ -43,7 +43,7 @@ export default {
         hosName: '',
         // 医院等级
         hosGrade: null,
-        group: null,
+        group: '1',
         channel: '微信',
         hosType: null,
         orderStatus: null,

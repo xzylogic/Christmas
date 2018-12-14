@@ -252,7 +252,7 @@ class AppointmentsContainer extends Component {
     await onSearchParamChange('origin', '');
     await onSearchParamChange('hosName', '');
     await onSearchParamChange('hosGrade', null);
-    await onSearchParamChange('group', null);
+    await onSearchParamChange('group', '1');
     await onSearchParamChange('channel', '微信');
     await onSearchParamChange('hosType', null);
     await onSearchParamChange('orderStatus', null);

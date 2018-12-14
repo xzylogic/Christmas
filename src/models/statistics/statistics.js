@@ -2,6 +2,8 @@ import moment from 'moment';
 import {
   fetchYilianStatisticsService,
   fetchSearchHospitalsService,
+  fetchHospitalBookDetailService,
+  fetchHospitalCancelDetailService,
 } from '@/services/statistics/yilian-statistics';
 
 export const STATISTICS_TYPE = {
@@ -232,6 +234,48 @@ export default {
         returnData = res.data;
       }
       return returnData;
+    },
+    *fetchHospitalBookDetail({ payload }, { select, call }) {
+      const { type, origin, orgId } = payload;
+      const searchParam = yield select(state => state.statistics.searchParams[type][origin]);
+      const searchData = {};
+      if (searchParam.countType === 'day') {
+        searchData.startDate = moment(searchParam.startDate).format('YYYY-MM-DD');
+        searchData.endDate = moment(searchParam.endDate).format('YYYY-MM-DD');
+      }
+      if (searchParam.countType === 'month') {
+        searchData.startDate = moment(searchParam.startDate).format('YYYY-MM');
+        searchData.endDate = moment(searchParam.endDate).format('YYYY-MM');
+      }
+      if (searchParam.countType === 'year') {
+        searchData.startDate = moment(searchParam.startDate).format('YYYY');
+        searchData.endDate = moment(searchParam.endDate).format('YYYY');
+      }
+      searchData.countType = searchParam.countType;
+      searchData.orgId = orgId;
+      const res = yield call(fetchHospitalBookDetailService, searchData);
+      return res;
+    },
+    *fetchHospitalCancelDetail({ payload }, { select, call }) {
+      const { type, origin, orgId } = payload;
+      const searchParam = yield select(state => state.statistics.searchParams[type][origin]);
+      const searchData = {};
+      if (searchParam.countType === 'day') {
+        searchData.startDate = moment(searchParam.startDate).format('YYYY-MM-DD');
+        searchData.endDate = moment(searchParam.endDate).format('YYYY-MM-DD');
+      }
+      if (searchParam.countType === 'month') {
+        searchData.startDate = moment(searchParam.startDate).format('YYYY-MM');
+        searchData.endDate = moment(searchParam.endDate).format('YYYY-MM');
+      }
+      if (searchParam.countType === 'year') {
+        searchData.startDate = moment(searchParam.startDate).format('YYYY');
+        searchData.endDate = moment(searchParam.endDate).format('YYYY');
+      }
+      searchData.countType = searchParam.countType;
+      searchData.orgId = orgId;
+      const res = yield call(fetchHospitalCancelDetailService, searchData);
+      return res;
     },
     *fetchSearchHospitals({ payload }, { select, call, put }) {
       const { type, origin } = payload;

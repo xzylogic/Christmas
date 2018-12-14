@@ -6,6 +6,7 @@ import moment from 'moment';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import SearchBar from '../../ZStatisticsComponent/QuerySearchBar';
 import StatisticsChart from '../../ZStatisticsComponent/StatisticsColumnChart';
+import LineChart from '../../ZStatisticsComponent/StatisticsLineChart';
 import { STATISTICS_TYPE, STATISTICS_ORIGIN } from '@/models/statistics/statistics';
 
 import classes from '../../Statistics.less';
@@ -44,6 +45,15 @@ const mapDispatchToProps = dispatch => ({
         origin: STATISTICS_ORIGIN.YILIAN,
       },
     }),
+  onFetchHospitalDetail: orgId =>
+    dispatch({
+      type: 'statistics/fetchHospitalBookDetail',
+      payload: {
+        orgId,
+        type: STATISTICS_TYPE.AMOUNT_OF_HOSPITALS_APPOINTMENTS,
+        origin: STATISTICS_ORIGIN.YILIAN,
+      },
+    }),
   onFetchSearchHospitals: () =>
     dispatch({
       type: 'statistics/fetchSearchHospitals',
@@ -61,10 +71,13 @@ const mapDispatchToProps = dispatch => ({
 class Index extends Component {
   state = {
     show: 'chart',
+    detailChart: null,
+    chartTitle: '',
   };
 
   componentDidMount() {
     const { list, onFetchYilianStatistics, onFetchSearchHospitals } = this.props;
+    this.setState({ detailChart: null });
     if (!list) {
       onFetchYilianStatistics(0);
     }
@@ -82,6 +95,7 @@ class Index extends Component {
     } else {
       await onUpdateSearchParams(dataKey, value);
     }
+    this.setState({ detailChart: null });
     await onFetchYilianStatistics();
   };
 
@@ -143,11 +157,13 @@ class Index extends Component {
 
   handleSearch = () => {
     const { onFetchYilianStatistics } = this.props;
+    this.setState({ detailChart: null });
     onFetchYilianStatistics();
   };
 
   handleReset = async () => {
     const { onUpdateSearchParams, onFetchYilianStatistics } = this.props;
+    this.setState({ detailChart: null });
     await onUpdateSearchParams('countType', 'day');
     await onUpdateSearchParams('startDate', moment(new Date().valueOf() - 2678400000));
     await onUpdateSearchParams('endDate', moment(new Date().valueOf() - 86400000));
@@ -161,8 +177,19 @@ class Index extends Component {
     console.log('export');
   };
 
+  handleChartClick = (orgId, orgName) => {
+    const { onFetchHospitalDetail } = this.props;
+    if (orgId) {
+      onFetchHospitalDetail(orgId).then(res => {
+        if (res && res.code === 200 && res.data) {
+          this.setState({ detailChart: res.data, chartTitle: orgName });
+        }
+      });
+    }
+  };
+
   render() {
-    const { show } = this.state;
+    const { show, detailChart, chartTitle } = this.state;
     const { searchParam, list, hospitals } = this.props;
     const chartData = (list && list.filter(obj => obj.orgName !== '预约量总计')) || [];
     // const chartData = list || [];
@@ -188,15 +215,29 @@ class Index extends Component {
             </Radio.Group>
           </div>
           {show === 'chart' ? (
-            <div className={classes.Content} style={{ minHeight: '560px' }}>
-              <StatisticsChart
-                data={chartData}
-                title="医院预约量统计"
-                xKey="orgName"
-                yKey="orderNum"
-                yAlias="预约量"
-              />
-            </div>
+            <React.Fragment>
+              <div className={classes.Content} style={{ minHeight: '560px' }}>
+                <StatisticsChart
+                  data={chartData}
+                  title="医院预约量统计"
+                  xKey="orgName"
+                  yKey="orderNum"
+                  yAlias="预约量"
+                  onChartClick={this.handleChartClick}
+                />
+              </div>
+              {detailChart ? (
+                <LineChart
+                  data={detailChart}
+                  title={`${chartTitle}预约量`}
+                  xKey="countDate"
+                  yKey="bookTotal"
+                  yAlias="预约量"
+                />
+              ) : (
+                ''
+              )}
+            </React.Fragment>
           ) : (
             <Table
               rowKey="orgName"

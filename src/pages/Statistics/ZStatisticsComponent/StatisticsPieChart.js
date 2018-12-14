@@ -33,7 +33,7 @@ class StatisticsIntervalChart extends Component {
         formatter: val => `${(val * 100).toFixed(2)}%`,
       });
       chart.coord('theta', {
-        radius: 0.75,
+        radius: 0.65,
       });
       chart
         .intervalStack()

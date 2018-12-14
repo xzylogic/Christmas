@@ -108,7 +108,10 @@ function querySearchBar(props) {
       />
       {hospitals ? (
         <React.Fragment>
+          {/* <span style={{display: 'inline-block', whiteSpace: 'nowrap'}}>
+            医院类型： */}
           <Select
+            id="cityCode"
             placeholder="医院类型"
             className={[classes.Gap, classes.Select].join(' ')}
             name="cityCode"
@@ -120,6 +123,9 @@ function querySearchBar(props) {
             <Select.Option value="中医医院">中医医院</Select.Option>
             <Select.Option value="综合医院">综合医院</Select.Option>
           </Select>
+          {/* </span>
+          <span style={{display: 'inline-block', whiteSpace: 'nowrap'}}>
+            医院名称： */}
           <Select
             placeholder="医院名称"
             className={[classes.Gap, classes.Hospital].join(' ')}
@@ -134,6 +140,9 @@ function querySearchBar(props) {
               </Select.Option>
             ))}
           </Select>
+          {/* </span> */}
+          {/* <span style={{display: 'inline-block', whiteSpace: 'nowrap'}}>
+            号源类型： */}
           <Select
             placeholder="号源类型"
             className={[classes.Gap, classes.Select].join(' ')}
@@ -145,6 +154,7 @@ function querySearchBar(props) {
             <Select.Option value="0">独享</Select.Option>
             <Select.Option value="1">共享</Select.Option>
           </Select>
+          {/* </span> */}
         </React.Fragment>
       ) : (
         ''

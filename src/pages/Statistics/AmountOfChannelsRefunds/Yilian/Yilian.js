@@ -445,6 +445,7 @@ class Index extends Component {
               className={classes.Content}
               pagination={false}
               scroll={{ x: 2050 }}
+              bordered
             />
           )}
         </div>

@@ -180,6 +180,7 @@ class Index extends Component {
               dataSource={list}
               className={classes.Content}
               pagination={false}
+              bordered
             />
           )}
         </div>

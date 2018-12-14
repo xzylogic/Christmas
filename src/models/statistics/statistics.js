@@ -206,6 +206,31 @@ export default {
         });
       }
     },
+    *exportYilianStatistics({ payload }, { select, call }) {
+      const { type, origin } = payload;
+      const searchParam = yield select(state => state.statistics.searchParams[type][origin]);
+      const postData = {};
+      Object.keys(searchParam).forEach(key => {
+        if (key === 'startDate' || key === 'endDate') {
+          if (searchParam.countType === 'day') {
+            postData[key] = moment(searchParam[key]).format('YYYY-MM-DD');
+          }
+          if (searchParam.countType === 'month') {
+            postData[key] = moment(searchParam[key]).format('YYYY-MM');
+          }
+          if (searchParam.countType === 'year') {
+            postData[key] = moment(searchParam[key]).format('YYYY');
+          }
+        } else if (searchParam[key]) {
+          postData[key] = searchParam[key];
+        }
+      });
+      postData.queryType = 1;
+      const res = yield call(fetchYilianStatisticsService, postData);
+      if (res && res.code === 200) {
+        console.log('success');
+      }
+    },
     *fetchSearchHospitals({ payload }, { select, call, put }) {
       const { type, origin } = payload;
       const searchParam = yield select(state => state.statistics.searchParams[type][origin]);

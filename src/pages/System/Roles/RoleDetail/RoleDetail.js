@@ -129,7 +129,6 @@ class RoleDetail extends Component {
         if (id !== '0') {
           formData.roleId = id;
         }
-        console.log(formData);
         onSaveRole(formData);
       }
     });
@@ -180,7 +179,6 @@ class RoleDetail extends Component {
       //   const idskey = getTreeDate(menus, true).filter(data => data.value === id).map(data => data.key);
       //   return idskey;
       // }).reduce((pre, curr) => ([...pre, ...curr]), []);
-      // console.log(initialValue);
     }
 
     return (

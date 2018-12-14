@@ -118,7 +118,6 @@ export async function fetchAppointmentService(params, page, size) {
   if (params) {
     query += `${params}`;
   }
-  // console.log(page)
   return request(`/yilian-cloud-backend-api/ylWeChatCount/reservation/search${query}`);
 }
 

@@ -25,8 +25,6 @@ export async function fetchLocationListService(params, page, size) {
 }
 
 export async function createGroupService(postData) {
-  console.log(postData);
-  console.log({ ...postData });
   return request(`/yilian-cloud-backend-api/hos/create/group`, {
     method: 'POST',
     body: {

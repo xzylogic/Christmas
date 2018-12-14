@@ -55,7 +55,6 @@ class Type4List extends Component {
     if (data && Array.isArray(data)) {
       const groupList = data.reduce((pre, curr) => [...pre, curr.name], []);
       const groupKeys = Array.from(new Set(groupList));
-      console.log(groupKeys);
       const groupTotal = groupKeys.map(groupname => {
         const newGroup = data.filter(obj => obj.name === groupname);
         const groupCount = newGroup.reduce(

@@ -226,7 +226,7 @@ class Member extends Component {
       moment(new Date().valueOf() - 604800000).format('YYYY-MM-DD')
     );
     await onSearchParamChange('endTime', moment(new Date().valueOf()).format('YYYY-MM-DD'));
-    await onSearchParamChange('type', '');
+    await onSearchParamChange('type', '0');
     await onSearchParamChange('name', '');
     await onSearchParamChange('hosName', '');
     await onSearchParamChange('queryType', '');

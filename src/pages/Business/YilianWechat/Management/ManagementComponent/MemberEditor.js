@@ -61,7 +61,6 @@ class MemberEditor extends Component {
           if (ifsuccess) {
             onClose();
           }
-          alert();
         });
       }
     });

@@ -70,17 +70,15 @@ class Type3Container extends Component {
 
   handleSearch = async e => {
     e.preventDefault();
-    // const { onFetchPopularizationReport } = this.props;
-    // onFetchPopularizationReport(0);
-    const { onDownloadPopularizationReport, onUpdateSearchParams } = this.props;
-    onUpdateSearchParams('isExport', false);
-    onDownloadPopularizationReport();
+    const { onFetchPopularizationReport } = this.props;
+    onFetchPopularizationReport(0);
   };
 
   handleReset = async e => {
     const { onUpdateSearchParams, onFetchPopularizationReport } = this.props;
     e.preventDefault();
     await onUpdateSearchParams('time', moment(new Date().valueOf()).format('YYYY-MM-DD'));
+    await onUpdateSearchParams('isExport', false);
     await onFetchPopularizationReport(0);
   };
 
@@ -90,6 +88,7 @@ class Type3Container extends Component {
     const { onDownloadPopularizationReport, onUpdateSearchParams } = this.props;
     onUpdateSearchParams('isExport', true);
     onDownloadPopularizationReport();
+    onUpdateSearchParams('isExport', false);
   };
 
   render() {

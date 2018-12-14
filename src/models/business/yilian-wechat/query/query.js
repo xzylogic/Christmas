@@ -107,7 +107,7 @@ export default {
         // 医生工号
         hosDocCode: '',
         // 导出
-        isExport: '',
+        isExport: false,
       },
     },
     list: {
@@ -510,6 +510,9 @@ export default {
         }
         if (appointment && appointment.hosDocCode) {
           params += `&hosDocCode=${appointment.hosDocCode}`;
+        }
+        if (appointment && !appointment.isExport) {
+          params += `&isExport=${appointment.isExport}`;
         }
         const res = yield call(fetchAppointmentService, params, page, 10);
         if (res && res.code === 200) {

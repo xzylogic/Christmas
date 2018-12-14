@@ -140,9 +140,6 @@ class Type1Container extends Component {
     const { onFetchPopularizationReport, onFetchPopularizationChart } = this.props;
     onFetchPopularizationReport(0);
     onFetchPopularizationChart(0);
-    // const { onDownloadPopularizationReport, onUpdateSearchParams } = this.props;
-    // onUpdateSearchParams('isExport', false);
-    // onDownloadPopularizationReport(0);
   };
 
   handleReset = async e => {
@@ -160,6 +157,7 @@ class Type1Container extends Component {
     await onUpdateSearchParams('countType', 'day');
     await onUpdateSearchParams('groupName', '1组');
     await onUpdateSearchParams('project', '');
+    await onUpdateSearchParams('isExport', false);
     await onFetchPopularizationReport(0);
     await onFetchPopularizationChart();
   };
@@ -170,6 +168,7 @@ class Type1Container extends Component {
     const { onDownloadPopularizationReport, onUpdateSearchParams } = this.props;
     onUpdateSearchParams('isExport', true);
     onDownloadPopularizationReport();
+    onUpdateSearchParams('isExport', false);
   };
 
   render() {

@@ -23,13 +23,13 @@ export default {
         startTime: moment(new Date().valueOf() - 2678400000).format('YYYY-MM-DD'),
         endTime: moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD'),
         countType: 'week',
-        cityName: null,
+        cityName: '',
         hosOrgCode: null,
         visitLevelCode: null,
         orderStatus: null,
         regChannel: null,
         type: 'day',
-        isExport: '',
+        isExport: false,
       },
       // 推广数据统计
       promoteAttention: {
@@ -49,7 +49,7 @@ export default {
         orderStatusWechat: null,
         // 医联App
         orderStatusApp: null,
-        isExport: '',
+        isExport: false,
       },
     },
     list: {
@@ -142,6 +142,9 @@ export default {
         if (promoteAttention && promoteAttention.group) {
           params += `&groupId=${promoteAttention.group}`;
         }
+        if (promoteAttention && !promoteAttention.isExport) {
+          params += `&isExport=${promoteAttention.isExport}`;
+        }
         const res = yield call(fetchPromoteAttentionAmountService, params, page, 10, way);
         if (res && res.code === 200) {
           yield put({
@@ -233,6 +236,9 @@ export default {
         if (promoteAttention && promoteAttention.group) {
           params += `&group=${promoteAttention.group}`;
         }
+        if (promoteAttention && !promoteAttention.isExport) {
+          params += `&isExport=${promoteAttention.isExport}`;
+        }
         const res = yield call(fetchPromoteAttentionAmountService, params, page, 10, way);
         if (res && res.code === 200) {
           yield put({
@@ -278,6 +284,9 @@ export default {
       }
       if (appointmentAttention && appointmentAttention.regChannel) {
         params += `&regChannel=${appointmentAttention.regChannel}`;
+      }
+      if (appointmentAttention && !appointmentAttention.isExport) {
+        params += `&isExport=${appointmentAttention.isExport}`;
       }
       const res = yield call(fetchAppointmentsDataService, params, page, 10);
       if (res && res.code === 200) {
@@ -367,6 +376,9 @@ export default {
       }
       if (appointmentAttention && appointmentAttention.regChannel) {
         params += `&regChannel=${appointmentAttention.regChannel}`;
+      }
+      if (appointmentAttention && !appointmentAttention.isExport) {
+        params += `&isExport=${appointmentAttention.isExport}`;
       }
       const res = yield call(fetchAppointmentsDataService, params, page, 10, way);
       if (res && res.code === 200) {

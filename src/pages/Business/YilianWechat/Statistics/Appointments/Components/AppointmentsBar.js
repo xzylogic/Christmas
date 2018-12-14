@@ -19,7 +19,7 @@ function AppointmentsBar(props) {
           onChange={value => onParamsChange(value, 'hosOrgCode')}
         >
           {typeHosName.map(item => (
-            <Select.Option id={item.id} key={item.id} value={item.hos_name}>
+            <Select.Option id={item.id} key={item.hos_name} value={item.hos_name}>
               {item.hos_name}
             </Select.Option>
           ))}
@@ -84,10 +84,10 @@ function AppointmentsBar(props) {
             value={params.cityName}
             onChange={value => onParamsChange(value, 'cityName')}
           >
-            <Select.Option value="all">全部</Select.Option>
-            <Select.Option value="专科医院">专科医院</Select.Option>
-            <Select.Option value="综合医院">综合医院</Select.Option>
-            <Select.Option value="中医医院">中医医院</Select.Option>
+            <Select.Option value="">全部</Select.Option>
+            <Select.Option value="zkyy">专科医院</Select.Option>
+            <Select.Option value="zhyy">综合医院</Select.Option>
+            <Select.Option value="zyyy">中医医院</Select.Option>
           </Select>
         </span>
         <span className={classes.Span}>

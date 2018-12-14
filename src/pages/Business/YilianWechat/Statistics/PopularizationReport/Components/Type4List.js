@@ -89,6 +89,7 @@ class Type4List extends Component {
           dataSource={this.getDataSource(data)}
           columns={this.setTableColumns()}
           pagination={false}
+          bordered
         />
       </React.Fragment>
     );

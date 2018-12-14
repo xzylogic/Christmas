@@ -33,8 +33,8 @@ export default {
         [STATISTICS_ORIGIN.YILIAN]: {
           functionType: 'YYHY', // 各医院号源使用情况
           countType: 'day', // 统计方式
-          startDate: moment(new Date().valueOf() - 2592000000),
-          endDate: moment(new Date().valueOf()),
+          startDate: moment(new Date().valueOf() - 2678400000),
+          endDate: moment(new Date().valueOf() - 86400000),
           cityCode: '', // 医院类型
           orgId: '', // 医院ID
           isExclusive: '', // 号源类型
@@ -46,8 +46,8 @@ export default {
         [STATISTICS_ORIGIN.YILIAN]: {
           functionType: 'YYYY', // 各医院预约量统计
           countType: 'day', // 统计方式
-          startDate: moment(new Date().valueOf() - 2592000000),
-          endDate: moment(new Date().valueOf()),
+          startDate: moment(new Date().valueOf() - 2678400000),
+          endDate: moment(new Date().valueOf() - 86400000),
           cityCode: '', // 医院类型
           orgId: '', // 医院ID
           isExclusive: '', // 号源类型
@@ -59,8 +59,8 @@ export default {
         [STATISTICS_ORIGIN.YILIAN]: {
           functionType: 'YYTH', // 各医院退号量统计
           countType: 'day', // 统计方式
-          startDate: moment(new Date().valueOf() - 2592000000),
-          endDate: moment(new Date().valueOf()),
+          startDate: moment(new Date().valueOf() - 2678400000),
+          endDate: moment(new Date().valueOf() - 86400000),
           cityCode: '', // 医院类型
           orgId: '', // 医院ID
           isExclusive: '', // 号源类型
@@ -72,8 +72,8 @@ export default {
         [STATISTICS_ORIGIN.YILIAN]: {
           functionType: 'QDZC', // 各渠道注册量统计
           countType: 'day', // 统计方式
-          startDate: moment(new Date().valueOf() - 2592000000),
-          endDate: moment(new Date().valueOf()),
+          startDate: moment(new Date().valueOf() - 2678400000),
+          endDate: moment(new Date().valueOf() - 86400000),
           cityCode: '', // 医院类型
           orgId: '', // 医院ID
           isExclusive: '', // 号源类型
@@ -85,8 +85,8 @@ export default {
         [STATISTICS_ORIGIN.YILIAN]: {
           functionType: 'QDYY', // 各渠道预约量统计
           countType: 'day', // 统计方式
-          startDate: moment(new Date().valueOf() - 2592000000),
-          endDate: moment(new Date().valueOf()),
+          startDate: moment(new Date().valueOf() - 2678400000),
+          endDate: moment(new Date().valueOf() - 86400000),
           cityCode: '', // 医院类型
           orgId: '', // 医院ID
           isExclusive: '', // 号源类型
@@ -98,8 +98,8 @@ export default {
         [STATISTICS_ORIGIN.YILIAN]: {
           functionType: 'QDTH', // 各渠道退号量统计
           countType: 'day', // 统计方式
-          startDate: moment(new Date().valueOf() - 2592000000),
-          endDate: moment(new Date().valueOf()),
+          startDate: moment(new Date().valueOf() - 2678400000),
+          endDate: moment(new Date().valueOf() - 86400000),
           cityCode: '', // 医院类型
           orgId: '', // 医院ID
           isExclusive: '', // 号源类型

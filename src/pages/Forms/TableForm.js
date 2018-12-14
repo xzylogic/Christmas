@@ -244,6 +244,7 @@ class TableForm extends PureComponent {
           dataSource={data}
           pagination={false}
           rowClassName={record => (record.editable ? styles.editable : '')}
+          bordered
         />
         <Button
           style={{ width: '100%', marginTop: 16, marginBottom: 8 }}

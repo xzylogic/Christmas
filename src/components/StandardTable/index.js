@@ -117,6 +117,7 @@ class StandardTable extends PureComponent {
           columns={columns}
           pagination={paginationProps}
           onChange={this.handleTableChange}
+          bordered
         />
       </div>
     );

@@ -269,6 +269,7 @@ class Member extends Component {
                     columns={this.setFTableColumns()}
                     dataSource={followingList}
                     pagination={false}
+                    bordered
                   />
                 </div>
               ) : (
@@ -296,6 +297,7 @@ class Member extends Component {
                     columns={this.setRTableColumns()}
                     dataSource={registrationList}
                     pagination={false}
+                    bordered
                   />
                 </div>
               ) : (

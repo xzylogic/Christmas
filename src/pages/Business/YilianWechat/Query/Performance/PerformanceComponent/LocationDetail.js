@@ -48,8 +48,8 @@ class LocationDetail extends Component {
     const columns = [
       {
         title: '日期',
-        dataIndex: 'date',
-        key: 'date',
+        dataIndex: 'date' || 'months' || 'weeks' || 'years',
+        key: 'date' || 'months' || 'weeks' || 'years',
         render: (_, record) => record.date || record.weeks || record.months || record.years,
       },
       {

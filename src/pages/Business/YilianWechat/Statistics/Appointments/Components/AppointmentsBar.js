@@ -47,7 +47,7 @@ function AppointmentsBar(props) {
 
   return (
     <Row className={classes.Container}>
-      <Col span={24} className={classes.Container}>
+      <Col className={classes.Container}>
         <span>
           <DatePicker.RangePicker
             className={classes.Gap}
@@ -74,7 +74,6 @@ function AppointmentsBar(props) {
             }}
           />
         </span>
-
         <span className={classes.Span}>
           医院类型：
           <Select
@@ -136,7 +135,6 @@ function AppointmentsBar(props) {
           <Select.Option value="3">已取消</Select.Option>
         </Select>
       </span>
-
       <span className={classes.BtnRight}>
         <Button type="primary" htmlType="button" onClick={onSearch} className={classes.Gap}>
           查询

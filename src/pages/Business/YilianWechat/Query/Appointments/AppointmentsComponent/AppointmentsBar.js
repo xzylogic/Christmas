@@ -13,10 +13,8 @@ function AppointmentsBar(props) {
         <Select
           className={classes.Gap}
           style={{ width: 115 }}
-          // name='type'
-          // value={params.type}
           onChange={value => onParamsChange(value, 'type')}
-          defaultValue="create_time"
+          value={params.type}
         >
           <Select.Option value="create_time">预约日期</Select.Option>
           <Select.Option value="schedule_date">就诊日期</Select.Option>
@@ -48,17 +46,12 @@ function AppointmentsBar(props) {
             }}
           />
         </span>
-        {/* <span className={classes.Span}>
-          就诊日期：
-          <DatePicker placeholder='就诊日期' />
-        </span> */}
         <span className={classes.Span}>
           预约状态：
           <Select
             style={{ width: 115 }}
             className={classes.Gap}
             placeholder="预约状态"
-            // defaultValue='0'
             value={params.orderStatus}
             onChange={value => onParamsChange(value, 'orderStatus')}
           >
@@ -73,7 +66,6 @@ function AppointmentsBar(props) {
             className={classes.Gap}
             placeholder="预约来源"
             value={params.regChannel}
-            // defaultValue='0'
             onChange={value => onParamsChange(value, 'regChannel')}
           >
             <Select.Option value="app">APP</Select.Option>

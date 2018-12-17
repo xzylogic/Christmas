@@ -203,8 +203,9 @@ class AppointmentsContainer extends Component {
     onDownloadAppointmentList();
     onSearchParamChange('isExport', false);
 
-    const b = '数据';
+    console.log('download:', download);
 
+    const b = '数据';
     const a = document.createElement('a');
     a.setAttribute('download', `${b}.xls`);
     a.setAttribute('href', { download });

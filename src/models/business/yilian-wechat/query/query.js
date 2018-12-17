@@ -259,14 +259,6 @@ export default {
         }
         if (membership && membership.hosName) {
           params += `&hosName=${membership.hosName}`;
-          // yield put({
-          //   type: 'updateSearchParam',
-          //   payload: {
-          //     key: 'membership',
-          //     hosName: membership.hosName,
-          //     name:'',
-          //   },
-          // });
         }
         const res = yield call(fetchMembershipPerformanceDetail, params, 0, 10);
         if (res && res.code === 200) {
@@ -306,9 +298,6 @@ export default {
       if (member && member.name) {
         params += `&name=${member.name}`;
       }
-      // if (member && member.source) {
-      //   params += `&source=${member.source}`;
-      // }
       const res = yield call(fetchMemberService, params, page, 10);
       if (res && res.code === 200) {
         yield put({

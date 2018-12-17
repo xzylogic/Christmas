@@ -99,6 +99,14 @@ export default {
       },
       appointments: {},
     },
+    download: {
+      popularization: {
+        [POPULARIZATION_REPORT_TYPE.TYPE1]: null,
+        [POPULARIZATION_REPORT_TYPE.TYPE2]: null,
+        [POPULARIZATION_REPORT_TYPE.TYPE3]: null,
+      },
+      appointments: {},
+    },
   },
 
   effects: {
@@ -190,11 +198,11 @@ export default {
       const res = yield call(fetchPopularizationReportType1Service, params, page, 10);
       if (res && res.code === 200) {
         yield put({
-          type: 'updateList',
+          type: 'updateDownload',
           payload: {
             pageKey: 'popularization',
             typeKey: POPULARIZATION_REPORT_TYPE.TYPE1,
-            list: res.data.content,
+            download: res.data.content,
             currentPage: page,
             totalElements: res.data.totalElements,
           },
@@ -295,11 +303,11 @@ export default {
       const res = yield call(fetchPopularizationReportType2Service, params, page, 10);
       if (res && res.code === 200) {
         yield put({
-          type: 'updateList',
+          type: 'updateDownload',
           payload: {
             pageKey: 'popularization',
             typeKey: POPULARIZATION_REPORT_TYPE.TYPE2,
-            list: res.data.content,
+            download: res.data.content,
             currentPage: page,
             totalElements: res.data.totalElements,
           },
@@ -397,11 +405,11 @@ export default {
       const res = yield call(fetchPopularizationReportType3Service, params, page, 10);
       if (res && res.code === 200) {
         yield put({
-          type: 'updateList',
+          type: 'updateDownload',
           payload: {
             pageKey: 'popularization',
             typeKey: POPULARIZATION_REPORT_TYPE.TYPE3,
-            list: res.data.content,
+            download: res.data.content,
             currentPage: page,
             totalElements: res.data.totalElements,
           },
@@ -565,6 +573,18 @@ export default {
           [payload.pageKey]: {
             ...state.chart[payload.pageKey],
             [payload.typeKey]: payload.chart,
+          },
+        },
+      };
+    },
+    updateDownload(state, { payload }) {
+      return {
+        ...state,
+        download: {
+          ...state.download,
+          [payload.pageKey]: {
+            ...state.download[payload.pageKey],
+            [payload.typeKey]: payload.download,
           },
         },
       };

@@ -9,6 +9,7 @@ import AppointmentsDetail from './AppointmentsDetail';
 
 const mapStateToProps = state => ({
   appointmentAttentionList: state.businessYilianWechatStatisticDatas.list.appointmentAttention,
+  download: state.businessYilianWechatQuery.list.appointmentDownload,
   currentPage: state.businessYilianWechatStatisticDatas.currentPage.appointmentAttention,
   totalElements: state.businessYilianWechatStatisticDatas.totalElements.appointmentAttention,
   searchParam: state.businessYilianWechatStatisticDatas.searchParam.appointmentAttention,
@@ -225,10 +226,15 @@ class AppointmentsContainer extends Component {
   handleExport = e => {
     e.preventDefault();
     console.log('export');
-    const { onDownloadAppointmentsData, onSearchParamChange } = this.props;
+    const { onDownloadAppointmentsData, onSearchParamChange, download } = this.props;
     onSearchParamChange('isExport', true);
     onDownloadAppointmentsData();
     onSearchParamChange('isExport', false);
+
+    const a = document.createElement('a');
+    a.setAttribute('download', '预约数据统计.xls');
+    a.setAttribute('href', { download });
+    a.click();
   };
 
   handleDetail = (e, record) => {

@@ -132,7 +132,7 @@ export default {
       // 所有推广人员列表
       fetchallPerson: null,
       // 预约查询导出链接
-      appointmentDownload: null,
+      appointmentDownload: 'http://10.2.10.13:9080/yilian-cloud-backend-api/test.xls',
     },
     currentPage: {
       group: 0,
@@ -577,7 +577,7 @@ export default {
           yield put({
             type: 'updateList',
             payload: {
-              key: 'appointmentDownload',
+              key: 'appointment',
               list: res.data.content,
               currentPage: page,
               totalElements: res.data.totalElements,

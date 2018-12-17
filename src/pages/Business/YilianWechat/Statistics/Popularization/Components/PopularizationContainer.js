@@ -9,6 +9,7 @@ import TableList from '@/components/PageComponents/Table/TableList';
 
 const mapStateToProps = state => ({
   promoteAttentionList: state.businessYilianWechatStatisticDatas.list.promoteAttention,
+  download: state.businessYilianWechatQuery.list.promoteDownload,
   currentPage: state.businessYilianWechatStatisticDatas.currentPage.promoteAttention,
   totalElements: state.businessYilianWechatStatisticDatas.totalElements.promoteAttention,
   searchParam: state.businessYilianWechatStatisticDatas.searchParam.promoteAttention,
@@ -261,10 +262,15 @@ class AppointmentsContainer extends Component {
   handleExport = e => {
     e.preventDefault();
     console.log('export');
-    const { onDowloadPromoteAttentionAmount, onSearchParamChange } = this.props;
+    const { onDowloadPromoteAttentionAmount, onSearchParamChange, download } = this.props;
     onSearchParamChange('isExport', true);
     onDowloadPromoteAttentionAmount();
     onSearchParamChange('isExport', false);
+
+    const a = document.createElement('a');
+    a.setAttribute('download', '推广数据统计.xls');
+    a.setAttribute('href', { download });
+    a.click();
   };
 
   handleDetail = (e, record) => {

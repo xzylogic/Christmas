@@ -33,6 +33,10 @@ const mapStateToProps = state => ({
     state.businessYilianWechatStatisticsAppointment.chart.appointments[
       APPOINTMENTS_REPORT_TYPE.TYPE1
     ],
+  reportDownload:
+    state.businessYilianWechatStatisticsAppointment.download.appointments[
+      APPOINTMENTS_REPORT_TYPE.TYPE1
+    ],
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -168,10 +172,16 @@ class AppointmentType1Container extends Component {
   handleExport = e => {
     e.preventDefault();
     console.log('export');
-    const { onDownloadAppointmentReport, onUpdateSearchParams } = this.props;
+    const { onDownloadAppointmentReport, onUpdateSearchParams, reportDownload } = this.props;
     onUpdateSearchParams('isExport', true);
     onDownloadAppointmentReport();
     onUpdateSearchParams('isExport', false);
+
+    console.log(reportDownload);
+    // const a = document.createElement('a');
+    //   a.setAttribute('download', '预约数据报表.xls');
+    //   a.setAttribute('href', {download});
+    //   a.click();
   };
 
   handleChange = e => {

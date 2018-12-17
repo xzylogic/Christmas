@@ -17,7 +17,7 @@ function querySearchBar(props) {
   } = props;
   return (
     <Row className={classes.Container}>
-      <Col span={16}>
+      <Col span={15}>
         <Select name="origin" value={source} className={classes.Gap} readOnly>
           <Select.Option value="wechat">微信</Select.Option>
         </Select>
@@ -53,7 +53,7 @@ function querySearchBar(props) {
           className={classes.Input}
         />
       </Col>
-      <Col span={8} className={classes.ColRight}>
+      <Col span={9} className={classes.ColRight}>
         <Button type="primary" htmlType="button" onClick={onSearch} className={classes.Gap}>
           查询
         </Button>

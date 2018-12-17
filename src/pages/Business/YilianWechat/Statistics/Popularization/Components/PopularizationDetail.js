@@ -49,8 +49,6 @@ class PopularizationDetail extends Component {
     const columns = [
       {
         title: '日期',
-        // dataIndex: 'week' || 'date' || 'months' || 'years',
-        // key: 'week',
         dataIndex: 'weeks' || 'date' || 'months' || 'years',
         key: 'weeks' || 'date' || 'months' || 'years',
         render: (_, record) => record.date || record.weeks || record.months || record.years,

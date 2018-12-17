@@ -42,8 +42,8 @@ const getTreeDate = (tree, copy) => {
     const treeLevel4 = tree.filter(obj => obj.level === '4').map(data => ({
       parent: data.parentId,
       title: data.name,
-      value: data.menuId,
       key: data.menuId,
+      value: data.menuId,
     }));
     const treeLevel3 = tree.filter(obj => obj.level === '3').map(data => {
       const children = treeLevel4.filter(child => child.parent === data.menuId);
@@ -51,8 +51,8 @@ const getTreeDate = (tree, copy) => {
       return {
         parent: data.parentId,
         title: data.name,
-        value: data.menuId,
-        key: [data.menuId, ...childrenValue].join(','),
+        key: data.menuId,
+        value: [data.menuId, ...childrenValue].join('-'),
         children,
       };
     });
@@ -62,8 +62,8 @@ const getTreeDate = (tree, copy) => {
       return {
         parent: data.parentId,
         title: data.name,
-        value: data.menuId,
-        key: [data.menuId, ...childrenValue].join(','),
+        key: data.menuId,
+        value: [data.menuId, ...childrenValue].join('-'),
         children,
       };
     });
@@ -73,8 +73,8 @@ const getTreeDate = (tree, copy) => {
       return {
         parent: data.parentId,
         title: data.name,
-        value: data.menuId,
-        key: [data.menuId, ...childrenValue].join(','),
+        key: data.menuId,
+        value: [data.menuId, ...childrenValue].join('-'),
         children,
       };
     });
@@ -121,10 +121,12 @@ class RoleDetail extends Component {
     } = this.props;
     form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        const menuIds = values.role.join(',');
+        const defaultMenuIds = values.role.join(',');
+        const menuIds = defaultMenuIds.replace(/-/gi, ',');
         const formData = {
           roleName: values.roleName,
           menuIds,
+          defaultMenuIds,
         };
         if (id !== '0') {
           formData.roleId = id;
@@ -173,8 +175,8 @@ class RoleDetail extends Component {
     };
 
     let initialValue = [];
-    if (currentRole && currentRole.menuIds) {
-      initialValue = currentRole.menuIds.split(',');
+    if (currentRole && currentRole.defaultMenuIds) {
+      initialValue = currentRole.defaultMenuIds.split(',');
       // initialValue = idsArr.map(id => {
       //   const idskey = getTreeDate(menus, true).filter(data => data.value === id).map(data => data.key);
       //   return idskey;

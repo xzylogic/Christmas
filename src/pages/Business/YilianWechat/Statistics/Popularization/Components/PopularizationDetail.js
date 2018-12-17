@@ -9,7 +9,6 @@ const mapStateToProps = state => ({
   currentPage: state.businessYilianWechatStatisticDatas.currentPage.promoteAttention,
   totalElements: state.businessYilianWechatStatisticDatas.totalElements.promoteAttention,
   searchParam: state.businessYilianWechatStatisticDatas.searchParam.promoteAttention,
-
   loading:
     state.loading.effects['businessYilianWechatStatisticDatas/fetchPromoteAttentionAmountDetail'],
 });
@@ -115,14 +114,18 @@ class PopularizationDetail extends Component {
           <Select.Option value="year">按年统计</Select.Option>
         </Select>
         <Divider>{name}</Divider>
-        <TableList
-          rowKey={(_, index) => index}
-          list={promoteAttentionList}
-          columns={this.setTableColumns()}
-          currentPage={currentPage}
-          totalElements={totalElements}
-          onPageChange={this.handlePageChange}
-        />
+        {promoteAttentionList instanceof Object ? (
+          <TableList
+            rowKey={(_, index) => index}
+            list={promoteAttentionList}
+            columns={this.setTableColumns()}
+            currentPage={currentPage}
+            totalElements={totalElements}
+            onPageChange={this.handlePageChange}
+          />
+        ) : (
+          ''
+        )}
       </Modal>
     );
   }

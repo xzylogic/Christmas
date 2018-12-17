@@ -235,7 +235,7 @@ export default {
           params += `&hosGrade=${promoteAttention.hosGrade}`;
         }
         if (promoteAttention && promoteAttention.channel) {
-          params += `&channel=${promoteAttention.channel}`;
+          params += `&promoCode=${promoteAttention.channel}`;
         }
         if (promoteAttention && promoteAttention.group) {
           params += `&group=${promoteAttention.group}`;

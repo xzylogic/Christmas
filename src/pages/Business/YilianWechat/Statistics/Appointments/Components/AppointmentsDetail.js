@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import { Modal, Select } from 'antd';
+import { Modal, Select, Divider } from 'antd';
 
 import TableList from '@/components/PageComponents/Table/TableList';
 
@@ -158,7 +158,7 @@ class AppointmentsDetail extends Component {
           <Select.Option value="month">按月统计</Select.Option>
           <Select.Option value="year">按年统计</Select.Option>
         </Select>
-        {/* <Divider>{name}</Divider> */}
+        <Divider />
         {appointmentList instanceof Object ? (
           <TableList
             rowKey={(_, index) => index}

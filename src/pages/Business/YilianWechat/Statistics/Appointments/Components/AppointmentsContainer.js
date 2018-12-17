@@ -9,7 +9,7 @@ import AppointmentsDetail from './AppointmentsDetail';
 
 const mapStateToProps = state => ({
   appointmentAttentionList: state.businessYilianWechatStatisticDatas.list.appointmentAttention,
-  download: state.businessYilianWechatQuery.list.appointmentDownload,
+  download: state.businessYilianWechatStatisticDatas.list.appointmentDownload,
   currentPage: state.businessYilianWechatStatisticDatas.currentPage.appointmentAttention,
   totalElements: state.businessYilianWechatStatisticDatas.totalElements.appointmentAttention,
   searchParam: state.businessYilianWechatStatisticDatas.searchParam.appointmentAttention,
@@ -67,7 +67,6 @@ const mapDispatchToProps = dispatch => ({
 )
 class AppointmentsContainer extends Component {
   state = {
-    // allHosNameArr: false,
     //   // way: 'week',
     selectedName: '',
     showDetail: false,

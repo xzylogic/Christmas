@@ -267,10 +267,12 @@ class AppointmentsContainer extends Component {
     onDowloadPromoteAttentionAmount();
     onSearchParamChange('isExport', false);
 
-    const a = document.createElement('a');
-    a.setAttribute('download', '推广数据统计.xls');
-    a.setAttribute('href', { download });
-    a.click();
+    console.log(download);
+
+    // const a = document.createElement('a');
+    // a.setAttribute('download', '推广数据统计.xls');
+    // a.setAttribute('href', { download });
+    // a.click();
   };
 
   handleDetail = (e, record) => {

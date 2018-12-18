@@ -205,11 +205,11 @@ class AppointmentsContainer extends Component {
 
     console.log('download:', download);
 
-    const b = '数据';
-    const a = document.createElement('a');
-    a.setAttribute('download', `${b}.xls`);
-    a.setAttribute('href', { download });
-    a.click();
+    // const b = '数据';
+    // const a = document.createElement('a');
+    // a.setAttribute('download', `${b}.xls`);
+    // a.setAttribute('href', { download });
+    // a.click();
   };
 
   render() {

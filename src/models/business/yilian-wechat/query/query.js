@@ -131,8 +131,6 @@ export default {
       fetchhosName: null,
       // 所有推广人员列表
       fetchallPerson: null,
-      // 预约查询导出链接
-      appointmentDownload: 'http://10.2.10.13:9080/yilian-cloud-backend-api/test.xls',
     },
     currentPage: {
       group: 0,
@@ -468,114 +466,98 @@ export default {
       }
     },
     *fetchAppointmentPerformance({ payload }, { call, put, select }) {
-      try {
-        const { page } = payload;
-        const { appointment } = yield select(state => state.businessYilianWechatQuery.searchParam);
-        let params = '';
-        if (appointment && appointment.startTime) {
-          params += `&startTime=${appointment.startTime}`;
-        }
-        if (appointment && appointment.endTime) {
-          params += `&endTime=${appointment.endTime}`;
-        }
-        if (appointment && appointment.type) {
-          params += `&dateType=${appointment.type}`;
-        }
-        if (appointment && appointment.orderStatus) {
-          params += `&orderStatus=${appointment.orderStatus}`;
-        }
-        if (appointment && appointment.regChannel) {
-          params += `&regChannel=${appointment.regChannel}`;
-        }
-        if (appointment && appointment.patientName) {
-          params += `&patientName=${appointment.patientName}`;
-        }
-        if (appointment && appointment.patientPhone) {
-          params += `&patientPhone=${appointment.patientPhone}`;
-        }
-        if (appointment && appointment.mediCardId) {
-          params += `&mediCardId=${appointment.mediCardId}`;
-        }
-        if (appointment && appointment.patientCardId) {
-          params += `&patientCardId=${appointment.patientCardId}`;
-        }
-        if (appointment && appointment.hosDocCode) {
-          params += `&hosDocCode=${appointment.hosDocCode}`;
-        }
-        if (appointment && !appointment.isExport) {
-          params += `&isExport=${appointment.isExport}`;
-        }
-        const res = yield call(fetchAppointmentService, params, page, 10);
-        if (res && res.code === 200) {
-          // console.log(res);
-          yield put({
-            type: 'updateList',
-            payload: {
-              key: 'appointment',
-              // list: res.data.content,
-              list: res.data.content,
-              currentPage: page,
-              totalElements: res.data.totalElements,
-            },
-          });
-        }
-      } catch (err) {
-        console.log(err);
+      const { page } = payload;
+      const { appointment } = yield select(state => state.businessYilianWechatQuery.searchParam);
+      let params = '';
+      if (appointment && appointment.startTime) {
+        params += `&startTime=${appointment.startTime}`;
+      }
+      if (appointment && appointment.endTime) {
+        params += `&endTime=${appointment.endTime}`;
+      }
+      if (appointment && appointment.type) {
+        params += `&dateType=${appointment.type}`;
+      }
+      if (appointment && appointment.orderStatus) {
+        params += `&orderStatus=${appointment.orderStatus}`;
+      }
+      if (appointment && appointment.regChannel) {
+        params += `&regChannel=${appointment.regChannel}`;
+      }
+      if (appointment && appointment.patientName) {
+        params += `&patientName=${appointment.patientName}`;
+      }
+      if (appointment && appointment.patientPhone) {
+        params += `&patientPhone=${appointment.patientPhone}`;
+      }
+      if (appointment && appointment.mediCardId) {
+        params += `&mediCardId=${appointment.mediCardId}`;
+      }
+      if (appointment && appointment.patientCardId) {
+        params += `&patientCardId=${appointment.patientCardId}`;
+      }
+      if (appointment && appointment.hosDocCode) {
+        params += `&hosDocCode=${appointment.hosDocCode}`;
+      }
+      if (appointment && !appointment.isExport) {
+        params += `&isExport=${appointment.isExport}`;
+      }
+      const res = yield call(fetchAppointmentService, params, page, 10);
+      if (res && res.code === 200) {
+        yield put({
+          type: 'updateList',
+          payload: {
+            key: 'appointment',
+            list: res.data.content,
+            currentPage: page,
+            totalElements: res.data.totalElements,
+          },
+        });
       }
     },
-    *downloadAppointmentList({ payload }, { call, put, select }) {
-      try {
-        const { page } = payload;
-        const { appointment } = yield select(state => state.businessYilianWechatQuery.searchParam);
-        let params = '';
-        if (appointment && appointment.startTime) {
-          params += `&startTime=${appointment.startTime}`;
-        }
-        if (appointment && appointment.endTime) {
-          params += `&endTime=${appointment.endTime}`;
-        }
-        if (appointment && appointment.type) {
-          params += `&dateType=${appointment.type}`;
-        }
-        if (appointment && appointment.orderStatus) {
-          params += `&orderStatus=${appointment.orderStatus}`;
-        }
-        if (appointment && appointment.regChannel) {
-          params += `&regChannel=${appointment.regChannel}`;
-        }
-        if (appointment && appointment.patientName) {
-          params += `&patientName=${appointment.patientName}`;
-        }
-        if (appointment && appointment.patientPhone) {
-          params += `&patientPhone=${appointment.patientPhone}`;
-        }
-        if (appointment && appointment.mediCardId) {
-          params += `&mediCardId=${appointment.mediCardId}`;
-        }
-        if (appointment && appointment.patientCardId) {
-          params += `&patientCardId=${appointment.patientCardId}`;
-        }
-        if (appointment && appointment.hosDocCode) {
-          params += `&hosDocCode=${appointment.hosDocCode}`;
-        }
-        if (appointment && appointment.isExport) {
-          params += `&isExport=${appointment.isExport}`;
-        }
-        const res = yield call(fetchAppointmentService, params, page, 10);
-        if (res && res.code === 200) {
-          yield put({
-            type: 'updateList',
-            payload: {
-              key: 'appointment',
-              list: res.data.content,
-              currentPage: page,
-              totalElements: res.data.totalElements,
-            },
-          });
-        }
-      } catch (err) {
-        console.log(err);
+    *downloadAppointmentList({ payload }, { call, select }) {
+      const { page } = payload;
+      const { appointment } = yield select(state => state.businessYilianWechatQuery.searchParam);
+      let params = '';
+      if (appointment && appointment.startTime) {
+        params += `&startTime=${appointment.startTime}`;
       }
+      if (appointment && appointment.endTime) {
+        params += `&endTime=${appointment.endTime}`;
+      }
+      if (appointment && appointment.type) {
+        params += `&dateType=${appointment.type}`;
+      }
+      if (appointment && appointment.orderStatus) {
+        params += `&orderStatus=${appointment.orderStatus}`;
+      }
+      if (appointment && appointment.regChannel) {
+        params += `&regChannel=${appointment.regChannel}`;
+      }
+      if (appointment && appointment.patientName) {
+        params += `&patientName=${appointment.patientName}`;
+      }
+      if (appointment && appointment.patientPhone) {
+        params += `&patientPhone=${appointment.patientPhone}`;
+      }
+      if (appointment && appointment.mediCardId) {
+        params += `&mediCardId=${appointment.mediCardId}`;
+      }
+      if (appointment && appointment.patientCardId) {
+        params += `&patientCardId=${appointment.patientCardId}`;
+      }
+      if (appointment && appointment.hosDocCode) {
+        params += `&hosDocCode=${appointment.hosDocCode}`;
+      }
+      if (appointment && appointment.isExport) {
+        params += `&isExport=${appointment.isExport}`;
+      }
+      const res = yield call(fetchAppointmentService, params, page, 10);
+      let returnData = null;
+      if (res && res.code === 200 && res.msg) {
+        returnData = res.msg;
+      }
+      return returnData;
     },
   },
 

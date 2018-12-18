@@ -54,11 +54,6 @@ export default {
         [APPOINTMENTS_REPORT_TYPE.TYPE1]: null,
       },
     },
-    download: {
-      appointments: {
-        [APPOINTMENTS_REPORT_TYPE.TYPE1]: null,
-      },
-    },
   },
 
   effects: {
@@ -144,18 +139,12 @@ export default {
         params += `&isExport=${searchParams.isExport}`;
       }
       const res = yield call(fetchAppointmentReportType1Service, params, page, 10);
-      if (res && res.code === 200) {
-        yield put({
-          type: 'updateDownload',
-          payload: {
-            pageKey: 'appointments',
-            typeKey: APPOINTMENTS_REPORT_TYPE.TYPE1,
-            download: res.data.content,
-            currentPage: page,
-            totalElements: res.data.totalElements,
-          },
-        });
+
+      let returnData = null;
+      if (res && res.code === 200 && res.msg) {
+        returnData = res.msg;
       }
+      return returnData;
     },
     *fetchAppointmentChartType1(_, { call, put, select }) {
       const searchParams = yield select(
@@ -256,18 +245,6 @@ export default {
           [payload.pageKey]: {
             ...state.chart[payload.pageKey],
             [payload.typeKey]: payload.chart,
-          },
-        },
-      };
-    },
-    updateDownload(state, { payload }) {
-      return {
-        ...state,
-        download: {
-          ...state.download,
-          [payload.pageKey]: {
-            ...state.download[payload.pageKey],
-            [payload.typeKey]: payload.download,
           },
         },
       };

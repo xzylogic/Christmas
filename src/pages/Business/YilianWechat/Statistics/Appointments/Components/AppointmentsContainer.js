@@ -9,7 +9,6 @@ import AppointmentsDetail from './AppointmentsDetail';
 
 const mapStateToProps = state => ({
   appointmentAttentionList: state.businessYilianWechatStatisticDatas.list.appointmentAttention,
-  download: state.businessYilianWechatStatisticDatas.list.appointmentDownload,
   currentPage: state.businessYilianWechatStatisticDatas.currentPage.appointmentAttention,
   totalElements: state.businessYilianWechatStatisticDatas.totalElements.appointmentAttention,
   searchParam: state.businessYilianWechatStatisticDatas.searchParam.appointmentAttention,
@@ -222,20 +221,19 @@ class AppointmentsContainer extends Component {
     await onFetchAppointmentsData(0);
   };
 
-  handleExport = e => {
+  handleExport = async e => {
     e.preventDefault();
-    console.log('export');
-    const { onDownloadAppointmentsData, onSearchParamChange, download } = this.props;
+    // console.log('export');
+    const { onDownloadAppointmentsData, onSearchParamChange, currentPage } = this.props;
     onSearchParamChange('isExport', true);
-    onDownloadAppointmentsData();
+    onDownloadAppointmentsData(currentPage).then(data => {
+      if (data) {
+        const a = document.createElement('a');
+        a.setAttribute('href', data);
+        a.click();
+      }
+    });
     onSearchParamChange('isExport', false);
-
-    console.log(download);
-
-    // const a = document.createElement('a');
-    // a.setAttribute('download', '预约数据统计.xls');
-    // a.setAttribute('href', { download });
-    // a.click();
   };
 
   handleDetail = (e, record) => {

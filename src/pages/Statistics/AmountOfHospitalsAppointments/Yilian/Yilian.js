@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
 import { Table, Radio } from 'antd';
+import moment from 'moment';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import SearchBar from '../../ZStatisticsComponent/QuerySearchBar';
@@ -38,6 +39,14 @@ const mapDispatchToProps = dispatch => ({
   onFetchYilianStatistics: () =>
     dispatch({
       type: 'statistics/fetchYilianStatistics',
+      payload: {
+        type: STATISTICS_TYPE.AMOUNT_OF_HOSPITALS_APPOINTMENTS,
+        origin: STATISTICS_ORIGIN.YILIAN,
+      },
+    }),
+  onExportYilianStatistics: () =>
+    dispatch({
+      type: 'statistics/exportYilianStatistics',
       payload: {
         type: STATISTICS_TYPE.AMOUNT_OF_HOSPITALS_APPOINTMENTS,
         origin: STATISTICS_ORIGIN.YILIAN,
@@ -140,6 +149,41 @@ class Index extends Component {
     return columns;
   };
 
+  handleSearch = async e => {
+    e.preventDefault();
+    const { onFetchYilianStatistics } = this.props;
+    onFetchYilianStatistics(0);
+  };
+
+  handleReset = async e => {
+    e.preventDefault();
+    const { onUpdateSearchParams, onFetchYilianStatistics } = this.props;
+    await onUpdateSearchParams('startDate', moment(new Date().valueOf() - 2678400000));
+    await onUpdateSearchParams('endDate', moment(new Date().valueOf() - 86400000));
+
+    this.setState({ show: 'chart' });
+    await onUpdateSearchParams('functionType', 'YYYY');
+    await onUpdateSearchParams('countType', 'day');
+    await onUpdateSearchParams('cityCode', '');
+    await onUpdateSearchParams('orgId', '');
+    await onUpdateSearchParams('isExclusive', '');
+
+    await onFetchYilianStatistics();
+  };
+
+  handleExport = async e => {
+    e.preventDefault();
+    // console.log('export');
+    const { onExportYilianStatistics } = this.props;
+    onExportYilianStatistics().then(data => {
+      if (data) {
+        const a = document.createElement('a');
+        a.setAttribute('href', data);
+        a.click();
+      }
+    });
+  };
+
   render() {
     const { show } = this.state;
     const { searchParam, list, hospitals } = this.props;
@@ -152,6 +196,9 @@ class Index extends Component {
             params={searchParam}
             onParamsChange={this.handleParamsChange}
             hospitals={hospitals}
+            onExport={this.handleExport}
+            onReset={this.handleReset}
+            onSearch={this.handleSearch}
           />
           <div className={classes.Map}>
             <Radio.Group

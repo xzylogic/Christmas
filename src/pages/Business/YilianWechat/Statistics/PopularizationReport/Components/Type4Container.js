@@ -17,8 +17,6 @@ const mapStateToProps = state => ({
   searchGroupList: state.businessYilianWechatStatistics.searchGroupList,
   reportList:
     state.businessYilianWechatStatistics.list.popularization[POPULARIZATION_REPORT_TYPE.TYPE4],
-  reportDownload:
-    state.businessYilianWechatStatistics.download.popularization[POPULARIZATION_REPORT_TYPE.TYPE4],
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -86,17 +84,17 @@ class Type3Container extends Component {
 
   handleExport = e => {
     e.preventDefault();
-    console.log('export');
-    const { onDownloadPopularizationReport, onUpdateSearchParams, reportDownload } = this.props;
+    // console.log('export');
+    const { onDownloadPopularizationReport, onUpdateSearchParams, currentPage } = this.props;
     onUpdateSearchParams('isExport', true);
-    onDownloadPopularizationReport();
+    onDownloadPopularizationReport(currentPage).then(data => {
+      if (data) {
+        const a = document.createElement('a');
+        a.setAttribute('href', data);
+        a.click();
+      }
+    });
     onUpdateSearchParams('isExport', false);
-
-    console.log(reportDownload);
-    // const a = document.createElement('a');
-    //   a.setAttribute('download', '推广数据报表4.xls');
-    //   a.setAttribute('href', {download});
-    //   a.click();
   };
 
   render() {

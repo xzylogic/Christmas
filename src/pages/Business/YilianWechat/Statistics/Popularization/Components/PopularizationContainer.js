@@ -9,7 +9,6 @@ import TableList from '@/components/PageComponents/Table/TableList';
 
 const mapStateToProps = state => ({
   promoteAttentionList: state.businessYilianWechatStatisticDatas.list.promoteAttention,
-  download: state.businessYilianWechatQuery.list.promoteDownload,
   currentPage: state.businessYilianWechatStatisticDatas.currentPage.promoteAttention,
   totalElements: state.businessYilianWechatStatisticDatas.totalElements.promoteAttention,
   searchParam: state.businessYilianWechatStatisticDatas.searchParam.promoteAttention,
@@ -59,7 +58,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch({
       type: 'businessYilianWechatStatisticDatas/fetchAllGroupName',
     }),
-  onDowloadPromoteAttentionAmount: page =>
+  onDownloadPromoteAttentionAmount: page =>
     dispatch({
       type: 'businessYilianWechatStatisticDatas/downloadPromoteAttentionAmount',
       payload: { page },
@@ -261,18 +260,17 @@ class AppointmentsContainer extends Component {
 
   handleExport = e => {
     e.preventDefault();
-    console.log('export');
-    const { onDowloadPromoteAttentionAmount, onSearchParamChange, download } = this.props;
+    // console.log('export');
+    const { onDownloadPromoteAttentionAmount, onSearchParamChange, currentPage } = this.props;
     onSearchParamChange('isExport', true);
-    onDowloadPromoteAttentionAmount();
+    onDownloadPromoteAttentionAmount(currentPage).then(data => {
+      if (data) {
+        const a = document.createElement('a');
+        a.setAttribute('href', data);
+        a.click();
+      }
+    });
     onSearchParamChange('isExport', false);
-
-    console.log(download);
-
-    // const a = document.createElement('a');
-    // a.setAttribute('download', '推广数据统计.xls');
-    // a.setAttribute('href', { download });
-    // a.click();
   };
 
   handleDetail = (e, record) => {

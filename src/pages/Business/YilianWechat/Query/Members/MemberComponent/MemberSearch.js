@@ -127,55 +127,6 @@ class MemberSearch extends Component {
             ''
           )}
         </Col>
-        {/* <span>
-          类型：
-          <Select
-            className={classes.Gap}
-            onChange={this.showAllHosName}
-            style={{ width: 115 }}
-            placeholder="--请选择--"
-            value={params.queryType}
-          >
-            <Select.Option value="name">地推人员</Select.Option>
-            <Select.Option value="hosName">医院二维码</Select.Option>
-          </Select>
-        </span>
-        {params.queryType ? (
-          <span>
-            请选择：
-            {params.queryType === 'hosName' ? (
-              <Select
-                style={{ width: 200 }}
-                className={classes.Gap}
-                placeholder="--请选择--"
-                value={params.hosName}
-                onChange={value => onParamsChange(value, 'hosName')}
-              >
-                {allHosName.map(item => (
-                  <Select.Option id={item} key={item} value={item}>
-                    {item}
-                  </Select.Option>
-                ))}
-              </Select>
-            ) : (
-              <Select
-                style={{ width: 200 }}
-                className={classes.Gap}
-                placeholder="--请选择--"
-                value={params.name}
-                onChange={value => onParamsChange(value, 'name')}
-              >
-                {allPerson.map(item => (
-                  <Select.Option id={item.id} key={item.id} value={item.id}>
-                    {item.hos_name}
-                  </Select.Option>
-                ))}
-              </Select>
-            )}
-          </span>
-        ) : (
-          ''
-        )} */}
       </div>
     );
   }

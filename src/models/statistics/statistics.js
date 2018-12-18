@@ -227,9 +227,44 @@ export default {
       });
       postData.queryType = 1;
       const res = yield call(fetchYilianStatisticsService, postData);
-      if (res && res.code === 200) {
-        console.log('success');
+      let returnData = null;
+      if (res && res.code === 200 && res.msg) {
+        returnData = res.data;
       }
+      return returnData;
+      // if (res && res.code === 200) {
+      //   console.log('success');
+      // }
+      // if (res && res.code === 200) {
+      //   console.log('success');
+      // }
+      // if (res && res.code === 200) {
+      //   console.log('success');
+      // }
+      // if (res && res.code === 200) {
+      //   console.log('success');
+      // }
+      // if (res && res.code === 200) {
+      //   console.log('success');
+      // }
+      // if (res && res.code === 200) {
+      //   console.log('success');
+      // }
+      // if (res && res.code === 200) {
+      //   console.log('success');
+      // }
+      // if (res && res.code === 200) {
+      //   console.log('success');
+      // }
+      // if (res && res.code === 200) {
+      //   console.log('success');
+      // }
+      // if (res && res.code === 200) {
+      //   console.log('success');
+      // }
+      // if (res && res.code === 200) {
+      //   console.log('success');
+      // }
     },
     *fetchSearchHospitals({ payload }, { select, call, put }) {
       const { type, origin } = payload;

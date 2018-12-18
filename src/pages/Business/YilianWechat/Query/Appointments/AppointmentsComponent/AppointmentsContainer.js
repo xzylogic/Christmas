@@ -8,7 +8,6 @@ import TableList from '@/components/PageComponents/Table/TableList';
 
 const mapStateToProps = state => ({
   appointmentList: state.businessYilianWechatQuery.list.appointment,
-  download: state.businessYilianWechatQuery.list.appointmentDownload,
   currentPage: state.businessYilianWechatQuery.currentPage.appointment,
   totalElements: state.businessYilianWechatQuery.totalElements.appointment,
   searchParam: state.businessYilianWechatQuery.searchParam.appointment,
@@ -195,21 +194,18 @@ class AppointmentsContainer extends Component {
     await onFetchAppointmentList(0);
   };
 
-  handleExport = e => {
+  handleExport = async e => {
     e.preventDefault();
-    console.log('export111');
-    const { onDownloadAppointmentList, onSearchParamChange, download } = this.props;
+    const { onDownloadAppointmentList, onSearchParamChange, currentPage } = this.props;
     onSearchParamChange('isExport', true);
-    onDownloadAppointmentList();
+    onDownloadAppointmentList(currentPage).then(data => {
+      if (data) {
+        const a = document.createElement('a');
+        a.setAttribute('href', data);
+        a.click();
+      }
+    });
     onSearchParamChange('isExport', false);
-
-    console.log('download:', download);
-
-    // const b = '数据';
-    // const a = document.createElement('a');
-    // a.setAttribute('download', `${b}.xls`);
-    // a.setAttribute('href', { download });
-    // a.click();
   };
 
   render() {

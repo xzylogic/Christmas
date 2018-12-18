@@ -65,10 +65,6 @@ export default {
       typeHosName: null,
       // 按小组查询到的医院名
       groupHosName: null,
-      // 预约数据统计下载
-      appointmentDownload: null,
-      // 推广数据统计下载
-      promoteDownload: null,
     },
     currentPage: {
       appointmentAttention: 0,
@@ -165,52 +161,43 @@ export default {
         console.log(err);
       }
     },
-    *downloadPromoteAttentionAmount({ payload }, { call, put, select }) {
-      try {
-        const { promoteAttention } = yield select(
-          state => state.businessYilianWechatStatisticDatas.searchParam
-        );
-        const { way, page } = payload;
-        let params = '';
-        if (promoteAttention && promoteAttention.startTime) {
-          params += `&startTime=${promoteAttention.startTime}`;
-        }
-        if (promoteAttention && promoteAttention.endTime) {
-          params += `&endTime=${promoteAttention.endTime}`;
-        }
-        if (promoteAttention && promoteAttention.origin) {
-          params += `&origin=${promoteAttention.origin}`;
-        }
-        if (promoteAttention && promoteAttention.hosName) {
-          params += `&hosName=${promoteAttention.hosName}`;
-        }
-        if (promoteAttention && promoteAttention.hosGrade) {
-          params += `&hosGrade=${promoteAttention.hosGrade}`;
-        }
-        if (promoteAttention && promoteAttention.channel) {
-          params += `&promoCode=${promoteAttention.channel}`;
-        }
-        if (promoteAttention && promoteAttention.group) {
-          params += `&groupId=${promoteAttention.group}`;
-        }
-        if (promoteAttention && promoteAttention.isExport) {
-          params += `&isExport=${promoteAttention.isExport}`;
-        }
-        const res = yield call(fetchPromoteAttentionAmountService, params, page, 10, way);
-        if (res && res.code === 200) {
-          yield put({
-            type: 'updateList',
-            payload: {
-              key: 'promoteDownload',
-              list: res.data.content,
-              currentPage: page,
-              totalElements: res.data.totalElements,
-            },
-          });
-        }
-      } catch (err) {
-        console.log(err);
+    *downloadPromoteAttentionAmount({ payload }, { call, select }) {
+      const { promoteAttention } = yield select(
+        state => state.businessYilianWechatStatisticDatas.searchParam
+      );
+      const { way, page } = payload;
+      let params = '';
+      if (promoteAttention && promoteAttention.startTime) {
+        params += `&startTime=${promoteAttention.startTime}`;
       }
+      if (promoteAttention && promoteAttention.endTime) {
+        params += `&endTime=${promoteAttention.endTime}`;
+      }
+      if (promoteAttention && promoteAttention.origin) {
+        params += `&origin=${promoteAttention.origin}`;
+      }
+      if (promoteAttention && promoteAttention.hosName) {
+        params += `&hosName=${promoteAttention.hosName}`;
+      }
+      if (promoteAttention && promoteAttention.hosGrade) {
+        params += `&hosGrade=${promoteAttention.hosGrade}`;
+      }
+      if (promoteAttention && promoteAttention.channel) {
+        params += `&promoCode=${promoteAttention.channel}`;
+      }
+      if (promoteAttention && promoteAttention.group) {
+        params += `&groupId=${promoteAttention.group}`;
+      }
+      if (promoteAttention && promoteAttention.isExport) {
+        params += `&isExport=${promoteAttention.isExport}`;
+      }
+      const res = yield call(fetchPromoteAttentionAmountService, params, page, 10, way);
+
+      let returnData = null;
+      if (res && res.code === 200 && res.msg) {
+        returnData = res.msg;
+      }
+      return returnData;
     },
     *fetchPromoteAttentionAmountDetail({ payload }, { call, put, select }) {
       try {
@@ -305,7 +292,7 @@ export default {
         });
       }
     },
-    *downloadAppointmentsData({ payload }, { call, select, put }) {
+    *downloadAppointmentsData({ payload }, { call, select }) {
       const { appointmentAttention } = yield select(
         state => state.businessYilianWechatStatisticDatas.searchParam
       );
@@ -339,17 +326,11 @@ export default {
         params += `&isExport=${appointmentAttention.isExport}`;
       }
       const res = yield call(fetchAppointmentsDataService, params, page, 10);
-      if (res && res.code === 200) {
-        yield put({
-          type: 'updateList',
-          payload: {
-            key: 'appointmentDownload',
-            list: res.data.content,
-            currentPage: page,
-            totalElements: res.data.totalElements,
-          },
-        });
+      let returnData = null;
+      if (res && res.code === 200 && res.msg) {
+        returnData = res.msg;
       }
+      return returnData;
     },
     *fetchAppointmentsDataDetail({ payload }, { call, select, put }) {
       const { appointmentAttention } = yield select(

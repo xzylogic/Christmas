@@ -17,7 +17,7 @@ export default [
     authority: ['admin', 'user'],
     routes: [
       // system
-      { path: '/', redirect: '/system/accounts' },
+      { path: '/' },
       {
         path: '/system',
         name: '系统管理',

@@ -2,6 +2,7 @@ import React from 'react';
 import Router from 'umi/router';
 import { connect } from 'dva';
 import { Table, Divider, Popconfirm } from 'antd';
+import moment from 'moment';
 
 import classes from '../Roles.less';
 
@@ -74,6 +75,7 @@ class RoleList extends React.PureComponent {
         title: '更新时间',
         dataIndex: 'lastedModifiedDate',
         key: 'lastedModifiedDate',
+        render: text => text && moment(new Date(text)).format('YYYY-MM-DD HH:mm'),
       },
       {
         title: '操作',

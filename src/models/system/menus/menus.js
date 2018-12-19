@@ -105,23 +105,23 @@ export default {
     *saveMenu({ payload }, { call, put }) {
       const res = yield call(saveMenu, payload.data);
       if (res && res.code === 200) {
-        message.success(res.message || '保存菜单成功！！！');
+        message.success(res.msg || '保存菜单成功！！！');
         yield put({
           type: 'fetchMenuList',
         });
       } else {
-        message.error((res && res.message) || '保存菜单失败！！！');
+        message.error((res && res.msg) || '保存菜单失败！！！');
       }
     },
     *deleteMenu({ payload }, { call, put }) {
       const res = yield call(deleteMenu, payload.menuId);
       if (res && res.code === 200) {
-        message.success(res.message || '删除菜单成功！！！');
+        message.success(res.msg || '删除菜单成功！！！');
         yield put({
           type: 'fetchMenuList',
         });
       } else {
-        message.error((res && res.message) || '删除菜单失败！！！');
+        message.error((res && res.msg) || '删除菜单失败！！！');
       }
     },
   },

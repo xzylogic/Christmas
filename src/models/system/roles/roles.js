@@ -42,6 +42,10 @@ export default {
       }
     },
     *fetchRole({ payload }, { call, put }) {
+      yield put({
+        type: 'updateCurrentRole',
+        payload: null,
+      });
       const { roleId } = payload;
       const res = yield call(fetchRoleService, roleId);
       if (res && res.code === 200) {
@@ -58,35 +62,43 @@ export default {
           type: 'fetchRoleList',
           payload: { page: 0 },
         });
-        message.success(res.message || '保存角色成功！！！').then(() => {
-          Router.goBack();
+        yield put({
+          type: 'account/fetchAllRoles',
         });
+        message.success(res.msg || '保存角色成功！！！');
+        Router.push('/system/roles');
       } else {
-        message.error((res && res.message) || '保存角色失败！！！');
+        message.error((res && res.msg) || '保存角色失败！！！');
       }
     },
     *toggleRoleState({ payload }, { call, put }) {
       const res = yield call(toggleRoleStateService, payload.roleId, payload.enable);
       if (res && res.code === 200) {
-        message.success(res.message || '更改角色状态成功！！！');
+        message.success(res.msg || '更改角色状态成功！！！');
         yield put({
           type: 'fetchRoleList',
           payload: { page: 0 },
         });
+        yield put({
+          type: 'account/fetchAllRoles',
+        });
       } else {
-        message.error((res && res.message) || '更改角色状态失败！！！');
+        message.error((res && res.msg) || '更改角色状态失败！！！');
       }
     },
     *deleteRole({ payload }, { call, put }) {
       const res = yield call(deleteRoleService, payload.roleId);
       if (res && res.code === 200) {
-        message.success(res.message || '删除角色成功！！！');
+        message.success(res.msg || '删除角色成功！！！');
         yield put({
           type: 'fetchRoleList',
           payload: { page: 0 },
         });
+        yield put({
+          type: 'account/fetchAllRoles',
+        });
       } else {
-        message.error((res && res.message) || '删除角色失败！！！');
+        message.error((res && res.msg) || '删除角色失败！！！');
       }
     },
   },

@@ -54,6 +54,10 @@ export default {
       }
     },
     *fetchAccountDetail({ payload }, { call, put }) {
+      yield put({
+        type: 'updateSelectedAccount',
+        payload: null,
+      });
       const { userId } = payload;
       const res = yield call(fetchAccountDetailService, userId);
       if (res && res.code === 200 && res.data) {
@@ -67,38 +71,37 @@ export default {
       const { userId, enable } = payload;
       const res = yield call(toggleAccountStateService, userId, enable);
       if (res && res.code === 200) {
-        message.success(res.message || '操作成功！！！');
+        message.success(res.msg || '操作成功！！！');
         yield put({ type: 'fetchAccountList', payload: { page: 0 } });
       } else {
-        message.success((res && res.message) || '操作失败！！！');
+        message.success((res && res.msg) || '操作失败！！！');
       }
     },
     *resetAccountPassword({ payload }, { call }) {
       const res = yield call(resetAccountPasswordService, payload.userId);
       if (res && res.code === 200) {
-        message.success(res.message || '操作成功！！！');
+        message.success(res.msg || '操作成功！！！');
       } else {
-        message.success((res && res.message) || '操作失败！！！');
+        message.success((res && res.msg) || '操作失败！！！');
       }
     },
     *deleteAccount({ payload }, { call, put }) {
       const res = yield call(deleteAccountService, payload.userId);
       if (res && res.code === 200) {
-        message.success(res.message || '操作成功！！！');
+        message.success(res.msg || '操作成功！！！');
         yield put({ type: 'fetchAccountList', payload: { page: 0 } });
       } else {
-        message.success((res && res.message) || '操作失败！！！');
+        message.success((res && res.msg) || '操作失败！！！');
       }
     },
     *saveAccount({ payload }, { call, put }) {
       const res = yield call(saveAccountService, payload.data);
       if (res && res.code === 200) {
         yield put({ type: 'fetchAccountList', payload: { page: 0 } });
-        message.success(res.message || '保存用户信息成功！！！').then(() => {
-          Router.goBack();
-        });
+        message.success(res.msg || '保存用户信息成功！！！');
+        Router.push('/system/accounts');
       } else {
-        message.success((res && res.message) || '保存用户信息失败！！！');
+        message.success((res && res.msg) || '保存用户信息失败！！！');
       }
     },
     *fetchAllRoles(_, { call, put }) {

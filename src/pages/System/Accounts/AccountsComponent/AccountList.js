@@ -1,6 +1,7 @@
 import React from 'react';
 import Router from 'umi/router';
 import { Table, Divider, Popconfirm } from 'antd';
+import moment from 'moment';
 
 import classes from '../Accounts.less';
 
@@ -68,6 +69,7 @@ class AccountList extends React.PureComponent {
         title: '创建时间',
         dataIndex: 'createdDate',
         key: 'createdDate',
+        render: text => text && moment(new Date(text)).format('YYYY-MM-DD HH:mm'),
       },
       {
         title: '操作',

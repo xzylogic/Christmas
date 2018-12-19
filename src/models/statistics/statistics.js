@@ -2,6 +2,8 @@ import moment from 'moment';
 import {
   fetchYilianStatisticsService,
   fetchSearchHospitalsService,
+  fetchHospitalBookDetailService,
+  fetchHospitalCancelDetailService,
 } from '@/services/statistics/yilian-statistics';
 
 export const STATISTICS_TYPE = {
@@ -227,68 +229,66 @@ export default {
       });
       postData.queryType = 1;
       const res = yield call(fetchYilianStatisticsService, postData);
-      let returnData = null;
-      if (res && res.code === 200 && res.msg) {
+      let returnData = '';
+      if (res && res.code === 200 && res.data) {
         returnData = res.data;
       }
       return returnData;
-      // if (res && res.code === 200) {
-      //   console.log('success');
-      // }
-      // if (res && res.code === 200) {
-      //   console.log('success');
-      // }
-      // if (res && res.code === 200) {
-      //   console.log('success');
-      // }
-      // if (res && res.code === 200) {
-      //   console.log('success');
-      // }
-      // if (res && res.code === 200) {
-      //   console.log('success');
-      // }
-      // if (res && res.code === 200) {
-      //   console.log('success');
-      // }
-      // if (res && res.code === 200) {
-      //   console.log('success');
-      // }
-      // if (res && res.code === 200) {
-      //   console.log('success');
-      // }
-      // if (res && res.code === 200) {
-      //   console.log('success');
-      // }
-      // if (res && res.code === 200) {
-      //   console.log('success');
-      // }
-      // if (res && res.code === 200) {
-      //   console.log('success');
-      // }
+    },
+    *fetchHospitalBookDetail({ payload }, { select, call }) {
+      const { type, origin, orgId } = payload;
+      const searchParam = yield select(state => state.statistics.searchParams[type][origin]);
+      const searchData = {};
+      if (searchParam.countType === 'day') {
+        searchData.startDate = moment(searchParam.startDate).format('YYYY-MM-DD');
+        searchData.endDate = moment(searchParam.endDate).format('YYYY-MM-DD');
+      }
+      if (searchParam.countType === 'month') {
+        searchData.startDate = moment(searchParam.startDate).format('YYYY-MM');
+        searchData.endDate = moment(searchParam.endDate).format('YYYY-MM');
+      }
+      if (searchParam.countType === 'year') {
+        searchData.startDate = moment(searchParam.startDate).format('YYYY');
+        searchData.endDate = moment(searchParam.endDate).format('YYYY');
+      }
+      searchData.countType = searchParam.countType;
+      searchData.orgId = orgId;
+      const res = yield call(fetchHospitalBookDetailService, searchData);
+      return res;
+    },
+    *fetchHospitalCancelDetail({ payload }, { select, call }) {
+      const { type, origin, orgId } = payload;
+      const searchParam = yield select(state => state.statistics.searchParams[type][origin]);
+      const searchData = {};
+      if (searchParam.countType === 'day') {
+        searchData.startDate = moment(searchParam.startDate).format('YYYY-MM-DD');
+        searchData.endDate = moment(searchParam.endDate).format('YYYY-MM-DD');
+      }
+      if (searchParam.countType === 'month') {
+        searchData.startDate = moment(searchParam.startDate).format('YYYY-MM');
+        searchData.endDate = moment(searchParam.endDate).format('YYYY-MM');
+      }
+      if (searchParam.countType === 'year') {
+        searchData.startDate = moment(searchParam.startDate).format('YYYY');
+        searchData.endDate = moment(searchParam.endDate).format('YYYY');
+      }
+      searchData.countType = searchParam.countType;
+      searchData.orgId = orgId;
+      const res = yield call(fetchHospitalCancelDetailService, searchData);
+      return res;
     },
     *fetchSearchHospitals({ payload }, { select, call, put }) {
       const { type, origin } = payload;
       const searchParam = yield select(state => state.statistics.searchParams[type][origin]);
       const { cityCode } = searchParam;
-      if (cityCode) {
-        const res = yield call(fetchSearchHospitalsService, cityCode);
-        if (res && res.code === 200) {
-          yield put({
-            type: 'updateHospitals',
-            payload: {
-              type,
-              origin,
-              value: res.data,
-            },
-          });
-        }
-      } else {
+      const res = yield call(fetchSearchHospitalsService, cityCode);
+      if (res && res.code === 200) {
         yield put({
           type: 'updateHospitals',
           payload: {
             type,
             origin,
-            value: [],
+            value: res.data,
           },
         });
       }

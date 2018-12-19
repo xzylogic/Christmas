@@ -227,6 +227,18 @@ class Index extends Component {
             key: 'shangHaiPublicRate',
             width: 100,
           },
+          {
+            title: '医联门户',
+            dataIndex: 'ylGateWayNum',
+            key: 'ylGateWayNum',
+            width: 100,
+          },
+          {
+            title: '医联门户预约率',
+            dataIndex: 'ylGateWayRate',
+            key: 'ylGateWayRate',
+            width: 100,
+          },
         ],
       },
       {
@@ -331,6 +343,13 @@ class Index extends Component {
               percent: parseFloat((totalCounts[key].split('%')[0] / 100).toFixed(4)),
             });
             break;
+          case 'ylGateWayRate':
+            dataCopy.push({
+              item: '医联门户',
+              count: totalCounts.ylGateWayNum,
+              percent: parseFloat((totalCounts[key].split('%')[0] / 100).toFixed(4)),
+            });
+            break;
           default:
             break;
         }
@@ -368,6 +387,9 @@ class Index extends Component {
       case '上海发布':
         this.setState({ yKeyTwo: 'shangHaiPublicNum', yTitleTwo: '上海发布预约量趋势图' });
         break;
+      case '医联门户':
+        this.setState({ yKeyTwo: 'ylGateWayNum', yTitleTwo: '医联门户预约量趋势图' });
+        break;
       case '医联自有渠道':
         this.setState({ yKeyOne: 'ylOwnerChannelNum', yTitleOne: '医联自有渠道预约量趋势图' });
         break;
@@ -376,45 +398,26 @@ class Index extends Component {
     }
   };
 
-  handleSearch = async e => {
-    e.preventDefault();
+  handleSearch = () => {
     const { onFetchYilianStatistics } = this.props;
-    onFetchYilianStatistics(0);
+    this.setState({ yKeyOne: '', yTitleOne: '', yKeyTwo: '', yTitleTwo: '' });
+    onFetchYilianStatistics();
   };
 
-  handleReset = async e => {
-    e.preventDefault();
+  handleReset = async () => {
     const { onUpdateSearchParams, onFetchYilianStatistics } = this.props;
+    this.setState({ yKeyOne: '', yTitleOne: '', yKeyTwo: '', yTitleTwo: '' });
+    await onUpdateSearchParams('countType', 'day');
     await onUpdateSearchParams('startDate', moment(new Date().valueOf() - 2678400000));
     await onUpdateSearchParams('endDate', moment(new Date().valueOf() - 86400000));
-
-    this.setState({
-      show: 'chart',
-      yKeyOne: null,
-      yTitleOne: '',
-      yKeyTwo: null,
-      yTitleTwo: '',
-    });
-    await onUpdateSearchParams('functionType', 'QDYY');
-    await onUpdateSearchParams('countType', 'day');
     await onUpdateSearchParams('cityCode', '');
     await onUpdateSearchParams('orgId', '');
     await onUpdateSearchParams('isExclusive', '');
-
     await onFetchYilianStatistics();
   };
 
-  handleExport = async e => {
-    e.preventDefault();
-    // console.log('export');
-    const { onExportYilianStatistics } = this.props;
-    onExportYilianStatistics().then(data => {
-      if (data) {
-        const a = document.createElement('a');
-        a.setAttribute('href', data);
-        a.click();
-      }
-    });
+  handelExport = () => {
+    console.log('export');
   };
 
   render() {
@@ -430,9 +433,9 @@ class Index extends Component {
             params={searchParam}
             onParamsChange={this.handleParamsChange}
             hospitals={hospitals}
-            onExport={this.handleExport}
-            onReset={this.handleReset}
             onSearch={this.handleSearch}
+            onReset={this.handleReset}
+            onExport={this.handelExport}
           />
           <div className={classes.Map}>
             <Radio.Group
@@ -447,7 +450,7 @@ class Index extends Component {
           {show === 'chart' ? (
             <React.Fragment>
               <Row className={classes.Content} style={{ minHeight: '560px' }}>
-                <Col span="10">
+                <Col span="12">
                   <StatisticsChart
                     data={chartOneData.data}
                     title={`渠道预约总量: ${chartOneData.title}`}
@@ -455,7 +458,7 @@ class Index extends Component {
                     onChartClick={this.handleChartClick}
                   />
                 </Col>
-                <Col span="14">
+                <Col span="12">
                   {yKeyOne ? (
                     <LineChart
                       data={chartData}
@@ -470,7 +473,7 @@ class Index extends Component {
                 </Col>
               </Row>
               <Row className={classes.Content} style={{ minHeight: '560px' }}>
-                <Col span="10">
+                <Col span="12">
                   <StatisticsChart
                     data={chartTwoData.data}
                     title={`医联自有渠道预约总量: ${chartTwoData.title}`}
@@ -478,7 +481,7 @@ class Index extends Component {
                     onChartClick={this.handleChartClick}
                   />
                 </Col>
-                <Col span="14">
+                <Col span="12">
                   {yKeyTwo ? (
                     <LineChart
                       data={chartData}
@@ -500,7 +503,7 @@ class Index extends Component {
               dataSource={list}
               className={classes.Content}
               pagination={false}
-              scroll={{ x: 2050 }}
+              scroll={{ x: 2250 }}
               bordered
             />
           )}

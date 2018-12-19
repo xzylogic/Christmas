@@ -136,7 +136,7 @@ class MenuForm extends Component {
                   message: '请填写菜单排序',
                 },
               ],
-            })(<Input type="number" placeholder="请填写菜单排序" />)}
+            })(<Input type="text" placeholder="请填写菜单排序" />)}
           </Form.Item>
           <Form.Item {...submitFormLayout} style={{ marginTop: 32 }}>
             <Button type="primary" htmlType="submit" loading={submitting}>
@@ -189,7 +189,6 @@ class MenuForm extends Component {
             </Form.Item>
             <Form.Item {...formItemLayout} label="菜单图标">
               {getFieldDecorator('icon', {
-                initialValue: selectedMenu.icon,
                 rules: [
                   {
                     required: false,

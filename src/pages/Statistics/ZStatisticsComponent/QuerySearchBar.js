@@ -108,22 +108,22 @@ function querySearchBar(props) {
       />
       {hospitals ? (
         <React.Fragment>
-          <span style={{ display: 'inline-block', whiteSpace: 'nowrap' }}>
-            医院类型：
-            <Select
-              id="cityCode"
-              placeholder="医院类型"
-              className={[classes.Gap, classes.Select].join(' ')}
-              name="cityCode"
-              value={cityCode}
-              onChange={value => onParamsChange(value, 'cityCode')}
-            >
-              <Select.Option value="all">所有医院类型</Select.Option>
-              <Select.Option value="专科医院">专科医院</Select.Option>
-              <Select.Option value="中医医院">中医医院</Select.Option>
-              <Select.Option value="综合医院">综合医院</Select.Option>
-            </Select>
-          </span>
+          {/* <span style={{ display: 'inline-block', whiteSpace: 'nowrap' }}>
+            医院类型： */}
+          <Select
+            id="cityCode"
+            placeholder="医院类型"
+            className={[classes.Gap, classes.Select].join(' ')}
+            name="cityCode"
+            value={cityCode}
+            onChange={value => onParamsChange(value, 'cityCode')}
+          >
+            <Select.Option value="">全部医院类型</Select.Option>
+            <Select.Option value="zkyy">专科医院</Select.Option>
+            <Select.Option value="zyyy">中医医院</Select.Option>
+            <Select.Option value="zhyy">综合医院</Select.Option>
+          </Select>
+          {/* </span> */}
           {/* <span style={{display: 'inline-block', whiteSpace: 'nowrap'}}>
             医院名称： */}
           <Select
@@ -133,7 +133,7 @@ function querySearchBar(props) {
             value={orgId}
             onChange={value => onParamsChange(value, 'orgId')}
           >
-            <Select.Option value="">所有医院</Select.Option>
+            <Select.Option value="">全部医院</Select.Option>
             {hospitals.map(hospital => (
               <Select.Option key={hospital.hos_org_code} value={hospital.hos_org_code}>
                 {hospital.hos_name}

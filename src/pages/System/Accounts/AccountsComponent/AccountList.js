@@ -66,8 +66,8 @@ class AccountList extends React.PureComponent {
       },
       {
         title: '创建时间',
-        dataIndex: 'createTime',
-        key: 'createTime',
+        dataIndex: 'createdDate',
+        key: 'createdDate',
       },
       {
         title: '操作',

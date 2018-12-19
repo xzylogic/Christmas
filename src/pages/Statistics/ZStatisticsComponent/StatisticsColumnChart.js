@@ -8,7 +8,7 @@ class StatisticsIntervalChart extends Component {
     width: 1000,
     height: 500,
     plotCfg: {
-      margin: [30, 80, 250, 80],
+      margin: [30, 100, 250, 100],
     },
   };
 
@@ -25,10 +25,10 @@ class StatisticsIntervalChart extends Component {
   };
 
   onChartClick = e => {
-    console.log(e);
+    const { onChartClick } = this.props;
     if (e && e.data) {
       const { _origin } = e.data;
-      console.log(_origin);
+      onChartClick(_origin && _origin.orgId, _origin && _origin.orgName);
     }
   };
 

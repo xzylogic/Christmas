@@ -72,8 +72,8 @@ class RoleList extends React.PureComponent {
       },
       {
         title: '更新时间',
-        dataIndex: 'createTime',
-        key: 'createTime',
+        dataIndex: 'lastedModifiedDate',
+        key: 'lastedModifiedDate',
       },
       {
         title: '操作',

@@ -24,13 +24,6 @@ class StatisticsIntervalChart extends Component {
     this.setState({ range: value });
   };
 
-  onChartClick = e => {
-    console.log(e);
-    if (e && e.shape && e.shape.id) {
-      console.log(e.shape.id);
-    }
-  };
-
   render() {
     const { width, height, plotCfg, range } = this.state;
     const { data, xKey, yKey, yAlias, title } = this.props;
@@ -50,7 +43,6 @@ class StatisticsIntervalChart extends Component {
         .position(`${xKey}*${yKey}`)
         .color('#36cfc9')
         .animate(false);
-      chart.on('plotclick', this.onChartClick);
       chart.render();
     });
 

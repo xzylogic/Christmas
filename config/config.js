@@ -61,11 +61,15 @@ export default {
     'primary-color': defaultSettings.primaryColor,
   },
   proxy: {
-    '/yilian-cloud-backend-api': {
-      target: 'http://10.2.10.13:9080',
-      changeOrigin: true,
-      // pathRewrite: { '^/server': '' }, // /server/api/currentUser -> /api/currentUser
-    },
+    ...(!process.env.NODE_ENV
+      ? {
+          '/yilian-cloud-backend-api': {
+            target: 'http://10.2.10.13:9080',
+            changeOrigin: true,
+            // pathRewrite: { '^/server': '' }, // /server/api/currentUser -> /api/currentUser
+          },
+        }
+      : {}),
   },
   externals: {
     '@antv/data-set': 'DataSet',

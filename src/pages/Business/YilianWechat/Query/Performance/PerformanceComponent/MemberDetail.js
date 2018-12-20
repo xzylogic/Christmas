@@ -47,10 +47,7 @@ class MemberDetail extends Component {
 
   setFansCountColor = (record, setMonth, memberMonthAmount) => {
     if (setMonth) {
-      if (
-        !(record.regCount < memberMonthAmount.mRegCount) &&
-        !(record.fansCount < memberMonthAmount.mFansCount)
-      ) {
+      if (!(record.fansCount < memberMonthAmount.mFansCount)) {
         return <span>{record.fansCount}</span>;
       }
       return <span style={{ color: 'red' }}>{record.fansCount}</span>;
@@ -60,10 +57,7 @@ class MemberDetail extends Component {
 
   setRegCountColor = (record, setMonth, memberMonthAmount) => {
     if (setMonth) {
-      if (
-        !(record.regCount < memberMonthAmount.mRegCount) &&
-        !(record.fansCount < memberMonthAmount.mFansCount)
-      ) {
+      if (!(record.regCount < memberMonthAmount.mRegCount)) {
         return <span>{record.regCount}</span>;
       }
       return <span style={{ color: 'red' }}>{record.regCount}</span>;
@@ -73,17 +67,48 @@ class MemberDetail extends Component {
 
   setTableColumns = () => {
     const { memberDetailList } = this.props;
-    let columns;
+    const { way } = this.state;
+
+    const columns = [];
+
     if (memberDetailList instanceof Object) {
       const { memberMonthAmount } = this.props;
       const setMonth = Object.keys(memberDetailList[0])[0] === 'months';
-      columns = [
-        {
-          title: '日期',
-          dataIndex: 'date' || 'months' || 'weeks' || 'years',
-          key: 'date' || 'months' || 'weeks' || 'years',
-          render: (_, record) => record.date || record.weeks || record.months || record.years,
-        },
+
+      switch (way) {
+        case 'day':
+          columns.push({
+            title: '日期',
+            dataIndex: 'date',
+            key: 'date',
+          });
+          break;
+        case 'week':
+          columns.push({
+            title: '周期',
+            dataIndex: 'weeks',
+            key: 'weeks',
+          });
+          break;
+        case 'month':
+          columns.push({
+            title: '月份',
+            dataIndex: 'months',
+            key: 'months',
+          });
+          break;
+        case 'year':
+          columns.push({
+            title: '年份',
+            dataIndex: 'years',
+            key: 'years',
+          });
+          break;
+        default:
+          break;
+      }
+
+      const columnsArr = [
         {
           title: '渠道',
           dataIndex: 'promoCode',
@@ -102,6 +127,34 @@ class MemberDetail extends Component {
           render: (_, record) => this.setRegCountColor(record, setMonth, memberMonthAmount),
         },
       ];
+
+      columns.push(...columnsArr);
+
+      // columns = [
+      //   {
+      //     title: '日期',
+      //     dataIndex: 'date' || 'months' || 'weeks' || 'years',
+      //     key: 'date' || 'months' || 'weeks' || 'years',
+      //     render: (_, record) => record.date || record.weeks || record.months || record.years,
+      //   },
+      //   {
+      //     title: '渠道',
+      //     dataIndex: 'promoCode',
+      //     key: 'promoCode',
+      //   },
+      //   {
+      //     title: '关注量',
+      //     dataIndex: 'fansCount',
+      //     key: 'fansCount',
+      //     render: (_, record) => this.setFansCountColor(record, setMonth, memberMonthAmount),
+      //   },
+      //   {
+      //     title: '注册量',
+      //     dataIndex: 'regCount',
+      //     key: 'regCount',
+      //     render: (_, record) => this.setRegCountColor(record, setMonth, memberMonthAmount),
+      //   },
+      // ];
     }
     return columns;
   };

@@ -47,7 +47,6 @@ class PopularizationDetail extends Component {
 
   setTableColumns = () => {
     const { way } = this.state;
-    console.log(way);
 
     const columns = [];
     switch (way) {

@@ -16,13 +16,14 @@ function querySearchBar(props) {
     amountSetShow,
   } = props;
   return (
-    <Row className={classes.Container}>
+    <Row>
       <Col span={15}>
         {/* <Select name="origin" value={source} className={classes.Gap} readOnly>
           <Select.Option value="wechat">微信</Select.Option>
         </Select> */}
         <DatePicker.RangePicker
           className={classes.Gap}
+          // className={classes.Gap}
           value={[moment(startTime, 'YYYY-MM-DD'), moment(endTime, 'YYYY-MM-DD')]}
           onChange={(_, dateStrings) => onParamsChange(dateStrings, 'date')}
           allowClear={false}
@@ -45,13 +46,14 @@ function querySearchBar(props) {
             ],
           }}
         />
-        <Input
-          name="name"
-          value={name}
-          onChange={e => onParamsChange(e.target.value, 'name')}
-          placeholder={inputPlaceholder}
-          className={classes.Input}
-        />
+        <span className={classes.Span}>
+          <Input
+            name="name"
+            value={name}
+            onChange={e => onParamsChange(e.target.value, 'name')}
+            placeholder={inputPlaceholder}
+          />
+        </span>
       </Col>
       <Col span={9} className={classes.ColRight}>
         <Button type="primary" htmlType="button" onClick={onSearch} className={classes.Gap}>
@@ -67,7 +69,7 @@ function querySearchBar(props) {
         <Button type="primary" htmlType="button" onClick={onReset} className={classes.Gap}>
           重置
         </Button>
-        <Button type="primary" htmlType="button" onClick={onExport}>
+        <Button type="primary" htmlType="button" onClick={onExport} className={classes.SearchGap}>
           导出Excel
         </Button>
       </Col>

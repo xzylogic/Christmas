@@ -5,7 +5,7 @@ import moment from 'moment';
 import classes from './AppointmentsBar.less';
 
 function AppointmentsBar(props) {
-  const { onReset, onExport, params, onParamsChange, onSearch } = props;
+  const { onReset, onExport, params, onParamsChange, onSearch, disabled } = props;
 
   return (
     <Row className={classes.Container}>
@@ -55,8 +55,10 @@ function AppointmentsBar(props) {
             value={params.orderStatus}
             onChange={value => onParamsChange(value, 'orderStatus')}
           >
-            <Select.Option value="1">已预约</Select.Option>
-            <Select.Option value="3">已撤销</Select.Option>
+            <Select.Option value="">全部</Select.Option>
+            <Select.Option value="1">预约</Select.Option>
+            <Select.Option value="3">撤销</Select.Option>
+            <Select.Option value="5">无效</Select.Option>
           </Select>
         </span>
         <span className={classes.Span}>
@@ -68,8 +70,18 @@ function AppointmentsBar(props) {
             value={params.regChannel}
             onChange={value => onParamsChange(value, 'regChannel')}
           >
+            <Select.Option value="">全部</Select.Option>
             <Select.Option value="app">APP</Select.Option>
             <Select.Option value="wechat">微信服务号</Select.Option>
+            <Select.Option value="alipay" disabled={disabled}>
+              支付宝服务窗
+            </Select.Option>
+            <Select.Option value="window" disabled={disabled}>
+              窗口
+            </Select.Option>
+            <Select.Option value="machine" disabled={disabled}>
+              自助机
+            </Select.Option>
           </Select>
         </span>
       </Col>
@@ -114,7 +126,7 @@ function AppointmentsBar(props) {
             className={classes.Input}
           />
         </span>
-        <span className={classes.Span} style={{ whiteSpace: 'nowrap', display: 'inline-block' }}>
+        <span className={classes.Span}>
           工号：
           <Input
             name="hosDocCode"

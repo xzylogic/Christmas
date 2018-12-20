@@ -87,12 +87,43 @@ class AppointmentsDetail extends Component {
       return content;
     };
 
-    const columns = [
-      {
-        title: '日期/周期/月份/年份',
-        dataIndex: 'date',
-        key: 'date',
-      },
+    const { way } = this.state;
+
+    const columns = [];
+    switch (way) {
+      case 'day':
+        columns.push({
+          title: '日期',
+          dataIndex: 'date',
+          key: 'date',
+        });
+        break;
+      case 'week':
+        columns.push({
+          title: '周期',
+          dataIndex: 'date',
+          key: 'date',
+        });
+        break;
+      case 'month':
+        columns.push({
+          title: '月份',
+          dataIndex: 'date',
+          key: 'date',
+        });
+        break;
+      case 'year':
+        columns.push({
+          title: '年份',
+          dataIndex: 'date',
+          key: 'date',
+        });
+        break;
+      default:
+        break;
+    }
+
+    const columnsArr = [
       {
         title: '医院类型',
         dataIndex: 'cityName',
@@ -127,6 +158,49 @@ class AppointmentsDetail extends Component {
         key: 'reservationCount',
       },
     ];
+
+    columns.push(...columnsArr);
+
+    // const columns = [
+    //   {
+    //     title: '日期/周期/月份/年份',
+    //     dataIndex: 'date',
+    //     key: 'date',
+    //   },
+    //   {
+    //     title: '医院类型',
+    //     dataIndex: 'cityName',
+    //     key: 'cityName',
+    //   },
+    //   {
+    //     title: '医院名称',
+    //     dataIndex: 'hosName',
+    //     key: 'hosName',
+    //   },
+    //   {
+    //     title: '门诊类型',
+    //     dataIndex: 'visitLevelCode',
+    //     key: 'visitLevelCode',
+    //     render: record => renderVisitLevelCode(record),
+    //   },
+    //   {
+    //     title: '订单状态',
+    //     dataIndex: 'orderStatus',
+    //     key: 'orderStatus',
+    //     render: record => renderOrderStatus(record),
+    //   },
+    //   {
+    //     title: '预约渠道',
+    //     dataIndex: 'regChannel',
+    //     key: 'regChannel',
+    //     render: record => renderRegChannel(record),
+    //   },
+    //   {
+    //     title: '预约量',
+    //     dataIndex: 'reservationCount',
+    //     key: 'reservationCount',
+    //   },
+    // ];
     return columns;
   };
 
@@ -141,10 +215,10 @@ class AppointmentsDetail extends Component {
   handleWayChange = value => {
     const { onFetchAppointmentsDataDetail, name, onSearchParamChange } = this.props;
     this.setState({ way: value });
+    onSearchParamChange('type', value);
     if (name) {
       onFetchAppointmentsDataDetail(value, 0);
     }
-    onSearchParamChange('type', value);
   };
 
   render() {

@@ -46,13 +46,44 @@ class PopularizationDetail extends Component {
   }
 
   setTableColumns = () => {
-    const columns = [
-      {
-        title: '日期',
-        dataIndex: 'weeks' || 'date' || 'months' || 'years',
-        key: 'weeks' || 'date' || 'months' || 'years',
-        render: (_, record) => record.date || record.weeks || record.months || record.years,
-      },
+    const { way } = this.state;
+    console.log(way);
+
+    const columns = [];
+    switch (way) {
+      case 'day':
+        columns.push({
+          title: '日期',
+          dataIndex: 'date',
+          key: 'date',
+        });
+        break;
+      case 'week':
+        columns.push({
+          title: '周期',
+          dataIndex: 'weeks',
+          key: 'weeks',
+        });
+        break;
+      case 'month':
+        columns.push({
+          title: '月份',
+          dataIndex: 'months',
+          key: 'months',
+        });
+        break;
+      case 'year':
+        columns.push({
+          title: '年份',
+          dataIndex: 'years',
+          key: 'years',
+        });
+        break;
+      default:
+        break;
+    }
+
+    const columnsArr = [
       {
         title: '渠道',
         dataIndex: 'promoCode',
@@ -74,6 +105,37 @@ class PopularizationDetail extends Component {
         key: 'conversionRate',
       },
     ];
+
+    columns.push(...columnsArr);
+
+    // const columns = [
+    //   {
+    //     title: '日期',
+    //     dataIndex: 'weeks' || 'date' || 'months' || 'years',
+    //     key: 'weeks' || 'date' || 'months' || 'years',
+    //     render: (_, record) => record.date || record.weeks || record.months || record.years,
+    //   },
+    //   {
+    //     title: '渠道',
+    //     dataIndex: 'promoCode',
+    //     key: 'promoCode',
+    //   },
+    //   {
+    //     title: '关注量',
+    //     dataIndex: 'fansCount',
+    //     key: 'fansCount',
+    //   },
+    //   {
+    //     title: '注册量',
+    //     dataIndex: 'regCount',
+    //     key: 'regCount',
+    //   },
+    //   {
+    //     title: '注册转换率',
+    //     dataIndex: 'conversionRate',
+    //     key: 'conversionRate',
+    //   },
+    // ];
     return columns;
   };
 

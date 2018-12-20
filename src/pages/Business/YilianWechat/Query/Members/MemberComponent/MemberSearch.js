@@ -69,12 +69,14 @@ class MemberSearch extends Component {
               ],
             }}
           />
-          <Button type="primary" htmlType="button" onClick={onSearch} className={classes.SearchGap}>
-            查询
-          </Button>
-          <Button className={classes.ResetBtn} type="primary" htmlType="button" onClick={onReset}>
-            重置
-          </Button>
+          <span style={{ float: 'right' }}>
+            <Button type="primary" htmlType="button" onClick={onSearch} className={classes.Gap}>
+              查询
+            </Button>
+            <Button className={classes.ResetBtn} type="primary" htmlType="button" onClick={onReset}>
+              重置
+            </Button>
+          </span>
         </Col>
         <Col>
           <span>

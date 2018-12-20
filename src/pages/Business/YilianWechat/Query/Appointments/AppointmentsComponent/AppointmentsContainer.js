@@ -211,6 +211,11 @@ class AppointmentsContainer extends Component {
   render() {
     const { searchParam, appointmentList, currentPage, totalElements } = this.props;
 
+    let showScroll = true;
+    if (appointmentList instanceof Object && appointmentList.length !== 0) {
+      showScroll = false;
+    }
+
     return (
       <React.Fragment>
         <AppointmentsBar
@@ -220,14 +225,26 @@ class AppointmentsContainer extends Component {
           onExport={this.handleExport}
           onParamsChange={this.handleParamsChanged}
         />
-        <TableList
-          rowKey={(_, index) => index}
-          list={appointmentList}
-          columns={this.setTableColumns()}
-          currentPage={currentPage}
-          totalElements={totalElements}
-          onPageChange={this.handlePageChange}
-        />
+        {showScroll ? (
+          <TableList
+            rowKey={(_, index) => index}
+            list={appointmentList}
+            columns={this.setTableColumns()}
+            currentPage={currentPage}
+            totalElements={totalElements}
+            onPageChange={this.handlePageChange}
+          />
+        ) : (
+          <TableList
+            rowKey={(_, index) => index}
+            list={appointmentList}
+            columns={this.setTableColumns()}
+            currentPage={currentPage}
+            totalElements={totalElements}
+            onPageChange={this.handlePageChange}
+            scroll={{ x: 1800 }}
+          />
+        )}
       </React.Fragment>
     );
   }

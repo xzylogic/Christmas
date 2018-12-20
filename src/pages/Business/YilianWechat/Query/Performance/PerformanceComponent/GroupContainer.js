@@ -183,7 +183,7 @@ class GroupContainer extends Component {
           onReset={this.handleReset}
           onExport={this.handleExport}
           onParamsChange={this.handleParamsChanged}
-          inputPlaceholder="请输入项目"
+          inputPlaceholder="请输入组名"
           amountSetShow={amountSetShow}
         />
         <TableList

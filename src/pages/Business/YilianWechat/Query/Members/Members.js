@@ -91,7 +91,7 @@ class Member extends Component {
     const listLength = (followingList && followingList.length) || 0;
     const columns = [
       {
-        title: '日期',
+        title: '日期/周期/月份/年份',
         dataIndex: 'date',
         key: 'date',
       },
@@ -140,7 +140,7 @@ class Member extends Component {
     const listLength = (registrationList && registrationList.length) || 0;
     const columns = [
       {
-        title: '日期',
+        title: '日期/周期/月份/年份',
         dataIndex: 'date',
         key: 'date',
       },

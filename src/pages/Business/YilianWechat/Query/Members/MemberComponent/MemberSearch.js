@@ -33,7 +33,7 @@ class MemberSearch extends Component {
     const { params, onParamsChange, onReset, allHosName, allPerson, onSearch } = this.props;
     return (
       <div className={classes.Search}>
-        <Col className={classes.TopSearchBar}>
+        <Col>
           <Select
             className={classes.Gap}
             name="type"
@@ -46,7 +46,7 @@ class MemberSearch extends Component {
             <Select.Option value="3">按年统计</Select.Option>
           </Select>
           <DatePicker.RangePicker
-            className={classes.Gap}
+            className={classes.Span}
             value={[moment(params.startTime, 'YYYY-MM-DD'), moment(params.endTime, 'YYYY-MM-DD')]}
             onChange={(_, dateStrings) => onParamsChange(dateStrings, 'date')}
             allowClear={false}
@@ -69,18 +69,20 @@ class MemberSearch extends Component {
               ],
             }}
           />
-          <Button type="primary" htmlType="button" onClick={onSearch} className={classes.SearchGap}>
-            查询
-          </Button>
-          <Button className={classes.ResetBtn} type="primary" htmlType="button" onClick={onReset}>
-            重置
-          </Button>
+          <span style={{ float: 'right', marginTop: '16px' }}>
+            <Button type="primary" htmlType="button" onClick={onSearch} className={classes.Gap}>
+              查询
+            </Button>
+            <Button type="primary" htmlType="button" onClick={onReset}>
+              重置
+            </Button>
+          </span>
         </Col>
         <Col>
-          <span>
+          <span className={classes.Span}>
             类型：
             <Select
-              className={classes.Gap}
+              // className={classes.Gap}
               onChange={this.showAllHosName}
               style={{ width: 115 }}
               placeholder="--请选择--"
@@ -91,12 +93,12 @@ class MemberSearch extends Component {
             </Select>
           </span>
           {params.queryType ? (
-            <span>
+            <span className={classes.Span}>
               请选择：
               {params.queryType === 'hosName' ? (
                 <Select
                   style={{ width: 200 }}
-                  className={classes.Gap}
+                  // className={classes.Gap}
                   placeholder="--请选择--"
                   value={params.hosName}
                   onChange={value => onParamsChange(value, 'hosName')}
@@ -110,7 +112,7 @@ class MemberSearch extends Component {
               ) : (
                 <Select
                   style={{ width: 200 }}
-                  className={classes.Gap}
+                  // className={classes.Gap}
                   placeholder="--请选择--"
                   value={params.name}
                   onChange={value => onParamsChange(value, 'name')}
@@ -127,55 +129,6 @@ class MemberSearch extends Component {
             ''
           )}
         </Col>
-        {/* <span>
-          类型：
-          <Select
-            className={classes.Gap}
-            onChange={this.showAllHosName}
-            style={{ width: 115 }}
-            placeholder="--请选择--"
-            value={params.queryType}
-          >
-            <Select.Option value="name">地推人员</Select.Option>
-            <Select.Option value="hosName">医院二维码</Select.Option>
-          </Select>
-        </span>
-        {params.queryType ? (
-          <span>
-            请选择：
-            {params.queryType === 'hosName' ? (
-              <Select
-                style={{ width: 200 }}
-                className={classes.Gap}
-                placeholder="--请选择--"
-                value={params.hosName}
-                onChange={value => onParamsChange(value, 'hosName')}
-              >
-                {allHosName.map(item => (
-                  <Select.Option id={item} key={item} value={item}>
-                    {item}
-                  </Select.Option>
-                ))}
-              </Select>
-            ) : (
-              <Select
-                style={{ width: 200 }}
-                className={classes.Gap}
-                placeholder="--请选择--"
-                value={params.name}
-                onChange={value => onParamsChange(value, 'name')}
-              >
-                {allPerson.map(item => (
-                  <Select.Option id={item.id} key={item.id} value={item.id}>
-                    {item.hos_name}
-                  </Select.Option>
-                ))}
-              </Select>
-            )}
-          </span>
-        ) : (
-          ''
-        )} */}
       </div>
     );
   }

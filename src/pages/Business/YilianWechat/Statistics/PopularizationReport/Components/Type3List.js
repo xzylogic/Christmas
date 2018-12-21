@@ -11,29 +11,29 @@ class Type3List extends Component {
       case 'day':
         columns.push({
           title: '日期',
-          dataIndex: 'sub_date',
-          key: 'sub_date',
+          dataIndex: 'date',
+          key: 'date',
         });
         break;
       case 'week':
         columns.push({
           title: '周期',
-          dataIndex: 'weeks',
-          key: 'weeks',
+          dataIndex: 'date',
+          key: 'date',
         });
         break;
       case 'month':
         columns.push({
           title: '月份',
-          dataIndex: 'months',
-          key: 'months',
+          dataIndex: 'date',
+          key: 'date',
         });
         break;
       case 'year':
         columns.push({
           title: '年份',
-          dataIndex: 'years',
-          key: 'years',
+          dataIndex: 'date',
+          key: 'date',
         });
         break;
       default:

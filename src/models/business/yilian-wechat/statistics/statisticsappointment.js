@@ -139,18 +139,12 @@ export default {
         params += `&isExport=${searchParams.isExport}`;
       }
       const res = yield call(fetchAppointmentReportType1Service, params, page, 10);
-      if (res && res.code === 200) {
-        yield put({
-          type: 'updateList',
-          payload: {
-            pageKey: 'appointments',
-            typeKey: APPOINTMENTS_REPORT_TYPE.TYPE1,
-            list: res.data.content,
-            currentPage: page,
-            totalElements: res.data.totalElements,
-          },
-        });
+
+      let returnData = null;
+      if (res && res.code === 200 && res.msg) {
+        returnData = res.msg;
       }
+      return returnData;
     },
     *fetchAppointmentChartType1(_, { call, put, select }) {
       const searchParams = yield select(

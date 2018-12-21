@@ -66,9 +66,8 @@ const mapDispatchToProps = dispatch => ({
 )
 class AppointmentsContainer extends Component {
   state = {
-    // allHosNameArr: false,
-    //   // way: 'week',
     selectedName: '',
+    selectedDate: '',
     showDetail: false,
   };
 
@@ -96,6 +95,7 @@ class AppointmentsContainer extends Component {
   };
 
   setTableColumns = () => {
+    const { searchParam } = this.props;
     const renderVisitLevelCode = record => {
       let content = '';
       if (record === '1') {
@@ -132,12 +132,56 @@ class AppointmentsContainer extends Component {
       return content;
     };
 
-    const columns = [
-      {
-        title: '日期/周期/月份/年份',
-        dataIndex: 'date',
-        key: 'date',
-      },
+    const handleDetail = (_, record) => {
+      let content = (
+        <span>
+          <a onClick={e => this.handleDetail(e, record)}>查看</a>
+        </span>
+      );
+
+      if (record.date.split('/').length === 3) {
+        content = <span>查看</span>;
+      }
+
+      return content;
+    };
+
+    const columns = [];
+
+    switch (searchParam.countType) {
+      case 'day':
+        columns.push({
+          title: '日期',
+          dataIndex: 'date',
+          key: 'date',
+        });
+        break;
+      case 'week':
+        columns.push({
+          title: '周期',
+          dataIndex: 'date',
+          key: 'date',
+        });
+        break;
+      case 'month':
+        columns.push({
+          title: '月份',
+          dataIndex: 'date',
+          key: 'date',
+        });
+        break;
+      case 'year':
+        columns.push({
+          title: '年份',
+          dataIndex: 'date',
+          key: 'date',
+        });
+        break;
+      default:
+        break;
+    }
+
+    const columnsArr = [
       {
         title: '医院类型',
         dataIndex: 'cityName',
@@ -175,13 +219,11 @@ class AppointmentsContainer extends Component {
         title: '明细',
         dataIndex: 'id',
         key: 'action',
-        render: (_, record) => (
-          <span>
-            <a onClick={e => this.handleDetail(e, record)}>查看</a>
-          </span>
-        ),
+        render: (_, record) => handleDetail(_, record),
       },
     ];
+
+    columns.push(...columnsArr);
     return columns;
   };
 
@@ -222,21 +264,30 @@ class AppointmentsContainer extends Component {
     await onFetchAppointmentsData(0);
   };
 
-  handleExport = e => {
+  handleExport = async e => {
     e.preventDefault();
-    console.log('export');
-    const { onDownloadAppointmentsData, onSearchParamChange } = this.props;
+    const { onDownloadAppointmentsData, onSearchParamChange, currentPage } = this.props;
     onSearchParamChange('isExport', true);
-    onDownloadAppointmentsData();
+    onDownloadAppointmentsData(currentPage).then(data => {
+      if (data) {
+        const a = document.createElement('a');
+        a.setAttribute('href', data);
+        a.click();
+      }
+    });
     onSearchParamChange('isExport', false);
   };
 
   handleDetail = (e, record) => {
     e.preventDefault();
-    this.setState({
-      showDetail: true,
-      selectedName: record.hosName,
-    });
+
+    if (record.date.split('/').length !== 3) {
+      this.setState({
+        showDetail: true,
+        selectedName: record.hosName,
+        selectedDate: record.date,
+      });
+    }
   };
 
   handleDetailClose = e => {
@@ -256,19 +307,17 @@ class AppointmentsContainer extends Component {
       typeHosName,
     } = this.props;
 
-    const { selectedName, showDetail } = this.state;
+    const { selectedName, showDetail, selectedDate } = this.state;
 
     return (
       <React.Fragment>
         <AppointmentsBar
-          // way={way}
           allHosName={allHosName}
           typeHosName={typeHosName}
           params={searchParam}
           onSearch={this.handleSearch}
           onReset={this.handleReset}
           onExport={this.handleExport}
-          // onChangeWay={this.handleChangeWay}
           onParamsChange={this.handleParamsChanged}
         />
         <TableList
@@ -282,6 +331,7 @@ class AppointmentsContainer extends Component {
         />
         <AppointmentsDetail
           name={selectedName}
+          date={selectedDate}
           visible={showDetail}
           onClose={this.handleDetailClose}
         />

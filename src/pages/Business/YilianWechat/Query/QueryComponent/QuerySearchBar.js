@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input, Select, Button, DatePicker, Row, Col } from 'antd';
+import { Input, Button, DatePicker, Row, Col } from 'antd';
 import moment from 'moment';
 
 import classes from './QuerySearchBar.less';
@@ -10,19 +10,20 @@ function querySearchBar(props) {
     onSearch,
     onReset,
     onExport,
-    params: { startTime, endTime, name, source },
+    params: { startTime, endTime, name },
     onParamsChange,
     inputPlaceholder,
     amountSetShow,
   } = props;
   return (
-    <Row className={classes.Container}>
-      <Col span={16}>
-        <Select name="origin" value={source} className={classes.Gap} readOnly>
+    <Row>
+      <Col span={15}>
+        {/* <Select name="origin" value={source} className={classes.Gap} readOnly>
           <Select.Option value="wechat">微信</Select.Option>
-        </Select>
+        </Select> */}
         <DatePicker.RangePicker
           className={classes.Gap}
+          // className={classes.Gap}
           value={[moment(startTime, 'YYYY-MM-DD'), moment(endTime, 'YYYY-MM-DD')]}
           onChange={(_, dateStrings) => onParamsChange(dateStrings, 'date')}
           allowClear={false}
@@ -45,15 +46,16 @@ function querySearchBar(props) {
             ],
           }}
         />
-        <Input
-          name="name"
-          value={name}
-          onChange={e => onParamsChange(e.target.value, 'name')}
-          placeholder={inputPlaceholder}
-          className={classes.Input}
-        />
+        <span className={classes.Span}>
+          <Input
+            name="name"
+            value={name}
+            onChange={e => onParamsChange(e.target.value, 'name')}
+            placeholder={inputPlaceholder}
+          />
+        </span>
       </Col>
-      <Col span={8} className={classes.ColRight}>
+      <Col span={9} className={classes.ColRight}>
         <Button type="primary" htmlType="button" onClick={onSearch} className={classes.Gap}>
           查询
         </Button>
@@ -67,7 +69,7 @@ function querySearchBar(props) {
         <Button type="primary" htmlType="button" onClick={onReset} className={classes.Gap}>
           重置
         </Button>
-        <Button type="primary" htmlType="button" onClick={onExport}>
+        <Button type="primary" htmlType="button" onClick={onExport} className={classes.SearchGap}>
           导出Excel
         </Button>
       </Col>

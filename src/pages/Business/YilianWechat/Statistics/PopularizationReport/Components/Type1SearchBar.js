@@ -28,7 +28,7 @@ function type1SearchBar(props) {
   return (
     <div className={classes.Search}>
       <Select
-        className={classes.Gap}
+        className={classes.Span}
         name="countType"
         value={params.countType}
         onChange={value => onParamsChange(value, 'countType')}
@@ -39,7 +39,7 @@ function type1SearchBar(props) {
         <Select.Option value="year">按年统计</Select.Option>
       </Select>
       <DatePicker.RangePicker
-        className={classes.Gap}
+        className={classes.Span}
         value={[moment(params.startTime, 'YYYY-MM-DD'), moment(params.endTime, 'YYYY-MM-DD')]}
         onChange={(_, dateStrings) => onParamsChange(dateStrings, 'date')}
         allowClear={false}
@@ -62,9 +62,9 @@ function type1SearchBar(props) {
           ],
         }}
       />
-      {options}
+      <span className={classes.Span}>{options}</span>
       <Select
-        className={classes.Gap}
+        className={classes.Span}
         name="project"
         value={params.project}
         onChange={value => onParamsChange(value, 'project')}

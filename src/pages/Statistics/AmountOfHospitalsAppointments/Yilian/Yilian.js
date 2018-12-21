@@ -62,6 +62,14 @@ const mapDispatchToProps = dispatch => ({
         origin: STATISTICS_ORIGIN.YILIAN,
       },
     }),
+  onExportYilianStatistics: () =>
+    dispatch({
+      type: 'statistics/exportYilianStatistics',
+      payload: {
+        type: STATISTICS_TYPE.AMOUNT_OF_HOSPITALS_APPOINTMENTS,
+        origin: STATISTICS_ORIGIN.YILIAN,
+      },
+    }),
 });
 
 @connect(
@@ -175,6 +183,15 @@ class Index extends Component {
 
   handelExport = () => {
     console.log('export');
+    const { onExportYilianStatistics } = this.props;
+    onExportYilianStatistics().then(data => {
+      console.log(data);
+      if (data) {
+        const a = document.createElement('a');
+        a.setAttribute('href', data);
+        a.click();
+      }
+    });
   };
 
   handleChartClick = (orgId, orgName) => {

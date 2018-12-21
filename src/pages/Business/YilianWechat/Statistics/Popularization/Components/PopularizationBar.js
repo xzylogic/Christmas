@@ -14,6 +14,7 @@ function PopularizationBar(props) {
     params,
     onParamsChange,
     groupHosName,
+    onChangeWay,
   } = props;
 
   const renderHosName = () => {
@@ -55,9 +56,15 @@ function PopularizationBar(props) {
   };
 
   return (
-    <Row className={classes.Container}>
-      <Col span={24} className={classes.Container}>
-        <span>
+    <Row>
+      <Col span={24}>
+        <Select className={classes.Span} onChange={onChangeWay} value={params.type}>
+          <Select.Option value="day">按日统计</Select.Option>
+          <Select.Option value="week">按周统计</Select.Option>
+          <Select.Option value="month">按月统计</Select.Option>
+          <Select.Option value="year">按年统计</Select.Option>
+        </Select>
+        <span className={classes.Span}>
           <DatePicker.RangePicker
             className={classes.Gap}
             value={[moment(params.startTime, 'YYYY-MM-DD'), moment(params.endTime, 'YYYY-MM-DD')]}

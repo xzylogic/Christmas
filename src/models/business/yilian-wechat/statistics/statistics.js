@@ -188,18 +188,11 @@ export default {
         params += `&isExport=${searchParams.isExport}`;
       }
       const res = yield call(fetchPopularizationReportType1Service, params, page, 10);
-      if (res && res.code === 200) {
-        yield put({
-          type: 'updateList',
-          payload: {
-            pageKey: 'popularization',
-            typeKey: POPULARIZATION_REPORT_TYPE.TYPE1,
-            list: res.data.content,
-            currentPage: page,
-            totalElements: res.data.totalElements,
-          },
-        });
+      let returnData = null;
+      if (res && res.code === 200 && res.msg) {
+        returnData = res.msg;
       }
+      return returnData;
     },
     *fetchPopularizationChartType1(_, { call, put, select }) {
       const searchParams = yield select(
@@ -271,7 +264,7 @@ export default {
         });
       }
     },
-    *downloadPopularizationReportType2({ payload }, { call, put, select }) {
+    *downloadPopularizationReportType2({ payload }, { call, select }) {
       const searchParams = yield select(
         state =>
           state.businessYilianWechatStatistics.searchParams.popularization[
@@ -293,18 +286,11 @@ export default {
         params += `&isExport=${searchParams.isExport}`;
       }
       const res = yield call(fetchPopularizationReportType2Service, params, page, 10);
-      if (res && res.code === 200) {
-        yield put({
-          type: 'updateList',
-          payload: {
-            pageKey: 'popularization',
-            typeKey: POPULARIZATION_REPORT_TYPE.TYPE2,
-            list: res.data.content,
-            currentPage: page,
-            totalElements: res.data.totalElements,
-          },
-        });
+      let returnData = null;
+      if (res && res.code === 200 && res.msg) {
+        returnData = res.msg;
       }
+      return returnData;
     },
     *fetchPopularizationChartType2(_, { call, put, select }) {
       const searchParams = yield select(
@@ -373,7 +359,7 @@ export default {
         });
       }
     },
-    *downloadPopularizationReportType3({ payload }, { call, put, select }) {
+    *downloadPopularizationReportType3({ payload }, { call, select }) {
       const searchParams = yield select(
         state =>
           state.businessYilianWechatStatistics.searchParams.popularization[
@@ -395,18 +381,12 @@ export default {
         params += `&isExport=${searchParams.isExport}`;
       }
       const res = yield call(fetchPopularizationReportType3Service, params, page, 10);
-      if (res && res.code === 200) {
-        yield put({
-          type: 'updateList',
-          payload: {
-            pageKey: 'popularization',
-            typeKey: POPULARIZATION_REPORT_TYPE.TYPE3,
-            list: res.data.content,
-            currentPage: page,
-            totalElements: res.data.totalElements,
-          },
-        });
+
+      let returnData = null;
+      if (res && res.code === 200 && res.msg) {
+        returnData = res.msg;
       }
+      return returnData;
     },
     *fetchPopularizationChartType3(_, { call, put, select }) {
       const searchParams = yield select(
@@ -469,7 +449,7 @@ export default {
         });
       }
     },
-    *downloadPopularizationReportType4({ payload }, { call, put, select }) {
+    *downloadPopularizationReportType4({ payload }, { call, select }) {
       const searchParams = yield select(
         state =>
           state.businessYilianWechatStatistics.searchParams.popularization[
@@ -485,18 +465,11 @@ export default {
         params += `&isExport=${searchParams.isExport}`;
       }
       const res = yield call(fetchPopularizationReportType4Service, params, page, 10);
-      if (res && res.code === 200) {
-        yield put({
-          type: 'updateList',
-          payload: {
-            pageKey: 'popularization',
-            typeKey: POPULARIZATION_REPORT_TYPE.TYPE4,
-            list: res.data,
-            currentPage: 0,
-            totalElements: 0,
-          },
-        });
+      let returnData = null;
+      if (res && res.code === 200 && res.msg) {
+        returnData = res.msg;
       }
+      return returnData;
     },
   },
 
@@ -569,5 +542,17 @@ export default {
         },
       };
     },
+    // updateDownload(state, { payload }) {
+    //   return {
+    //     ...state,
+    //     download: {
+    //       ...state.download,
+    //       [payload.pageKey]: {
+    //         ...state.download[payload.pageKey],
+    //         [payload.typeKey]: payload.download,
+    //       },
+    //     },
+    //   };
+    // },
   },
 };

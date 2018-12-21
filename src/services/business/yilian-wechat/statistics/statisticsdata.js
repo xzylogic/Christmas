@@ -17,7 +17,7 @@ export async function fetchPromoteAttentionAmountService(params, page, size, way
   if (params) {
     query += `${params}`;
   }
-  req = request(`/yilian-cloud-backend-api/ylWeChatCount/extendData/count/week${query}`);
+  // req = request(`/yilian-cloud-backend-api/ylWeChatCount/extendData/count/day${query}`);
   switch (way) {
     case 'day':
       req = request(`/yilian-cloud-backend-api/ylWeChatCount/extendData/count/day${query}`);

@@ -131,14 +131,14 @@ class LocationContainer extends Component {
       param: e.target.value,
     });
     const { onUpdataSearchParam, onSearchLocationList } = this.props;
-    await onUpdataSearchParam('LocationName', e.target.value);
+    await onUpdataSearchParam('locationName', e.target.value);
     await onSearchLocationList(0);
   };
 
   handleSearch = async e => {
     e.preventDefault();
-    const { onSearchLocationList } = this.props;
-    onSearchLocationList(0);
+    const { onFetchLocationList } = this.props;
+    onFetchLocationList(0);
   };
 
   handleRefresh = e => {

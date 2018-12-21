@@ -19,16 +19,16 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onFetchWeChatAttentionAmount: page =>
+  onFetchPromoteAttentionAmount: (way, page) =>
     dispatch({
       type: 'businessYilianWechatStatisticDatas/fetchPromoteAttentionAmount',
-      payload: { page },
+      payload: { way, page },
     }),
-  onFetchWeChatAttentionAmountDebounce: debounce(
-    page =>
+  onFetchPromoteAttentionAmountDebounce: debounce(
+    (way, page) =>
       dispatch({
         type: 'businessYilianWechatStatisticDatas/fetchPromoteAttentionAmount',
-        payload: { page },
+        payload: { way, page },
       }),
     500
   ),
@@ -37,14 +37,6 @@ const mapDispatchToProps = dispatch => ({
       type: 'businessYilianWechatStatisticDatas/fetchHosGroup',
       payload: { page },
     }),
-  onFetchHosGroupDebounce: debounce(
-    page =>
-      dispatch({
-        type: 'businessYilianWechatStatisticDatas/fetchHosGroup',
-        payload: { page },
-      }),
-    500
-  ),
   onSearchParamChange: (key, value) =>
     dispatch({
       type: 'businessYilianWechatStatisticDatas/updateSearchParam',
@@ -58,9 +50,9 @@ const mapDispatchToProps = dispatch => ({
     dispatch({
       type: 'businessYilianWechatStatisticDatas/fetchAllGroupName',
     }),
-  onDowloadPromoteAttentionAmount: page =>
+  onDownloadPromoteAttentionAmount: page =>
     dispatch({
-      type: 'businessYilianWechatStatisticDatas/dowloadPromoteAttentionAmount',
+      type: 'businessYilianWechatStatisticDatas/downloadPromoteAttentionAmount',
       payload: { page },
     }),
 });
@@ -72,30 +64,30 @@ const mapDispatchToProps = dispatch => ({
 class AppointmentsContainer extends Component {
   state = {
     // allHosNameArr: false,
-    //   // way: 'week',
+    way: 'week',
     selectedName: '',
+    selectedDate: '',
     showDetail: false,
   };
 
   componentDidMount() {
     const {
-      onFetchWeChatAttentionAmount,
+      onFetchPromoteAttentionAmount,
       onFetchAllHosName,
       onFetchAllGroupName,
       onFetchHosGroup,
     } = this.props;
-    onFetchWeChatAttentionAmount(0);
+    const { way } = this.state;
+
+    onFetchPromoteAttentionAmount(way, 0);
     onFetchAllHosName();
     onFetchAllGroupName();
     onFetchHosGroup(0);
   }
 
   handleParamsChanged = async (value, dataKey) => {
-    const {
-      onSearchParamChange,
-      onFetchWeChatAttentionAmountDebounce,
-      onFetchHosGroupDebounce,
-    } = this.props;
+    const { onSearchParamChange, onFetchPromoteAttentionAmountDebounce } = this.props;
+    const { way } = this.state;
 
     if (dataKey === 'date') {
       await onSearchParamChange('startTime', value[0]);
@@ -103,11 +95,12 @@ class AppointmentsContainer extends Component {
     } else {
       await onSearchParamChange(dataKey, value);
     }
-    await onFetchWeChatAttentionAmountDebounce(0);
-    await onFetchHosGroupDebounce(0);
+    await onFetchPromoteAttentionAmountDebounce(way, 0);
+    // await onFetchHosGroupDebounce(0);
   };
 
   setTableColumnsWechat = () => {
+    const { way } = this.state;
     const renderGroupId = record => {
       let content = '';
       if (record) {
@@ -115,12 +108,43 @@ class AppointmentsContainer extends Component {
       }
       return content;
     };
-    const columns = [
-      {
-        title: '日期/周期/月份/年份',
-        dataIndex: 'weeks' || 'date' || 'months' || 'years',
-        key: 'weeks' || 'date' || 'months' || 'years',
-      },
+
+    const columns = [];
+
+    switch (way) {
+      case 'day':
+        columns.push({
+          title: '日期',
+          dataIndex: 'date',
+          key: 'date',
+        });
+        break;
+      case 'week':
+        columns.push({
+          title: '周期',
+          dataIndex: 'weeks',
+          key: 'weeks',
+        });
+        break;
+      case 'month':
+        columns.push({
+          title: '月份',
+          dataIndex: 'months',
+          key: 'months',
+        });
+        break;
+      case 'year':
+        columns.push({
+          title: '年份',
+          dataIndex: 'years',
+          key: 'years',
+        });
+        break;
+      default:
+        break;
+    }
+
+    const columnsArr = [
       {
         title: '医院名称',
         dataIndex: 'hosName',
@@ -163,10 +187,13 @@ class AppointmentsContainer extends Component {
         render: record => renderGroupId(record),
       },
     ];
+
+    columns.push(...columnsArr);
     return columns;
   };
 
   setTableColumnsApp = () => {
+    const { way } = this.state;
     const renderGroupId = record => {
       let content = '';
       if (record) {
@@ -174,12 +201,43 @@ class AppointmentsContainer extends Component {
       }
       return content;
     };
-    const columns = [
-      {
-        title: '日期/周期/月份/年份',
-        dataIndex: 'weeks' || 'date' || 'months' || 'years',
-        key: 'weeks' || 'date' || 'months' || 'years',
-      },
+
+    const columns = [];
+
+    switch (way) {
+      case 'day':
+        columns.push({
+          title: '日期',
+          dataIndex: 'date',
+          key: 'date',
+        });
+        break;
+      case 'week':
+        columns.push({
+          title: '周期',
+          dataIndex: 'weeks',
+          key: 'weeks',
+        });
+        break;
+      case 'month':
+        columns.push({
+          title: '月份',
+          dataIndex: 'months',
+          key: 'months',
+        });
+        break;
+      case 'year':
+        columns.push({
+          title: '年份',
+          dataIndex: 'years',
+          key: 'years',
+        });
+        break;
+      default:
+        break;
+    }
+
+    const columnsArr = [
       {
         title: '医院名称',
         dataIndex: 'hosName',
@@ -216,29 +274,29 @@ class AppointmentsContainer extends Component {
         key: 'groupId',
         render: record => renderGroupId(record),
       },
-      // {
-      //   title: '二维码',
-      //   dataIndex: 'weeks',
-      //   key: 'weeks',
-      // },
     ];
+
+    columns.push(...columnsArr);
     return columns;
   };
 
   handlePageChange = page => {
-    const { onFetchWeChatAttentionAmount } = this.props;
-    onFetchWeChatAttentionAmount(page - 1);
+    const { onFetchPromoteAttentionAmount } = this.props;
+    const { way } = this.state;
+    onFetchPromoteAttentionAmount(way, page - 1);
   };
 
   handleSearch = async e => {
     e.preventDefault();
-    const { onFetchWeChatAttentionAmount } = this.props;
-    onFetchWeChatAttentionAmount(0);
+    const { onFetchPromoteAttentionAmount } = this.props;
+    const { way } = this.state;
+    onFetchPromoteAttentionAmount(way, 0);
   };
 
   handleReset = async e => {
     e.preventDefault();
-    const { onSearchParamChange, onFetchWeChatAttentionAmount } = this.props;
+    const { onSearchParamChange, onFetchPromoteAttentionAmount } = this.props;
+    const { way } = this.state;
     await onSearchParamChange(
       'startTime',
       moment(new Date().valueOf() - 604800000).format('YYYY-MM-DD')
@@ -255,16 +313,29 @@ class AppointmentsContainer extends Component {
     await onSearchParamChange('orderStatusWechat', null);
     await onSearchParamChange('orderStatusApp', null);
     await onSearchParamChange('isExport', false);
-    await onFetchWeChatAttentionAmount(0);
+    await onFetchPromoteAttentionAmount(way, 0);
   };
 
   handleExport = e => {
     e.preventDefault();
-    console.log('export');
-    const { onDowloadPromoteAttentionAmount, onSearchParamChange } = this.props;
+    const { onDownloadPromoteAttentionAmount, onSearchParamChange, currentPage } = this.props;
     onSearchParamChange('isExport', true);
-    onDowloadPromoteAttentionAmount();
+    onDownloadPromoteAttentionAmount(currentPage).then(data => {
+      if (data) {
+        const a = document.createElement('a');
+        a.setAttribute('href', data);
+        a.click();
+      }
+    });
     onSearchParamChange('isExport', false);
+  };
+
+  handleChangeWay = async value => {
+    await this.setState({ way: value });
+    const { onFetchPromoteAttentionAmount, onSearchParamChange } = this.props;
+    const { way } = this.state;
+    await onSearchParamChange('type', way);
+    await onFetchPromoteAttentionAmount(way, 0);
   };
 
   handleDetail = (e, record) => {
@@ -272,6 +343,7 @@ class AppointmentsContainer extends Component {
     this.setState({
       showDetail: true,
       selectedName: record.hosName,
+      selectedDate: record.date || record.weeks || record.months || record.years,
     });
   };
 
@@ -280,10 +352,6 @@ class AppointmentsContainer extends Component {
     this.setState({
       showDetail: false,
     });
-  };
-
-  handleChangeWay = value => {
-    console.log(value);
   };
 
   render() {
@@ -297,12 +365,12 @@ class AppointmentsContainer extends Component {
       groupHosName,
     } = this.props;
 
-    const { showDetail, selectedName } = this.state;
+    const { showDetail, selectedName, way, selectedDate } = this.state;
 
     return (
       <React.Fragment>
         <PopularizationBar
-          // way={way}
+          way={way}
           allHosName={allHosName}
           allGroupName={allGroupName}
           groupHosName={groupHosName}
@@ -334,6 +402,7 @@ class AppointmentsContainer extends Component {
         )}
         <PopularizationDetail
           name={selectedName}
+          date={selectedDate}
           visible={showDetail}
           onClose={this.handleDetailClose}
         />

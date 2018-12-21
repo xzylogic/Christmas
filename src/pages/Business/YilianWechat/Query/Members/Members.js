@@ -87,14 +87,44 @@ class Member extends Component {
   };
 
   setFTableColumns = () => {
-    const { followingList } = this.props;
+    const { followingList, searchParam } = this.props;
     const listLength = (followingList && followingList.length) || 0;
-    const columns = [
-      {
-        title: '日期',
-        dataIndex: 'date',
-        key: 'date',
-      },
+    const columns = [];
+
+    switch (searchParam.type) {
+      case '0':
+        columns.push({
+          title: '日期',
+          dataIndex: 'date',
+          key: 'date',
+        });
+        break;
+      case '1':
+        columns.push({
+          title: '周期',
+          dataIndex: 'date',
+          key: 'date',
+        });
+        break;
+      case '2':
+        columns.push({
+          title: '月份',
+          dataIndex: 'date',
+          key: 'date',
+        });
+        break;
+      case '3':
+        columns.push({
+          title: '年份',
+          dataIndex: 'date',
+          key: 'date',
+        });
+        break;
+      default:
+        break;
+    }
+
+    const columnsArr = [
       {
         title: '机构',
         dataIndex: 'appName',
@@ -132,6 +162,52 @@ class Member extends Component {
         render: (text, record, index) => renderContent(text, record, index, listLength),
       },
     ];
+
+    columns.push(...columnsArr);
+
+    // const columns = [
+    //   {
+    //     title: '日期/周期/月份/年份',
+    //     dataIndex: 'date',
+    //     key: 'date',
+    //   },
+    //   {
+    //     title: '机构',
+    //     dataIndex: 'appName',
+    //     key: 'appName',
+    //     render: (text, record, index) => renderContent(text, record, index, listLength),
+    //   },
+    //   {
+    //     title: '微信线上关注数',
+    //     dataIndex: 'online',
+    //     key: 'online',
+    //     render: (text, record, index) => renderContent(text, record, index, listLength),
+    //   },
+    //   {
+    //     title: '微信地推人员关注数',
+    //     dataIndex: 'person',
+    //     key: 'person',
+    //     render: (text, record, index) => renderContent(text, record, index, listLength),
+    //   },
+    //   {
+    //     title: '微信医院二维码关注数',
+    //     dataIndex: 'hos',
+    //     key: 'hos',
+    //     render: (text, record, index) => renderContent(text, record, index, listLength),
+    //   },
+    //   {
+    //     title: '微信关注总数',
+    //     dataIndex: 'counts',
+    //     key: 'counts',
+    //     render: (text, record, index) => renderContent(text, record, index, listLength),
+    //   },
+    //   {
+    //     title: '微信取消关注数',
+    //     dataIndex: 'unFollow',
+    //     key: 'unFollow',
+    //     render: (text, record, index) => renderContent(text, record, index, listLength),
+    //   },
+    // ];
     return columns;
   };
 
@@ -140,7 +216,7 @@ class Member extends Component {
     const listLength = (registrationList && registrationList.length) || 0;
     const columns = [
       {
-        title: '日期',
+        title: '日期/周期/月份/年份',
         dataIndex: 'date',
         key: 'date',
       },

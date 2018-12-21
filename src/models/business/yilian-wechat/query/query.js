@@ -63,6 +63,7 @@ export default {
         endTime: moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD'),
         name: '',
         source: 'wechat',
+        isExport: false,
       },
       // 人员查询
       member: {
@@ -70,6 +71,7 @@ export default {
         endTime: moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD'),
         name: '',
         source: 'wechat',
+        isExport: false,
       },
       // 推广地点查询
       location: {
@@ -77,6 +79,7 @@ export default {
         endTime: moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD'),
         name: '',
         source: 'wechat',
+        isExport: false,
       },
       // 会员查询
       membership: {
@@ -122,7 +125,7 @@ export default {
       // 会员注册列表
       registration: null,
       // 预约列表
-      appointmentList: null,
+      appointment: null,
       // 小组列表
       queryMessage: null,
       fetchMessage: null,
@@ -183,6 +186,9 @@ export default {
       if (group && group.name) {
         params += `&name=${group.name}`;
       }
+      // if (group && !group.isExport) {
+      //   params += `&name=${group.isExport}`;
+      // }
       const res = yield call(fetchGroupPerformanceService, params, page, 10);
       if (res && res.code === 200) {
         yield put({
@@ -196,6 +202,29 @@ export default {
         });
       }
     },
+    // *downloadGroupPerformance({ payload }, { call, select }) {
+    //   const { group } = yield select(state => state.businessYilianWechatQuery.searchParam);
+    //   const { page } = payload;
+    //   let params = '';
+    //   if (group && group.startTime) {
+    //     params += `&startTime=${group.startTime}`;
+    //   }
+    //   if (group && group.endTime) {
+    //     params += `&endTime=${group.endTime}`;
+    //   }
+    //   if (group && group.name) {
+    //     params += `&name=${group.name}`;
+    //   }
+    //   if (group && group.isExport) {
+    //     params += `&isExport=${group.isExport}`;
+    //   }
+    //   const res = yield call(fetchGroupPerformanceService, params, page, 10);
+    //   let returnData = null;
+    //   if (res && res.code === 200 && res.msg) {
+    //     returnData = res.msg;
+    //   }
+    //   return returnData;
+    // },
     *fetchGroupPerformanceDetail({ payload }, { call, select, put }) {
       try {
         const { group } = yield select(state => state.businessYilianWechatQuery.searchParam);
@@ -257,14 +286,6 @@ export default {
         }
         if (membership && membership.hosName) {
           params += `&hosName=${membership.hosName}`;
-          // yield put({
-          //   type: 'updateSearchParam',
-          //   payload: {
-          //     key: 'membership',
-          //     hosName: membership.hosName,
-          //     name:'',
-          //   },
-          // });
         }
         const res = yield call(fetchMembershipPerformanceDetail, params, 0, 10);
         if (res && res.code === 200) {
@@ -304,8 +325,8 @@ export default {
       if (member && member.name) {
         params += `&name=${member.name}`;
       }
-      // if (member && member.source) {
-      //   params += `&source=${member.source}`;
+      // if (member && !member.isExport) {
+      //   params += `&isExport=${member.isExport}`;
       // }
       const res = yield call(fetchMemberService, params, page, 10);
       if (res && res.code === 200) {
@@ -320,6 +341,29 @@ export default {
         });
       }
     },
+    // *downloadMemberPerformance({ payload }, { call, select }) {
+    //   const { member } = yield select(state => state.businessYilianWechatQuery.searchParam);
+    //   const { page } = payload;
+    //   let params = '';
+    //   if (member && member.startTime) {
+    //     params += `&startTime=${member.startTime}`;
+    //   }
+    //   if (member && member.endTime) {
+    //     params += `&endTime=${member.endTime}`;
+    //   }
+    //   if (member && member.name) {
+    //     params += `&name=${member.name}`;
+    //   }
+    //   if (member && member.isExport) {
+    //     params += `&isExport=${member.isExport}`;
+    //   }
+    //   const res = yield call(fetchMemberService, params, page, 10);
+    //   let returnData = null;
+    //   if (res && res.code === 200 && res.msg) {
+    //     returnData = res.msg;
+    //   }
+    //   return returnData;
+    // },
     *fetchMemberPerformanceDetail({ payload }, { call, select, put }) {
       try {
         const { member } = yield select(state => state.businessYilianWechatQuery.searchParam);
@@ -374,6 +418,9 @@ export default {
       if (location && location.name) {
         params += `&name=${location.name}`;
       }
+      // if (location && !location.isExport) {
+      //   params += `&isExport=${location.isExport}`;
+      // }
       const res = yield call(fetchLocationService, params, page, 10);
       if (res && res.code === 200) {
         yield put({
@@ -387,6 +434,29 @@ export default {
         });
       }
     },
+    // *downloadLocationPerformance({ payload }, { call, select }) {
+    //   const { location } = yield select(state => state.businessYilianWechatQuery.searchParam);
+    //   const { page } = payload;
+    //   let params = '';
+    //   if (location && location.startTime) {
+    //     params += `&startTime=${location.startTime}`;
+    //   }
+    //   if (location && location.endTime) {
+    //     params += `&endTime=${location.endTime}`;
+    //   }
+    //   if (location && location.name) {
+    //     params += `&name=${location.name}`;
+    //   }
+    //   if (location && location.isExport) {
+    //     params += `&isExport=${location.isExport}`;
+    //   }
+    //   const res = yield call(fetchLocationService, params, page, 10);
+    //   let returnData = null;
+    //   if (res && res.code === 200 && res.msg) {
+    //     returnData = res.msg;
+    //   }
+    //   return returnData;
+    // },
     *fetchLocationPerformanceDetail({ payload }, { call, select, put }) {
       const { location } = yield select(state => state.businessYilianWechatQuery.searchParam);
       const { way, name, page } = payload;
@@ -477,114 +547,98 @@ export default {
       }
     },
     *fetchAppointmentPerformance({ payload }, { call, put, select }) {
-      try {
-        const { page } = payload;
-        const { appointment } = yield select(state => state.businessYilianWechatQuery.searchParam);
-        let params = '';
-        if (appointment && appointment.startTime) {
-          params += `&startTime=${appointment.startTime}`;
-        }
-        if (appointment && appointment.endTime) {
-          params += `&endTime=${appointment.endTime}`;
-        }
-        if (appointment && appointment.type) {
-          params += `&dateType=${appointment.type}`;
-        }
-        if (appointment && appointment.orderStatus) {
-          params += `&orderStatus=${appointment.orderStatus}`;
-        }
-        if (appointment && appointment.regChannel) {
-          params += `&regChannel=${appointment.regChannel}`;
-        }
-        if (appointment && appointment.patientName) {
-          params += `&patientName=${appointment.patientName}`;
-        }
-        if (appointment && appointment.patientPhone) {
-          params += `&patientPhone=${appointment.patientPhone}`;
-        }
-        if (appointment && appointment.mediCardId) {
-          params += `&mediCardId=${appointment.mediCardId}`;
-        }
-        if (appointment && appointment.patientCardId) {
-          params += `&patientCardId=${appointment.patientCardId}`;
-        }
-        if (appointment && appointment.hosDocCode) {
-          params += `&hosDocCode=${appointment.hosDocCode}`;
-        }
-        if (appointment && !appointment.isExport) {
-          params += `&isExport=${appointment.isExport}`;
-        }
-        const res = yield call(fetchAppointmentService, params, page, 10);
-        if (res && res.code === 200) {
-          // console.log(res);
-          yield put({
-            type: 'updateList',
-            payload: {
-              key: 'appointment',
-              // list: res.data.content,
-              list: res.data.content,
-              currentPage: page,
-              totalElements: res.data.totalElements,
-            },
-          });
-        }
-      } catch (err) {
-        console.log(err);
+      const { page } = payload;
+      const { appointment } = yield select(state => state.businessYilianWechatQuery.searchParam);
+      let params = '';
+      if (appointment && appointment.startTime) {
+        params += `&startTime=${appointment.startTime}`;
+      }
+      if (appointment && appointment.endTime) {
+        params += `&endTime=${appointment.endTime}`;
+      }
+      if (appointment && appointment.type) {
+        params += `&dateType=${appointment.type}`;
+      }
+      if (appointment && appointment.orderStatus) {
+        params += `&orderStatus=${appointment.orderStatus}`;
+      }
+      if (appointment && appointment.regChannel) {
+        params += `&regChannel=${appointment.regChannel}`;
+      }
+      if (appointment && appointment.patientName) {
+        params += `&patientName=${appointment.patientName}`;
+      }
+      if (appointment && appointment.patientPhone) {
+        params += `&patientPhone=${appointment.patientPhone}`;
+      }
+      if (appointment && appointment.mediCardId) {
+        params += `&mediCardId=${appointment.mediCardId}`;
+      }
+      if (appointment && appointment.patientCardId) {
+        params += `&patientCardId=${appointment.patientCardId}`;
+      }
+      if (appointment && appointment.hosDocCode) {
+        params += `&hosDocCode=${appointment.hosDocCode}`;
+      }
+      if (appointment && !appointment.isExport) {
+        params += `&isExport=${appointment.isExport}`;
+      }
+      const res = yield call(fetchAppointmentService, params, page, 10);
+      if (res && res.code === 200) {
+        yield put({
+          type: 'updateList',
+          payload: {
+            key: 'appointment',
+            list: res.data.content,
+            currentPage: page,
+            totalElements: res.data.totalElements,
+          },
+        });
       }
     },
-    *downloadAppointmentList({ payload }, { call, put, select }) {
-      try {
-        const { page } = payload;
-        const { appointment } = yield select(state => state.businessYilianWechatQuery.searchParam);
-        let params = '';
-        if (appointment && appointment.startTime) {
-          params += `&startTime=${appointment.startTime}`;
-        }
-        if (appointment && appointment.endTime) {
-          params += `&endTime=${appointment.endTime}`;
-        }
-        if (appointment && appointment.type) {
-          params += `&dateType=${appointment.type}`;
-        }
-        if (appointment && appointment.orderStatus) {
-          params += `&orderStatus=${appointment.orderStatus}`;
-        }
-        if (appointment && appointment.regChannel) {
-          params += `&regChannel=${appointment.regChannel}`;
-        }
-        if (appointment && appointment.patientName) {
-          params += `&patientName=${appointment.patientName}`;
-        }
-        if (appointment && appointment.patientPhone) {
-          params += `&patientPhone=${appointment.patientPhone}`;
-        }
-        if (appointment && appointment.mediCardId) {
-          params += `&mediCardId=${appointment.mediCardId}`;
-        }
-        if (appointment && appointment.patientCardId) {
-          params += `&patientCardId=${appointment.patientCardId}`;
-        }
-        if (appointment && appointment.hosDocCode) {
-          params += `&hosDocCode=${appointment.hosDocCode}`;
-        }
-        if (appointment && appointment.isExport) {
-          params += `&isExport=${appointment.isExport}`;
-        }
-        const res = yield call(fetchAppointmentService, params, page, 10);
-        if (res && res.code === 200) {
-          yield put({
-            type: 'updateList',
-            payload: {
-              key: 'appointment',
-              list: res.data.content,
-              currentPage: page,
-              totalElements: res.data.totalElements,
-            },
-          });
-        }
-      } catch (err) {
-        console.log(err);
+    *downloadAppointmentList({ payload }, { call, select }) {
+      const { page } = payload;
+      const { appointment } = yield select(state => state.businessYilianWechatQuery.searchParam);
+      let params = '';
+      if (appointment && appointment.startTime) {
+        params += `&startTime=${appointment.startTime}`;
       }
+      if (appointment && appointment.endTime) {
+        params += `&endTime=${appointment.endTime}`;
+      }
+      if (appointment && appointment.type) {
+        params += `&dateType=${appointment.type}`;
+      }
+      if (appointment && appointment.orderStatus) {
+        params += `&orderStatus=${appointment.orderStatus}`;
+      }
+      if (appointment && appointment.regChannel) {
+        params += `&regChannel=${appointment.regChannel}`;
+      }
+      if (appointment && appointment.patientName) {
+        params += `&patientName=${appointment.patientName}`;
+      }
+      if (appointment && appointment.patientPhone) {
+        params += `&patientPhone=${appointment.patientPhone}`;
+      }
+      if (appointment && appointment.mediCardId) {
+        params += `&mediCardId=${appointment.mediCardId}`;
+      }
+      if (appointment && appointment.patientCardId) {
+        params += `&patientCardId=${appointment.patientCardId}`;
+      }
+      if (appointment && appointment.hosDocCode) {
+        params += `&hosDocCode=${appointment.hosDocCode}`;
+      }
+      if (appointment && appointment.isExport) {
+        params += `&isExport=${appointment.isExport}`;
+      }
+      const res = yield call(fetchAppointmentService, params, page, 10);
+      let returnData = null;
+      if (res && res.code === 200 && res.msg) {
+        returnData = res.msg;
+      }
+      return returnData;
     },
   },
 

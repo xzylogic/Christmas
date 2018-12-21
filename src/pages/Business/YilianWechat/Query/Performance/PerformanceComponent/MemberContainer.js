@@ -49,6 +49,11 @@ const mapDispatchToProps = dispatch => ({
       type: 'businessYilianWechatQuery/getQueryMessage',
       payload: { value },
     }),
+  // onDownloadMemberList: page =>
+  //   dispatch({
+  //     type: 'businessYilianWechatQuery/downloadMemberPerformance',
+  //     payload: { page },
+  //   }),
 });
 
 @connect(
@@ -177,6 +182,17 @@ class MemberContainer extends Component {
 
   handleExport = e => {
     e.preventDefault();
+    // const { onDownloadMemberList, onSearchParamChange, currentPage } = this.props;
+
+    // onSearchParamChange('isExport', true);
+    // onDownloadMemberList(currentPage).then(data => {
+    //   if (data) {
+    //     const a = document.createElement('a');
+    //     a.setAttribute('href', data);
+    //     a.click();
+    //   }
+    // });
+    // onSearchParamChange('isExport', false);
     console.log('export');
   };
 

@@ -5,7 +5,7 @@ import moment from 'moment';
 import classes from './AppointmentsBar.less';
 
 function AppointmentsBar(props) {
-  const { onReset, onExport, params, onParamsChange, onSearch } = props;
+  const { onReset, onExport, params, onParamsChange, onSearch, disabled } = props;
 
   return (
     <Row className={classes.Container}>
@@ -13,10 +13,8 @@ function AppointmentsBar(props) {
         <Select
           className={classes.Gap}
           style={{ width: 115 }}
-          // name='type'
-          // value={params.type}
           onChange={value => onParamsChange(value, 'type')}
-          defaultValue="create_time"
+          value={params.type}
         >
           <Select.Option value="create_time">预约日期</Select.Option>
           <Select.Option value="schedule_date">就诊日期</Select.Option>
@@ -48,22 +46,19 @@ function AppointmentsBar(props) {
             }}
           />
         </span>
-        {/* <span className={classes.Span}>
-          就诊日期：
-          <DatePicker placeholder='就诊日期' />
-        </span> */}
         <span className={classes.Span}>
           预约状态：
           <Select
             style={{ width: 115 }}
             className={classes.Gap}
             placeholder="预约状态"
-            // defaultValue='0'
             value={params.orderStatus}
             onChange={value => onParamsChange(value, 'orderStatus')}
           >
-            <Select.Option value="1">已预约</Select.Option>
-            <Select.Option value="3">已撤销</Select.Option>
+            <Select.Option value="">全部</Select.Option>
+            <Select.Option value="1">预约</Select.Option>
+            <Select.Option value="3">撤销</Select.Option>
+            <Select.Option value="5">无效</Select.Option>
           </Select>
         </span>
         <span className={classes.Span}>
@@ -73,11 +68,20 @@ function AppointmentsBar(props) {
             className={classes.Gap}
             placeholder="预约来源"
             value={params.regChannel}
-            // defaultValue='0'
             onChange={value => onParamsChange(value, 'regChannel')}
           >
+            <Select.Option value="">全部</Select.Option>
             <Select.Option value="app">APP</Select.Option>
             <Select.Option value="wechat">微信服务号</Select.Option>
+            <Select.Option value="alipay" disabled={disabled}>
+              支付宝服务窗
+            </Select.Option>
+            <Select.Option value="window" disabled={disabled}>
+              窗口
+            </Select.Option>
+            <Select.Option value="machine" disabled={disabled}>
+              自助机
+            </Select.Option>
           </Select>
         </span>
       </Col>
@@ -122,7 +126,7 @@ function AppointmentsBar(props) {
             className={classes.Input}
           />
         </span>
-        <span className={classes.Span} style={{ whiteSpace: 'nowrap', display: 'inline-block' }}>
+        <span className={classes.Span}>
           工号：
           <Input
             name="hosDocCode"

@@ -49,6 +49,11 @@ const mapDispatchToProps = dispatch => ({
       type: 'businessYilianWechatQuery/getQueryMessage',
       payload: { value },
     }),
+  // onDownloadGroupList: page =>
+  //   dispatch({
+  //     type: 'businessYilianWechatQuery/downloadGroupPerformance',
+  //     payload: { page },
+  //   }),
 });
 
 @connect(
@@ -161,6 +166,18 @@ class GroupContainer extends Component {
 
   handleExport = e => {
     e.preventDefault();
+    // const { onDownloadGroupList, onSearchParamChange, currentPage } = this.props;
+
+    // onSearchParamChange('isExport', true);
+    // onDownloadGroupList(currentPage).then(data => {
+    //   if (data) {
+    //     const a = document.createElement('a');
+    //     a.setAttribute('href', data);
+    //     a.click();
+    //   }
+    // });
+    // onSearchParamChange('isExport', false);
+
     console.log('export');
   };
 
@@ -183,7 +200,7 @@ class GroupContainer extends Component {
           onReset={this.handleReset}
           onExport={this.handleExport}
           onParamsChange={this.handleParamsChanged}
-          inputPlaceholder="请输入项目"
+          inputPlaceholder="请输入组名"
           amountSetShow={amountSetShow}
         />
         <TableList

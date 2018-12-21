@@ -21,7 +21,7 @@ function type2SearchBar(props) {
         <Select.Option value="year">按年统计</Select.Option>
       </Select> */}
       <DatePicker.RangePicker
-        className={classes.Gap}
+        className={classes.Span}
         value={[moment(params.startTime, 'YYYY-MM-DD'), moment(params.endTime, 'YYYY-MM-DD')]}
         onChange={(_, dateStrings) => onParamsChange(dateStrings, 'date')}
         allowClear={false}

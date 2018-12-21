@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import { Modal, Select, Divider } from 'antd';
+import { Modal, Divider } from 'antd';
 
 import TableList from '@/components/PageComponents/Table/TableList';
 
@@ -9,16 +9,20 @@ const mapStateToProps = state => ({
   currentPage: state.businessYilianWechatStatisticDatas.currentPage.promoteAttention,
   totalElements: state.businessYilianWechatStatisticDatas.totalElements.promoteAttention,
   searchParam: state.businessYilianWechatStatisticDatas.searchParam.promoteAttention,
-
   loading:
     state.loading.effects['businessYilianWechatStatisticDatas/fetchPromoteAttentionAmountDetail'],
 });
 
 const mapDispatchToProps = dispatch => ({
-  onFetchPromoteAttentionAmount: (way, name, page) =>
+  onFetchPromoteAttentionAmount: (way, page) =>
     dispatch({
       type: 'businessYilianWechatStatisticDatas/fetchPromoteAttentionAmountDetail',
-      payload: { way, name, page },
+      payload: { way, page },
+    }),
+  onSearchParamChange: (key, value) =>
+    dispatch({
+      type: 'businessYilianWechatStatisticDatas/updateSearchParam',
+      payload: { origin: 'promoteAttention', key, value },
     }),
 });
 
@@ -28,21 +32,66 @@ const mapDispatchToProps = dispatch => ({
 )
 class PopularizationDetail extends Component {
   state = {
-    way: 'week',
+    way: 'day',
   };
 
-  componentWillReceiveProps(nextProps) {
-    const { name } = this.props;
-    if (name && nextProps.name !== name) {
-      this.setState({ way: 'week' });
-    }
-  }
-
   componentDidUpdate(prevProps) {
-    const { onFetchPromoteAttentionAmount, name } = this.props;
+    const { onFetchPromoteAttentionAmount, onSearchParamChange, name, date } = this.props;
     const { way } = this.state;
+
     if (name && prevProps.name !== name) {
-      onFetchPromoteAttentionAmount(way, name, 0);
+      let startTime = '';
+      let endTime = '';
+
+      // 按周显示
+      if (date.split('-').length === 2) {
+        startTime = date
+          .split('-')[0]
+          .split('/')
+          .join('-');
+        endTime = date
+          .split('-')[1]
+          .split('/')
+          .join('-');
+        // 按月显示
+      } else if (date.split('/').length === 2) {
+        const newStartDate = date.split('/');
+        const newEndDate = date.split('/');
+        newStartDate.push('01');
+        const num = date.split('/')[1];
+        const newNum = parseInt(num, 10);
+
+        if (
+          newNum === 1 ||
+          newNum === 3 ||
+          newNum === 5 ||
+          newNum === 7 ||
+          newNum === 8 ||
+          newNum === 10 ||
+          newNum === 12
+        ) {
+          newEndDate.push('31');
+        } else if (newNum === 2) {
+          newEndDate.push('28');
+        } else {
+          newEndDate.push('30');
+        }
+        startTime = newStartDate.join('-');
+        endTime = newEndDate.join('-');
+        // 按年显示
+      } else if (date.split('/').length === 1) {
+        const newStartDate = date.split('/');
+        const newEndDate = date.split('/');
+        newStartDate.push('01', '31');
+        newEndDate.push('12', '31');
+        startTime = newStartDate.join('-');
+        endTime = newEndDate.join('-');
+      }
+
+      onSearchParamChange('chooseStartTime', startTime);
+      onSearchParamChange('chooseEndTime', endTime);
+
+      onFetchPromoteAttentionAmount(way, 0);
     }
   }
 
@@ -50,16 +99,14 @@ class PopularizationDetail extends Component {
     const columns = [
       {
         title: '日期',
-        // dataIndex: 'week' || 'date' || 'months' || 'years',
-        // key: 'week',
         dataIndex: 'weeks' || 'date' || 'months' || 'years',
         key: 'weeks' || 'date' || 'months' || 'years',
         render: (_, record) => record.date || record.weeks || record.months || record.years,
       },
       {
-        title: '渠道',
-        dataIndex: 'promoCode',
-        key: 'promoCode',
+        title: '医院',
+        dataIndex: 'hosName',
+        key: 'hosName',
       },
       {
         title: '关注量',
@@ -84,21 +131,12 @@ class PopularizationDetail extends Component {
     const { onFetchPromoteAttentionAmount, name } = this.props;
     const { way } = this.state;
     if (name) {
-      onFetchPromoteAttentionAmount(way, name, page - 1);
-    }
-  };
-
-  handleWayChange = value => {
-    const { onFetchPromoteAttentionAmount, name } = this.props;
-    this.setState({ way: value });
-    if (name) {
-      onFetchPromoteAttentionAmount(value, name, 0);
+      onFetchPromoteAttentionAmount(way, page - 1);
     }
   };
 
   render() {
-    const { promoteAttentionList, currentPage, totalElements, visible, name, onClose } = this.props;
-    const { way } = this.state;
+    const { promoteAttentionList, currentPage, totalElements, visible, date, onClose } = this.props;
     return (
       <Modal
         title="查看详情"
@@ -108,21 +146,19 @@ class PopularizationDetail extends Component {
         footer={null}
         onCancel={onClose}
       >
-        <Select name="way" value={way} onChange={this.handleWayChange}>
-          <Select.Option value="day">按日统计</Select.Option>
-          <Select.Option value="week">按周统计</Select.Option>
-          <Select.Option value="month">按月统计</Select.Option>
-          <Select.Option value="year">按年统计</Select.Option>
-        </Select>
-        <Divider>{name}</Divider>
-        <TableList
-          rowKey={(_, index) => index}
-          list={promoteAttentionList}
-          columns={this.setTableColumns()}
-          currentPage={currentPage}
-          totalElements={totalElements}
-          onPageChange={this.handlePageChange}
-        />
+        <Divider>{date}</Divider>
+        {promoteAttentionList instanceof Object ? (
+          <TableList
+            rowKey={(_, index) => index}
+            list={promoteAttentionList}
+            columns={this.setTableColumns()}
+            currentPage={currentPage}
+            totalElements={totalElements}
+            onPageChange={this.handlePageChange}
+          />
+        ) : (
+          ''
+        )}
       </Modal>
     );
   }

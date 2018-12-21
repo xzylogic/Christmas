@@ -45,13 +45,44 @@ class LocationDetail extends Component {
   }
 
   setTableColumns = () => {
-    const columns = [
-      {
-        title: '日期',
-        dataIndex: 'date',
-        key: 'date',
-        render: (_, record) => record.date || record.weeks || record.months || record.years,
-      },
+    const { way } = this.state;
+
+    const columns = [];
+
+    switch (way) {
+      case 'day':
+        columns.push({
+          title: '日期',
+          dataIndex: 'date',
+          key: 'date',
+        });
+        break;
+      case 'week':
+        columns.push({
+          title: '周期',
+          dataIndex: 'weeks',
+          key: 'weeks',
+        });
+        break;
+      case 'month':
+        columns.push({
+          title: '月份',
+          dataIndex: 'months',
+          key: 'months',
+        });
+        break;
+      case 'year':
+        columns.push({
+          title: '年份',
+          dataIndex: 'years',
+          key: 'years',
+        });
+        break;
+      default:
+        break;
+    }
+
+    const columnsArr = [
       {
         title: '渠道',
         dataIndex: 'promoCode',
@@ -68,6 +99,32 @@ class LocationDetail extends Component {
         key: 'regCount',
       },
     ];
+
+    columns.push(...columnsArr);
+
+    // const columns = [
+    //   {
+    //     title: '日期',
+    //     dataIndex: 'date' || 'months' || 'weeks' || 'years',
+    //     key: 'date' || 'months' || 'weeks' || 'years',
+    //     render: (_, record) => record.date || record.weeks || record.months || record.years,
+    //   },
+    //   {
+    //     title: '渠道',
+    //     dataIndex: 'promoCode',
+    //     key: 'promoCode',
+    //   },
+    //   {
+    //     title: '关注量',
+    //     dataIndex: 'fansCount',
+    //     key: 'fansCount',
+    //   },
+    //   {
+    //     title: '注册量',
+    //     dataIndex: 'regCount',
+    //     key: 'regCount',
+    //   },
+    // ];
     return columns;
   };
 

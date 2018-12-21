@@ -84,10 +84,16 @@ class Type3Container extends Component {
 
   handleExport = e => {
     e.preventDefault();
-    console.log('export');
-    const { onDownloadPopularizationReport, onUpdateSearchParams } = this.props;
+    // console.log('export');
+    const { onDownloadPopularizationReport, onUpdateSearchParams, currentPage } = this.props;
     onUpdateSearchParams('isExport', true);
-    onDownloadPopularizationReport();
+    onDownloadPopularizationReport(currentPage).then(data => {
+      if (data) {
+        const a = document.createElement('a');
+        a.setAttribute('href', data);
+        a.click();
+      }
+    });
     onUpdateSearchParams('isExport', false);
   };
 

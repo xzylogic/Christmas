@@ -45,6 +45,10 @@ const mapDispatchToProps = dispatch => ({
   mapDispatchToProps
 )
 class AppointmentsContainer extends Component {
+  state = {
+    disabled: true,
+  };
+
   componentDidMount() {
     const { onFetchAppointmentList } = this.props;
     onFetchAppointmentList(0);
@@ -69,6 +73,29 @@ class AppointmentsContainer extends Component {
       }
       if (record === '3') {
         content = <span>已取消</span>;
+      }
+      return content;
+    };
+
+    const renderRegChannel = record => {
+      let content = '';
+      if (record === 'app') {
+        content = <span>APP</span>;
+      }
+      if (record === 'wechat') {
+        content = <span>微信</span>;
+      }
+      return content;
+    };
+
+    const renderMediCardIdType = record => {
+      let content = '';
+      if (record === '1') {
+        content = <span>社保卡</span>;
+      } else if (record === '2') {
+        content = <span>医联卡</span>;
+      } else {
+        content = <span>无卡预约</span>;
       }
       return content;
     };
@@ -108,6 +135,7 @@ class AppointmentsContainer extends Component {
         title: '预约来源',
         dataIndex: 'regChannel',
         key: 'regChannel',
+        render: record => renderRegChannel(record),
       },
       {
         title: '患者姓名',
@@ -128,6 +156,7 @@ class AppointmentsContainer extends Component {
         title: '卡类型',
         dataIndex: 'mediCardIdType',
         key: 'mediCardIdType',
+        render: record => renderMediCardIdType(record),
       },
       {
         title: '手机',
@@ -171,7 +200,6 @@ class AppointmentsContainer extends Component {
 
   handleSearch = async e => {
     e.preventDefault();
-    console.log('export');
     const { onFetchAppointmentList } = this.props;
     onFetchAppointmentList(0);
   };
@@ -195,17 +223,29 @@ class AppointmentsContainer extends Component {
     await onFetchAppointmentList(0);
   };
 
-  handleExport = e => {
+  handleExport = async e => {
     e.preventDefault();
-    console.log('export');
-    const { onDownloadAppointmentList, onSearchParamChange } = this.props;
+    const { onDownloadAppointmentList, onSearchParamChange, currentPage } = this.props;
+
     onSearchParamChange('isExport', true);
-    onDownloadAppointmentList();
+    onDownloadAppointmentList(currentPage).then(data => {
+      if (data) {
+        const a = document.createElement('a');
+        a.setAttribute('href', data);
+        a.click();
+      }
+    });
     onSearchParamChange('isExport', false);
   };
 
   render() {
     const { searchParam, appointmentList, currentPage, totalElements } = this.props;
+    const { disabled } = this.state;
+
+    let showScroll = true;
+    if (appointmentList instanceof Object && appointmentList.length !== 0) {
+      showScroll = false;
+    }
 
     return (
       <React.Fragment>
@@ -215,15 +255,28 @@ class AppointmentsContainer extends Component {
           onReset={this.handleReset}
           onExport={this.handleExport}
           onParamsChange={this.handleParamsChanged}
+          disabled={disabled}
         />
-        <TableList
-          rowKey={(_, index) => index}
-          list={appointmentList}
-          columns={this.setTableColumns()}
-          currentPage={currentPage}
-          totalElements={totalElements}
-          onPageChange={this.handlePageChange}
-        />
+        {showScroll ? (
+          <TableList
+            rowKey={(_, index) => index}
+            list={appointmentList}
+            columns={this.setTableColumns()}
+            currentPage={currentPage}
+            totalElements={totalElements}
+            onPageChange={this.handlePageChange}
+          />
+        ) : (
+          <TableList
+            rowKey={(_, index) => index}
+            list={appointmentList}
+            columns={this.setTableColumns()}
+            currentPage={currentPage}
+            totalElements={totalElements}
+            onPageChange={this.handlePageChange}
+            scroll={{ x: 1800 }}
+          />
+        )}
       </React.Fragment>
     );
   }

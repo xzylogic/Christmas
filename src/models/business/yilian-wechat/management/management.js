@@ -26,9 +26,9 @@ export default {
       groupName: '',
       memberName: '',
       locationName: '',
-      groupDownload: '',
-      memberDownload: '',
-      locationDownload: '',
+      groupDownload: false,
+      memberDownload: false,
+      locationDownload: false,
     },
     list: {
       group: null,
@@ -60,6 +60,9 @@ export default {
       if (searchParam && searchParam.groupName) {
         params += `name=${searchParam.groupName}`;
       }
+      if (searchParam && !searchParam.groupDownload) {
+        params += `isExport=${searchParam.groupDownload}`;
+      }
       const res = yield call(fetchGroupListService, params, page, 10);
       if (res && res.code === 200) {
         yield put({
@@ -73,12 +76,32 @@ export default {
         });
       }
     },
+    *downloadGroupList({ payload }, { call, select }) {
+      const searchParam = yield select(state => state.businessYilianWechatManagement.searchParam);
+      const { page } = payload;
+      let params = '';
+      if (searchParam && searchParam.groupName) {
+        params += `name=${searchParam.groupName}`;
+      }
+      if (searchParam && searchParam.groupDownload) {
+        params += `isExport=${searchParam.groupDownload}`;
+      }
+      const res = yield call(fetchGroupListService, params, page, 10);
+      let returnData = null;
+      if (res && res.code === 200 && res.msg) {
+        returnData = res.msg;
+      }
+      return returnData;
+    },
     *fetchMemberList({ payload }, { call, put, select }) {
       const searchParam = yield select(state => state.businessYilianWechatManagement.searchParam);
       const { page } = payload;
       let params = '';
       if (searchParam && searchParam.memberName) {
         params += `name=${searchParam.memberName}`;
+      }
+      if (searchParam && !searchParam.memberDownload) {
+        params += `isExport=${searchParam.memberDownload}`;
       }
       const res = yield call(fetchMemberListService, params, page, 10);
       if (res && res.code === 200) {
@@ -92,6 +115,23 @@ export default {
           },
         });
       }
+    },
+    *downloadMemberList({ payload }, { call, select }) {
+      const searchParam = yield select(state => state.businessYilianWechatManagement.searchParam);
+      const { page } = payload;
+      let params = '';
+      if (searchParam && searchParam.memberName) {
+        params += `name=${searchParam.memberName}`;
+      }
+      if (searchParam && searchParam.memberDownload) {
+        params += `isExport=${searchParam.memberDownload}`;
+      }
+      const res = yield call(fetchMemberListService, params, page, 10);
+      let returnData = null;
+      if (res && res.code === 200 && res.msg) {
+        returnData = res.msg;
+      }
+      return returnData;
     },
     *getMemberMessage(_, { call, put }) {
       const res = yield call(getMemberService);
@@ -112,6 +152,9 @@ export default {
       if (searchParam && searchParam.locationName) {
         params += `name=${searchParam.locationName}`;
       }
+      if (searchParam && !searchParam.locationDownload) {
+        params += `isExport=${searchParam.locationDownload}`;
+      }
       const res = yield call(fetchLocationListService, params, page, 10);
       if (res && res.code === 200) {
         yield put({
@@ -124,6 +167,23 @@ export default {
           },
         });
       }
+    },
+    *downloadLocationList({ payload }, { call, select }) {
+      const searchParam = yield select(state => state.businessYilianWechatManagement.searchParam);
+      const { page } = payload;
+      let params = '';
+      if (searchParam && searchParam.locationName) {
+        params += `name=${searchParam.locationName}`;
+      }
+      if (searchParam && searchParam.locationDownload) {
+        params += `isExport=${searchParam.locationDownload}`;
+      }
+      const res = yield call(fetchLocationListService, params, page, 10);
+      let returnData = null;
+      if (res && res.code === 200 && res.msg) {
+        returnData = res.msg;
+      }
+      return returnData;
     },
     *createGroup({ payload }, { call, put }) {
       const { postData } = payload;

@@ -49,11 +49,11 @@ const mapDispatchToProps = dispatch => ({
       type: 'businessYilianWechatQuery/getQueryMessage',
       payload: { value },
     }),
-  // onDownloadGroupList: page =>
-  //   dispatch({
-  //     type: 'businessYilianWechatQuery/downloadGroupPerformance',
-  //     payload: { page },
-  //   }),
+  onDownloadGroupList: page =>
+    dispatch({
+      type: 'businessYilianWechatQuery/downloadGroupPerformance',
+      payload: { page },
+    }),
 });
 
 @connect(
@@ -166,19 +166,17 @@ class GroupContainer extends Component {
 
   handleExport = e => {
     e.preventDefault();
-    // const { onDownloadGroupList, onSearchParamChange, currentPage } = this.props;
+    const { onDownloadGroupList, onSearchParamChange, currentPage } = this.props;
 
-    // onSearchParamChange('isExport', true);
-    // onDownloadGroupList(currentPage).then(data => {
-    //   if (data) {
-    //     const a = document.createElement('a');
-    //     a.setAttribute('href', data);
-    //     a.click();
-    //   }
-    // });
-    // onSearchParamChange('isExport', false);
-
-    console.log('export');
+    onSearchParamChange('isExport', true);
+    onDownloadGroupList(currentPage).then(data => {
+      if (data) {
+        const a = document.createElement('a');
+        a.setAttribute('href', data);
+        a.click();
+      }
+    });
+    onSearchParamChange('isExport', false);
   };
 
   handleDetailClose = e => {

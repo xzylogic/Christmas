@@ -33,7 +33,7 @@ const mapDispatchToProps = dispatch => ({
       }),
     500
   ),
-  onUpdateSearchParam: (key, value) =>
+  onUpdataSearchParam: (key, value) =>
     dispatch({
       type: 'businessYilianWechatManagement/updateSearchParam',
       payload: { key, value },
@@ -51,11 +51,11 @@ const mapDispatchToProps = dispatch => ({
     dispatch({
       type: 'businessYilianWechatManagement/fetchAllHosName',
     }),
-  // onDownloadGroupList: page =>
-  //   dispatch({
-  //     type: 'businessYilianWechatManagement/downloadGroupList',
-  //     payload: { page },
-  //   }),
+  onDownloadGroupList: page =>
+    dispatch({
+      type: 'businessYilianWechatManagement/downloadGroupList',
+      payload: { page },
+    }),
 });
 
 @connect(
@@ -165,8 +165,8 @@ class GroupContainer extends Component {
 
   handleParamChange = async e => {
     e.preventDefault();
-    const { onUpdateSearchParam, onSearchGroupList } = this.props;
-    await onUpdateSearchParam('groupName', e.target.value);
+    const { onUpdataSearchParam, onSearchGroupList } = this.props;
+    await onUpdataSearchParam('groupName', e.target.value);
     await onSearchGroupList(0);
   };
 
@@ -192,9 +192,17 @@ class GroupContainer extends Component {
 
   handleExport = e => {
     e.preventDefault();
-    console.log('export');
-    // const { onDownloadGroupList } = this.props;
-    // onDownloadGroupList();
+    const { onDownloadGroupList, onUpdataSearchParam, currentPage } = this.props;
+
+    onUpdataSearchParam('groupDownload', true);
+    onDownloadGroupList(currentPage).then(data => {
+      if (data) {
+        const a = document.createElement('a');
+        a.setAttribute('href', data);
+        a.click();
+      }
+    });
+    onUpdataSearchParam('groupDownload', false);
   };
 
   handlEditorGroupHos = e => {

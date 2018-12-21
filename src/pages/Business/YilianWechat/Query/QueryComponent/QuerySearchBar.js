@@ -59,9 +59,9 @@ function querySearchBar(props) {
         <Button type="primary" htmlType="button" onClick={onSearch} className={classes.Gap}>
           查询
         </Button>
-        {/* <Button type="primary" htmlType="button" onClick={onReset} className={classes.Gap}>
+        <Button type="primary" htmlType="button" onClick={onReset} className={classes.Gap}>
           重置
-        </Button> */}
+        </Button>
         {amountSetShow ? (
           <Button type="primary" htmlType="button" onClick={onAmountSet} className={classes.Gap}>
             月指标量
@@ -69,10 +69,7 @@ function querySearchBar(props) {
         ) : (
           ''
         )}
-        <Button type="primary" htmlType="button" onClick={onReset} className={classes.Gap}>
-          重置
-        </Button>
-        <Button type="primary" htmlType="button" onClick={onExport} className={classes.SearchGap}>
+        <Button type="primary" htmlType="button" onClick={onExport} className={classes.Gap}>
           导出Excel
         </Button>
       </Col>

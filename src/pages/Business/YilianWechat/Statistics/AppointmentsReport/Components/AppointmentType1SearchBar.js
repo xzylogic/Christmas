@@ -29,7 +29,7 @@ function AppointmentType1SearchBar(props) {
   return (
     <div className={classes.Search}>
       <DatePicker.RangePicker
-        className={classes.Gap}
+        className={classes.Span}
         value={[moment(params.startTime, 'YYYY-MM-DD'), moment(params.endTime, 'YYYY-MM-DD')]}
         onChange={(_, dateStrings) => onParamsChange(dateStrings, 'date')}
         allowClear={false}
@@ -52,7 +52,7 @@ function AppointmentType1SearchBar(props) {
           ],
         }}
       />
-      <span>
+      <span className={classes.Span}>
         小组：
         {options}
       </span>

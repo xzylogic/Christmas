@@ -46,10 +46,10 @@ function AppointmentsBar(props) {
   };
 
   return (
-    <Row className={classes.Container}>
-      <Col className={classes.Container}>
+    <Row>
+      <Col>
         <Select
-          className={classes.Gap}
+          className={classes.Span}
           name="countType"
           value={params.countType}
           onChange={value => onParamsChange(value, 'countType')}
@@ -59,7 +59,7 @@ function AppointmentsBar(props) {
           <Select.Option value="month">按月统计</Select.Option>
           <Select.Option value="year">按年统计</Select.Option>
         </Select>
-        <span>
+        <span className={classes.Span}>
           <DatePicker.RangePicker
             className={classes.Gap}
             value={[moment(params.startTime, 'YYYY-MM-DD'), moment(params.endTime, 'YYYY-MM-DD')]}

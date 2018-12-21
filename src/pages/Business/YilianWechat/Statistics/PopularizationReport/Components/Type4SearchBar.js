@@ -10,7 +10,7 @@ function type3SearchBar(props) {
   return (
     <div className={classes.Search}>
       <DatePicker
-        className={classes.Gap}
+        className={classes.Span}
         value={moment(params.time, 'YYYY-MM-DD')}
         onChange={(_, dateStrings) => onParamsChange(dateStrings, 'time')}
         allowClear={false}

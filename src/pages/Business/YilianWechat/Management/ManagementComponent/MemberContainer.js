@@ -50,6 +50,11 @@ const mapDispatchProps = dispatch => ({
       type: 'businessYilianWechatManagement/getMemberMessage',
       payload: { value },
     }),
+  onDownloadMemberList: page =>
+    dispatch({
+      type: 'businessYilianWechatManagement/downloadMemberList',
+      payload: { page },
+    }),
 });
 
 @connect(
@@ -147,7 +152,7 @@ class MemberContainer extends Component {
         title: '操作',
         dataIndex: 'id',
         key: 'action',
-        render: (text, record) => (
+        render: (_, record) => (
           <span>
             <a onClick={e => this.handleEditor(e, record)}>编辑</a>
             <Divider type="vertical" />
@@ -201,7 +206,17 @@ class MemberContainer extends Component {
 
   handleExport = e => {
     e.preventDefault();
-    console.log('export');
+    const { onDownloadMemberList, onUpdataSearchParam, currentPage } = this.props;
+
+    onUpdataSearchParam('memberDownload', true);
+    onDownloadMemberList(currentPage).then(data => {
+      if (data) {
+        const a = document.createElement('a');
+        a.setAttribute('href', data);
+        a.click();
+      }
+    });
+    onUpdataSearchParam('memberDownload', false);
   };
 
   handleShowCode(e, record) {

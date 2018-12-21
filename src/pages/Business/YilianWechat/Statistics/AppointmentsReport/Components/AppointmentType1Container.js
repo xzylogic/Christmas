@@ -167,7 +167,6 @@ class AppointmentType1Container extends Component {
 
   handleExport = e => {
     e.preventDefault();
-    // console.log('export');
     const { onDownloadAppointmentReport, onUpdateSearchParams, currentPage } = this.props;
     onUpdateSearchParams('isExport', true);
     onDownloadAppointmentReport(currentPage).then(data => {

@@ -138,9 +138,9 @@ class RoleDetail extends Component {
   };
 
   goBack = () => {
-    const { onUpdateSelectedAccount } = this.props;
-    onUpdateSelectedAccount(null);
-    Router.push(`/system/accounts`);
+    const { onResetCurrentRole } = this.props;
+    onResetCurrentRole();
+    Router.push(`/system/roles`);
   };
 
   render() {

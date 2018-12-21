@@ -15,7 +15,7 @@ export default {
       {
         antd: true,
         dva: {
-          hmr: true,
+          hmr: process.env.NODE_ENV === 'development',
         },
         targets: {
           ie: 11,
@@ -74,13 +74,6 @@ export default {
   externals: {
     '@antv/data-set': 'DataSet',
   },
-  // proxy: {
-  //   '/server/api/': {
-  //     target: 'https://preview.pro.ant.design/',
-  //     changeOrigin: true,
-  //     pathRewrite: { '^/server': '' },
-  //   },
-  // },
   ignoreMomentLocale: true,
   lessLoaderOptions: {
     javascriptEnabled: true,

@@ -89,6 +89,8 @@ export default {
         name: '',
         hosName: '',
         queryType: null,
+        isExportRegister: false,
+        isExportFocus: false,
       },
       // 预约查询
       appointment: {
@@ -287,6 +289,12 @@ export default {
         if (membership && membership.hosName) {
           params += `&hosName=${membership.hosName}`;
         }
+        if (membership && !membership.isExportRegister) {
+          params += `&isExportRegister=${membership.isExportRegister}`;
+        }
+        if (membership && !membership.isExportFocus) {
+          params += `&isExportFocus=${membership.isExportFocus}`;
+        }
         const res = yield call(fetchMembershipPerformanceDetail, params, 0, 10);
         if (res && res.code === 200) {
           yield put({
@@ -311,6 +319,37 @@ export default {
       } catch (err) {
         console.log(err);
       }
+    },
+    *downloadMembership(_, { call, select }) {
+      const { membership } = yield select(state => state.businessYilianWechatQuery.searchParam);
+      let params = '';
+      if (membership && membership.type !== '') {
+        params += `?type=${membership.type}`;
+      }
+      if (membership && membership.startTime) {
+        params += `&startTime=${membership.startTime}`;
+      }
+      if (membership && membership.endTime) {
+        params += `&endTime=${membership.endTime}`;
+      }
+      if (membership && membership.name) {
+        params += `&name=${membership.name}`;
+      }
+      if (membership && membership.hosName) {
+        params += `&hosName=${membership.hosName}`;
+      }
+      if (membership && membership.isExportRegister) {
+        params += `&isExportRegister=${membership.isExportRegister}`;
+      }
+      if (membership && membership.isExportFocus) {
+        params += `&isExportFocus=${membership.isExportFocus}`;
+      }
+      const res = yield call(fetchMembershipPerformanceDetail, params, 0, 10);
+      let returnData = null;
+      if (res && res.code === 200 && res.msg) {
+        returnData = res.msg;
+      }
+      return returnData;
     },
     *fetchMemberPerformance({ payload }, { call, put, select }) {
       const { member } = yield select(state => state.businessYilianWechatQuery.searchParam);

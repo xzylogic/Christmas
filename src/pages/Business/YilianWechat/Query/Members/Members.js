@@ -49,6 +49,10 @@ const mapDispatchToProps = dispatch => ({
     dispatch({
       type: 'businessYilianWechatQuery/fetchallPerson',
     }),
+  onDownloadMembershipList: () =>
+    dispatch({
+      type: 'businessYilianWechatQuery/downloadMembership',
+    }),
 });
 
 const renderContent = (text, record, index, listLength) => {
@@ -164,50 +168,6 @@ class Member extends Component {
     ];
 
     columns.push(...columnsArr);
-
-    // const columns = [
-    //   {
-    //     title: '日期/周期/月份/年份',
-    //     dataIndex: 'date',
-    //     key: 'date',
-    //   },
-    //   {
-    //     title: '机构',
-    //     dataIndex: 'appName',
-    //     key: 'appName',
-    //     render: (text, record, index) => renderContent(text, record, index, listLength),
-    //   },
-    //   {
-    //     title: '微信线上关注数',
-    //     dataIndex: 'online',
-    //     key: 'online',
-    //     render: (text, record, index) => renderContent(text, record, index, listLength),
-    //   },
-    //   {
-    //     title: '微信地推人员关注数',
-    //     dataIndex: 'person',
-    //     key: 'person',
-    //     render: (text, record, index) => renderContent(text, record, index, listLength),
-    //   },
-    //   {
-    //     title: '微信医院二维码关注数',
-    //     dataIndex: 'hos',
-    //     key: 'hos',
-    //     render: (text, record, index) => renderContent(text, record, index, listLength),
-    //   },
-    //   {
-    //     title: '微信关注总数',
-    //     dataIndex: 'counts',
-    //     key: 'counts',
-    //     render: (text, record, index) => renderContent(text, record, index, listLength),
-    //   },
-    //   {
-    //     title: '微信取消关注数',
-    //     dataIndex: 'unFollow',
-    //     key: 'unFollow',
-    //     render: (text, record, index) => renderContent(text, record, index, listLength),
-    //   },
-    // ];
     return columns;
   };
 
@@ -280,12 +240,32 @@ class Member extends Component {
 
   handleFollowDownload = e => {
     e.preventDefault();
-    console.log('follow download');
+    const { onDownloadMembershipList, onSearchParamChange } = this.props;
+
+    onSearchParamChange('isExportFocus', true);
+    onDownloadMembershipList().then(data => {
+      if (data) {
+        const a = document.createElement('a');
+        a.setAttribute('href', data);
+        a.click();
+      }
+    });
+    onSearchParamChange('isExportFocus', false);
   };
 
   handleRegisterDownload = e => {
     e.preventDefault();
-    console.log('register download');
+    const { onDownloadMembershipList, onSearchParamChange } = this.props;
+
+    onSearchParamChange('isExportRegister', true);
+    onDownloadMembershipList().then(data => {
+      if (data) {
+        const a = document.createElement('a');
+        a.setAttribute('href', data);
+        a.click();
+      }
+    });
+    onSearchParamChange('isExportRegister', false);
   };
 
   handleSearch = async e => {

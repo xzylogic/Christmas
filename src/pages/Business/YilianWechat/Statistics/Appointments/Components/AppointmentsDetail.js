@@ -192,7 +192,7 @@ class AppointmentsDetail extends Component {
     const { appointmentList, currentPage, totalElements, visible, onClose, date } = this.props;
 
     return (
-      <Modal title="明细" width={900} centered visible={visible} footer={null} onCancel={onClose}>
+      <Modal title="明细" width={800} centered visible={visible} footer={null} onCancel={onClose}>
         <Divider>{date}</Divider>
         {appointmentList instanceof Object ? (
           <TableList

@@ -131,6 +131,7 @@ export default {
       // 小组列表
       queryMessage: null,
       fetchMessage: null,
+      // 人员月指标量
       fetchMemberMessage: null,
       // 医院列表
       fetchhosName: null,
@@ -431,6 +432,7 @@ export default {
         console.log(err);
       }
     },
+    // 设置人员月指标量
     *createMemberMonthAmount({ payload }, { call, put }) {
       const { postData } = payload;
       const res = yield call(createMemberMonthService, postData);

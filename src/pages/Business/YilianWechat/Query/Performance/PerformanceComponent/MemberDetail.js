@@ -47,20 +47,20 @@ class MemberDetail extends Component {
 
   setFansCountColor = (record, setMonth, memberMonthAmount) => {
     if (setMonth) {
-      if (!(record.fansCount < memberMonthAmount.mFansCount)) {
-        return <span>{record.fansCount}</span>;
+      if (record.fansCount < memberMonthAmount.mFansCount) {
+        return <span style={{ color: 'red' }}>{record.fansCount}</span>;
       }
-      return <span style={{ color: 'red' }}>{record.fansCount}</span>;
+      return <span>{record.fansCount}</span>;
     }
     return <span>{record.fansCount}</span>;
   };
 
   setRegCountColor = (record, setMonth, memberMonthAmount) => {
     if (setMonth) {
-      if (!(record.regCount < memberMonthAmount.mRegCount)) {
-        return <span>{record.regCount}</span>;
+      if (record.regCount < memberMonthAmount.mRegCount) {
+        return <span style={{ color: 'red' }}>{record.regCount}</span>;
       }
-      return <span style={{ color: 'red' }}>{record.regCount}</span>;
+      return <span>{record.regCount}</span>;
     }
     return <span>{record.regCount}</span>;
   };
@@ -129,32 +129,6 @@ class MemberDetail extends Component {
       ];
 
       columns.push(...columnsArr);
-
-      // columns = [
-      //   {
-      //     title: '日期',
-      //     dataIndex: 'date' || 'months' || 'weeks' || 'years',
-      //     key: 'date' || 'months' || 'weeks' || 'years',
-      //     render: (_, record) => record.date || record.weeks || record.months || record.years,
-      //   },
-      //   {
-      //     title: '渠道',
-      //     dataIndex: 'promoCode',
-      //     key: 'promoCode',
-      //   },
-      //   {
-      //     title: '关注量',
-      //     dataIndex: 'fansCount',
-      //     key: 'fansCount',
-      //     render: (_, record) => this.setFansCountColor(record, setMonth, memberMonthAmount),
-      //   },
-      //   {
-      //     title: '注册量',
-      //     dataIndex: 'regCount',
-      //     key: 'regCount',
-      //     render: (_, record) => this.setRegCountColor(record, setMonth, memberMonthAmount),
-      //   },
-      // ];
     }
     return columns;
   };

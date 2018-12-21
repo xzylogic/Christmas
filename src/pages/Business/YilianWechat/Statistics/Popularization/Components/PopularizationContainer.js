@@ -63,7 +63,6 @@ const mapDispatchToProps = dispatch => ({
 )
 class AppointmentsContainer extends Component {
   state = {
-    // allHosNameArr: false,
     way: 'week',
     selectedName: '',
     selectedDate: '',
@@ -76,8 +75,9 @@ class AppointmentsContainer extends Component {
       onFetchAllHosName,
       onFetchAllGroupName,
       onFetchHosGroup,
+      searchParam,
     } = this.props;
-    const { way } = this.state;
+    const { way } = searchParam;
 
     onFetchPromoteAttentionAmount(way, 0);
     onFetchAllHosName();
@@ -96,11 +96,10 @@ class AppointmentsContainer extends Component {
       await onSearchParamChange(dataKey, value);
     }
     await onFetchPromoteAttentionAmountDebounce(way, 0);
-    // await onFetchHosGroupDebounce(0);
   };
 
   setTableColumnsWechat = () => {
-    const { way } = this.state;
+    const { searchParam } = this.props;
     const renderGroupId = record => {
       let content = '';
       if (record) {
@@ -130,7 +129,7 @@ class AppointmentsContainer extends Component {
 
     const columns = [];
 
-    switch (way) {
+    switch (searchParam.way) {
       case 'day':
         columns.push({
           title: '日期',
@@ -355,6 +354,7 @@ class AppointmentsContainer extends Component {
     const { onFetchPromoteAttentionAmount, onSearchParamChange } = this.props;
     const { way } = this.state;
     await onSearchParamChange('type', way);
+    await onSearchParamChange('way', way);
     await onFetchPromoteAttentionAmount(way, 0);
   };
 

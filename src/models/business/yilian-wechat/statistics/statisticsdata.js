@@ -36,6 +36,7 @@ export default {
       // 推广数据统计
       promoteAttention: {
         type: 'week',
+        way: 'week',
         startTime: moment(new Date().valueOf() - 2678400000).format('YYYY-MM-DD'),
         endTime: moment(new Date().valueOf()).format('YYYY-MM-DD'),
         origin: '',

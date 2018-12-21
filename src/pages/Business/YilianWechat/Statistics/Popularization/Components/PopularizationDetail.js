@@ -140,7 +140,7 @@ class PopularizationDetail extends Component {
     return (
       <Modal
         title="查看详情"
-        width={600}
+        width={700}
         centered
         visible={visible}
         footer={null}

@@ -18,7 +18,7 @@ export default {
     *login({ payload }, { call, put }) {
       const response = yield call(login, payload.userName, payload.password);
       // Login successfully
-      if (response.code === 200) {
+      if (response && response.code === 200) {
         yield put({
           type: 'changeLoginStatus',
           payload: {

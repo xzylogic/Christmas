@@ -61,7 +61,7 @@ export default {
     'primary-color': defaultSettings.primaryColor,
   },
   proxy: {
-    ...(!process.env.NODE_ENV
+    ...(process.env.NODE_ENV === 'development'
       ? {
           '/yilian-cloud-backend-api': {
             target: 'http://10.2.10.13:9080',

@@ -74,7 +74,7 @@ export default {
         message.success(res.msg || '操作成功！！！');
         yield put({ type: 'fetchAccountList', payload: { page: 0 } });
       } else {
-        message.success((res && res.msg) || '操作失败！！！');
+        message.error((res && res.msg) || '操作失败！！！');
       }
     },
     *resetAccountPassword({ payload }, { call }) {
@@ -82,7 +82,7 @@ export default {
       if (res && res.code === 200) {
         message.success(res.msg || '操作成功！！！');
       } else {
-        message.success((res && res.msg) || '操作失败！！！');
+        message.error((res && res.msg) || '操作失败！！！');
       }
     },
     *deleteAccount({ payload }, { call, put }) {
@@ -91,7 +91,7 @@ export default {
         message.success(res.msg || '操作成功！！！');
         yield put({ type: 'fetchAccountList', payload: { page: 0 } });
       } else {
-        message.success((res && res.msg) || '操作失败！！！');
+        message.error((res && res.msg) || '操作失败！！！');
       }
     },
     *saveAccount({ payload }, { call, put }) {
@@ -101,7 +101,7 @@ export default {
         message.success(res.msg || '保存用户信息成功！！！');
         Router.push('/system/accounts');
       } else {
-        message.success((res && res.msg) || '保存用户信息失败！！！');
+        message.error((res && res.msg) || '保存用户信息失败！！！');
       }
     },
     *fetchAllRoles(_, { call, put }) {

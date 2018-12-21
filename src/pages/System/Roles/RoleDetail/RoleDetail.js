@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
+import Router from 'umi/router';
 import { Form, Input, Button, TreeSelect } from 'antd';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
@@ -136,10 +137,15 @@ class RoleDetail extends Component {
     });
   };
 
+  goBack = () => {
+    const { onUpdateSelectedAccount } = this.props;
+    onUpdateSelectedAccount(null);
+    Router.push(`/system/accounts`);
+  };
+
   render() {
     const {
       form: { getFieldDecorator },
-      history: { goBack },
       currentRole,
       menus,
     } = this.props;
@@ -203,7 +209,7 @@ class RoleDetail extends Component {
               <Button type="primary" htmlType="submit">
                 保存
               </Button>
-              <Button style={{ marginLeft: 8 }} onClick={goBack}>
+              <Button style={{ marginLeft: 8 }} onClick={this.goBack}>
                 返回
               </Button>
             </Form.Item>

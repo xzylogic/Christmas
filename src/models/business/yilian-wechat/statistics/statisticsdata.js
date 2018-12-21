@@ -28,6 +28,8 @@ export default {
         visitLevelCode: null,
         orderStatus: null,
         regChannel: null,
+        chooseStartTime: moment(new Date().valueOf() - 31622400000).format('YYYY-MM-DD'),
+        chooseEndTime: moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD'),
         type: 'day',
         isExport: false,
       },
@@ -49,6 +51,8 @@ export default {
         orderStatusWechat: null,
         // 医联App
         orderStatusApp: null,
+        chooseStartTime: moment(new Date().valueOf() - 31622400000).format('YYYY-MM-DD'),
+        chooseEndTime: moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD'),
         isExport: false,
       },
     },
@@ -206,11 +210,11 @@ export default {
         );
         const { way, page } = payload;
         let params = '';
-        if (promoteAttention && promoteAttention.startTime) {
-          params += `&startTime=${promoteAttention.startTime}`;
+        if (promoteAttention && promoteAttention.chooseStartTime) {
+          params += `&startTime=${promoteAttention.chooseStartTime}`;
         }
-        if (promoteAttention && promoteAttention.endTime) {
-          params += `&endTime=${promoteAttention.endTime}`;
+        if (promoteAttention && promoteAttention.chooseEndTime) {
+          params += `&endTime=${promoteAttention.chooseEndTime}`;
         }
         if (promoteAttention && promoteAttention.origin) {
           params += `&origin=${promoteAttention.origin}`;
@@ -338,11 +342,11 @@ export default {
       );
       const { way, page } = payload;
       let params = '';
-      if (appointmentAttention && appointmentAttention.startTime) {
-        params += `&startTime=${appointmentAttention.startTime}`;
+      if (appointmentAttention && appointmentAttention.chooseStartTime) {
+        params += `&startTime=${appointmentAttention.chooseStartTime}`;
       }
-      if (appointmentAttention && appointmentAttention.endTime) {
-        params += `&endTime=${appointmentAttention.endTime}`;
+      if (appointmentAttention && appointmentAttention.chooseEndTime) {
+        params += `&endTime=${appointmentAttention.chooseEndTime}`;
       }
       if (appointmentAttention && appointmentAttention.type) {
         params += `&countType=${appointmentAttention.type}`;

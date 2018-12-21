@@ -13,7 +13,7 @@ function AppointmentsBar(props) {
       content = (
         <Select
           className={classes.Gap}
-          style={{ width: 115 }}
+          style={{ width: 150 }}
           placeholder="医院名称"
           value={params.hosOrgCode}
           onChange={value => onParamsChange(value, 'hosOrgCode')}
@@ -29,7 +29,7 @@ function AppointmentsBar(props) {
       content = (
         <Select
           className={classes.Gap}
-          style={{ width: 115 }}
+          style={{ width: 150 }}
           placeholder="医院名称"
           value={params.hosOrgCode}
           onChange={value => onParamsChange(value, 'hosOrgCode')}
@@ -48,6 +48,17 @@ function AppointmentsBar(props) {
   return (
     <Row className={classes.Container}>
       <Col className={classes.Container}>
+        <Select
+          className={classes.Gap}
+          name="countType"
+          value={params.countType}
+          onChange={value => onParamsChange(value, 'countType')}
+        >
+          <Select.Option value="day">按日统计</Select.Option>
+          <Select.Option value="week">按周统计</Select.Option>
+          <Select.Option value="month">按月统计</Select.Option>
+          <Select.Option value="year">按年统计</Select.Option>
+        </Select>
         <span>
           <DatePicker.RangePicker
             className={classes.Gap}
@@ -93,22 +104,22 @@ function AppointmentsBar(props) {
           医院名称：
           {renderHosName()}
         </span>
-        <span className={classes.Span}>
-          门诊类型：
-          <Select
-            style={{ width: 115 }}
-            placeholder="门诊类型"
-            className={classes.Gap}
-            value={params.visitLevelCode}
-            onChange={value => onParamsChange(value, 'visitLevelCode')}
-            // defaultValue={allGroupName[0].name}
-          >
-            <Select.Option value="1">专家</Select.Option>
-            <Select.Option value="2">专病</Select.Option>
-            <Select.Option value="3">普通</Select.Option>
-          </Select>
-        </span>
       </Col>
+      <span className={classes.Span}>
+        门诊类型：
+        <Select
+          style={{ width: 115 }}
+          placeholder="门诊类型"
+          className={classes.Gap}
+          value={params.visitLevelCode}
+          onChange={value => onParamsChange(value, 'visitLevelCode')}
+          // defaultValue={allGroupName[0].name}
+        >
+          <Select.Option value="1">专家</Select.Option>
+          <Select.Option value="2">专病</Select.Option>
+          <Select.Option value="3">普通</Select.Option>
+        </Select>
+      </span>
       <span className={classes.Span}>
         预约渠道：
         <Select

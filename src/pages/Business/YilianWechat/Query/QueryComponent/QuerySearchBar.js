@@ -59,6 +59,9 @@ function querySearchBar(props) {
         <Button type="primary" htmlType="button" onClick={onSearch} className={classes.Gap}>
           查询
         </Button>
+        {/* <Button type="primary" htmlType="button" onClick={onReset} className={classes.Gap}>
+          重置
+        </Button> */}
         {amountSetShow ? (
           <Button type="primary" htmlType="button" onClick={onAmountSet} className={classes.Gap}>
             月指标量

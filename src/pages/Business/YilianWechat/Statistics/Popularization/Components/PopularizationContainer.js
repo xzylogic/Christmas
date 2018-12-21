@@ -109,6 +109,24 @@ class AppointmentsContainer extends Component {
       return content;
     };
 
+    const handleDetail = (_, record) => {
+      let content = (
+        <span>
+          <a onClick={e => this.handleDetail(e, record)}>查看</a>
+        </span>
+      );
+
+      if (record && record.date) {
+        content = <span>查看</span>;
+      }
+
+      // if (record.date.split('/').length === 3) {
+      //   content = <span>查看</span>;
+      // }
+
+      return content;
+    };
+
     const columns = [];
 
     switch (way) {
@@ -174,11 +192,12 @@ class AppointmentsContainer extends Component {
         title: '明细',
         dataIndex: 'id',
         key: 'action',
-        render: (_, record) => (
-          <span>
-            <a onClick={e => this.handleDetail(e, record)}>查看</a>
-          </span>
-        ),
+        render: (_, record) => handleDetail(_, record),
+        // render: (_, record) => (
+        //   <span>
+        //     <a onClick={e => this.handleDetail(e, record)}>查看</a>
+        //   </span>
+        // ),
       },
       {
         title: '组别',

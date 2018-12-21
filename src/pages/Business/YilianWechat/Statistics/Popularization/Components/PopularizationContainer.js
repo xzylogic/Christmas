@@ -332,8 +332,9 @@ class AppointmentsContainer extends Component {
 
   handleChangeWay = async value => {
     await this.setState({ way: value });
-    const { onFetchPromoteAttentionAmount } = this.props;
+    const { onFetchPromoteAttentionAmount, onSearchParamChange } = this.props;
     const { way } = this.state;
+    await onSearchParamChange('type', way);
     await onFetchPromoteAttentionAmount(way, 0);
   };
 

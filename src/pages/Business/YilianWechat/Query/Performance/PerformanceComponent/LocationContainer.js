@@ -34,6 +34,11 @@ const mapDispatchToProps = dispatch => ({
       type: 'businessYilianWechatQuery/updateSearchParam',
       payload: { origin: 'location', key, value },
     }),
+  // onDownloadLocationList: page =>
+  //   dispatch({
+  //     type: 'businessYilianWechatQuery/downloadLocationPerformance',
+  //     payload: { page },
+  //   }),
 });
 
 @connect(
@@ -147,6 +152,17 @@ class LocationContainer extends Component {
 
   handleExport = e => {
     e.preventDefault();
+    // const { onDownloadLocationList, onSearchParamChange, currentPage } = this.props;
+
+    // onSearchParamChange('isExport', true);
+    // onDownloadLocationList(currentPage).then(data => {
+    //   if (data) {
+    //     const a = document.createElement('a');
+    //     a.setAttribute('href', data);
+    //     a.click();
+    //   }
+    // });
+    // onSearchParamChange('isExport', false);
     console.log('export');
   };
 

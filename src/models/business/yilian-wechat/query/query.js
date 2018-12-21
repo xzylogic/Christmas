@@ -63,6 +63,7 @@ export default {
         endTime: moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD'),
         name: '',
         source: 'wechat',
+        isExport: false,
       },
       // 人员查询
       member: {
@@ -70,6 +71,7 @@ export default {
         endTime: moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD'),
         name: '',
         source: 'wechat',
+        isExport: false,
       },
       // 推广地点查询
       location: {
@@ -77,6 +79,7 @@ export default {
         endTime: moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD'),
         name: '',
         source: 'wechat',
+        isExport: false,
       },
       // 会员查询
       membership: {
@@ -183,6 +186,9 @@ export default {
       if (group && group.name) {
         params += `&name=${group.name}`;
       }
+      // if (group && !group.isExport) {
+      //   params += `&name=${group.isExport}`;
+      // }
       const res = yield call(fetchGroupPerformanceService, params, page, 10);
       if (res && res.code === 200) {
         yield put({
@@ -196,6 +202,29 @@ export default {
         });
       }
     },
+    // *downloadGroupPerformance({ payload }, { call, select }) {
+    //   const { group } = yield select(state => state.businessYilianWechatQuery.searchParam);
+    //   const { page } = payload;
+    //   let params = '';
+    //   if (group && group.startTime) {
+    //     params += `&startTime=${group.startTime}`;
+    //   }
+    //   if (group && group.endTime) {
+    //     params += `&endTime=${group.endTime}`;
+    //   }
+    //   if (group && group.name) {
+    //     params += `&name=${group.name}`;
+    //   }
+    //   if (group && group.isExport) {
+    //     params += `&isExport=${group.isExport}`;
+    //   }
+    //   const res = yield call(fetchGroupPerformanceService, params, page, 10);
+    //   let returnData = null;
+    //   if (res && res.code === 200 && res.msg) {
+    //     returnData = res.msg;
+    //   }
+    //   return returnData;
+    // },
     *fetchGroupPerformanceDetail({ payload }, { call, select, put }) {
       try {
         const { group } = yield select(state => state.businessYilianWechatQuery.searchParam);
@@ -296,6 +325,9 @@ export default {
       if (member && member.name) {
         params += `&name=${member.name}`;
       }
+      // if (member && !member.isExport) {
+      //   params += `&isExport=${member.isExport}`;
+      // }
       const res = yield call(fetchMemberService, params, page, 10);
       if (res && res.code === 200) {
         yield put({
@@ -309,6 +341,29 @@ export default {
         });
       }
     },
+    // *downloadMemberPerformance({ payload }, { call, select }) {
+    //   const { member } = yield select(state => state.businessYilianWechatQuery.searchParam);
+    //   const { page } = payload;
+    //   let params = '';
+    //   if (member && member.startTime) {
+    //     params += `&startTime=${member.startTime}`;
+    //   }
+    //   if (member && member.endTime) {
+    //     params += `&endTime=${member.endTime}`;
+    //   }
+    //   if (member && member.name) {
+    //     params += `&name=${member.name}`;
+    //   }
+    //   if (member && member.isExport) {
+    //     params += `&isExport=${member.isExport}`;
+    //   }
+    //   const res = yield call(fetchMemberService, params, page, 10);
+    //   let returnData = null;
+    //   if (res && res.code === 200 && res.msg) {
+    //     returnData = res.msg;
+    //   }
+    //   return returnData;
+    // },
     *fetchMemberPerformanceDetail({ payload }, { call, select, put }) {
       try {
         const { member } = yield select(state => state.businessYilianWechatQuery.searchParam);
@@ -363,6 +418,9 @@ export default {
       if (location && location.name) {
         params += `&name=${location.name}`;
       }
+      // if (location && !location.isExport) {
+      //   params += `&isExport=${location.isExport}`;
+      // }
       const res = yield call(fetchLocationService, params, page, 10);
       if (res && res.code === 200) {
         yield put({
@@ -376,6 +434,29 @@ export default {
         });
       }
     },
+    // *downloadLocationPerformance({ payload }, { call, select }) {
+    //   const { location } = yield select(state => state.businessYilianWechatQuery.searchParam);
+    //   const { page } = payload;
+    //   let params = '';
+    //   if (location && location.startTime) {
+    //     params += `&startTime=${location.startTime}`;
+    //   }
+    //   if (location && location.endTime) {
+    //     params += `&endTime=${location.endTime}`;
+    //   }
+    //   if (location && location.name) {
+    //     params += `&name=${location.name}`;
+    //   }
+    //   if (location && location.isExport) {
+    //     params += `&isExport=${location.isExport}`;
+    //   }
+    //   const res = yield call(fetchLocationService, params, page, 10);
+    //   let returnData = null;
+    //   if (res && res.code === 200 && res.msg) {
+    //     returnData = res.msg;
+    //   }
+    //   return returnData;
+    // },
     *fetchLocationPerformanceDetail({ payload }, { call, select, put }) {
       const { location } = yield select(state => state.businessYilianWechatQuery.searchParam);
       const { way, name, page } = payload;

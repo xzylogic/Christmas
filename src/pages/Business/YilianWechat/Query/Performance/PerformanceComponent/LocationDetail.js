@@ -101,30 +101,6 @@ class LocationDetail extends Component {
     ];
 
     columns.push(...columnsArr);
-
-    // const columns = [
-    //   {
-    //     title: '日期',
-    //     dataIndex: 'date' || 'months' || 'weeks' || 'years',
-    //     key: 'date' || 'months' || 'weeks' || 'years',
-    //     render: (_, record) => record.date || record.weeks || record.months || record.years,
-    //   },
-    //   {
-    //     title: '渠道',
-    //     dataIndex: 'promoCode',
-    //     key: 'promoCode',
-    //   },
-    //   {
-    //     title: '关注量',
-    //     dataIndex: 'fansCount',
-    //     key: 'fansCount',
-    //   },
-    //   {
-    //     title: '注册量',
-    //     dataIndex: 'regCount',
-    //     key: 'regCount',
-    //   },
-    // ];
     return columns;
   };
 

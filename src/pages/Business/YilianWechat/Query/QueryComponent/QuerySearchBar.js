@@ -22,8 +22,8 @@ function querySearchBar(props) {
           <Select.Option value="wechat">微信</Select.Option>
         </Select> */}
         <DatePicker.RangePicker
-          className={classes.Gap}
           // className={classes.Gap}
+          className={classes.Span}
           value={[moment(startTime, 'YYYY-MM-DD'), moment(endTime, 'YYYY-MM-DD')]}
           onChange={(_, dateStrings) => onParamsChange(dateStrings, 'date')}
           allowClear={false}

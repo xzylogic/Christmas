@@ -47,20 +47,20 @@ class GroupDetail extends Component {
 
   setFansCountColor = (record, setMonth, groupMonthAmount) => {
     if (setMonth) {
-      if (!(record.fansCount < groupMonthAmount.mFansCount)) {
-        return <span>{record.fansCount}</span>;
+      if (record.fansCount < groupMonthAmount.mFansCount) {
+        return <span style={{ color: 'red' }}>{record.fansCount}</span>;
       }
-      return <span style={{ color: 'red' }}>{record.fansCount}</span>;
+      return <span>{record.fansCount}</span>;
     }
     return <span>{record.fansCount}</span>;
   };
 
   setRegCountColor = (record, setMonth, groupMonthAmount) => {
     if (setMonth) {
-      if (!(record.regCount < groupMonthAmount.mRegCount)) {
-        return <span>{record.regCount}</span>;
+      if (record.regCount < groupMonthAmount.mRegCount) {
+        return <span style={{ color: 'red' }}>{record.regCount}</span>;
       }
-      return <span style={{ color: 'red' }}>{record.regCount}</span>;
+      return <span>{record.regCount}</span>;
     }
     return <span>{record.regCount}</span>;
   };

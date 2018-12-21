@@ -140,7 +140,8 @@ class AppointmentsContainer extends Component {
       );
 
       if (record.date.split('/').length === 3) {
-        content = <span>查看</span>;
+        // content = <span>查看</span>;
+        content = <span style={{ color: '#8e8c8a' }}>查看</span>;
       }
 
       return content;

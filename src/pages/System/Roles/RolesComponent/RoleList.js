@@ -85,7 +85,7 @@ class RoleList extends React.PureComponent {
           <span>
             <Popconfirm
               placement="topRight"
-              title={`是否要${record.enabled === true ? '禁用' : '启用'}账号${record.roleName}？`}
+              title={`是否要${record.enabled === true ? '禁用' : '启用'}角色${record.roleName}？`}
               onConfirm={e => this.handleState(e, record)}
               onCancel={e => e.preventDefault()}
               okText="是"
@@ -98,7 +98,7 @@ class RoleList extends React.PureComponent {
             <Divider type="vertical" />
             <Popconfirm
               placement="topRight"
-              title={`是否要删除账号${record.roleName}？`}
+              title={`是否要删除角色${record.roleName}？`}
               onConfirm={e => this.handleDelete(e, record)}
               onCancel={e => e.preventDefault()}
               okText="是"

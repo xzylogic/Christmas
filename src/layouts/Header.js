@@ -12,6 +12,7 @@ const { Header } = Layout;
 class HeaderView extends PureComponent {
   state = {
     visible: true,
+    changePWD: false,
   };
 
   static getDerivedStateFromProps(props, state) {
@@ -42,7 +43,18 @@ class HeaderView extends PureComponent {
 
   handleMenuClick = ({ key }) => {
     const { dispatch } = this.props;
+
     if (key === 'changePassword') {
+      this.setState({ changePWD: true });
+
+      // console.log(this.props)
+
+      // currentUser
+      //   password
+
+      // const { visible } = this.state;
+      // console.log(visible)
+
       // router.push('/account/center');
       // return;
       // }
@@ -97,7 +109,7 @@ class HeaderView extends PureComponent {
   render() {
     const { isMobile, handleMenuCollapse, setting } = this.props;
     const { navTheme, layout, fixedHeader } = setting;
-    const { visible } = this.state;
+    const { visible, changePWD } = this.state;
     const isTop = layout === 'topmenu';
     const width = this.getHeadWidth();
     const HeaderDom = visible ? (
@@ -115,6 +127,8 @@ class HeaderView extends PureComponent {
           <GlobalHeader
             onCollapse={handleMenuCollapse}
             onMenuClick={this.handleMenuClick}
+            changePWD={changePWD}
+            onClose={() => this.setState({ changePWD: false })}
             {...this.props}
           />
         )}

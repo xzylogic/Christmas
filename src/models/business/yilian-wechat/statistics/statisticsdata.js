@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { message } from 'antd';
 
 import {
   fetchPromoteAttentionAmountService,
@@ -7,6 +8,7 @@ import {
   fetchAppointmentsDataService,
   fetchHosTypeService,
   fetchHosGroupService,
+  modifyPasswordService,
 } from '@/services/business/yilian-wechat/statistics/statisticsdata';
 
 export const APPOINTMENTS_REPORT_TYPE = {
@@ -426,6 +428,21 @@ export default {
           },
         });
       }
+    },
+    // 修改密码
+    *modifyPassword({ payload }, { call }) {
+      const { postData } = payload;
+
+      const { userId, oldPassword, newPassword } = postData;
+      const res = yield call(modifyPasswordService, userId, oldPassword, newPassword);
+      let ifsuccess = false;
+      if (res && res.code === 200) {
+        ifsuccess = true;
+        message.success('修改密码成功！');
+      } else {
+        message.error('修改密码失败！');
+      }
+      return ifsuccess;
     },
   },
 

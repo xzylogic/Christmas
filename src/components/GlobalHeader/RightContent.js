@@ -16,7 +16,6 @@ const mapDispatchToProps = dispatch => ({
   mapDispatchToProps
 )
 @Form.create()
-// export default class GlobalHeaderRight extends PureComponent {
 class GlobalHeaderRight extends PureComponent {
   handleSubmit = e => {
     e.preventDefault();
@@ -48,7 +47,6 @@ class GlobalHeaderRight extends PureComponent {
   };
 
   compareToFirstPassword = (_, value, callback) => {
-    // const form = this.props.form;
     const { form } = this.props;
 
     if (value && value !== form.getFieldValue('newPassword')) {

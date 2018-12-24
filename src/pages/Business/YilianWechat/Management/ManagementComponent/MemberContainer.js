@@ -213,6 +213,7 @@ class MemberContainer extends Component {
       if (data) {
         const a = document.createElement('a');
         a.setAttribute('href', data);
+        a.setAttribute('target', '_blank');
         a.click();
       }
     });

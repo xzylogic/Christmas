@@ -74,16 +74,29 @@ class AppointmentsContainer extends Component {
       if (record === '3') {
         content = <span>已取消</span>;
       }
+
+      if (record === '5') {
+        content = <span>已无效</span>;
+      }
       return content;
     };
 
     const renderRegChannel = record => {
       let content = '';
-      if (record === 'app') {
+      if (record === 'app' || record === 'app_ios' || record === 'app_android') {
         content = <span>APP</span>;
       }
       if (record === 'wechat') {
         content = <span>微信</span>;
+      }
+      if (record === 'alipay') {
+        content = <span>支付宝服务窗</span>;
+      }
+      if (record === 'window') {
+        content = <span>窗口</span>;
+      }
+      if (record === 'machine') {
+        content = <span>自助机</span>;
       }
       return content;
     };

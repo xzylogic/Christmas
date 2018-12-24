@@ -118,7 +118,7 @@ class MemberSearch extends Component {
                   onChange={value => onParamsChange(value, 'name')}
                 >
                   {allPerson.map(item => (
-                    <Select.Option id={item.id} key={item.id} value={item.id}>
+                    <Select.Option id={item.id} key={item.id} value={item.hos_name}>
                       {item.hos_name}
                     </Select.Option>
                   ))}

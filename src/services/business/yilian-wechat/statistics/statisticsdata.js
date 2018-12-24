@@ -81,6 +81,7 @@ export async function fetchAppointmentReportType1Service(params, page, size) {
   return request(`/yilian-cloud-backend-api/ylWeChatCount/reservation/groupHosCount${query}`);
 }
 
+// 修改密码
 export async function modifyPasswordService(userId, oldPassword, newPassword) {
   return request(
     `/yilian-cloud-backend-api/user/modifyPassword?userId=${userId}&oldPassword=${oldPassword}&newPassword=${newPassword}`,

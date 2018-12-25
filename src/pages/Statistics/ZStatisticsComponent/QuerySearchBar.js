@@ -106,6 +106,27 @@ function querySearchBar(props) {
           ],
         }}
       />
+      {/* <span className={classes.Gap}>
+            开始日期：
+            <DatePicker
+              format="YYYY-MM-DD"
+              showToday={false}
+              allowClear={false}
+              value={moment(startDate, 'YYYY-MM-DD')}
+              onChange={(_, dateStrings) => onParamsChange(dateStrings, 'startDate')}
+            />
+          </span>
+          <span className={classes.Gap}>
+            截止日期：
+            <DatePicker
+              defaultValue={moment('2018/01/01', 'YYYY-MM-DD')}
+              format="YYYY-MM-DD"
+              showToday={false}
+              allowClear={false}
+              value={moment(endDate, 'YYYY-MM-DD')}
+              onChange={(_, dateStrings) => onParamsChange(dateStrings, 'endDate')}
+            />
+          </span> */}
       {hospitals ? (
         <React.Fragment>
           {/* <span style={{ display: 'inline-block', whiteSpace: 'nowrap' }}>
@@ -159,15 +180,17 @@ function querySearchBar(props) {
       ) : (
         ''
       )}
-      <Button type="primary" htmlType="button" onClick={onSearch} className={classes.Gap}>
-        查询
-      </Button>
-      <Button type="primary" htmlType="button" onClick={onReset} className={classes.Gap}>
-        重置
-      </Button>
-      <Button type="primary" htmlType="button" onClick={onExport} className={classes.Gap}>
-        导出Excel
-      </Button>
+      <span className={classes.Span}>
+        <Button type="primary" htmlType="button" onClick={onSearch} className={classes.Gap}>
+          查询
+        </Button>
+        <Button type="primary" htmlType="button" onClick={onReset} className={classes.Gap}>
+          重置
+        </Button>
+        <Button type="primary" htmlType="button" onClick={onExport} className={classes.Gap}>
+          导出Excel
+        </Button>
+      </span>
     </div>
   );
 }

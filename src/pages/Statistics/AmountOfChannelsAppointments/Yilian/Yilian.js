@@ -417,7 +417,6 @@ class Index extends Component {
   };
 
   handelExport = () => {
-    console.log('export');
     const { onExportYilianStatistics } = this.props;
     onExportYilianStatistics().then(data => {
       console.log(data);

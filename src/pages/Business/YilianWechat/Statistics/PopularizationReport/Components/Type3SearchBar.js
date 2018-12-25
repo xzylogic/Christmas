@@ -7,6 +7,14 @@ import classes from '../PopularizationReport.less';
 function type3SearchBar(props) {
   const { params, onParamsChange, onReset, onExport, onSearch } = props;
 
+  const dateFormat = () => {
+    let content = 'YYYY-MM-DD';
+    if (params.countType === 'month' || params.countType === 'year') {
+      content = 'YYYY-MM';
+    }
+    return content;
+  };
+
   return (
     <div className={classes.Search}>
       <Select
@@ -47,7 +55,7 @@ function type3SearchBar(props) {
       <span className={classes.Span}>
         开始日期：
         <DatePicker
-          format="YYYY-MM-DD"
+          format={dateFormat()}
           showToday={false}
           allowClear={false}
           value={moment(params.startTime, 'YYYY-MM-DD')}
@@ -57,8 +65,7 @@ function type3SearchBar(props) {
       <span className={classes.Span}>
         截止日期：
         <DatePicker
-          defaultValue={moment('2018/01/01', 'YYYY-MM-DD')}
-          format="YYYY-MM-DD"
+          format={dateFormat()}
           showToday={false}
           allowClear={false}
           value={moment(params.endTime, 'YYYY-MM-DD')}

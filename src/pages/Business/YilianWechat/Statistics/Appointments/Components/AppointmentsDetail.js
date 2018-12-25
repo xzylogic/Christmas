@@ -89,7 +89,7 @@ class AppointmentsDetail extends Component {
       } else if (date.split('/').length === 1) {
         const newStartDate = date.split('/');
         const newEndDate = date.split('/');
-        newStartDate.push('01', '31');
+        newStartDate.push('01', '01');
         newEndDate.push('12', '31');
         startTime = newStartDate.join('-');
         endTime = newEndDate.join('-');

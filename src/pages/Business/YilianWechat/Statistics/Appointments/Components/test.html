@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+     const currentStart ='2018-12-25';
+
+      // 默认开始年份
+      const defaultStart = currentStart.split('-').splice(0, 1);
+      defaultStart.push('01', '01');
+      const defaultStartTime = defaultStart.join('-');
+
+      // 开始年份
+      const startYear1 = currentStart.split('-').splice(0, 1);
+      startYear1.push('01', '01');
+      const startYear2 = startYear1.join('-');
+
+      let startYear3 = parseInt(startYear2.split('-')[0], 10);
+      let startyearArr = [{ id: startYear2, year: startYear3 }];
+
+      console.log(startYear3)
+
+      for (let i = 0; i < 20; i ++ ) {
+        startYear3--;
+        const startYear4 = [startYear3];
+        startYear4.push('01', '01');
+        const startYear5 = startYear4.join('-');
+        startyearArr.push({ id: startYear5, year: startYear3 });
+      }
+
+      console.log(startyearArr)
+    
+  </script>
+</body>
+</html>

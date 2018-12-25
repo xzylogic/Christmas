@@ -55,6 +55,14 @@ function PopularizationBar(props) {
     return content;
   };
 
+  const dateFormat = () => {
+    let content = 'YYYY-MM-DD';
+    if (params.type === 'month' || params.type === 'year') {
+      content = 'YYYY-MM';
+    }
+    return content;
+  };
+
   return (
     <Row>
       <Col span={24}>
@@ -93,7 +101,7 @@ function PopularizationBar(props) {
         <span className={classes.Span}>
           开始日期：
           <DatePicker
-            format="YYYY-MM-DD"
+            format={dateFormat()}
             showToday={false}
             allowClear={false}
             value={moment(params.startTime, 'YYYY-MM-DD')}
@@ -103,8 +111,7 @@ function PopularizationBar(props) {
         <span className={classes.Span}>
           截止日期：
           <DatePicker
-            defaultValue={moment('2018/01/01', 'YYYY-MM-DD')}
-            format="YYYY-MM-DD"
+            format={dateFormat()}
             showToday={false}
             allowClear={false}
             value={moment(params.endTime, 'YYYY-MM-DD')}

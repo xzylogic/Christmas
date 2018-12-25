@@ -52,7 +52,6 @@ class Type3Chart extends Component {
       )
       .map(obj => {
         const objCopy = { ...obj };
-        objCopy.date = obj.sub_date || obj.weeks || obj.months || obj.years || '';
         objCopy.conversionRate =
           (obj.conversionRate && Number(obj.conversionRate.split('%')[0])) || 0;
         objCopy['关注量'] = objCopy.fansCount;

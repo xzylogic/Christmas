@@ -33,11 +33,11 @@ const getListCounts = list => {
     if (listCopy.length > 0) {
       const listCounts = listCopy.reduce(
         (preObj, obj) => ({
-          counts: preObj.counts + obj.counts,
-          hos: preObj.hos + obj.hos,
-          online: preObj.online + obj.online,
-          person: preObj.person + obj.person,
-          unFollow: preObj.unFollow + obj.unFollow,
+          counts: preObj.counts + parseInt(obj.counts, 10),
+          hos: preObj.hos + parseInt(obj.hos, 10),
+          online: preObj.online + parseInt(obj.online, 10),
+          person: preObj.person + parseInt(obj.person, 10),
+          unFollow: preObj.unFollow + parseInt(obj.unFollow, 10),
         }),
         initialValue
       );

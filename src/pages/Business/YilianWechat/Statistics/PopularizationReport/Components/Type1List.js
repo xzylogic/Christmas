@@ -58,20 +58,12 @@ class Type1List extends Component {
   getList = (data, type) => {
     let returnData = [];
     if (data && Array.isArray(data)) {
-      const arr = data.reduce(
-        // (pre, curr) => [...pre, curr.sub_date || curr.weeks || curr.months || curr.years || ''],
-        (pre, curr) => [...pre, curr.date || curr.date || curr.date || curr.date || ''],
-        []
-      );
+      const arr = data.reduce((pre, curr) => [...pre, curr.date || ''], []);
       const dateKeys = Array.from(new Set(arr));
       returnData = dateKeys.map(date => {
         const mapData = {};
         mapData.date = date;
-        const dataBydate = data.filter(
-          obj =>
-            // obj.sub_date === date || obj.weeks === date || obj.months === date || obj.years === date
-            obj.date === date || obj.date === date || obj.date === date || obj.date === date
-        );
+        const dataBydate = data.filter(obj => obj.date === date);
         dataBydate.forEach(obj => {
           mapData[obj.site] = obj[type] || 0;
         });

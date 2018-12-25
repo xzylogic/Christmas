@@ -31,6 +31,12 @@ const Line2 = createG2(chart => {
     .color('site', ['#36cfc9', '#ffc53d', '#40a9ff', '#ff4d4f', '#9254de'])
     .size(2)
     .animate(false);
+  chart
+    .point()
+    .position('date*regCount')
+    .color('site', ['#36cfc9', '#ffc53d', '#40a9ff', '#ff4d4f', '#9254de'])
+    .size(2)
+    .animate(false);
   chart.render();
 });
 
@@ -47,13 +53,18 @@ const Line3 = createG2(chart => {
     .color('site', ['#36cfc9', '#ffc53d', '#40a9ff', '#ff4d4f', '#9254de'])
     .size(2)
     .animate(false);
+  chart
+    .point()
+    .position('date*conversionRate')
+    .color('site', ['#36cfc9', '#ffc53d', '#40a9ff', '#ff4d4f', '#9254de'])
+    .size(2)
+    .animate(false);
   chart.render();
 });
 
 const getDataSource = data => {
   const dataCopy = data.map(obj => {
     const objCopy = { ...obj };
-    objCopy.date = obj.sub_date || obj.weeks || obj.months || obj.years || '';
     objCopy.conversionRate = (obj.conversionRate && Number(obj.conversionRate.split('%')[0])) || 0;
     return objCopy;
   });

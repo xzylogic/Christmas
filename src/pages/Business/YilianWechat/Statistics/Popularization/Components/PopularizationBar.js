@@ -64,7 +64,7 @@ function PopularizationBar(props) {
           <Select.Option value="month">按月统计</Select.Option>
           <Select.Option value="year">按年统计</Select.Option>
         </Select>
-        <span className={classes.Span}>
+        {/* <span className={classes.Span}>
           <DatePicker.RangePicker
             className={classes.Gap}
             value={[moment(params.startTime, 'YYYY-MM-DD'), moment(params.endTime, 'YYYY-MM-DD')]}
@@ -89,8 +89,28 @@ function PopularizationBar(props) {
               ],
             }}
           />
+        </span> */}
+        <span className={classes.Span}>
+          开始日期：
+          <DatePicker
+            format="YYYY-MM-DD"
+            showToday={false}
+            allowClear={false}
+            value={moment(params.startTime, 'YYYY-MM-DD')}
+            onChange={(_, dateStrings) => onParamsChange(dateStrings, 'startTime')}
+          />
         </span>
-
+        <span className={classes.Span}>
+          截止日期：
+          <DatePicker
+            defaultValue={moment('2018/01/01', 'YYYY-MM-DD')}
+            format="YYYY-MM-DD"
+            showToday={false}
+            allowClear={false}
+            value={moment(params.endTime, 'YYYY-MM-DD')}
+            onChange={(_, dateStrings) => onParamsChange(dateStrings, 'endTime')}
+          />
+        </span>
         <span className={classes.Span}>
           组别：
           {allGroupName instanceof Object ? (
@@ -112,14 +132,14 @@ function PopularizationBar(props) {
             ''
           )}
         </span>
-        <span className={classes.Span}>
-          医院名称：
-          {renderHosName()}
-        </span>
       </Col>
       {/* <Col span={15}> */}
       {/* </Col> */}
       {/* <Col span={8} className={classes.ColRight}> */}
+      <span className={classes.Span}>
+        医院名称：
+        {renderHosName()}
+      </span>
       <span className={classes.Span}>
         数据来源：
         <Select

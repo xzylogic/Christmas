@@ -1,5 +1,5 @@
 import React from 'react';
-import { Select, Button, DatePicker, Row, Col } from 'antd';
+import { Select, Button, DatePicker, Row } from 'antd';
 import moment from 'moment';
 
 import classes from './AppointmentsBar.less';
@@ -60,19 +60,19 @@ function AppointmentsBar(props) {
   // }
   return (
     <Row>
-      <Col>
-        <Select
-          className={classes.Span}
-          name="countType"
-          value={params.countType}
-          onChange={value => onParamsChange(value, 'countType')}
-        >
-          <Select.Option value="day">按日统计</Select.Option>
-          <Select.Option value="week">按周统计</Select.Option>
-          <Select.Option value="month">按月统计</Select.Option>
-          <Select.Option value="year">按年统计</Select.Option>
-        </Select>
-        <span className={classes.Span}>
+      {/* <Col> */}
+      <Select
+        className={classes.Span}
+        name="countType"
+        value={params.countType}
+        onChange={value => onParamsChange(value, 'countType')}
+      >
+        <Select.Option value="day">按日统计</Select.Option>
+        <Select.Option value="week">按周统计</Select.Option>
+        <Select.Option value="month">按月统计</Select.Option>
+        <Select.Option value="year">按年统计</Select.Option>
+      </Select>
+      {/* <span className={classes.Span}>
           <DatePicker.RangePicker
             className={classes.Gap}
             value={[moment(params.startTime, 'YYYY-MM-DD'), moment(params.endTime, 'YYYY-MM-DD')]}
@@ -97,44 +97,47 @@ function AppointmentsBar(props) {
               ],
             }}
           />
-        </span>
-        {/* <span className={classes.Span}>开始日期：
-          <DatePicker
-          // defaultValue={moment('2018/01/01', 'YYYY-MM-DD')}
-          format={'YYYY-MM-DD'}
+        </span> */}
+      <span className={classes.Span}>
+        开始日期：
+        <DatePicker
+          format="YYYY-MM-DD"
           showToday={false}
           allowClear={false}
-          onChange={changeStartTime}
+          value={moment(params.startTime, 'YYYY-MM-DD')}
+          onChange={(_, dateStrings) => onParamsChange(dateStrings, 'startTime')}
         />
-        </span>
-        <span className={classes.Span}>截止日期：
-          <DatePicker
+      </span>
+      <span className={classes.Span}>
+        截止日期：
+        <DatePicker
           defaultValue={moment('2018/01/01', 'YYYY-MM-DD')}
-          format={'YYYY-MM-DD'}
+          format="YYYY-MM-DD"
           showToday={false}
-          onChange={changeEndTime}
+          allowClear={false}
+          value={moment(params.endTime, 'YYYY-MM-DD')}
+          onChange={(_, dateStrings) => onParamsChange(dateStrings, 'endTime')}
         />
-        </span> */}
-        <span className={classes.Span}>
-          医院类型：
-          <Select
-            placeholder="医院类型"
-            className={classes.Gap}
-            style={{ width: 115 }}
-            value={params.cityName}
-            onChange={value => onParamsChange(value, 'cityName')}
-          >
-            <Select.Option value="">全部</Select.Option>
-            <Select.Option value="zkyy">专科医院</Select.Option>
-            <Select.Option value="zhyy">综合医院</Select.Option>
-            <Select.Option value="zyyy">中医医院</Select.Option>
-          </Select>
-        </span>
-        <span className={classes.Span}>
-          医院名称：
-          {renderHosName()}
-        </span>
-      </Col>
+      </span>
+      <span className={classes.Span}>
+        医院类型：
+        <Select
+          placeholder="医院类型"
+          className={classes.Gap}
+          style={{ width: 115 }}
+          value={params.cityName}
+          onChange={value => onParamsChange(value, 'cityName')}
+        >
+          <Select.Option value="">全部</Select.Option>
+          <Select.Option value="zkyy">专科医院</Select.Option>
+          <Select.Option value="zhyy">综合医院</Select.Option>
+          <Select.Option value="zyyy">中医医院</Select.Option>
+        </Select>
+      </span>
+      <span className={classes.Span}>
+        医院名称：
+        {renderHosName()}
+      </span>
       <span className={classes.Span}>
         门诊类型：
         <Select
@@ -143,7 +146,6 @@ function AppointmentsBar(props) {
           className={classes.Gap}
           value={params.visitLevelCode}
           onChange={value => onParamsChange(value, 'visitLevelCode')}
-          // defaultValue={allGroupName[0].name}
         >
           <Select.Option value="1">专家</Select.Option>
           <Select.Option value="2">专病</Select.Option>
@@ -176,11 +178,12 @@ function AppointmentsBar(props) {
           <Select.Option value="3">已取消</Select.Option>
         </Select>
       </span>
+      {/* </Col> */}
       <span className={classes.BtnRight}>
-        <Button type="primary" htmlType="button" onClick={onSearch} className={classes.Gap}>
+        <Button type="primary" htmlType="button" onClick={onSearch} className={classes.Span}>
           查询
         </Button>
-        <Button type="primary" htmlType="button" onClick={onReset} className={classes.Gap}>
+        <Button type="primary" htmlType="button" onClick={onReset} className={classes.Span}>
           重置
         </Button>
         <Button type="primary" htmlType="button" onClick={onExport}>

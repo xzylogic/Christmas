@@ -64,16 +64,6 @@ class GlobalHeaderRight extends PureComponent {
     } else {
       callback();
     }
-
-    // // 密码长度6-18位，由数字和大小写字母组合而成
-    // // const pPattern = /^.*(?=.{3,18})(?=.*\d).*$/;
-    // // 输出 true
-    // // console.log("==",pPattern.test(value));
-
-    // if (value && !pPattern.test(value)) {
-    //   // callback('密码长度6-18位数字!')
-    // }else{
-    // callback()};
   };
 
   render() {
@@ -85,7 +75,6 @@ class GlobalHeaderRight extends PureComponent {
       onClose,
       form: { getFieldDecorator },
     } = this.props;
-
     const menu = (
       <Menu className={styles.menu} selectedKeys={[]} onClick={onMenuClick}>
         <Menu.Item key="changePassword">

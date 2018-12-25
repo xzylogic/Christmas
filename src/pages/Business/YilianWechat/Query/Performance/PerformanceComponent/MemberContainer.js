@@ -206,6 +206,7 @@ class MemberContainer extends Component {
   render() {
     const { searchParam, memberList, currentPage, totalElements } = this.props;
     const { amountSetShow, visible, selectedName, showDetail } = this.state;
+
     return (
       <React.Fragment>
         <QuerySearchBar

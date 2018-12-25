@@ -13,6 +13,7 @@ const mapStateToProps = state => ({
   currentPage: state.businessYilianWechatQuery.currentPage.group,
   totalElements: state.businessYilianWechatQuery.totalElements.group,
   searchParam: state.businessYilianWechatQuery.searchParam.group,
+  allGroupName: state.businessYilianWechatQuery.list.queryMessage,
   loading:
     state.loading.effects[
       ('businessYilianWechatQuery/fetchGroupPerformance',
@@ -54,6 +55,10 @@ const mapDispatchToProps = dispatch => ({
       type: 'businessYilianWechatQuery/downloadGroupPerformance',
       payload: { page },
     }),
+  // onFetchAllGroupName: () =>
+  //   dispatch({
+  //     type: 'businessYilianWechatQuery/fetchAllGroupName',
+  //   }),
 });
 
 @connect(
@@ -187,7 +192,7 @@ class GroupContainer extends Component {
   };
 
   render() {
-    const { searchParam, groupList, currentPage, totalElements } = this.props;
+    const { searchParam, groupList, currentPage, totalElements, allGroupName } = this.props;
     const { showDetail, selectedName, amountSetShow, visible } = this.state;
     return (
       <React.Fragment>
@@ -200,6 +205,7 @@ class GroupContainer extends Component {
           onParamsChange={this.handleParamsChanged}
           inputPlaceholder="请输入组名"
           amountSetShow={amountSetShow}
+          allGroupName={allGroupName}
         />
         <TableList
           rowKey="name"

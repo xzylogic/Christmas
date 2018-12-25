@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input, Button, DatePicker, Row, Col } from 'antd';
+import { Input, Button, DatePicker, Row, Col, Select } from 'antd';
 import moment from 'moment';
 
 import classes from './QuerySearchBar.less';
@@ -14,15 +14,13 @@ function querySearchBar(props) {
     onParamsChange,
     inputPlaceholder,
     amountSetShow,
+    allGroupName,
   } = props;
+
   return (
     <Row>
       <Col span={15}>
-        {/* <Select name="origin" value={source} className={classes.Gap} readOnly>
-          <Select.Option value="wechat">微信</Select.Option>
-        </Select> */}
         <DatePicker.RangePicker
-          // className={classes.Gap}
           className={classes.Span}
           value={[moment(startTime, 'YYYY-MM-DD'), moment(endTime, 'YYYY-MM-DD')]}
           onChange={(_, dateStrings) => onParamsChange(dateStrings, 'date')}
@@ -47,12 +45,28 @@ function querySearchBar(props) {
           }}
         />
         <span className={classes.Span}>
-          <Input
-            name="name"
-            value={name}
-            onChange={e => onParamsChange(e.target.value, 'name')}
-            placeholder={inputPlaceholder}
-          />
+          {allGroupName instanceof Object ? (
+            <Select
+              style={{ width: 100 }}
+              name="name"
+              value={name}
+              onChange={value => onParamsChange(value, 'name')}
+            >
+              <Select.Option value="">全部</Select.Option>
+              {allGroupName.names.map(item => (
+                <Select.Option key={item} value={item}>
+                  {item}
+                </Select.Option>
+              ))}
+            </Select>
+          ) : (
+            <Input
+              name="name"
+              value={name}
+              onChange={e => onParamsChange(e.target.value, 'name')}
+              placeholder={inputPlaceholder}
+            />
+          )}
         </span>
       </Col>
       <Col span={9} className={classes.ColRight}>

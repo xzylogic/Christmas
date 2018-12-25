@@ -125,6 +125,7 @@ export async function fetchMembershipPerformanceDetail(params) {
   return request(`/yilian-cloud-backend-api/member/search${params}`);
 }
 
+// 获取所有小组
 export async function getQueryMessageService() {
   return request(`/yilian-cloud-backend-api/performance/groupMonth/data`);
 }

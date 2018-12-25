@@ -17,6 +17,7 @@ import {
   fetchHosnameService,
   fetchallPersonService,
   fetchAppointmentService,
+  // fetchAllGroupNameService
 } from '@/services/business/yilian-wechat/query/query';
 
 const getListCounts = list => {
@@ -128,7 +129,7 @@ export default {
       registration: null,
       // 预约列表
       appointment: null,
-      // 小组列表
+      // 所有小组列表
       queryMessage: null,
       fetchMessage: null,
       // 人员月指标量
@@ -539,7 +540,6 @@ export default {
     *fetchGroupMonth({ payload }, { call, put }) {
       const { value } = payload;
       const res = yield call(fetchGroupMonthService, value);
-      // console.log(res);
       if (res && res.code === 200) {
         yield put({
           type: 'updateList',

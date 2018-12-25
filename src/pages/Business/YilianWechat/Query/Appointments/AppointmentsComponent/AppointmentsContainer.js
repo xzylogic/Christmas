@@ -118,83 +118,99 @@ class AppointmentsContainer extends Component {
         title: '预约日期',
         dataIndex: 'createTime',
         key: 'schedule_date',
+        width: 170,
       },
       {
         title: '就诊日期',
         dataIndex: 'scheduleDate',
         key: 'scheduleDate',
+        width: 115,
       },
       {
         title: '就诊时段',
         dataIndex: 'scheduleTime',
         key: 'scheduleTime',
+        width: 115,
       },
       {
         title: '预约科室',
         dataIndex: 'deptName',
         key: 'deptName',
+        width: 160,
       },
       {
         title: '预约医院',
         dataIndex: 'hosOrgName',
         key: 'hosOrgName',
+        width: 160,
       },
       {
         title: '预约医生',
         dataIndex: 'doctName',
         key: 'doctName',
+        width: 100,
       },
       {
         title: '预约来源',
         dataIndex: 'regChannel',
         key: 'regChannel',
+        width: 100,
         render: record => renderRegChannel(record),
       },
       {
         title: '患者姓名',
         dataIndex: 'patientName',
         key: 'patientName',
+        width: 100,
       },
       {
         title: '性别',
         dataIndex: 'sex',
         key: 'sex',
+        width: 70,
       },
       {
         title: '患者卡号',
         dataIndex: 'mediCardId',
         key: 'mediCardId',
+        width: 160,
       },
       {
         title: '卡类型',
         dataIndex: 'mediCardIdType',
         key: 'mediCardIdType',
+        width: 100,
         render: record => renderMediCardIdType(record),
       },
       {
         title: '手机',
         dataIndex: 'patientPhone',
         key: 'patientPhone',
+        width: 150,
       },
       {
         title: '身份证号',
         dataIndex: 'patientCardId',
         key: 'patientCardId',
+        width: 180,
       },
       {
         title: '订单号',
         dataIndex: 'orderId',
         key: 'orderId',
+        width: 170,
       },
       {
         title: '预约编号',
         dataIndex: 'orderNumber',
         key: 'orderNumber',
+        width: 150,
       },
       {
         title: '预约状态',
         dataIndex: 'orderStatus',
         key: 'orderStatus',
+        width: 100,
         render: record => renderOrderStatus(record),
       },
       {
@@ -287,7 +303,7 @@ class AppointmentsContainer extends Component {
             currentPage={currentPage}
             totalElements={totalElements}
             onPageChange={this.handlePageChange}
-            scroll={{ x: 1800 }}
+            scroll={{ x: 2300 }}
           />
         )}
       </React.Fragment>

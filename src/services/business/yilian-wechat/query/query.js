@@ -50,20 +50,24 @@ export async function fetchMemberService(params, page, size) {
   return request(`/yilian-cloud-backend-api/performance/person/all${query}`);
 }
 
-export async function fetchMemberPerformanceDetailService(way, params) {
+export async function fetchMemberPerformanceDetailService(way, params, page, size) {
   let req = '';
+  let query = `?page=${page || 0}&size=${size || 10}`;
+  if (params) {
+    query += `${params}`;
+  }
   switch (way) {
     case 'day':
-      req = request(`/yilian-cloud-backend-api/performance/person/day${params}`);
+      req = request(`/yilian-cloud-backend-api/performance/person/day${query}`);
       break;
     case 'week':
-      req = request(`/yilian-cloud-backend-api/performance/person/week${params}`);
+      req = request(`/yilian-cloud-backend-api/performance/person/week${query}`);
       break;
     case 'month':
-      req = request(`/yilian-cloud-backend-api/performance/person/month${params}`);
+      req = request(`/yilian-cloud-backend-api/performance/person/month${query}`);
       break;
     case 'year':
-      req = request(`/yilian-cloud-backend-api/performance/person/year${params}`);
+      req = request(`/yilian-cloud-backend-api/performance/person/year${query}`);
       break;
     default:
       break;

@@ -161,14 +161,18 @@ class MemberDetail extends Component {
           <Select.Option value="year">按年统计</Select.Option>
         </Select>
         <Divider>{name}</Divider>
-        <TableList
-          rowKey={(_, index) => index}
-          list={memberDetailList}
-          columns={this.setTableColumns()}
-          currentPage={currentPage}
-          totalElements={totalElements}
-          onPageChange={this.handlePageChange}
-        />
+        {memberDetailList instanceof Object ? (
+          <TableList
+            rowKey={(_, index) => index}
+            list={memberDetailList}
+            columns={this.setTableColumns()}
+            currentPage={currentPage}
+            totalElements={totalElements}
+            onPageChange={this.handlePageChange}
+          />
+        ) : (
+          <div style={{ textAlign: 'center' }}>无数据</div>
+        )}
       </Modal>
     );
   }

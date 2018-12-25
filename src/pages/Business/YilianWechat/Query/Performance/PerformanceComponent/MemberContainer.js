@@ -126,7 +126,7 @@ class MemberContainer extends Component {
         title: '渠道',
         dataIndex: 'promoCode',
         key: 'promoCode',
-        render: () => '微信',
+        // render: () => '微信',
       },
       {
         title: '关注量',

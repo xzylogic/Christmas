@@ -408,10 +408,10 @@ export default {
     *fetchMemberPerformanceDetail({ payload }, { call, select, put }) {
       try {
         const { member } = yield select(state => state.businessYilianWechatQuery.searchParam);
-        const { way, name } = payload;
+        const { way, name, page } = payload;
         let params = '';
         if (member && member.startTime) {
-          params += `?startTime=${member.startTime}`;
+          params += `&startTime=${member.startTime}`;
         }
         if (member && member.endTime) {
           params += `&endTime=${member.endTime}`;
@@ -419,13 +419,15 @@ export default {
         if (name) {
           params += `&name=${name}`;
         }
-        const res = yield call(fetchMemberPerformanceDetailService, way, params);
+        const res = yield call(fetchMemberPerformanceDetailService, way, params, page, 10);
         if (res && res.code === 200) {
           yield put({
             type: 'updateDetailList',
             payload: {
               key: 'member',
               list: res.data.content,
+              currentPage: page,
+              totalElements: res.data.totalElements,
             },
           });
         }

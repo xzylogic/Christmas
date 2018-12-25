@@ -161,14 +161,18 @@ class GroupDetail extends Component {
           <Select.Option value="year">按年统计</Select.Option>
         </Select>
         <Divider>{name}</Divider>
-        <TableList
-          rowKey={(_, index) => index}
-          list={groupDetailList}
-          columns={this.setTableColumns()}
-          currentPage={currentPage}
-          totalElements={totalElements}
-          onPageChange={this.handlePageChange}
-        />
+        {groupDetailList instanceof Object ? (
+          <TableList
+            rowKey={(_, index) => index}
+            list={groupDetailList}
+            columns={this.setTableColumns()}
+            currentPage={currentPage}
+            totalElements={totalElements}
+            onPageChange={this.handlePageChange}
+          />
+        ) : (
+          <div style={{ textAlign: 'center' }}>无数据</div>
+        )}
       </Modal>
     );
   }

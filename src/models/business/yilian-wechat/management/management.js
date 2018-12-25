@@ -16,6 +16,9 @@ import {
   fetchAllHosNameService,
   fetchAllGroupNameService,
   addHosToGroupService,
+  fetchGroupExportService,
+  fetchMemberExportService,
+  fetchLocationExportService,
 } from '@/services/business/yilian-wechat/management/management';
 
 export default {
@@ -76,17 +79,13 @@ export default {
         });
       }
     },
-    *downloadGroupList({ payload }, { call, select }) {
+    *downloadGroupList(_, { call, select }) {
       const searchParam = yield select(state => state.businessYilianWechatManagement.searchParam);
-      const { page } = payload;
       let params = '';
       if (searchParam && searchParam.groupName) {
         params += `name=${searchParam.groupName}`;
       }
-      if (searchParam && searchParam.groupDownload) {
-        params += `isExport=${searchParam.groupDownload}`;
-      }
-      const res = yield call(fetchGroupListService, params, page, 10);
+      const res = yield call(fetchGroupExportService, params);
       let returnData = null;
       if (res && res.code === 200 && res.msg) {
         returnData = res.msg;
@@ -116,17 +115,13 @@ export default {
         });
       }
     },
-    *downloadMemberList({ payload }, { call, select }) {
+    *downloadMemberList(_, { call, select }) {
       const searchParam = yield select(state => state.businessYilianWechatManagement.searchParam);
-      const { page } = payload;
       let params = '';
       if (searchParam && searchParam.memberName) {
         params += `name=${searchParam.memberName}`;
       }
-      if (searchParam && searchParam.memberDownload) {
-        params += `isExport=${searchParam.memberDownload}`;
-      }
-      const res = yield call(fetchMemberListService, params, page, 10);
+      const res = yield call(fetchMemberExportService, params);
       let returnData = null;
       if (res && res.code === 200 && res.msg) {
         returnData = res.msg;
@@ -168,17 +163,13 @@ export default {
         });
       }
     },
-    *downloadLocationList({ payload }, { call, select }) {
+    *downloadLocationList(_, { call, select }) {
       const searchParam = yield select(state => state.businessYilianWechatManagement.searchParam);
-      const { page } = payload;
       let params = '';
       if (searchParam && searchParam.locationName) {
         params += `name=${searchParam.locationName}`;
       }
-      if (searchParam && searchParam.locationDownload) {
-        params += `isExport=${searchParam.locationDownload}`;
-      }
-      const res = yield call(fetchLocationListService, params, page, 10);
+      const res = yield call(fetchLocationExportService, params);
       let returnData = null;
       if (res && res.code === 200 && res.msg) {
         returnData = res.msg;

@@ -107,6 +107,11 @@ class GroupContainer extends Component {
         key: 'name',
       },
       {
+        title: '组编号',
+        dataIndex: 'id',
+        key: 'id',
+      },
+      {
         title: '人数',
         dataIndex: 'counts',
         key: 'counts',

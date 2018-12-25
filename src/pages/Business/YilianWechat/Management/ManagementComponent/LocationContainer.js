@@ -39,10 +39,9 @@ const mapDispatchProps = dispatch => ({
       type: 'businessYilianWechatManagement/deleteLocation',
       payload: { id },
     }),
-  onDownloadLocationList: page =>
+  onDownloadLocationList: () =>
     dispatch({
       type: 'businessYilianWechatManagement/downloadLocationList',
-      payload: { page },
     }),
 });
 
@@ -157,10 +156,8 @@ class LocationContainer extends Component {
 
   handleExport = e => {
     e.preventDefault();
-    const { onDownloadLocationList, onUpdataSearchParam, currentPage } = this.props;
-
-    onUpdataSearchParam('locationDownload', true);
-    onDownloadLocationList(currentPage).then(data => {
+    const { onDownloadLocationList } = this.props;
+    onDownloadLocationList().then(data => {
       if (data) {
         const a = document.createElement('a');
         a.setAttribute('href', data);
@@ -168,7 +165,6 @@ class LocationContainer extends Component {
         a.click();
       }
     });
-    onUpdataSearchParam('locationDownload', false);
   };
 
   render() {

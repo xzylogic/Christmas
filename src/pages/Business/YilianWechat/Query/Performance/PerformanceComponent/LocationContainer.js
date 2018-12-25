@@ -89,11 +89,6 @@ class LocationContainer extends Component {
         key: 'counts',
       },
       {
-        title: '所在组',
-        dataIndex: 'group',
-        key: 'group',
-      },
-      {
         title: '渠道',
         dataIndex: 'promoCode',
         key: 'promoCode',

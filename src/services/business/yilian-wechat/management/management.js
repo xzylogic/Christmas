@@ -122,3 +122,18 @@ export async function addHosToGroupService(newPostData) {
     }
   );
 }
+
+// 导出小组
+export async function fetchGroupExportService(params) {
+  return request(`/yilian-cloud-backend-api/hos/export/group${params}`);
+}
+
+// 导出人员
+export async function fetchMemberExportService(params) {
+  return request(`/yilian-cloud-backend-api/hos/export/person${params}`);
+}
+
+// 导出地点
+export async function fetchLocationExportService(params) {
+  return request(`/yilian-cloud-backend-api/hos/export/site${params}`);
+}

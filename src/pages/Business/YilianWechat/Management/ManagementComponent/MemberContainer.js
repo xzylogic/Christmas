@@ -50,10 +50,9 @@ const mapDispatchProps = dispatch => ({
       type: 'businessYilianWechatManagement/getMemberMessage',
       payload: { value },
     }),
-  onDownloadMemberList: page =>
+  onDownloadMemberList: () =>
     dispatch({
       type: 'businessYilianWechatManagement/downloadMemberList',
-      payload: { page },
     }),
 });
 
@@ -206,10 +205,8 @@ class MemberContainer extends Component {
 
   handleExport = e => {
     e.preventDefault();
-    const { onDownloadMemberList, onUpdataSearchParam, currentPage } = this.props;
-
-    onUpdataSearchParam('memberDownload', true);
-    onDownloadMemberList(currentPage).then(data => {
+    const { onDownloadMemberList } = this.props;
+    onDownloadMemberList().then(data => {
       if (data) {
         const a = document.createElement('a');
         a.setAttribute('href', data);
@@ -217,7 +214,6 @@ class MemberContainer extends Component {
         a.click();
       }
     });
-    onUpdataSearchParam('memberDownload', false);
   };
 
   handleShowCode(e, record) {

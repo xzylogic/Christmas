@@ -60,9 +60,141 @@ function querySearchBar(props) {
     onParamsChange,
     hospitals,
   } = props;
-  // const { mode, formatString } = this.state;
-  // const mode = 'date';
-  // const formatString = 'YYYY-MM-DD';
+
+  const chooseTime = () => {
+    let content = (
+      <span>
+        <span className={classes.Gap}>
+          开始日期：
+          <DatePicker
+            format="YYYY-MM-DD"
+            showToday={false}
+            allowClear={false}
+            value={moment(startDate, 'YYYY-MM-DD')}
+            onChange={(_, dateStrings) => onParamsChange(dateStrings, 'startTime')}
+          />
+        </span>
+        <span className={classes.Gap}>
+          截止日期：
+          <DatePicker
+            format="YYYY-MM-DD"
+            showToday={false}
+            allowClear={false}
+            value={moment(endDate, 'YYYY-MM-DD')}
+            onChange={(_, dateStrings) => onParamsChange(dateStrings, 'endTime')}
+          />
+        </span>
+      </span>
+    );
+    if (countType === 'month') {
+      content = (
+        <span>
+          <span className={classes.Gap}>
+            开始月份：
+            <DatePicker.MonthPicker
+              format="YYYY-MM"
+              showToday={false}
+              allowClear={false}
+              value={moment(startDate, 'YYYY-MM-DD')}
+              onChange={(_, dateStrings) => onParamsChange(dateStrings, 'startTime')}
+            />
+          </span>
+          <span className={classes.Gap}>
+            截止月份：
+            <DatePicker.MonthPicker
+              format="YYYY-MM"
+              showToday={false}
+              allowClear={false}
+              value={moment(endDate, 'YYYY-MM-DD')}
+              onChange={(_, dateStrings) => onParamsChange(dateStrings, 'endTime')}
+            />
+          </span>
+        </span>
+      );
+    }
+    if (countType === 'year') {
+      const currentStart = moment(new Date().valueOf() - 2678400000).format('YYYY-MM-DD');
+      const currentEnd = moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD');
+
+      // 默认开始年份
+      const defaultStart = currentStart.split('-').splice(0, 1);
+      defaultStart.push('01', '01');
+      const defaultStartTime = defaultStart.join('-');
+
+      // 默认截止年份
+      const defaultEnd = currentEnd.split('-').splice(0, 1);
+      defaultEnd.push('12', '31');
+      const defaultEndTime = defaultEnd.join('-');
+
+      // 开始年份
+      const startYear1 = currentStart.split('-').splice(0, 1);
+      startYear1.push('01', '01');
+      const startYear2 = startYear1.join('-');
+
+      const startYear3 = parseInt(startYear2.split('-')[0], 10);
+      const startyearArr = [{ id: startYear2, year: startYear3 }];
+
+      // for (let i = 0; i < 20; i + 1) {
+      //   startYear3 - 1;
+      //   const startYear4 = [startYear3];
+      //   startYear4.push('01', '01');
+      //   const startYear5 = startYear4.join('-');
+      //   startyearArr.push({ id: startYear5, year: startYear3 });
+      // }
+
+      // 截止年份
+      const endYear1 = currentEnd.split('-').splice(0, 1);
+      endYear1.push('12', '31');
+      const endYear2 = endYear1.join('-');
+
+      const endYear3 = parseInt(endYear2.split('-')[0], 10);
+      const endyearArr = [{ id: endYear2, year: endYear3 }];
+
+      // for (let i = 0; i < 20; i+1) {
+      //   endYear3 - 1;
+      //   const endYear4 = [endYear3];
+      //   endYear4.push('12', '31');
+      //   const endYear5 = endYear4.join('-');
+      //   endyearArr.push({ id: endYear5, year: endYear3 });
+      // }
+
+      content = (
+        <span>
+          <span className={classes.Gap}>
+            开始年份：
+            <Select
+              className={classes.Gap}
+              style={{ width: 150 }}
+              value={defaultStartTime}
+              onChange={value => onParamsChange(value, 'startTime')}
+            >
+              {startyearArr.map(item => (
+                <Select.Option key={item.year} value={item.id}>
+                  {item.year}
+                </Select.Option>
+              ))}
+            </Select>
+          </span>
+          <span className={classes.Gap}>
+            截止年份：
+            <Select
+              className={classes.Gap}
+              style={{ width: 150 }}
+              value={defaultEndTime}
+              onChange={value => onParamsChange(value, 'endTime')}
+            >
+              {endyearArr.map(item => (
+                <Select.Option key={item.year} value={item.id}>
+                  {item.year}
+                </Select.Option>
+              ))}
+            </Select>
+          </span>
+        </span>
+      );
+    }
+    return content;
+  };
 
   return (
     <div className={classes.Container}>
@@ -77,56 +209,7 @@ function querySearchBar(props) {
         <Select.Option value="month">按月统计</Select.Option>
         <Select.Option value="year">按年统计</Select.Option>
       </Select>
-      {/* <DatePicker.RangePicker
-        className={classes.Gap}
-        value={[startDate, endDate]}
-        onChange={date => onParamsChange(date, 'date')}
-        // onPanelChange={this.handlePanelChange}
-        // onOpenChange={this.handleOpenChange}
-        // open={open}
-        allowClear={false}
-        // format={formatString}
-        mode={[mode, mode]}
-        ranges={{
-          最近一周: [
-            moment(new Date(new Date().valueOf() - 691200000), formatString),
-            moment(new Date(new Date().valueOf() - 86400000), formatString),
-          ],
-          最近30天: [
-            moment(new Date(new Date().valueOf() - 2678400000), formatString),
-            moment(new Date(new Date().valueOf() - 86400000), formatString),
-          ],
-          最近90天: [
-            moment(new Date(new Date().valueOf() - 7862400000), formatString),
-            moment(new Date(new Date().valueOf() - 86400000), formatString),
-          ],
-          最近一年: [
-            moment(new Date(new Date().valueOf() - 31622400000), formatString),
-            moment(new Date(new Date().valueOf() - 86400000), formatString),
-          ],
-        }}
-      /> */}
-      <span className={classes.Gap}>
-        开始日期：
-        <DatePicker
-          format="YYYY-MM-DD"
-          showToday={false}
-          allowClear={false}
-          value={moment(startDate, 'YYYY-MM-DD')}
-          onChange={(_, dateStrings) => onParamsChange(dateStrings, 'startDate')}
-        />
-      </span>
-      <span className={classes.Gap}>
-        截止日期：
-        <DatePicker
-          defaultValue={moment('2018/01/01', 'YYYY-MM-DD')}
-          format="YYYY-MM-DD"
-          showToday={false}
-          allowClear={false}
-          value={moment(endDate, 'YYYY-MM-DD')}
-          onChange={(_, dateStrings) => onParamsChange(dateStrings, 'endDate')}
-        />
-      </span>
+      {chooseTime()}
       {hospitals ? (
         <React.Fragment>
           {/* <span style={{ display: 'inline-block', whiteSpace: 'nowrap' }}>

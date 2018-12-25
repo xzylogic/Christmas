@@ -45,14 +45,6 @@ function AppointmentsBar(props) {
     return content;
   };
 
-  // const dateFormat = () => {
-  //   let content = 'YYYY-MM-DD';
-  //   if(params.countType==="month" || params.countType==="year"){
-  //     content = 'YYYY-MM';
-  //   }
-  //   return content;
-  // }
-
   const chooseTime = () => {
     let content = (
       <span>

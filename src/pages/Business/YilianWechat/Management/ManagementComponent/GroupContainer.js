@@ -51,10 +51,9 @@ const mapDispatchToProps = dispatch => ({
     dispatch({
       type: 'businessYilianWechatManagement/fetchAllHosName',
     }),
-  onDownloadGroupList: page =>
+  onDownloadGroupList: () =>
     dispatch({
       type: 'businessYilianWechatManagement/downloadGroupList',
-      payload: { page },
     }),
 });
 
@@ -192,10 +191,8 @@ class GroupContainer extends Component {
 
   handleExport = e => {
     e.preventDefault();
-    const { onDownloadGroupList, onUpdataSearchParam, currentPage } = this.props;
-
-    onUpdataSearchParam('groupDownload', true);
-    onDownloadGroupList(currentPage).then(data => {
+    const { onDownloadGroupList } = this.props;
+    onDownloadGroupList().then(data => {
       if (data) {
         const a = document.createElement('a');
         a.setAttribute('href', data);
@@ -203,7 +200,6 @@ class GroupContainer extends Component {
         a.click();
       }
     });
-    onUpdataSearchParam('groupDownload', false);
   };
 
   handlEditorGroupHos = e => {

@@ -45,8 +45,9 @@ class GroupDetail extends Component {
     }
   }
 
-  setFansCountColor = (record, setMonth, groupMonthAmount) => {
-    if (setMonth) {
+  setFansCountColor = (record, groupMonthAmount) => {
+    const { way } = this.state;
+    if (way === 'month') {
       if (record.fansCount < groupMonthAmount.mFansCount) {
         return <span style={{ color: 'red' }}>{record.fansCount}</span>;
       }
@@ -55,8 +56,9 @@ class GroupDetail extends Component {
     return <span>{record.fansCount}</span>;
   };
 
-  setRegCountColor = (record, setMonth, groupMonthAmount) => {
-    if (setMonth) {
+  setRegCountColor = (record, groupMonthAmount) => {
+    const { way } = this.state;
+    if (way === 'month') {
       if (record.regCount < groupMonthAmount.mRegCount) {
         return <span style={{ color: 'red' }}>{record.regCount}</span>;
       }
@@ -73,7 +75,6 @@ class GroupDetail extends Component {
 
     if (groupDetailList instanceof Object) {
       const { groupMonthAmount } = this.props;
-      const setMonth = Object.keys(groupDetailList[0])[0] === 'months';
 
       switch (way) {
         case 'day':
@@ -118,13 +119,13 @@ class GroupDetail extends Component {
           title: '关注量',
           dataIndex: 'fansCount',
           key: 'fansCount',
-          render: (_, record) => this.setFansCountColor(record, setMonth, groupMonthAmount),
+          render: (_, record) => this.setFansCountColor(record, groupMonthAmount),
         },
         {
           title: '注册量',
           dataIndex: 'regCount',
           key: 'regCount',
-          render: (_, record) => this.setRegCountColor(record, setMonth, groupMonthAmount),
+          render: (_, record) => this.setRegCountColor(record, groupMonthAmount),
         },
       ];
 

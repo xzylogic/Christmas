@@ -45,8 +45,9 @@ class MemberDetail extends Component {
     }
   }
 
-  setFansCountColor = (record, setMonth, memberMonthAmount) => {
-    if (setMonth) {
+  setFansCountColor = (record, memberMonthAmount) => {
+    const { way } = this.state;
+    if (way === 'month') {
       if (record.fansCount < memberMonthAmount.mFansCount) {
         return <span style={{ color: 'red' }}>{record.fansCount}</span>;
       }
@@ -55,8 +56,9 @@ class MemberDetail extends Component {
     return <span>{record.fansCount}</span>;
   };
 
-  setRegCountColor = (record, setMonth, memberMonthAmount) => {
-    if (setMonth) {
+  setRegCountColor = (record, memberMonthAmount) => {
+    const { way } = this.state;
+    if (way === 'month') {
       if (record.regCount < memberMonthAmount.mRegCount) {
         return <span style={{ color: 'red' }}>{record.regCount}</span>;
       }
@@ -73,7 +75,6 @@ class MemberDetail extends Component {
 
     if (memberDetailList instanceof Object) {
       const { memberMonthAmount } = this.props;
-      const setMonth = Object.keys(memberDetailList[0])[0] === 'months';
 
       switch (way) {
         case 'day':
@@ -118,13 +119,13 @@ class MemberDetail extends Component {
           title: '关注量',
           dataIndex: 'fansCount',
           key: 'fansCount',
-          render: (_, record) => this.setFansCountColor(record, setMonth, memberMonthAmount),
+          render: (_, record) => this.setFansCountColor(record, memberMonthAmount),
         },
         {
           title: '注册量',
           dataIndex: 'regCount',
           key: 'regCount',
-          render: (_, record) => this.setRegCountColor(record, setMonth, memberMonthAmount),
+          render: (_, record) => this.setRegCountColor(record, memberMonthAmount),
         },
       ];
 

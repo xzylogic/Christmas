@@ -45,6 +45,19 @@ function AppointmentsBar(props) {
     return content;
   };
 
+  // const changeStartTime = e =>{
+  //   console.log(e)
+  //   // console.log((e._i).split('/').join('-'))
+  //   // const startTime = (e._i).split('/').join('-');
+  //   // onParamsChange(startTime, 'startTime')
+  // }
+
+  // const changeEndTime = e =>{
+  //   // console.log(e)
+  //   // console.log((e._i).split('/').join('-'))
+  //   const endTime = (e._i).split('/').join('-');
+  //   onParamsChange(endTime, 'endTime')
+  // }
   return (
     <Row>
       <Col>
@@ -85,6 +98,23 @@ function AppointmentsBar(props) {
             }}
           />
         </span>
+        {/* <span className={classes.Span}>开始日期：
+          <DatePicker
+          // defaultValue={moment('2018/01/01', 'YYYY-MM-DD')}
+          format={'YYYY-MM-DD'}
+          showToday={false}
+          allowClear={false}
+          onChange={changeStartTime}
+        />
+        </span>
+        <span className={classes.Span}>截止日期：
+          <DatePicker
+          defaultValue={moment('2018/01/01', 'YYYY-MM-DD')}
+          format={'YYYY-MM-DD'}
+          showToday={false}
+          onChange={changeEndTime}
+        />
+        </span> */}
         <span className={classes.Span}>
           医院类型：
           <Select

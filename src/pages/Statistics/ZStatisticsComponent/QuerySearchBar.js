@@ -61,8 +61,8 @@ function querySearchBar(props) {
     hospitals,
   } = props;
   // const { mode, formatString } = this.state;
-  const mode = 'date';
-  const formatString = 'YYYY-MM-DD';
+  // const mode = 'date';
+  // const formatString = 'YYYY-MM-DD';
 
   return (
     <div className={classes.Container}>
@@ -77,7 +77,7 @@ function querySearchBar(props) {
         <Select.Option value="month">按月统计</Select.Option>
         <Select.Option value="year">按年统计</Select.Option>
       </Select>
-      <DatePicker.RangePicker
+      {/* <DatePicker.RangePicker
         className={classes.Gap}
         value={[startDate, endDate]}
         onChange={date => onParamsChange(date, 'date')}
@@ -105,28 +105,28 @@ function querySearchBar(props) {
             moment(new Date(new Date().valueOf() - 86400000), formatString),
           ],
         }}
-      />
-      {/* <span className={classes.Gap}>
-            开始日期：
-            <DatePicker
-              format="YYYY-MM-DD"
-              showToday={false}
-              allowClear={false}
-              value={moment(startDate, 'YYYY-MM-DD')}
-              onChange={(_, dateStrings) => onParamsChange(dateStrings, 'startDate')}
-            />
-          </span>
-          <span className={classes.Gap}>
-            截止日期：
-            <DatePicker
-              defaultValue={moment('2018/01/01', 'YYYY-MM-DD')}
-              format="YYYY-MM-DD"
-              showToday={false}
-              allowClear={false}
-              value={moment(endDate, 'YYYY-MM-DD')}
-              onChange={(_, dateStrings) => onParamsChange(dateStrings, 'endDate')}
-            />
-          </span> */}
+      /> */}
+      <span className={classes.Gap}>
+        开始日期：
+        <DatePicker
+          format="YYYY-MM-DD"
+          showToday={false}
+          allowClear={false}
+          value={moment(startDate, 'YYYY-MM-DD')}
+          onChange={(_, dateStrings) => onParamsChange(dateStrings, 'startDate')}
+        />
+      </span>
+      <span className={classes.Gap}>
+        截止日期：
+        <DatePicker
+          defaultValue={moment('2018/01/01', 'YYYY-MM-DD')}
+          format="YYYY-MM-DD"
+          showToday={false}
+          allowClear={false}
+          value={moment(endDate, 'YYYY-MM-DD')}
+          onChange={(_, dateStrings) => onParamsChange(dateStrings, 'endDate')}
+        />
+      </span>
       {hospitals ? (
         <React.Fragment>
           {/* <span style={{ display: 'inline-block', whiteSpace: 'nowrap' }}>

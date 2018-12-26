@@ -90,16 +90,18 @@ function StatisticalMethods(props) {
       if (params.startDate instanceof Object) {
         defaultStartTime = params.startDate.format('YYYY');
       } else {
-        console.log(123);
-        // defaultStartTime = params.startDate.split('-')[0];
+        const times = params.startDate.split('-');
+        const [firstTime] = times;
+        defaultStartTime = firstTime;
       }
 
       if (params.endDate instanceof Object) {
         defaultEndTime = params.endDate.format('YYYY');
       } else {
-        console.log(123);
-
-        // defaultEndTime = params.endDate.split('-')[0];
+        const times = params.endDate.split('-')[0];
+        const [firstTime] = times;
+        console.log(firstTime);
+        defaultEndTime = firstTime;
       }
 
       const defaultStartTime1 = parseInt(defaultStartTime, 10);

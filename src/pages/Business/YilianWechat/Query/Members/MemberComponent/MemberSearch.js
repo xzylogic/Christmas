@@ -4,6 +4,16 @@ import { Select, Button, DatePicker, Col } from 'antd';
 import moment from 'moment';
 import classes from '../Members.less';
 
+const getYears = start => {
+  const startYear = start || 1900;
+  const thisYear = new Date().getFullYear();
+  const yearList = [];
+  for (let year = startYear; year <= thisYear; year += 1) {
+    yearList.unshift(year.toString());
+  }
+  return yearList;
+};
+
 const mapDispatchToProps = dispatch => ({
   onSearchParamChange: (key, value) =>
     dispatch({
@@ -83,26 +93,29 @@ class MemberSearch extends Component {
         );
       }
       if (params.type === '3') {
-        const currentStart = moment(new Date().valueOf() - 2678400000).format('YYYY-MM-DD');
-        const currentEnd = moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD');
+        // const currentStart = moment(new Date().valueOf() - 2678400000).format('YYYY');
+        // const currentEnd = moment(new Date().valueOf() - 86400000).format('YYYY');
 
         // 默认开始年份
-        const defaultStart = params.startTime.split('-').splice(0, 1);
-        defaultStart.push('01', '01');
-        const defaultStartTime = defaultStart.join('-');
+        // const defaultStart = params.startTime.split('-').splice(0, 1);
+        // defaultStart.push('01', '01');
+        // const defaultStartTime = defaultStart.join('-');
+        const defaultStartTime = params.startTime.split('-')[0];
 
         // 默认截止年份
-        const defaultEnd = params.endTime.split('-').splice(0, 1);
-        defaultEnd.push('12', '31');
-        const defaultEndTime = defaultEnd.join('-');
+        // const defaultEnd = params.endTime.split('-').splice(0, 1);
+        // defaultEnd.push('12', '31');
+        // const defaultEndTime = defaultEnd.join('-');
+        const defaultEndTime = params.endTime.split('-')[0];
 
         // 开始年份
-        const startYear1 = currentStart.split('-').splice(0, 1);
-        startYear1.push('01', '01');
-        const startYear2 = startYear1.join('-');
+        // const startYear1 = currentStart.split('-').splice(0, 1);
+        // startYear1.push('01', '01');
+        // const startYear2 = startYear1.join('-');
 
-        const startYear3 = parseInt(startYear2.split('-')[0], 10);
-        const startyearArr = [{ date: startYear2, year: startYear3 }];
+        // const startYear3 = parseInt(startYear2.split('-')[0], 10);
+        // const startyearArr = [{ date: startYear2, year: startYear3 }];
+        const startyearArr = getYears();
 
         // for (let i = 0; i < 20; i + 1) {
         //   startYear3 - 1;
@@ -113,12 +126,13 @@ class MemberSearch extends Component {
         // }
 
         // 截止年份
-        const endYear1 = currentEnd.split('-').splice(0, 1);
-        endYear1.push('12', '31');
-        const endYear2 = endYear1.join('-');
+        // const endYear1 = currentEnd.split('-').splice(0, 1);
+        // endYear1.push('12', '31');
+        // const endYear2 = endYear1.join('-');
 
-        const endYear3 = parseInt(endYear2.split('-')[0], 10);
-        const endyearArr = [{ date: endYear2, year: endYear3 }];
+        // const endYear3 = parseInt(endYear2.split('-')[0], 10);
+        // const endyearArr = [{ date: endYear2, year: endYear3 }];
+        const endyearArr = getYears(defaultStartTime);
 
         // for (let i = 0; i < 20; i+1) {
         //   endYear3 - 1;
@@ -139,8 +153,8 @@ class MemberSearch extends Component {
                 onChange={value => onParamsChange(value, 'startTime')}
               >
                 {startyearArr.map(item => (
-                  <Select.Option key={item.year} value={item.date}>
-                    {item.year}
+                  <Select.Option key={item} value={item}>
+                    {item}
                   </Select.Option>
                 ))}
               </Select>
@@ -154,8 +168,8 @@ class MemberSearch extends Component {
                 onChange={value => onParamsChange(value, 'endTime')}
               >
                 {endyearArr.map(item => (
-                  <Select.Option key={item.year} value={item.date}>
-                    {item.year}
+                  <Select.Option key={item} value={item}>
+                    {item}
                   </Select.Option>
                 ))}
               </Select>

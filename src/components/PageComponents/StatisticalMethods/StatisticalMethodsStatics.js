@@ -98,7 +98,7 @@ function StatisticalMethods(props) {
       if (params.endDate instanceof Object) {
         defaultEndTime = params.endDate.format('YYYY');
       } else {
-        const times = params.endDate.split('-')[0];
+        const times = params.endDate.split('-');
         const [firstTime] = times;
         console.log(firstTime);
         defaultEndTime = firstTime;

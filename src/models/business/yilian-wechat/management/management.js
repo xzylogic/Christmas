@@ -19,6 +19,7 @@ import {
   fetchGroupExportService,
   fetchMemberExportService,
   fetchLocationExportService,
+  fetchHosGroupService,
 } from '@/services/business/yilian-wechat/management/management';
 
 export default {
@@ -32,6 +33,7 @@ export default {
       groupDownload: false,
       memberDownload: false,
       locationDownload: false,
+      hosGroupName: '1',
     },
     list: {
       group: null,
@@ -42,6 +44,8 @@ export default {
       allHosName: null,
       // 所有小组类别
       allGroupName: null,
+      // 根据小组查询医院名
+      groupHosName: null,
     },
     currentPage: {
       group: 0,
@@ -329,6 +333,27 @@ export default {
         message.error('编辑小组信息失败！');
       }
       return ifsuccess;
+    },
+    // 根据组别查询推广医院
+    *fetchHosGroup({ payload }, { call, select, put }) {
+      const searchParam = yield select(state => state.businessYilianWechatManagement.searchParam);
+      const { page } = payload;
+      let params = '';
+      if (searchParam && searchParam.hosGroupName) {
+        params += `&groupId=${searchParam.hosGroupName}`;
+      }
+      const res = yield call(fetchHosGroupService, params, page, 10);
+      if (res && res.code === 200) {
+        yield put({
+          type: 'updateList',
+          payload: {
+            key: 'groupHosName',
+            list: res.data,
+            currentPage: page,
+            totalElements: res.data.totalElements,
+          },
+        });
+      }
     },
   },
 

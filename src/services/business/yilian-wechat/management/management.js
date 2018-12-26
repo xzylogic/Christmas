@@ -135,6 +135,15 @@ export async function addHosToGroupService(newPostData) {
   );
 }
 
+// 根据组别查询推广医院
+export async function fetchHosGroupService(params, page, size) {
+  let query = `?page=${page || 0}&size=${size || 10}`;
+  if (params) {
+    query += `${params}`;
+  }
+  return request(`/yilian-cloud-backend-api/ylWeChatCount/search/hosByGroupId${query}`);
+}
+
 // 导出小组
 export async function fetchGroupExportService(params) {
   return request(`/yilian-cloud-backend-api/hos/export/group${params}`);

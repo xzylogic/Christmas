@@ -30,10 +30,11 @@ export default {
         visitLevelCode: null,
         orderStatus: '',
         regChannel: '',
-        chooseStartTime: moment(new Date().valueOf() - 31622400000).format('YYYY-MM-DD'),
-        chooseEndTime: moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD'),
         type: 'day',
         isExport: false,
+        // 查看详情参数
+        chooseStartTime: moment(new Date().valueOf() - 31622400000).format('YYYY-MM-DD'),
+        chooseEndTime: moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD'),
       },
       // 推广数据统计
       promoteAttention: {
@@ -54,9 +55,10 @@ export default {
         orderStatusWechat: null,
         // 医联App
         orderStatusApp: null,
+        isExport: false,
+        // 查看详情参数
         chooseStartTime: moment(new Date().valueOf() - 31622400000).format('YYYY-MM-DD'),
         chooseEndTime: moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD'),
-        isExport: false,
       },
     },
     list: {
@@ -407,6 +409,7 @@ export default {
         });
       }
     },
+    // 根据组别查询推广医院
     *fetchHosGroup({ payload }, { call, select, put }) {
       const { promoteAttention } = yield select(
         state => state.businessYilianWechatStatisticDatas.searchParam

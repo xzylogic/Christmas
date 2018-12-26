@@ -242,7 +242,7 @@ class MemberSearch extends Component {
               请选择：
               {params.queryType === 'hosName' ? (
                 <Select
-                  style={{ width: 200 }}
+                  style={{ width: 300 }}
                   // className={classes.Gap}
                   placeholder="--请选择--"
                   value={params.hosName}

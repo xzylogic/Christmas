@@ -12,11 +12,16 @@ class StatisticsIntervalChart extends Component {
     },
   };
 
-  getDataSource = (data, range) => {
-    const dataCopy = data.slice(
-      ((range[0] * data.length) / 100).toFixed(0),
-      ((range[1] * data.length) / 100).toFixed(0)
-    );
+  getDataSource = (data, range, xKey) => {
+    const dataCopy = data
+      .slice(
+        ((range[0] * data.length) / 100).toFixed(0),
+        ((range[1] * data.length) / 100).toFixed(0)
+      )
+      .map(obj => ({
+        ...obj,
+        [xKey]: ` ${obj[xKey]}`,
+      }));
     return dataCopy;
   };
 
@@ -28,10 +33,12 @@ class StatisticsIntervalChart extends Component {
     const { width, height, plotCfg, range } = this.state;
     const { data, xKey, yKey, yAlias, title } = this.props;
 
-    const dataSource = (data && this.getDataSource(data, range)) || [];
+    const dataSource = (data && this.getDataSource(data, range, xKey)) || [];
 
     const Chart = createG2(chart => {
-      chart.col(xKey, { alias: ' ' });
+      chart.col(xKey, {
+        alias: ' ',
+      });
       chart.col(yKey, { alias: yAlias });
       chart
         .line()

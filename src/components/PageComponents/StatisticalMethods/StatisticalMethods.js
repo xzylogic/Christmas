@@ -4,18 +4,33 @@ import moment from 'moment';
 
 import classes from './StatisticalMethods.less';
 
-const getYears = start => {
+const getStartYears = start => {
   const startYear = start || 1900;
   const thisYear = new Date().getFullYear();
   const yearList = [];
-  console.log(startYear);
   for (let year = startYear; year <= thisYear; year += 1) {
-    const endYear4 = [year];
-    endYear4.push('01', '01');
-    const endYear5 = endYear4.join('-');
-    console.log(endYear5);
+    const startYear1 = [year];
+    startYear1.push('01', '01');
+    const startYear2 = startYear1.join('-');
 
-    yearList.unshift(endYear5);
+    yearList.unshift({ date: startYear2, y: year });
+    // yearList.unshift(year.toString());
+  }
+  return yearList;
+};
+
+const getEndYears = end => {
+  const endYear = end;
+  const thisYear = new Date().getFullYear();
+  const yearList = [];
+  for (let year = endYear; year <= thisYear; year += 1) {
+    const endYear1 = [year];
+    endYear1.push('12', '31');
+    const endYear2 = endYear1.join('-');
+
+    //
+
+    yearList.unshift({ date: endYear2, y: year });
     // yearList.unshift(year.toString());
   }
   return yearList;
@@ -106,7 +121,7 @@ function StatisticalMethods(props) {
 
       // const startYear3 = parseInt(startYear2.split('-')[0], 10);
       // const startyearArr = [{ date: startYear2, year: startYear3 }];
-      const startyearArr = getYears();
+      const startyearArr = getStartYears();
 
       // console.log(startyearArr)
 
@@ -125,9 +140,12 @@ function StatisticalMethods(props) {
 
       // const endYear3 = parseInt(endYear2.split('-')[0], 10);
       // const endyearArr = [{ date: endYear2, year: endYear3 }];
-      const endyearArr = getYears();
 
-      console.log(endyearArr);
+      const defaultStartTime1 = parseInt(defaultStartTime, 10);
+
+      const endyearArr = getEndYears(defaultStartTime1);
+
+      // console.log(endyearArr);
 
       // console.log(endyearArr)
 
@@ -150,8 +168,8 @@ function StatisticalMethods(props) {
               onChange={value => onParamsChange(value, 'startTime')}
             >
               {startyearArr.map(item => (
-                <Select.Option key={item} value={item}>
-                  {item}
+                <Select.Option key={item.y} value={item.date}>
+                  {item.y}
                 </Select.Option>
               ))}
             </Select>
@@ -166,8 +184,8 @@ function StatisticalMethods(props) {
               onChange={value => onParamsChange(value, 'endTime')}
             >
               {endyearArr.map(item => (
-                <Select.Option key={item} value={item}>
-                  {item}
+                <Select.Option key={item.y} value={item.date}>
+                  {item.y}
                 </Select.Option>
               ))}
             </Select>

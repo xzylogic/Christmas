@@ -118,9 +118,11 @@ function AppointmentsBar(props) {
       const startYear3 = parseInt(startYear2.split('-')[0], 10);
       const startyearArr = [{ id: startYear2, year: startYear3 }];
 
+      console.log(startYear3);
+
       // for (let i = 0; i < 20; i + 1) {
       //   startYear3 - 1;
-      //   const startYear4 = [startYear3];
+      //   let startYear4 = [startYear3];
       //   startYear4.push('01', '01');
       //   const startYear5 = startYear4.join('-');
       //   startyearArr.push({ id: startYear5, year: startYear3 });

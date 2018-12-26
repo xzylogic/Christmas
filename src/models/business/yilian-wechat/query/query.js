@@ -62,6 +62,8 @@ export default {
       group: {
         startTime: moment(new Date().valueOf() - 2678400000).format('YYYY-MM-DD'),
         endTime: moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD'),
+        countType: 'week',
+        type: 'day',
         name: '',
         source: 'wechat',
         isExport: false,
@@ -70,6 +72,8 @@ export default {
       member: {
         startTime: moment(new Date().valueOf() - 2678400000).format('YYYY-MM-DD'),
         endTime: moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD'),
+        countType: 'week',
+        type: 'day',
         name: '',
         source: 'wechat',
         isExport: false,
@@ -78,6 +82,8 @@ export default {
       location: {
         startTime: moment(new Date().valueOf() - 2678400000).format('YYYY-MM-DD'),
         endTime: moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD'),
+        countType: 'week',
+        type: 'day',
         name: '',
         source: 'wechat',
         isExport: false,
@@ -178,8 +184,9 @@ export default {
 
   effects: {
     *fetchGroupPerformance({ payload }, { call, put, select }) {
+      console.log(payload);
       const { group } = yield select(state => state.businessYilianWechatQuery.searchParam);
-      const { page } = payload;
+      const { way, page } = payload;
       let params = '';
       if (group && group.startTime) {
         params += `&startTime=${group.startTime}`;
@@ -193,7 +200,7 @@ export default {
       if (group && !group.isExport) {
         params += `&isExport=${group.isExport}`;
       }
-      const res = yield call(fetchGroupPerformanceService, params, page, 10);
+      const res = yield call(fetchGroupPerformanceService, way, params, page, 10);
       if (res && res.code === 200) {
         yield put({
           type: 'updateList',

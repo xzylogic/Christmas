@@ -22,16 +22,16 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onFetchGroupList: page =>
+  onFetchGroupList: (way, page) =>
     dispatch({
       type: 'businessYilianWechatQuery/fetchGroupPerformance',
-      payload: { page },
+      payload: { way, page },
     }),
   onFetchGroupListDebounce: debounce(
-    page =>
+    (way, page) =>
       dispatch({
         type: 'businessYilianWechatQuery/fetchGroupPerformance',
-        payload: { page },
+        payload: { way, page },
       }),
     500
   ),
@@ -55,10 +55,6 @@ const mapDispatchToProps = dispatch => ({
       type: 'businessYilianWechatQuery/downloadGroupPerformance',
       payload: { page },
     }),
-  // onFetchAllGroupName: () =>
-  //   dispatch({
-  //     type: 'businessYilianWechatQuery/fetchAllGroupName',
-  //   }),
 });
 
 @connect(
@@ -71,6 +67,7 @@ class GroupContainer extends Component {
     selectedName: '',
     amountSetShow: true,
     visible: false,
+    way: 'week',
   };
 
   componentDidMount() {
@@ -80,13 +77,22 @@ class GroupContainer extends Component {
 
   handleParamsChanged = async (value, dataKey) => {
     const { onSearchParamChange, onFetchGroupListDebounce } = this.props;
+    const { way } = this.state;
     if (dataKey === 'date') {
       await onSearchParamChange('startTime', value[0]);
       await onSearchParamChange('endTime', value[1]);
     } else {
       await onSearchParamChange(dataKey, value);
     }
-    await onFetchGroupListDebounce(0);
+    await onFetchGroupListDebounce(way, 0);
+  };
+
+  handleChangeWay = async value => {
+    await this.setState({ way: value });
+    const { onFetchGroupList, onSearchParamChange } = this.props;
+    const { way } = this.state;
+    await onSearchParamChange('countType', way);
+    await onFetchGroupList(way, 0);
   };
 
   handleDetail = (e, record) => {
@@ -148,7 +154,8 @@ class GroupContainer extends Component {
 
   handlePageChange = page => {
     const { onFetchGroupList } = this.props;
-    onFetchGroupList(page - 1);
+    const { way } = this.state;
+    onFetchGroupList(way, page - 1);
   };
 
   handleAmountSet = e => {
@@ -159,19 +166,21 @@ class GroupContainer extends Component {
   handleSearch = async e => {
     e.preventDefault();
     const { onFetchGroupList } = this.props;
-    onFetchGroupList(0);
+    const { way } = this.state;
+    onFetchGroupList(way, 0);
   };
 
   handleReset = async e => {
     e.preventDefault();
     const { onSearchParamChange, onFetchGroupList } = this.props;
+    const { way } = this.state;
     await onSearchParamChange(
       'startTime',
       moment(new Date().valueOf() - 604800000).format('YYYY-MM-DD')
     );
     await onSearchParamChange('endTime', moment(new Date().valueOf()).format('YYYY-MM-DD'));
     await onSearchParamChange('name', '');
-    await onFetchGroupList(0);
+    await onFetchGroupList(way, 0);
   };
 
   handleExport = e => {
@@ -207,6 +216,7 @@ class GroupContainer extends Component {
           onSearch={this.handleSearch}
           onReset={this.handleReset}
           onExport={this.handleExport}
+          onChangeWay={this.handleChangeWay}
           onParamsChange={this.handleParamsChanged}
           inputPlaceholder="请输入组名"
           amountSetShow={amountSetShow}

@@ -28,7 +28,7 @@ function AppointmentsBar(props) {
           onChange={value => onParamsChange(value, 'hosOrgCode')}
         >
           {typeHosName.map(item => (
-            <Select.Option id={item.id} key={item.hos_name} value={item.hos_name}>
+            <Select.Option id={item.id} key={item.hos_name} value={item.id}>
               {item.hos_name}
             </Select.Option>
           ))}
@@ -44,7 +44,7 @@ function AppointmentsBar(props) {
           onChange={value => onParamsChange(value, 'hosOrgCode')}
         >
           {allHosName.map(item => (
-            <Select.Option id={item.id} key={item.id} value={item.hos_name}>
+            <Select.Option id={item.id} key={item.id} value={item.id}>
               {item.hos_name}
             </Select.Option>
           ))}

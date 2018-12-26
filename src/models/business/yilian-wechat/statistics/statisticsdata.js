@@ -269,7 +269,7 @@ export default {
         params += `&countType=${appointmentAttention.countType}`;
       }
       if (appointmentAttention && appointmentAttention.cityName) {
-        params += `&cityName=${appointmentAttention.cityName}`;
+        params += `&cityCode=${appointmentAttention.cityName}`;
       }
       if (appointmentAttention && appointmentAttention.hosOrgCode) {
         params += `&hosOrgCode=${appointmentAttention.hosOrgCode}`;
@@ -315,7 +315,7 @@ export default {
         params += `&countType=${appointmentAttention.type}`;
       }
       if (appointmentAttention && appointmentAttention.cityName) {
-        params += `&cityName=${appointmentAttention.cityName}`;
+        params += `&cityCode=${appointmentAttention.cityName}`;
       }
       if (appointmentAttention && appointmentAttention.hosOrgCode) {
         params += `&hosOrgCode=${appointmentAttention.hosOrgCode}`;
@@ -355,7 +355,7 @@ export default {
         params += `&countType=${appointmentAttention.type}`;
       }
       if (appointmentAttention && appointmentAttention.cityName) {
-        params += `&cityName=${appointmentAttention.cityName}`;
+        params += `&cityCode=${appointmentAttention.cityName}`;
       }
       if (appointmentAttention && appointmentAttention.hosOrgCode) {
         params += `&hosOrgCode=${appointmentAttention.hosOrgCode}`;

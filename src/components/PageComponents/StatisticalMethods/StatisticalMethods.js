@@ -10,7 +10,13 @@ const getYears = start => {
   const yearList = [];
   console.log(startYear);
   for (let year = startYear; year <= thisYear; year += 1) {
-    yearList.unshift(year.toString());
+    const endYear4 = [year];
+    endYear4.push('01', '01');
+    const endYear5 = endYear4.join('-');
+    console.log(endYear5);
+
+    yearList.unshift(endYear5);
+    // yearList.unshift(year.toString());
   }
   return yearList;
 };

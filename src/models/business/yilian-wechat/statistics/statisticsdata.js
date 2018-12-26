@@ -28,8 +28,8 @@ export default {
         cityName: '',
         hosOrgCode: null,
         visitLevelCode: null,
-        orderStatus: null,
-        regChannel: null,
+        orderStatus: '',
+        regChannel: '',
         chooseStartTime: moment(new Date().valueOf() - 31622400000).format('YYYY-MM-DD'),
         chooseEndTime: moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD'),
         type: 'day',
@@ -265,7 +265,7 @@ export default {
       if (appointmentAttention && appointmentAttention.endTime) {
         params += `&endTime=${appointmentAttention.endTime}`;
       }
-      if (appointmentAttention && appointmentAttention.type) {
+      if (appointmentAttention && appointmentAttention.countType) {
         params += `&countType=${appointmentAttention.countType}`;
       }
       if (appointmentAttention && appointmentAttention.cityName) {
@@ -312,7 +312,7 @@ export default {
         params += `&endTime=${appointmentAttention.endTime}`;
       }
       if (appointmentAttention && appointmentAttention.type) {
-        params += `&countType=${appointmentAttention.countType}`;
+        params += `&countType=${appointmentAttention.type}`;
       }
       if (appointmentAttention && appointmentAttention.cityName) {
         params += `&cityName=${appointmentAttention.cityName}`;
@@ -343,7 +343,7 @@ export default {
       const { appointmentAttention } = yield select(
         state => state.businessYilianWechatStatisticDatas.searchParam
       );
-      const { way, page } = payload;
+      const { page } = payload;
       let params = '';
       if (appointmentAttention && appointmentAttention.chooseStartTime) {
         params += `&startTime=${appointmentAttention.chooseStartTime}`;
@@ -372,7 +372,7 @@ export default {
       if (appointmentAttention && !appointmentAttention.isExport) {
         params += `&isExport=${appointmentAttention.isExport}`;
       }
-      const res = yield call(fetchAppointmentsDataService, params, page, 10, way);
+      const res = yield call(fetchAppointmentsDataService, params, page, 10);
       if (res && res.code === 200) {
         yield put({
           type: 'updateDetailList',
@@ -466,11 +466,11 @@ export default {
           ...state.list,
           [payload.key]: payload.list,
         },
-        detailCurrentPage: {
+        currentPage: {
           ...state.currentPage,
           [payload.key]: payload.currentPage,
         },
-        datailTotalElements: {
+        totalElements: {
           ...state.totalElements,
           [payload.key]: payload.totalElements,
         },

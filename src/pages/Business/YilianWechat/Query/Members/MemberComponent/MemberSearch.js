@@ -193,26 +193,6 @@ class MemberSearch extends Component {
             <Select.Option value="2">按月统计</Select.Option>
             <Select.Option value="3">按年统计</Select.Option>
           </Select>
-          {/* <span className={classes.Span}>
-            开始日期：
-            <DatePicker
-              format={dateFormat()}
-              showToday={false}
-              allowClear={false}
-              value={moment(params.startTime, 'YYYY-MM-DD')}
-              onChange={(_, dateStrings) => onParamsChange(dateStrings, 'startTime')}
-            />
-          </span>
-          <span className={classes.Span}>
-            截止日期：
-            <DatePicker
-              format={dateFormat()}
-              showToday={false}
-              allowClear={false}
-              value={moment(params.endTime, 'YYYY-MM-DD')}
-              onChange={(_, dateStrings) => onParamsChange(dateStrings, 'endTime')}
-            />
-          </span> */}
           {chooseTime()}
           <span style={{ float: 'right', marginTop: '16px' }}>
             <Button type="primary" htmlType="button" onClick={onSearch} className={classes.Gap}>

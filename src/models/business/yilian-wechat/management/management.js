@@ -61,10 +61,10 @@ export default {
       const { page } = payload;
       let params = '';
       if (searchParam && searchParam.groupName) {
-        params += `name=${searchParam.groupName}`;
+        params += `&name=${searchParam.groupName}`;
       }
       if (searchParam && !searchParam.groupDownload) {
-        params += `isExport=${searchParam.groupDownload}`;
+        params += `&isExport=${searchParam.groupDownload}`;
       }
       const res = yield call(fetchGroupListService, params, page, 10);
       if (res && res.code === 200) {
@@ -83,7 +83,7 @@ export default {
       const searchParam = yield select(state => state.businessYilianWechatManagement.searchParam);
       let params = '';
       if (searchParam && searchParam.groupName) {
-        params += `name=${searchParam.groupName}`;
+        params += `&name=${searchParam.groupName}`;
       }
       const res = yield call(fetchGroupExportService, params);
       let returnData = null;
@@ -97,10 +97,10 @@ export default {
       const { page } = payload;
       let params = '';
       if (searchParam && searchParam.memberName) {
-        params += `name=${searchParam.memberName}`;
+        params += `&name=${searchParam.memberName}`;
       }
       if (searchParam && !searchParam.memberDownload) {
-        params += `isExport=${searchParam.memberDownload}`;
+        params += `&isExport=${searchParam.memberDownload}`;
       }
       const res = yield call(fetchMemberListService, params, page, 10);
       if (res && res.code === 200) {
@@ -119,7 +119,7 @@ export default {
       const searchParam = yield select(state => state.businessYilianWechatManagement.searchParam);
       let params = '';
       if (searchParam && searchParam.memberName) {
-        params += `name=${searchParam.memberName}`;
+        params += `&name=${searchParam.memberName}`;
       }
       const res = yield call(fetchMemberExportService, params);
       let returnData = null;
@@ -145,10 +145,10 @@ export default {
       const { page } = payload;
       let params = '';
       if (searchParam && searchParam.locationName) {
-        params += `name=${searchParam.locationName}`;
+        params += `&name=${searchParam.locationName}`;
       }
       if (searchParam && !searchParam.locationDownload) {
-        params += `isExport=${searchParam.locationDownload}`;
+        params += `&isExport=${searchParam.locationDownload}`;
       }
       const res = yield call(fetchLocationListService, params, page, 10);
       if (res && res.code === 200) {
@@ -167,7 +167,7 @@ export default {
       const searchParam = yield select(state => state.businessYilianWechatManagement.searchParam);
       let params = '';
       if (searchParam && searchParam.locationName) {
-        params += `name=${searchParam.locationName}`;
+        params += `&name=${searchParam.locationName}`;
       }
       const res = yield call(fetchLocationExportService, params);
       let returnData = null;

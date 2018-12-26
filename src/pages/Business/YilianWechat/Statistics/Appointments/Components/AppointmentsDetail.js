@@ -181,11 +181,11 @@ class AppointmentsDetail extends Component {
   };
 
   handlePageChange = page => {
-    const { onFetchAppointmentsDataDetail, name } = this.props;
+    const { onFetchAppointmentsDataDetail } = this.props;
     const { way } = this.state;
-    if (name) {
-      onFetchAppointmentsDataDetail(way, page - 1);
-    }
+    // if (name) {
+    onFetchAppointmentsDataDetail(way, page - 1);
+    // }
   };
 
   render() {

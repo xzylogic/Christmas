@@ -69,6 +69,7 @@ class AppointmentsContainer extends Component {
     selectedName: '',
     selectedDate: '',
     showDetail: false,
+    disabledShow: true,
   };
 
   componentDidMount() {
@@ -308,7 +309,7 @@ class AppointmentsContainer extends Component {
       typeHosName,
     } = this.props;
 
-    const { selectedName, showDetail, selectedDate } = this.state;
+    const { selectedName, showDetail, selectedDate, disabledShow } = this.state;
 
     return (
       <React.Fragment>
@@ -320,6 +321,7 @@ class AppointmentsContainer extends Component {
           onReset={this.handleReset}
           onExport={this.handleExport}
           onParamsChange={this.handleParamsChanged}
+          disabled={disabledShow}
         />
         <TableList
           rowKey={(_, index) => index}

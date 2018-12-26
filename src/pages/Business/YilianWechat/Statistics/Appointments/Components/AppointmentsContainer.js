@@ -130,6 +130,12 @@ class AppointmentsContainer extends Component {
       if (record === 'app') {
         content = <span>医联App</span>;
       }
+      if (record === 'app_ios') {
+        content = <span>医联App</span>;
+      }
+      if (record === 'app_android') {
+        content = <span>医联App</span>;
+      }
       return content;
     };
 

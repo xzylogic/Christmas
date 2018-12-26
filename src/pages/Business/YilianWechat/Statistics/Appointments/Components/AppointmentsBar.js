@@ -22,13 +22,13 @@ function AppointmentsBar(props) {
       content = (
         <Select
           className={classes.Gap}
-          style={{ width: 150 }}
+          style={{ width: 240 }}
           placeholder="医院名称"
           value={params.hosOrgCode}
           onChange={value => onParamsChange(value, 'hosOrgCode')}
         >
           {typeHosName.map(item => (
-            <Select.Option id={item.id} key={item.hos_name} value={item.id}>
+            <Select.Option id={item.hos_org_code} key={item.hos_org_code} value={item.hos_org_code}>
               {item.hos_name}
             </Select.Option>
           ))}
@@ -38,7 +38,7 @@ function AppointmentsBar(props) {
       content = (
         <Select
           className={classes.Gap}
-          style={{ width: 150 }}
+          style={{ width: 240 }}
           placeholder="医院名称"
           value={params.hosOrgCode}
           onChange={value => onParamsChange(value, 'hosOrgCode')}
@@ -91,7 +91,7 @@ function AppointmentsBar(props) {
       <span className={classes.Span}>
         门诊类型：
         <Select
-          style={{ width: 115 }}
+          style={{ width: 80 }}
           placeholder="门诊类型"
           className={classes.Gap}
           value={params.visitLevelCode}

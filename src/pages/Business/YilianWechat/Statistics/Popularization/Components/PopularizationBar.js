@@ -23,7 +23,7 @@ class PopularizationBar extends React.Component {
         content = (
           <Select
             className={classes.Gap}
-            style={{ width: 115 }}
+            style={{ width: 130 }}
             placeholder="医院名称"
             onChange={value => onParamsChange(value, 'hosName')}
             value={params.hosName}
@@ -39,7 +39,7 @@ class PopularizationBar extends React.Component {
         content = (
           <Select
             className={classes.Gap}
-            style={{ width: 115 }}
+            style={{ width: 130 }}
             placeholder="医院名称"
             onChange={value => onParamsChange(value, 'hosName')}
             value={params.hosName}

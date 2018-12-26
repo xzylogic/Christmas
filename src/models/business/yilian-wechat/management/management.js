@@ -189,7 +189,7 @@ export default {
         yield put({ type: 'fetchGroupList', payload: { page: 0 } });
         message.success('新增小组成功！');
       } else {
-        message.error('新增小组失败！');
+        message.error(res.msg);
       }
       return ifsuccess;
     },
@@ -202,7 +202,7 @@ export default {
         yield put({ type: 'fetchGroupList', payload: { page: 0 } });
         message.success('修改小组信息成功！');
       } else {
-        message.error('修改小组信息失败！');
+        message.error(res.msg);
       }
       return ifsuccess;
     },
@@ -213,7 +213,7 @@ export default {
         yield put({ type: 'fetchGroupList', payload: { page: 0 } });
         message.success('删除小组成功！');
       } else {
-        message.error('删除小组失败！');
+        message.error(res.msg);
       }
     },
     *createMember({ payload }, { call, put }) {
@@ -225,7 +225,7 @@ export default {
         yield put({ type: 'fetchMemberList', payload: { page: 0 } });
         message.success('新增人员成功！');
       } else {
-        message.error('新增人员失败！');
+        message.error(res.msg);
       }
       return ifsuccess;
     },
@@ -238,7 +238,7 @@ export default {
         yield put({ type: 'fetchMemberList', payload: { page: 0 } });
         message.success('修改人员信息成功！');
       } else {
-        message.error('修改人员信息失败！');
+        message.error(res.msg);
       }
       return ifsuccess;
     },
@@ -249,7 +249,7 @@ export default {
         yield put({ type: 'fetchMemberList', payload: { page: 0 } });
         message.success('删除人员成功！');
       } else {
-        message.error('删除人员失败！');
+        message.error(res.msg);
       }
     },
     *createLocation({ payload }, { call, put }) {
@@ -261,7 +261,7 @@ export default {
         yield put({ type: 'fetchLocationList', payload: { page: 0 } });
         message.success('新增地点成功！');
       } else {
-        message.error('新增地点失败！');
+        message.error(res.msg);
       }
       return ifsuccess;
     },
@@ -274,7 +274,7 @@ export default {
         yield put({ type: 'fetchLocationList', payload: { page: 0 } });
         message.success('修改地点信息成功！');
       } else {
-        message.error('修改地点信息失败！');
+        message.error(res.msg);
       }
       return ifsuccess;
     },
@@ -285,7 +285,7 @@ export default {
         yield put({ type: 'fetchLocationList', payload: { page: 0 } });
         message.success('删除地点成功！');
       } else {
-        message.error('删除地点失败！');
+        message.error(res.msg);
       }
     },
     *fetchAllHosName(_, { call, put }) {
@@ -330,7 +330,7 @@ export default {
         ifsuccess = true;
         message.success('编辑小组信息成功！');
       } else {
-        message.error('编辑小组信息失败！');
+        message.error(res.msg);
       }
       return ifsuccess;
     },

@@ -13,8 +13,8 @@ import {
   deleteMemberService,
   deleteLocationService,
   getMemberService,
-  fetchAllHosNameService,
-  fetchAllGroupNameService,
+  fetchValiHosNameService,
+  fetchValiGroupNameService,
   addHosToGroupService,
   fetchGroupExportService,
   fetchMemberExportService,
@@ -285,7 +285,7 @@ export default {
       }
     },
     *fetchAllHosName(_, { call, put }) {
-      const res = yield call(fetchAllHosNameService);
+      const res = yield call(fetchValiHosNameService);
       if (res && res.code === 200) {
         yield put({
           type: 'updateList',
@@ -297,7 +297,7 @@ export default {
       }
     },
     *fetchAllGroupName(_, { call, put }) {
-      const res = yield call(fetchAllGroupNameService);
+      const res = yield call(fetchValiGroupNameService);
       if (res && res.code === 200) {
         yield put({
           type: 'updateList',

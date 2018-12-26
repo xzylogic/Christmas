@@ -88,8 +88,8 @@ class Index extends Component {
   handleParamsChange = async (value, dataKey) => {
     const { onUpdateSearchParams, onFetchYilianStatistics, onFetchSearchHospitals } = this.props;
     if (dataKey === 'date') {
-      await onUpdateSearchParams('startDate', value[0]);
-      await onUpdateSearchParams('endDate', value[1]);
+      await onUpdateSearchParams('startTime', value[0]);
+      await onUpdateSearchParams('endTime', value[1]);
     } else if (dataKey === 'cityCode') {
       await onUpdateSearchParams(dataKey, value);
       await onFetchSearchHospitals();
@@ -408,8 +408,8 @@ class Index extends Component {
     const { onUpdateSearchParams, onFetchYilianStatistics } = this.props;
     this.setState({ yKeyOne: '', yTitleOne: '', yKeyTwo: '', yTitleTwo: '' });
     await onUpdateSearchParams('countType', 'day');
-    await onUpdateSearchParams('startDate', moment(new Date().valueOf() - 2678400000));
-    await onUpdateSearchParams('endDate', moment(new Date().valueOf() - 86400000));
+    await onUpdateSearchParams('startTime', moment(new Date().valueOf() - 2678400000));
+    await onUpdateSearchParams('endTime', moment(new Date().valueOf() - 86400000));
     await onUpdateSearchParams('cityCode', '');
     await onUpdateSearchParams('orgId', '');
     await onUpdateSearchParams('isExclusive', '');

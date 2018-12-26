@@ -41,8 +41,8 @@ function StatisticalMethods(props) {
             format="YYYY-MM-DD"
             showToday={false}
             allowClear={false}
-            value={moment(params.startTime, 'YYYY-MM-DD')}
-            onChange={(_, dateStrings) => onParamsChange(dateStrings, 'startTime')}
+            value={moment(params.startDate, 'YYYY-MM-DD')}
+            onChange={(_, dateStrings) => onParamsChange(dateStrings, 'startDate')}
           />
         </span>
         <span className={classes.Span}>
@@ -51,13 +51,13 @@ function StatisticalMethods(props) {
             format="YYYY-MM-DD"
             showToday={false}
             allowClear={false}
-            value={moment(params.endTime, 'YYYY-MM-DD')}
-            onChange={(_, dateStrings) => onParamsChange(dateStrings, 'endTime')}
+            value={moment(params.endDate, 'YYYY-MM-DD')}
+            onChange={(_, dateStrings) => onParamsChange(dateStrings, 'endDate')}
           />
         </span>
       </span>
     );
-    if (params.countType === 'month' || params.type === 'month' || params.type === '2') {
+    if (params.countType === 'month') {
       content = (
         <span>
           <span className={classes.Span}>
@@ -66,8 +66,8 @@ function StatisticalMethods(props) {
               format="YYYY-MM"
               showToday={false}
               allowClear={false}
-              value={moment(params.startTime, 'YYYY-MM-DD')}
-              onChange={(_, dateStrings) => onParamsChange(dateStrings, 'startTime')}
+              value={moment(params.startDate, 'YYYY-MM-DD')}
+              onChange={(_, dateStrings) => onParamsChange(dateStrings, 'startDate')}
             />
           </span>
           <span className={classes.Span}>
@@ -76,24 +76,32 @@ function StatisticalMethods(props) {
               format="YYYY-MM"
               showToday={false}
               allowClear={false}
-              value={moment(params.endTime, 'YYYY-MM-DD')}
-              onChange={(_, dateStrings) => onParamsChange(dateStrings, 'endTime')}
+              value={moment(params.endDate, 'YYYY-MM-DD')}
+              onChange={(_, dateStrings) => onParamsChange(dateStrings, 'endDate')}
             />
           </span>
         </span>
       );
     }
-    if (params.countType === 'year' || params.type === 'year' || params.type === '3') {
+    if (params.countType === 'year') {
       // 默认起止日期
 
-      console.log(params);
-      const defaultStartTime = params.startTime.split('-')[0];
-      const defaultEndTime = params.endTime.split('-')[0];
+      // console.log(params)
+      // const defaultStartTime = params.startDate.format('YYYY')  || params.startDate.split('-')[0];
+      // const defaultEndTime = params.startDate.format('YYYY') || params.endDate.split('-')[0];
 
-      const defaultStartTime1 = parseInt(defaultStartTime, 10);
+      // const defaultStartTime = ;
+      // const defaultEndTime = params.endDate.split('-')[0];
+      const defaultStartTime = '2018';
+      const defaultEndTime = '2018';
+
+      // console.log(params.startDate.format('YYYY-MM-DD'))
+
+      // const defaultStartTime1 = parseInt(defaultStartTime, 10);
 
       const startyearArr = getStartYears();
-      const endyearArr = getEndYears(defaultStartTime1);
+      // const endyearArr = getEndYears(defaultStartTime1);
+      const endyearArr = getEndYears(1990);
 
       content = (
         <span>
@@ -103,7 +111,7 @@ function StatisticalMethods(props) {
               className={classes.Gap}
               style={{ width: 150 }}
               value={defaultStartTime}
-              onChange={value => onParamsChange(value, 'startTime')}
+              onChange={value => onParamsChange(value, 'startDate')}
             >
               {startyearArr.map(item => (
                 <Select.Option key={item.y} value={item.date}>
@@ -118,7 +126,7 @@ function StatisticalMethods(props) {
               className={classes.Gap}
               style={{ width: 150 }}
               value={defaultEndTime}
-              onChange={value => onParamsChange(value, 'endTime')}
+              onChange={value => onParamsChange(value, 'endDate')}
             >
               {endyearArr.map(item => (
                 <Select.Option key={item.y} value={item.date}>

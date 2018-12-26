@@ -37,7 +37,7 @@ class MemberEditor extends Component {
           sex: values.sex,
           phone: values.phone,
           jobNumber: values.jobNumber,
-          groupName: values.groupName,
+          groupId: values.groupName,
           site: values.site,
           promoCode: values.promoCode.join(' '),
         };

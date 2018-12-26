@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
 import moment from 'moment';
-import { Tabs, Radio, Table, Button } from 'antd';
+import { Tabs, Radio, Table, Button, Modal } from 'antd';
 import debounce from 'lodash.debounce';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
@@ -73,6 +73,8 @@ class Member extends Component {
   state = {
     tab1Show: 'chart',
     tab2Show: 'chart',
+    tab1ModalShow: false,
+    tab2ModalShow: false,
   };
 
   componentDidMount() {
@@ -172,14 +174,44 @@ class Member extends Component {
   };
 
   setRTableColumns = () => {
-    const { registrationList } = this.props;
+    const { registrationList, searchParam } = this.props;
     const listLength = (registrationList && registrationList.length) || 0;
-    const columns = [
-      {
-        title: '日期/周期/月份/年份',
-        dataIndex: 'date',
-        key: 'date',
-      },
+    const columns = [];
+
+    switch (searchParam.type) {
+      case '0':
+        columns.push({
+          title: '日期',
+          dataIndex: 'date',
+          key: 'date',
+        });
+        break;
+      case '1':
+        columns.push({
+          title: '周期',
+          dataIndex: 'date',
+          key: 'date',
+        });
+        break;
+      case '2':
+        columns.push({
+          title: '月份',
+          dataIndex: 'date',
+          key: 'date',
+        });
+        break;
+      case '3':
+        columns.push({
+          title: '年份',
+          dataIndex: 'date',
+          key: 'date',
+        });
+        break;
+      default:
+        break;
+    }
+
+    const columnsArr = [
       {
         title: '机构',
         dataIndex: 'appName',
@@ -211,6 +243,8 @@ class Member extends Component {
         render: (text, record, index) => renderContent(text, record, index, listLength),
       },
     ];
+
+    columns.push(...columnsArr);
     return columns;
   };
 
@@ -238,7 +272,12 @@ class Member extends Component {
     await onFetchMembershipListDebounce(0);
   };
 
-  handleFollowDownload = e => {
+  handleSureFollowDownload = e => {
+    e.preventDefault();
+    this.setState({ tab1ModalShow: true, tab2ModalShow: false });
+  };
+
+  handleFollowDownload = async e => {
     e.preventDefault();
     const { onDownloadMembershipList, onSearchParamChange } = this.props;
 
@@ -251,10 +290,17 @@ class Member extends Component {
       }
     });
     onSearchParamChange('isExportFocus', false);
+    this.setState({ tab1ModalShow: false, tab2ModalShow: false });
+  };
+
+  handleSureRegisterDownload = e => {
+    e.preventDefault();
+    this.setState({ tab1ModalShow: false, tab2ModalShow: true });
   };
 
   handleRegisterDownload = e => {
     e.preventDefault();
+
     const { onDownloadMembershipList, onSearchParamChange } = this.props;
 
     onSearchParamChange('isExportRegister', true);
@@ -266,6 +312,7 @@ class Member extends Component {
       }
     });
     onSearchParamChange('isExportRegister', false);
+    this.setState({ tab1ModalShow: false, tab2ModalShow: false });
   };
 
   handleSearch = async e => {
@@ -291,7 +338,7 @@ class Member extends Component {
 
   render() {
     const { followingList, registrationList, searchParam, allHosName, allPerson } = this.props;
-    const { tab1Show, tab2Show } = this.state;
+    const { tab1Show, tab2Show, tab1ModalShow, tab2ModalShow } = this.state;
     return (
       <PageHeaderWrapper>
         <div className={classes.Container}>
@@ -314,9 +361,22 @@ class Member extends Component {
                   <Radio.Button value="chart">图形</Radio.Button>
                   <Radio.Button value="list">列表</Radio.Button>
                 </Radio.Group>
-                <Button type="ghost" onClick={this.handleFollowDownload}>
+                <Button type="ghost" onClick={this.handleSureFollowDownload}>
                   下载
                 </Button>
+                <Modal
+                  title="提示"
+                  centered
+                  visible={tab1ModalShow}
+                  onOk={this.handleFollowDownload}
+                  onCancel={() => this.setState({ tab1ModalShow: false })}
+                >
+                  <div>
+                    【会员关注】: 确定导出从
+                    {searchParam.startTime}到{searchParam.endTime}
+                    该时段的记录？
+                  </div>
+                </Modal>
               </div>
               {tab1Show === 'list' ? (
                 <div>
@@ -342,9 +402,22 @@ class Member extends Component {
                   <Radio.Button value="chart">图形</Radio.Button>
                   <Radio.Button value="list">列表</Radio.Button>
                 </Radio.Group>
-                <Button type="ghost" onClick={this.handleRegisterDownload}>
+                <Button type="ghost" onClick={this.handleSureRegisterDownload}>
                   下载
                 </Button>
+                <Modal
+                  title="提示"
+                  centered
+                  visible={tab2ModalShow}
+                  onOk={this.handleRegisterDownload}
+                  onCancel={() => this.setState({ tab2ModalShow: false })}
+                >
+                  <div>
+                    【会员注册 】: 确定导出从
+                    {searchParam.startTime}到{searchParam.endTime}
+                    该时段的记录？
+                  </div>
+                </Modal>
               </div>
               {tab2Show === 'list' ? (
                 <div>

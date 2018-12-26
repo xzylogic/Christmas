@@ -85,8 +85,6 @@ function StatisticalMethods(props) {
     }
     if (params.countType === 'year' || params.type === 'year' || params.type === '3') {
       // 默认起止日期
-
-      console.log(params);
       const defaultStartTime = params.startTime.split('-')[0];
       const defaultEndTime = params.endTime.split('-')[0];
 

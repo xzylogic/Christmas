@@ -100,7 +100,6 @@ function StatisticalMethods(props) {
       } else {
         const times = params.endDate.split('-');
         const [firstTime] = times;
-        console.log(firstTime);
         defaultEndTime = firstTime;
       }
 

@@ -96,14 +96,14 @@ function type1SearchBar(props) {
       const startYear2 = startYear1.join('-');
 
       const startYear3 = parseInt(startYear2.split('-')[0], 10);
-      const startyearArr = [{ id: startYear2, year: startYear3 }];
+      const startyearArr = [{ date: startYear2, year: startYear3 }];
 
       // for (let i = 0; i < 20; i + 1) {
       //   startYear3 - 1;
       //   const startYear4 = [startYear3];
       //   startYear4.push('01', '01');
       //   const startYear5 = startYear4.join('-');
-      //   startyearArr.push({ id: startYear5, year: startYear3 });
+      //   startyearArr.push({ date: startYear5, year: startYear3 });
       // }
 
       // 截止年份
@@ -112,14 +112,14 @@ function type1SearchBar(props) {
       const endYear2 = endYear1.join('-');
 
       const endYear3 = parseInt(endYear2.split('-')[0], 10);
-      const endyearArr = [{ id: endYear2, year: endYear3 }];
+      const endyearArr = [{ date: endYear2, year: endYear3 }];
 
       // for (let i = 0; i < 20; i+1) {
       //   endYear3 - 1;
       //   const endYear4 = [endYear3];
       //   endYear4.push('12', '31');
       //   const endYear5 = endYear4.join('-');
-      //   endyearArr.push({ id: endYear5, year: endYear3 });
+      //   endyearArr.push({ date: endYear5, year: endYear3 });
       // }
 
       content = (
@@ -133,7 +133,7 @@ function type1SearchBar(props) {
               onChange={value => onParamsChange(value, 'startTime')}
             >
               {startyearArr.map(item => (
-                <Select.Option key={item.year} value={item.id}>
+                <Select.Option key={item.year} value={item.date}>
                   {item.year}
                 </Select.Option>
               ))}
@@ -148,7 +148,7 @@ function type1SearchBar(props) {
               onChange={value => onParamsChange(value, 'endTime')}
             >
               {endyearArr.map(item => (
-                <Select.Option key={item.year} value={item.id}>
+                <Select.Option key={item.year} value={item.date}>
                   {item.year}
                 </Select.Option>
               ))}

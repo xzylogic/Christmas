@@ -97,6 +97,7 @@ function AppointmentsBar(props) {
       );
     }
     if (params.countType === 'year') {
+      // 当前时间
       const currentStart = moment(new Date().valueOf() - 2678400000).format('YYYY-MM-DD');
       const currentEnd = moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD');
 
@@ -116,16 +117,30 @@ function AppointmentsBar(props) {
       const startYear2 = startYear1.join('-');
 
       const startYear3 = parseInt(startYear2.split('-')[0], 10);
-      const startyearArr = [{ id: startYear2, year: startYear3 }];
+      const startyearArr = [{ date: startYear2, year: startYear3 }];
 
-      console.log(startYear3);
+      // const startyearArr = [];
+
+      // let arr1 = Array.apply(null, { length: 20 });
+      // arr1 = Object.keys(arr1);
+      // arr1 = arr1.map(function(item) {
+      //   const startYear4 = [startYear3 - item];
+
+      //   startYear4.push('01', '01');
+
+      //   const startYear5 = startYear4.join('-');
+
+      //   startyearArr.push({ date: startYear5, year: startYear3 - item });
+
+      //   return startyearArr[0];
+      // });
 
       // for (let i = 0; i < 20; i + 1) {
       //   startYear3 - 1;
       //   let startYear4 = [startYear3];
       //   startYear4.push('01', '01');
       //   const startYear5 = startYear4.join('-');
-      //   startyearArr.push({ id: startYear5, year: startYear3 });
+      //   startyearArr.push({ date: startYear5, year: startYear3 });
       // }
 
       // 截止年份
@@ -134,14 +149,30 @@ function AppointmentsBar(props) {
       const endYear2 = endYear1.join('-');
 
       const endYear3 = parseInt(endYear2.split('-')[0], 10);
-      const endyearArr = [{ id: endYear2, year: endYear3 }];
+      const endyearArr = [{ date: endYear2, year: endYear3 }];
+
+      // const endyearArr = [];
+
+      // let arr2 = Array.apply(null, { length: 20 });
+      // arr2 = Object.keys(arr2);
+      // arr2 = arr2.map(function(item) {
+      //   const endYear4 = [endYear3 - item];
+
+      //   endYear4.push('12', '31');
+
+      //   const endYear5 = endYear4.join('-');
+
+      //   endyearArr.push({ date: endYear5, year: endYear3 - item });
+
+      //   return endyearArr[0];
+      // });
 
       // for (let i = 0; i < 20; i+1) {
       //   endYear3 - 1;
       //   const endYear4 = [endYear3];
       //   endYear4.push('12', '31');
       //   const endYear5 = endYear4.join('-');
-      //   endyearArr.push({ id: endYear5, year: endYear3 });
+      //   endyearArr.push({ date: endYear5, year: endYear3 });
       // }
 
       content = (
@@ -155,7 +186,7 @@ function AppointmentsBar(props) {
               onChange={value => onParamsChange(value, 'startTime')}
             >
               {startyearArr.map(item => (
-                <Select.Option key={item.year} value={item.id}>
+                <Select.Option key={item.year} value={item.date}>
                   {item.year}
                 </Select.Option>
               ))}
@@ -170,7 +201,7 @@ function AppointmentsBar(props) {
               onChange={value => onParamsChange(value, 'endTime')}
             >
               {endyearArr.map(item => (
-                <Select.Option key={item.year} value={item.id}>
+                <Select.Option key={item.year} value={item.date}>
                   {item.year}
                 </Select.Option>
               ))}

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Select, Button, Row } from 'antd';
-// import moment from 'moment';
 import StatisticalMethods from '@/components/PageComponents/StatisticalMethods/StatisticalMethods';
 
 import classes from './AppointmentsBar.less';
@@ -69,9 +68,7 @@ function AppointmentsBar(props) {
         <Select.Option value="month">按月统计</Select.Option>
         <Select.Option value="year">按年统计</Select.Option>
       </Select>
-
       <StatisticalMethods params={params} onParamsChange={onParamsChange} />
-
       <span className={classes.Span}>
         医院类型：
         <Select

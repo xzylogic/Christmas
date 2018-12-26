@@ -57,7 +57,7 @@ function StatisticalMethods(props) {
         </span>
       </span>
     );
-    if (params.countType === 'month') {
+    if (params.countType === 'month' || params.type === 'month') {
       content = (
         <span>
           <span className={classes.Span}>
@@ -83,7 +83,7 @@ function StatisticalMethods(props) {
         </span>
       );
     }
-    if (params.countType === 'year') {
+    if (params.countType === 'year' || params.type === 'year') {
       // 默认起止日期
       const defaultStartTime = params.startTime.split('-')[0];
       const defaultEndTime = params.endTime.split('-')[0];

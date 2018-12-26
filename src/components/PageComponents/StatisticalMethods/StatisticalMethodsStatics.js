@@ -84,24 +84,28 @@ function StatisticalMethods(props) {
       );
     }
     if (params.countType === 'year') {
-      // 默认起止日期
+      let defaultStartTime = '';
+      let defaultEndTime = '';
 
-      // console.log(params)
-      // const defaultStartTime = params.startDate.format('YYYY')  || params.startDate.split('-')[0];
-      // const defaultEndTime = params.startDate.format('YYYY') || params.endDate.split('-')[0];
+      if (params.startDate instanceof Object) {
+        defaultStartTime = params.startDate.format('YYYY');
+      } else {
+        console.log(123);
+        // defaultStartTime = params.startDate.split('-')[0];
+      }
 
-      // const defaultStartTime = ;
-      // const defaultEndTime = params.endDate.split('-')[0];
-      const defaultStartTime = '2018';
-      const defaultEndTime = '2018';
+      if (params.endDate instanceof Object) {
+        defaultEndTime = params.endDate.format('YYYY');
+      } else {
+        console.log(123);
 
-      // console.log(params.startDate.format('YYYY-MM-DD'))
+        // defaultEndTime = params.endDate.split('-')[0];
+      }
 
-      // const defaultStartTime1 = parseInt(defaultStartTime, 10);
+      const defaultStartTime1 = parseInt(defaultStartTime, 10);
 
       const startyearArr = getStartYears();
-      // const endyearArr = getEndYears(defaultStartTime1);
-      const endyearArr = getEndYears(1990);
+      const endyearArr = getEndYears(defaultStartTime1);
 
       content = (
         <span>

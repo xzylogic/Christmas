@@ -50,10 +50,10 @@ const mapDispatchToProps = dispatch => ({
     dispatch({
       type: 'businessYilianWechatStatisticDatas/fetchAllGroupName',
     }),
-  onDownloadPromoteAttentionAmount: page =>
+  onDownloadPromoteAttentionAmount: (way, page) =>
     dispatch({
       type: 'businessYilianWechatStatisticDatas/downloadPromoteAttentionAmount',
-      payload: { page },
+      payload: { way, page },
     }),
 });
 
@@ -163,6 +163,11 @@ class AppointmentsContainer extends Component {
     }
 
     const columnsArr = [
+      // {
+      //   title: '医院等级',
+      //   dataIndex: 'hosName',
+      //   key: 'hosName',
+      // },
       {
         title: '医院名称',
         dataIndex: 'hosName',
@@ -178,11 +183,11 @@ class AppointmentsContainer extends Component {
         dataIndex: 'regCount',
         key: 'regCount',
       },
-      {
-        title: '实名量',
-        dataIndex: 'realCount',
-        key: 'realCount',
-      },
+      // {
+      //   title: '实名量',
+      //   dataIndex: 'realCount',
+      //   key: 'realCount',
+      // },
       {
         title: '关注量',
         dataIndex: 'fansCount',
@@ -205,6 +210,11 @@ class AppointmentsContainer extends Component {
         key: 'groupId',
         render: record => renderGroupId(record),
       },
+      // {
+      //   title: '二维码',
+      //   dataIndex: 'hosName',
+      //   key: 'hosName',
+      // },
     ];
 
     columns.push(...columnsArr);
@@ -258,6 +268,11 @@ class AppointmentsContainer extends Component {
 
     const columnsArr = [
       {
+        title: '医院等级',
+        dataIndex: 'hosName',
+        key: 'hosName',
+      },
+      {
         title: '医院名称',
         dataIndex: 'hosName',
         key: 'hosName',
@@ -272,11 +287,11 @@ class AppointmentsContainer extends Component {
         dataIndex: 'regCount',
         key: 'regCount',
       },
-      {
-        title: '实名量',
-        dataIndex: 'realCount',
-        key: 'realCount',
-      },
+      // {
+      //   title: '实名量',
+      //   dataIndex: 'realCount',
+      //   key: 'realCount',
+      // },
       {
         title: '明细',
         dataIndex: 'id',
@@ -292,6 +307,11 @@ class AppointmentsContainer extends Component {
         dataIndex: 'groupId',
         key: 'groupId',
         render: record => renderGroupId(record),
+      },
+      {
+        title: '二维码',
+        dataIndex: 'hosName',
+        key: 'hosName',
       },
     ];
 
@@ -315,35 +335,36 @@ class AppointmentsContainer extends Component {
   handleReset = async e => {
     e.preventDefault();
     const { onSearchParamChange, onFetchPromoteAttentionAmount } = this.props;
-    const { way } = this.state;
     await onSearchParamChange(
       'startTime',
       moment(new Date().valueOf() - 604800000).format('YYYY-MM-DD')
     );
     await onSearchParamChange('endTime', moment(new Date().valueOf()).format('YYYY-MM-DD'));
     await onSearchParamChange('way', 'week');
+    await onSearchParamChange('type', 'week');
     await onSearchParamChange('origin', '');
     await onSearchParamChange('hosName', '');
     await onSearchParamChange('hosGrade', null);
-    await onSearchParamChange('group', '1');
+    await onSearchParamChange('group', '');
     await onSearchParamChange('channel', '微信');
     await onSearchParamChange('hosType', null);
     await onSearchParamChange('orderStatus', null);
     await onSearchParamChange('orderStatusWechat', null);
     await onSearchParamChange('orderStatusApp', null);
     await onSearchParamChange('isExport', false);
-    await onFetchPromoteAttentionAmount(way, 0);
+    await onFetchPromoteAttentionAmount('week', 0);
   };
 
   handleExport = e => {
     e.preventDefault();
     const { onDownloadPromoteAttentionAmount, onSearchParamChange, currentPage } = this.props;
+    const { way } = this.state;
     onSearchParamChange('isExport', true);
-    onDownloadPromoteAttentionAmount(currentPage).then(data => {
+    onDownloadPromoteAttentionAmount(way, currentPage).then(data => {
       if (data) {
         const a = document.createElement('a');
         a.setAttribute('href', data);
-        a.setAttribute('target', '_blank');
+        // a.setAttribute('target', '_blank');
         a.click();
       }
     });

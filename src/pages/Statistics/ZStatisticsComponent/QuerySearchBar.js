@@ -108,7 +108,7 @@ function querySearchBar(props) {
           >
             <Select.Option value="">全部医院</Select.Option>
             {hospitals.map(hospital => (
-              <Select.Option key={hospital.hos_org_code} value={hospital.hos_org_code}>
+              <Select.Option key={hospital.hos_org_code} value={hospital.org_id}>
                 {hospital.hos_name}
               </Select.Option>
             ))}

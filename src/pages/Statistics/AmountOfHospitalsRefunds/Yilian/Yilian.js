@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import { Table, Radio } from 'antd';
+import { Table, Radio, Spin } from 'antd';
 import moment from 'moment';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
@@ -22,6 +22,7 @@ const mapStateToProps = state => ({
     state.statistics.hospitals[STATISTICS_TYPE.AMOUNT_OF_HOSPITALS_REFUNDS][
       STATISTICS_ORIGIN.YILIAN
     ],
+  loading: state.loading.effects['statistics/fetchYilianStatistics'],
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -204,7 +205,7 @@ class Index extends Component {
 
   render() {
     const { show, detailChart, chartTitle } = this.state;
-    const { searchParam, list, hospitals } = this.props;
+    const { searchParam, list, hospitals, loading } = this.props;
     const chartData = (list && list.filter(obj => obj.orgName !== '退号量总计')) || [];
     // const chartData = list || [];
     return (
@@ -229,7 +230,7 @@ class Index extends Component {
             </Radio.Group>
           </div>
           {show === 'chart' ? (
-            <React.Fragment>
+            <Spin spinning={loading}>
               <div className={classes.Content} style={{ minHeight: '560px' }}>
                 <StatisticsChart
                   data={chartData}
@@ -251,16 +252,18 @@ class Index extends Component {
               ) : (
                 ''
               )}
-            </React.Fragment>
+            </Spin>
           ) : (
-            <Table
-              rowKey="orgName"
-              columns={this.setTableColums()}
-              dataSource={list}
-              className={classes.Content}
-              pagination={false}
-              bordered
-            />
+            <Spin spinning={loading}>
+              <Table
+                rowKey="orgName"
+                columns={this.setTableColums()}
+                dataSource={list}
+                className={classes.Content}
+                pagination={false}
+                bordered
+              />
+            </Spin>
           )}
         </div>
       </PageHeaderWrapper>

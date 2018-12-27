@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import { Table, Radio, Row, Col } from 'antd';
+import { Table, Radio, Row, Col, Spin } from 'antd';
 import moment from 'moment';
 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
@@ -20,6 +20,7 @@ const mapStateToProps = state => ({
     state.statistics.list[STATISTICS_TYPE.AMOUNT_OF_CHANNELS_REGISTRATION][
       STATISTICS_ORIGIN.YILIAN
     ],
+  loading: state.loading.effects['statistics/fetchYilianStatistics'],
   // hospitals:
   //   state.statistics.hospitals[STATISTICS_TYPE.AMOUNT_OF_CHANNELS_REGISTRATION][STATISTICS_ORIGIN.YILIAN],
 });
@@ -428,7 +429,7 @@ class Index extends Component {
 
   render() {
     const { show, yKeyOne, yTitleOne, yKeyTwo, yTitleTwo } = this.state;
-    const { searchParam, list } = this.props;
+    const { searchParam, list, loading } = this.props;
     const chartData = (list && list.filter(obj => obj.countDate !== '注册量总计')) || [];
     const chartOneData = this.getDataSourceOne(list || []);
     const chartTwoData = this.getDataSourceTwo(list || []);
@@ -453,7 +454,7 @@ class Index extends Component {
             </Radio.Group>
           </div>
           {show === 'chart' ? (
-            <React.Fragment>
+            <Spin spinning={loading}>
               <Row className={classes.Content} style={{ minHeight: '560px' }}>
                 <Col span="12">
                   <StatisticsChart
@@ -500,17 +501,19 @@ class Index extends Component {
                   )}
                 </Col>
               </Row>
-            </React.Fragment>
+            </Spin>
           ) : (
-            <Table
-              rowKey="countDate"
-              columns={this.setTableColums(searchParam.countType)}
-              dataSource={list}
-              className={classes.Content}
-              pagination={false}
-              scroll={{ x: 2250 }}
-              bordered
-            />
+            <Spin spinning={loading}>
+              <Table
+                rowKey="countDate"
+                columns={this.setTableColums(searchParam.countType)}
+                dataSource={list}
+                className={classes.Content}
+                pagination={false}
+                scroll={{ x: 2250 }}
+                bordered
+              />
+            </Spin>
           )}
         </div>
       </PageHeaderWrapper>

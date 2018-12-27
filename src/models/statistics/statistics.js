@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { message } from 'antd';
 import {
   fetchYilianStatisticsService,
   fetchSearchHospitalsService,
@@ -204,6 +205,16 @@ export default {
             type,
             origin,
             value: res.data,
+          },
+        });
+      } else {
+        message.error((res && res.msg) || '获取数据错误');
+        yield put({
+          type: 'updateDataList',
+          payload: {
+            type,
+            origin,
+            value: [],
           },
         });
       }

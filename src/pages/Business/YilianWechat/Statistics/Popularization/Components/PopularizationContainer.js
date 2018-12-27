@@ -66,6 +66,9 @@ class AppointmentsContainer extends Component {
     way: 'week',
     selectedName: '',
     selectedDate: '',
+    selectedHosName: '',
+    selectedChannel: '',
+    selectedGroup: '',
     showDetail: false,
   };
 
@@ -352,6 +355,14 @@ class AppointmentsContainer extends Component {
     await onSearchParamChange('orderStatusWechat', null);
     await onSearchParamChange('orderStatusApp', null);
     await onSearchParamChange('isExport', false);
+    await onSearchParamChange(
+      'chooseStartTime',
+      moment(new Date().valueOf() - 604800000).format('YYYY-MM-DD')
+    );
+    await onSearchParamChange('chooseEndTime', moment(new Date().valueOf()).format('YYYY-MM-DD'));
+    await onSearchParamChange('chooseHosName', '');
+    await onSearchParamChange('chooseChannel', '微信');
+    await onSearchParamChange('chooseGroup', '');
     await onFetchPromoteAttentionAmount('week', 0);
   };
 
@@ -386,6 +397,9 @@ class AppointmentsContainer extends Component {
       showDetail: true,
       selectedName: record.hosName,
       selectedDate: record.date || record.weeks || record.months || record.years,
+      selectedHosName: record.hosName,
+      selectedChannel: record.promoCode,
+      selectedGroup: record.groupId,
     });
   };
 
@@ -407,7 +421,15 @@ class AppointmentsContainer extends Component {
       groupHosName,
     } = this.props;
 
-    const { showDetail, selectedName, way, selectedDate } = this.state;
+    const {
+      showDetail,
+      selectedName,
+      way,
+      selectedDate,
+      selectedHosName,
+      selectedChannel,
+      selectedGroup,
+    } = this.state;
 
     return (
       <React.Fragment>
@@ -445,6 +467,9 @@ class AppointmentsContainer extends Component {
         <PopularizationDetail
           name={selectedName}
           date={selectedDate}
+          hosname={selectedHosName}
+          channel={selectedChannel}
+          group={selectedGroup}
           visible={showDetail}
           onClose={this.handleDetailClose}
         />

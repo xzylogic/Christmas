@@ -84,9 +84,24 @@ function StatisticalMethods(props) {
       );
     }
     if (params.countType === 'year' || params.type === 'year' || params.type === '3') {
-      // 默认起止日期
-      const defaultStartTime = params.startTime.split('-')[0];
-      const defaultEndTime = params.endTime.split('-')[0];
+      let defaultStartTime = '';
+      let defaultEndTime = '';
+
+      if (params.startTime instanceof Object) {
+        defaultStartTime = params.startTime.format('YYYY');
+      } else {
+        const times = params.startTime.split('-');
+        const [firstTime] = times;
+        defaultStartTime = firstTime;
+      }
+
+      if (params.endTime instanceof Object) {
+        defaultEndTime = params.endTime.format('YYYY');
+      } else {
+        const times = params.endTime.split('-');
+        const [firstTime] = times;
+        defaultEndTime = firstTime;
+      }
 
       const defaultStartTime1 = parseInt(defaultStartTime, 10);
 

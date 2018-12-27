@@ -25,16 +25,26 @@ export default {
         startTime: moment(new Date().valueOf() - 2678400000).format('YYYY-MM-DD'),
         endTime: moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD'),
         countType: 'week',
+        // 医院类型
         cityName: '',
+        // 医院名称
         hosOrgCode: null,
+        // 门诊类型
         visitLevelCode: null,
+        // 订单状态
         orderStatus: '',
+        // 预约渠道
         regChannel: '',
         type: 'day',
         isExport: false,
         // 查看详情参数
         chooseStartTime: moment(new Date().valueOf() - 31622400000).format('YYYY-MM-DD'),
         chooseEndTime: moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD'),
+        chooseHosOrgCode: '',
+        chooseCityName: null,
+        chooseVisitLevelCode: null,
+        chooseOrderStatus: '',
+        chooseRegChannel: '',
       },
       // 推广数据统计
       promoteAttention: {
@@ -47,7 +57,9 @@ export default {
         hosName: '',
         // 医院等级
         hosGrade: null,
+        // 组别
         group: '',
+        // 渠道
         channel: '微信',
         hosType: null,
         orderStatus: null,
@@ -59,6 +71,9 @@ export default {
         // 查看详情参数
         chooseStartTime: moment(new Date().valueOf() - 31622400000).format('YYYY-MM-DD'),
         chooseEndTime: moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD'),
+        chooseHosName: '',
+        chooseChannel: '微信',
+        chooseGroup: '',
       },
     },
     list: {
@@ -136,9 +151,6 @@ export default {
         if (promoteAttention && promoteAttention.endTime) {
           params += `&endTime=${promoteAttention.endTime}`;
         }
-        if (promoteAttention && promoteAttention.origin) {
-          params += `&origin=${promoteAttention.origin}`;
-        }
         if (promoteAttention && promoteAttention.hosName) {
           params += `&hosName=${promoteAttention.hosName}`;
         }
@@ -182,9 +194,6 @@ export default {
       if (promoteAttention && promoteAttention.endTime) {
         params += `&endTime=${promoteAttention.endTime}`;
       }
-      if (promoteAttention && promoteAttention.origin) {
-        params += `&origin=${promoteAttention.origin}`;
-      }
       if (promoteAttention && promoteAttention.hosName) {
         params += `&hosName=${promoteAttention.hosName}`;
       }
@@ -221,20 +230,14 @@ export default {
         if (promoteAttention && promoteAttention.chooseEndTime) {
           params += `&endTime=${promoteAttention.chooseEndTime}`;
         }
-        if (promoteAttention && promoteAttention.origin) {
-          params += `&origin=${promoteAttention.origin}`;
+        if (promoteAttention && promoteAttention.chooseHosName) {
+          params += `&hosName=${promoteAttention.chooseHosName}`;
         }
-        if (promoteAttention && promoteAttention.hosName) {
-          params += `&hosName=${promoteAttention.hosName}`;
+        if (promoteAttention && promoteAttention.chooseChannel) {
+          params += `&promoCode=${promoteAttention.chooseChannel}`;
         }
-        if (promoteAttention && promoteAttention.hosGrade) {
-          params += `&hosGrade=${promoteAttention.hosGrade}`;
-        }
-        if (promoteAttention && promoteAttention.channel) {
-          params += `&promoCode=${promoteAttention.channel}`;
-        }
-        if (promoteAttention && promoteAttention.group) {
-          params += `&group=${promoteAttention.group}`;
+        if (promoteAttention && promoteAttention.chooseGroup) {
+          params += `&group=${promoteAttention.chooseGroup}`;
         }
         if (promoteAttention && !promoteAttention.isExport) {
           params += `&isExport=${promoteAttention.isExport}`;
@@ -246,8 +249,8 @@ export default {
             payload: {
               key: 'promoteAttention',
               list: res.data.content,
-              currentPage: page,
-              totalElements: res.data.totalElements,
+              detailCurrentPage: page,
+              datailTotalElements: res.data.totalElements,
             },
           });
         }
@@ -356,20 +359,20 @@ export default {
       if (appointmentAttention && appointmentAttention.type) {
         params += `&countType=${appointmentAttention.type}`;
       }
-      if (appointmentAttention && appointmentAttention.cityName) {
-        params += `&cityCode=${appointmentAttention.cityName}`;
+      if (appointmentAttention && appointmentAttention.chooseCityName) {
+        params += `&cityCode=${appointmentAttention.chooseCityName}`;
       }
-      if (appointmentAttention && appointmentAttention.hosOrgCode) {
-        params += `&hosOrgCode=${appointmentAttention.hosOrgCode}`;
+      if (appointmentAttention && appointmentAttention.chooseHosOrgCode) {
+        params += `&hosOrgCode=${appointmentAttention.chooseHosOrgCode}`;
       }
-      if (appointmentAttention && appointmentAttention.visitLevelCode) {
-        params += `&visitLevelCode=${appointmentAttention.visitLevelCode}`;
+      if (appointmentAttention && appointmentAttention.chooseVisitLevelCode) {
+        params += `&visitLevelCode=${appointmentAttention.chooseVisitLevelCode}`;
       }
-      if (appointmentAttention && appointmentAttention.orderStatus) {
-        params += `&orderStatus=${appointmentAttention.orderStatus}`;
+      if (appointmentAttention && appointmentAttention.chooseOrderStatus) {
+        params += `&orderStatus=${appointmentAttention.chooseOrderStatus}`;
       }
-      if (appointmentAttention && appointmentAttention.regChannel) {
-        params += `&regChannel=${appointmentAttention.regChannel}`;
+      if (appointmentAttention && appointmentAttention.chooseRegChannel) {
+        params += `&regChannel=${appointmentAttention.chooseRegChannel}`;
       }
       if (appointmentAttention && !appointmentAttention.isExport) {
         params += `&isExport=${appointmentAttention.isExport}`;
@@ -381,8 +384,8 @@ export default {
           payload: {
             key: 'appointmentAttention',
             list: res.data.content,
-            currentPage: page,
-            totalElements: res.data.totalElements,
+            detailCurrentPage: page,
+            datailTotalElements: res.data.totalElements,
           },
         });
       }

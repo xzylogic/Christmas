@@ -238,9 +238,12 @@ class AppointmentsContainer extends Component {
     const { onSearchParamChange, onFetchAppointmentList } = this.props;
     await onSearchParamChange(
       'startTime',
-      moment(new Date().valueOf() - 604800000).format('YYYY-MM-DD')
+      moment(new Date().valueOf() - 2678400000).format('YYYY-MM-DD')
     );
-    await onSearchParamChange('endTime', moment(new Date().valueOf()).format('YYYY-MM-DD'));
+    await onSearchParamChange(
+      'endTime',
+      moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD')
+    );
     await onSearchParamChange('orderStatus', '');
     await onSearchParamChange('regChannel', '');
     await onSearchParamChange('patientName', '');

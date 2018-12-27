@@ -151,9 +151,12 @@ class Type1Container extends Component {
     e.preventDefault();
     await onUpdateSearchParams(
       'startTime',
-      moment(new Date().valueOf() - 604800000).format('YYYY-MM-DD')
+      moment(new Date().valueOf() - 2678400000).format('YYYY-MM-DD')
     );
-    await onUpdateSearchParams('endTime', moment(new Date().valueOf()).format('YYYY-MM-DD'));
+    await onUpdateSearchParams(
+      'endTime',
+      moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD')
+    );
     await onUpdateSearchParams('countType', 'day');
     await onUpdateSearchParams('groupName', '1组');
     await onUpdateSearchParams('project', '');

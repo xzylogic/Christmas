@@ -326,9 +326,12 @@ class Member extends Component {
     const { onSearchParamChange, onFetchMembershipListDebounce } = this.props;
     await onSearchParamChange(
       'startTime',
-      moment(new Date().valueOf() - 604800000).format('YYYY-MM-DD')
+      moment(new Date().valueOf() - 2678400000).format('YYYY-MM-DD')
     );
-    await onSearchParamChange('endTime', moment(new Date().valueOf()).format('YYYY-MM-DD'));
+    await onSearchParamChange(
+      'endTime',
+      moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD')
+    );
     await onSearchParamChange('type', '0');
     await onSearchParamChange('name', '');
     await onSearchParamChange('hosName', '');

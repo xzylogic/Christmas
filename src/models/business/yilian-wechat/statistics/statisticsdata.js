@@ -51,7 +51,7 @@ export default {
         type: 'week',
         way: 'week',
         startTime: moment(new Date().valueOf() - 2678400000).format('YYYY-MM-DD'),
-        endTime: moment(new Date().valueOf()).format('YYYY-MM-DD'),
+        endTime: moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD'),
         origin: '',
         // 医院名字
         hosName: '',

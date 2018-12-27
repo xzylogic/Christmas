@@ -184,7 +184,6 @@ export default {
 
   effects: {
     *fetchGroupPerformance({ payload }, { call, put, select }) {
-      console.log(payload);
       const { group } = yield select(state => state.businessYilianWechatQuery.searchParam);
       const { way, page } = payload;
       let params = '';

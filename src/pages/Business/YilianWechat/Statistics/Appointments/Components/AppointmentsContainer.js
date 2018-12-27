@@ -262,9 +262,12 @@ class AppointmentsContainer extends Component {
     const { onSearchParamChange, onFetchAppointmentsData } = this.props;
     await onSearchParamChange(
       'startTime',
-      moment(new Date().valueOf() - 604800000).format('YYYY-MM-DD')
+      moment(new Date().valueOf() - 2678400000).format('YYYY-MM-DD')
     );
-    await onSearchParamChange('endTime', moment(new Date().valueOf()).format('YYYY-MM-DD'));
+    await onSearchParamChange(
+      'endTime',
+      moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD')
+    );
     await onSearchParamChange('countType', 'week');
     await onSearchParamChange('cityName', '');
     await onSearchParamChange('hosOrgCode', null);
@@ -275,9 +278,12 @@ class AppointmentsContainer extends Component {
     await onSearchParamChange('isExport', false);
     await onSearchParamChange(
       'chooseStartTime',
-      moment(new Date().valueOf() - 604800000).format('YYYY-MM-DD')
+      moment(new Date().valueOf() - 2678400000).format('YYYY-MM-DD')
     );
-    await onSearchParamChange('chooseEndTime', moment(new Date().valueOf()).format('YYYY-MM-DD'));
+    await onSearchParamChange(
+      'chooseEndTime',
+      moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD')
+    );
     await onSearchParamChange('chooseCityName', '');
     await onSearchParamChange('chooseHosOrgCode', '');
     await onSearchParamChange('chooseVisitLevelCode', null);

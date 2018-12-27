@@ -89,7 +89,11 @@ class AppointmentsContainer extends Component {
   }
 
   handleParamsChanged = async (value, dataKey) => {
-    const { onSearchParamChange, onFetchPromoteAttentionAmountDebounce } = this.props;
+    const {
+      onSearchParamChange,
+      onFetchPromoteAttentionAmountDebounce,
+      onFetchHosGroup,
+    } = this.props;
     const { way } = this.state;
 
     if (dataKey === 'date') {
@@ -99,6 +103,7 @@ class AppointmentsContainer extends Component {
       await onSearchParamChange(dataKey, value);
     }
     await onFetchPromoteAttentionAmountDebounce(way, 0);
+    await onFetchHosGroup(0);
   };
 
   setTableColumnsWechat = () => {
@@ -340,9 +345,12 @@ class AppointmentsContainer extends Component {
     const { onSearchParamChange, onFetchPromoteAttentionAmount } = this.props;
     await onSearchParamChange(
       'startTime',
-      moment(new Date().valueOf() - 604800000).format('YYYY-MM-DD')
+      moment(new Date().valueOf() - 2678400000).format('YYYY-MM-DD')
     );
-    await onSearchParamChange('endTime', moment(new Date().valueOf()).format('YYYY-MM-DD'));
+    await onSearchParamChange(
+      'endTime',
+      moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD')
+    );
     await onSearchParamChange('way', 'week');
     await onSearchParamChange('type', 'week');
     await onSearchParamChange('origin', '');
@@ -357,9 +365,12 @@ class AppointmentsContainer extends Component {
     await onSearchParamChange('isExport', false);
     await onSearchParamChange(
       'chooseStartTime',
-      moment(new Date().valueOf() - 604800000).format('YYYY-MM-DD')
+      moment(new Date().valueOf() - 2678400000).format('YYYY-MM-DD')
     );
-    await onSearchParamChange('chooseEndTime', moment(new Date().valueOf()).format('YYYY-MM-DD'));
+    await onSearchParamChange(
+      'chooseEndTime',
+      moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD')
+    );
     await onSearchParamChange('chooseHosName', '');
     await onSearchParamChange('chooseChannel', '微信');
     await onSearchParamChange('chooseGroup', '');

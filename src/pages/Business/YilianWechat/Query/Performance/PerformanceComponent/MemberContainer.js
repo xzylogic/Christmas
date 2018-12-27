@@ -173,9 +173,12 @@ class MemberContainer extends Component {
     const { onSearchParamChange, onFetchMemberList } = this.props;
     await onSearchParamChange(
       'startTime',
-      moment(new Date().valueOf() - 604800000).format('YYYY-MM-DD')
+      moment(new Date().valueOf() - 2678400000).format('YYYY-MM-DD')
     );
-    await onSearchParamChange('endTime', moment(new Date().valueOf()).format('YYYY-MM-DD'));
+    await onSearchParamChange(
+      'endTime',
+      moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD')
+    );
     await onSearchParamChange('name', '');
     await onFetchMemberList(0);
   };

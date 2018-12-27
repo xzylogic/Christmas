@@ -76,6 +76,7 @@ class PopularizationBar extends React.Component {
                 value={params.group}
                 defaultValue={allGroupName[0].name}
               >
+                <Select.Option value="">全部</Select.Option>
                 {allGroupName.map(item => (
                   <Select.Option id={item.id} key={item.id} value={item.id.toString()}>
                     {item.name}

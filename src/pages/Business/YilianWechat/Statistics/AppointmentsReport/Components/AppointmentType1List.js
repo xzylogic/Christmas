@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Divider } from 'antd';
 
 import TableList from '@/components/PageComponents/Table/TableList';
 
@@ -6,25 +7,6 @@ class AppointmentType1List extends Component {
   componentDidMount() {}
 
   setTableColumns = data => {
-    // const columns = [
-    // {
-    //   title: '日期',
-    //   dataIndex: 'date',
-    //   key: 'date',
-    // },
-    //   {
-    //     title: '医院名称',
-    //     dataIndex: 'site',
-    //     key: 'site',
-    //   },
-    //   {
-    //     title: '预约量',
-    //     dataIndex: 'reservationCount',
-    //     key: 'reservationCount',
-    //   },
-    // ];
-    // return columns;
-
     const columns = [];
     columns.push({
       title: '日期',
@@ -69,55 +51,19 @@ class AppointmentType1List extends Component {
   render() {
     const { data, currentPage, totalElements, onPageChange } = this.props;
     return (
-      <TableList
-        rowKey={(_, index) => index}
-        list={this.getList(data, 'reservationCount')}
-        columns={this.setTableColumns(data)}
-        currentPage={currentPage}
-        totalElements={totalElements}
-        onPageChange={onPageChange}
-      />
+      <React.Fragment>
+        <Divider>预约量</Divider>
+        <TableList
+          rowKey={(_, index) => index}
+          list={this.getList(data, 'reservationCount')}
+          columns={this.setTableColumns(data)}
+          currentPage={currentPage}
+          totalElements={totalElements}
+          onPageChange={onPageChange}
+        />
+      </React.Fragment>
     );
   }
 }
-
-// class AppointmentType1List extends Component {
-//   componentDidMount() {}
-
-//   setTableColumns = () => {
-//     const columns = [
-//       {
-//         title: '日期',
-//         dataIndex: 'date',
-//         key: 'date',
-//       },
-//       {
-//         title: '医院名称',
-//         dataIndex: 'site',
-//         key: 'site',
-//       },
-//       {
-//         title: '预约量',
-//         dataIndex: 'reservationCount',
-//         key: 'reservationCount',
-//       },
-//     ];
-//     return columns;
-//   };
-
-//   render() {
-//     const { data, currentPage, totalElements, onPageChange } = this.props;
-//     return (
-//       <TableList
-//         rowKey={(_, index) => index}
-//         list={data}
-//         columns={this.setTableColumns()}
-//         currentPage={currentPage}
-//         totalElements={totalElements}
-//         onPageChange={onPageChange}
-//       />
-//     );
-//   }
-// }
 
 export default AppointmentType1List;

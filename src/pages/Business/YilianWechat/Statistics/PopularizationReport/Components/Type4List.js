@@ -15,7 +15,7 @@ const renderTitle = (timeTitle, fansTotal, regTotal, conversionRateTotal) => {
   let content = (
     <div>
       {timeTitle}
-      微信推广数据关注量
+      微信推广数据
     </div>
   );
 
@@ -24,7 +24,7 @@ const renderTitle = (timeTitle, fansTotal, regTotal, conversionRateTotal) => {
       <div>
         <div>
           {timeTitle}
-          微信推广数据关注量
+          微信推广数据
         </div>
         <div>
           关注量

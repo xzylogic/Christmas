@@ -25,6 +25,7 @@ const mapStateToProps = state => ({
       STATISTICS_ORIGIN.YILIAN
     ],
   loading: state.loading.effects['statistics/fetchYilianStatistics'],
+  loadingDetail: state.loading.effects['statistics/fetchHospitalBookDetail'],
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -207,7 +208,7 @@ class Index extends Component {
 
   render() {
     const { show, detailChart, chartTitle } = this.state;
-    const { searchParam, list, hospitals, loading } = this.props;
+    const { searchParam, list, hospitals, loading, loadingDetail } = this.props;
     const chartData = (list && list.filter(obj => obj.orgName !== '预约量总计')) || [];
     // const chartData = list || [];
     return (
@@ -243,14 +244,16 @@ class Index extends Component {
                   onChartClick={this.handleChartClick}
                 />
               </div>
-              {detailChart ? (
-                <LineChart
-                  data={detailChart}
-                  title={`${chartTitle}预约量`}
-                  xKey="countDate"
-                  yKey="bookTotal"
-                  yAlias="预约量"
-                />
+              {detailChart || loadingDetail ? (
+                <Spin spinning={loadingDetail}>
+                  <LineChart
+                    data={detailChart || []}
+                    title={`${chartTitle}预约量`}
+                    xKey="countDate"
+                    yKey="bookTotal"
+                    yAlias="预约量"
+                  />
+                </Spin>
               ) : (
                 ''
               )}

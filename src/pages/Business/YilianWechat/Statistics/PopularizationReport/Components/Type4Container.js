@@ -113,7 +113,7 @@ class Type3Container extends Component {
           onExport={this.handleExport}
         />
         <div className={classes.Content}>
-          <ReportList data={reportList} />
+          <ReportList data={reportList} params={searchParam} />
         </div>
       </React.Fragment>
     );

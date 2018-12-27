@@ -78,6 +78,7 @@ class MemberEditor extends Component {
       getMessage,
       groupHosNameList,
       onParamChange,
+      params,
       form: { getFieldDecorator },
     } = this.props;
 
@@ -151,7 +152,7 @@ class MemberEditor extends Component {
             )}
             <Form.Item {...formItemLayout} label="所属小组">
               {getFieldDecorator('groupName', {
-                initialValue: (initialValue && initialValue.groupName) || getMessage.groups[0].id,
+                initialValue: (initialValue && initialValue.groupName) || params,
                 rules: [{ required: true, message: '请选择小组！' }],
               })(
                 <Select onChange={value => onParamChange(value, 'hosGroupName')}>
@@ -163,7 +164,7 @@ class MemberEditor extends Component {
                 </Select>
               )}
             </Form.Item>
-            {groupHosNameList instanceof Object ? (
+            {groupHosNameList instanceof Object && groupHosNameList.length ? (
               <Form.Item {...formItemLayout} label="推广地址">
                 {getFieldDecorator('site', {
                   initialValue: (initialValue && initialValue.site) || groupHosNameList[0].hos_name,
@@ -181,7 +182,6 @@ class MemberEditor extends Component {
             ) : (
               ''
             )}
-
             <Form.Item {...formItemLayout} label="推广码">
               {getFieldDecorator('promoCode', {
                 initialValue: initialValue && initialValue.promoCode.split(' '),

@@ -67,6 +67,7 @@ const mapDispatchToProps = dispatch => ({
 class AppointmentsContainer extends Component {
   state = {
     selectedName: '',
+    selectedNameCode: '',
     selectedDate: '',
     selectedCityName: '',
     selectedVisitCode: '',
@@ -322,7 +323,8 @@ class AppointmentsContainer extends Component {
       }
       this.setState({
         showDetail: true,
-        selectedName: record.hosName, // 更改为code
+        selectedName: record.hosName,
+        selectedNameCode: record.hosOrgCode,
         selectedDate: record.date,
         selectedCityName: cityname,
         selectedVisitCode: record.visitLevelCode,
@@ -351,6 +353,7 @@ class AppointmentsContainer extends Component {
 
     const {
       selectedName,
+      selectedNameCode,
       showDetail,
       selectedDate,
       selectedCityName,
@@ -383,6 +386,7 @@ class AppointmentsContainer extends Component {
         />
         <AppointmentsDetail
           name={selectedName}
+          namecode={selectedNameCode}
           date={selectedDate}
           cityname={selectedCityName}
           visitcode={selectedVisitCode}

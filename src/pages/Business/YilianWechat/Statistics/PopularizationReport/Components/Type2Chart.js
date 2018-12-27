@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import createG2 from 'g2-react';
 import G2 from 'g2';
+import { Divider } from 'antd';
 
 const Chart = createG2(chart => {
   chart.col('name', { alias: ' ' });
@@ -58,12 +59,28 @@ class Type2Chart extends Component {
     },
   };
 
+  getTimeTitle = (startTime, endTime) => {
+    let content = '';
+    const start = startTime.split('-').join('');
+    const end = endTime.split('-').join('');
+    content = `(${start}-${end})`;
+    return content;
+  };
+
   render() {
     const { width, height, plotCfg } = this.state;
-    const { data } = this.props;
+    const {
+      data,
+      params: { startTime, endTime },
+    } = this.props;
+    const timeTitle = this.getTimeTitle(startTime, endTime);
 
     return (
       <React.Fragment>
+        <Divider>
+          各组微信推广数据
+          {timeTitle}
+        </Divider>
         <Chart
           data={(data && getDataSource(data)) || []}
           width={width}

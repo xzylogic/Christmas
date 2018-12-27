@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import { Modal } from 'antd';
+import { Modal, Divider } from 'antd';
 
 import TableList from '@/components/PageComponents/Table/TableList';
 
@@ -120,11 +120,11 @@ class PopularizationDetail extends Component {
         key: 'weeks' || 'date' || 'months' || 'years',
         render: (_, record) => record.date || record.weeks || record.months || record.years,
       },
-      {
-        title: '医院',
-        dataIndex: 'hosName',
-        key: 'hosName',
-      },
+      // {
+      //   title: '医院',
+      //   dataIndex: 'hosName',
+      //   key: 'hosName',
+      // },
       {
         title: '关注量',
         dataIndex: 'fansCount',
@@ -153,7 +153,14 @@ class PopularizationDetail extends Component {
   };
 
   render() {
-    const { promoteAttentionList, currentPage, totalElements, visible, onClose } = this.props;
+    const {
+      promoteAttentionList,
+      currentPage,
+      totalElements,
+      visible,
+      onClose,
+      hosname,
+    } = this.props;
     return (
       <Modal
         title="查看详情"
@@ -163,6 +170,7 @@ class PopularizationDetail extends Component {
         footer={null}
         onCancel={onClose}
       >
+        <Divider>{hosname}</Divider>
         {promoteAttentionList instanceof Object ? (
           <TableList
             rowKey={(_, index) => index}

@@ -208,7 +208,7 @@ class Type2Container extends Component {
         </div>
         <div className={classes.Content}>
           {show === 'chart' ? (
-            <ReportChart data={reportChart} />
+            <ReportChart data={reportChart} params={searchParam} />
           ) : (
             <ReportList
               data={reportList}

@@ -56,6 +56,7 @@ class AppointmentsReport extends Component {
               onChange={value => onUpdateReportType(value)}
               style={{ width: '100%' }}
               open={false}
+              showArrow={false}
             >
               <Select.Option value={APPOINTMENTS_REPORT_TYPE.TYPE1}>
                 {/* 按小组统计医院明细（微信关注量、注册量、注册转化率总量对比） */}

@@ -63,7 +63,6 @@ class FollowChart extends Component {
   render() {
     const { width, height, plotCfg } = this.state;
     const { data } = this.props;
-
     return (
       <Line
         data={(data && getDateSource(data)) || []}

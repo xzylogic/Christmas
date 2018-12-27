@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import { Modal } from 'antd';
+import { Modal, Divider } from 'antd';
 
 import TableList from '@/components/PageComponents/Table/TableList';
 
@@ -47,6 +47,7 @@ class AppointmentsDetail extends Component {
       onFetchAppointmentsDataDetail,
       onSearchParamChange,
       name,
+      namecode,
       date,
       cityname,
       visitcode,
@@ -114,7 +115,7 @@ class AppointmentsDetail extends Component {
       onSearchParamChange('chooseStartTime', startTime);
       onSearchParamChange('chooseEndTime', endTime);
       onSearchParamChange('chooseCityName', cityname);
-      // onSearchParamChange('chooseHosOrgCode', name);
+      onSearchParamChange('chooseHosOrgCode', namecode);
       onSearchParamChange('chooseVisitLevelCode', visitcode);
       onSearchParamChange('chooseOrderStatus', orderstatus);
       onSearchParamChange('chooseRegChannel', regchannel);
@@ -165,16 +166,16 @@ class AppointmentsDetail extends Component {
         dataIndex: 'date',
         key: 'date',
       },
-      {
-        title: '医院类型',
-        dataIndex: 'cityName',
-        key: 'cityName',
-      },
-      {
-        title: '医院名称',
-        dataIndex: 'hosName',
-        key: 'hosName',
-      },
+      // {
+      //   title: '医院类型',
+      //   dataIndex: 'cityName',
+      //   key: 'cityName',
+      // },
+      // {
+      //   title: '医院名称',
+      //   dataIndex: 'hosName',
+      //   key: 'hosName',
+      // },
       {
         title: '门诊类型',
         dataIndex: 'visitLevelCode',
@@ -211,10 +212,11 @@ class AppointmentsDetail extends Component {
   };
 
   render() {
-    const { appointmentList, currentPage, totalElements, visible, onClose } = this.props;
+    const { appointmentList, currentPage, totalElements, name, visible, onClose } = this.props;
 
     return (
       <Modal title="明细" width={800} centered visible={visible} footer={null} onCancel={onClose}>
+        <Divider>{name}</Divider>
         {appointmentList instanceof Object ? (
           <TableList
             rowKey={(_, index) => index}

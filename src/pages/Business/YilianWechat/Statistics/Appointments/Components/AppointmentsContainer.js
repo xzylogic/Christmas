@@ -68,7 +68,12 @@ class AppointmentsContainer extends Component {
   state = {
     selectedName: '',
     selectedDate: '',
+    selectedCityName: '',
+    selectedVisitCode: '',
+    selectedOrderStatus: '',
+    selectedRegChannel: '',
     showDetail: false,
+    disabledShow: true,
   };
 
   componentDidMount() {
@@ -127,6 +132,12 @@ class AppointmentsContainer extends Component {
         content = <span>医联微信</span>;
       }
       if (record === 'app') {
+        content = <span>医联App</span>;
+      }
+      if (record === 'app_ios') {
+        content = <span>医联App</span>;
+      }
+      if (record === 'app_android') {
         content = <span>医联App</span>;
       }
       return content;
@@ -258,10 +269,20 @@ class AppointmentsContainer extends Component {
     await onSearchParamChange('cityName', '');
     await onSearchParamChange('hosOrgCode', null);
     await onSearchParamChange('visitLevelCode', null);
-    await onSearchParamChange('orderStatus', null);
+    await onSearchParamChange('orderStatus', '');
     await onSearchParamChange('regChannel', null);
     await onSearchParamChange('type', 'day');
     await onSearchParamChange('isExport', false);
+    await onSearchParamChange(
+      'chooseStartTime',
+      moment(new Date().valueOf() - 604800000).format('YYYY-MM-DD')
+    );
+    await onSearchParamChange('chooseEndTime', moment(new Date().valueOf()).format('YYYY-MM-DD'));
+    await onSearchParamChange('chooseCityName', '');
+    await onSearchParamChange('chooseHosOrgCode', '');
+    await onSearchParamChange('chooseVisitLevelCode', null);
+    await onSearchParamChange('chooseOrderStatus', '');
+    await onSearchParamChange('chooseRegChannel', '');
     await onFetchAppointmentsData(0);
   };
 
@@ -283,10 +304,24 @@ class AppointmentsContainer extends Component {
     e.preventDefault();
 
     if (record.date.split('/').length !== 3) {
+      let cityname = '';
+      if (record.cityName === '专科医院') {
+        cityname = 'zkyy';
+      }
+      if (record.cityName === '综合医院') {
+        cityname = 'zhyy';
+      }
+      if (record.cityName === '中医医院') {
+        cityname = 'zyyy';
+      }
       this.setState({
         showDetail: true,
-        selectedName: record.hosName,
+        selectedName: record.hosName, // 更改为code
         selectedDate: record.date,
+        selectedCityName: cityname,
+        selectedVisitCode: record.visitLevelCode,
+        selectedOrderStatus: record.orderStatus,
+        selectedRegChannel: record.regChannel,
       });
     }
   };
@@ -308,7 +343,16 @@ class AppointmentsContainer extends Component {
       typeHosName,
     } = this.props;
 
-    const { selectedName, showDetail, selectedDate } = this.state;
+    const {
+      selectedName,
+      showDetail,
+      selectedDate,
+      selectedCityName,
+      selectedVisitCode,
+      selectedOrderStatus,
+      selectedRegChannel,
+      disabledShow,
+    } = this.state;
 
     return (
       <React.Fragment>
@@ -320,6 +364,7 @@ class AppointmentsContainer extends Component {
           onReset={this.handleReset}
           onExport={this.handleExport}
           onParamsChange={this.handleParamsChanged}
+          disabled={disabledShow}
         />
         <TableList
           rowKey={(_, index) => index}
@@ -333,6 +378,10 @@ class AppointmentsContainer extends Component {
         <AppointmentsDetail
           name={selectedName}
           date={selectedDate}
+          cityname={selectedCityName}
+          visitcode={selectedVisitCode}
+          orderstatus={selectedOrderStatus}
+          regchannel={selectedRegChannel}
           visible={showDetail}
           onClose={this.handleDetailClose}
         />

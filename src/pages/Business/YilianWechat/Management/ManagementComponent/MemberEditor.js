@@ -6,6 +6,7 @@ const mapStateToProps = state => ({
   createLoading: state.loading.effects['businessYilianWechatManagement/createMember'],
   modifyLoading: state.loading.effects['businessYilianWechatManagement/createMember'],
   getMessage: state.businessYilianWechatManagement.list.person,
+  groupHosNameList: state.businessYilianWechatManagement.list.groupHosName,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -37,7 +38,7 @@ class MemberEditor extends Component {
           sex: values.sex,
           phone: values.phone,
           jobNumber: values.jobNumber,
-          groupName: values.groupName,
+          groupId: values.groupName,
           site: values.site,
           promoCode: values.promoCode.join(' '),
         };
@@ -75,6 +76,8 @@ class MemberEditor extends Component {
       modifyLoading,
       onClose,
       getMessage,
+      groupHosNameList,
+      onParamChange,
       form: { getFieldDecorator },
     } = this.props;
 
@@ -151,7 +154,7 @@ class MemberEditor extends Component {
                 initialValue: (initialValue && initialValue.groupName) || getMessage.groups[0].id,
                 rules: [{ required: true, message: '请选择小组！' }],
               })(
-                <Select>
+                <Select onChange={value => onParamChange(value, 'hosGroupName')}>
                   {getMessage.groups.map(item => (
                     <Select.Option id={item.id} key={item.id} value={item.id}>
                       {item.name}
@@ -160,20 +163,25 @@ class MemberEditor extends Component {
                 </Select>
               )}
             </Form.Item>
-            <Form.Item {...formItemLayout} label="推广地址">
-              {getFieldDecorator('site', {
-                initialValue: (initialValue && initialValue.site) || getMessage.sites[0],
-                rules: [{ required: true, message: '请选择推广地址！' }],
-              })(
-                <Select placeholder="请选择推广地址">
-                  {getMessage.sites.map(item => (
-                    <Select.Option id={item} key={item} value={item}>
-                      {item}
-                    </Select.Option>
-                  ))}
-                </Select>
-              )}
-            </Form.Item>
+            {groupHosNameList instanceof Object ? (
+              <Form.Item {...formItemLayout} label="推广地址">
+                {getFieldDecorator('site', {
+                  initialValue: (initialValue && initialValue.site) || groupHosNameList[0].hos_name,
+                  rules: [{ required: true, message: '请选择推广地址！' }],
+                })(
+                  <Select placeholder="请选择推广地址">
+                    {groupHosNameList.map(item => (
+                      <Select.Option id={item.id} key={item.id} value={item.hos_name}>
+                        {item.hos_name}
+                      </Select.Option>
+                    ))}
+                  </Select>
+                )}
+              </Form.Item>
+            ) : (
+              ''
+            )}
+
             <Form.Item {...formItemLayout} label="推广码">
               {getFieldDecorator('promoCode', {
                 initialValue: initialValue && initialValue.promoCode.split(' '),

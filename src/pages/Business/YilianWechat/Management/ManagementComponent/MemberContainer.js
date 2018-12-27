@@ -54,6 +54,12 @@ const mapDispatchProps = dispatch => ({
     dispatch({
       type: 'businessYilianWechatManagement/downloadMemberList',
     }),
+  // 根据小组查询医院名
+  onFetchHosGroup: page =>
+    dispatch({
+      type: 'businessYilianWechatManagement/fetchHosGroup',
+      payload: { page },
+    }),
 });
 
 @connect(
@@ -71,10 +77,11 @@ class MemberContainer extends Component {
   };
 
   componentDidMount() {
-    const { memberList, onFetchMemberList, onGetMemberMessage } = this.props;
+    const { memberList, onFetchMemberList, onGetMemberMessage, onFetchHosGroup } = this.props;
     if (!memberList) {
       onFetchMemberList(0);
     }
+    onFetchHosGroup(0);
     onGetMemberMessage(0);
   }
 
@@ -173,13 +180,18 @@ class MemberContainer extends Component {
   };
 
   handleParamChange = async e => {
-    e.preventDefault();
-    this.setState({
-      param: e.target.value,
-    });
-    const { onUpdataSearchParam, onSearchMemberList } = this.props;
-    await onUpdataSearchParam('memberName', e.target.value);
-    await onSearchMemberList(0);
+    const { onUpdataSearchParam, onSearchMemberList, onFetchHosGroup } = this.props;
+    if (typeof e === 'number') {
+      await onUpdataSearchParam('hosGroupName', e);
+      await onFetchHosGroup(0);
+    } else {
+      e.preventDefault();
+      this.setState({
+        param: e.target.value,
+      });
+      await onUpdataSearchParam('memberName', e.target.value);
+      await onSearchMemberList(0);
+    }
   };
 
   handleSearch = async e => {
@@ -252,6 +264,7 @@ class MemberContainer extends Component {
           showAdd={showAdd}
           initialValue={selectedData}
           onClose={() => this.setState({ showEditor: false })}
+          onParamChange={this.handleParamChange}
         />
         <WechatCode
           showCode={showCode}

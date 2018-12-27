@@ -96,8 +96,8 @@ class GroupHosEditor extends Component {
                   style={{ width: 230 }}
                 >
                   {allHosName.map(item => (
-                    <Select.Option id={item.id} key={item.id} value={item.id}>
-                      {item.hos_name}
+                    <Select.Option id={item} key={item} value={item}>
+                      {item}
                     </Select.Option>
                   ))}
                 </Select>
@@ -107,12 +107,7 @@ class GroupHosEditor extends Component {
               {getFieldDecorator('name', {
                 rules: [{ required: true, message: '请选择小组！' }],
               })(
-                <Select
-                  size={size}
-                  placeholder="请选择小组"
-                  // onChange={this.handleChange}
-                  style={{ width: 115 }}
-                >
+                <Select size={size} placeholder="请选择小组" style={{ width: 115 }}>
                   {allGroupName.map(item => (
                     <Select.Option id={item.id} key={item.id} value={item.id}>
                       {item.name}

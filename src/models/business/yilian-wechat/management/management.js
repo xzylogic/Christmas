@@ -13,12 +13,13 @@ import {
   deleteMemberService,
   deleteLocationService,
   getMemberService,
-  fetchAllHosNameService,
-  fetchAllGroupNameService,
+  fetchValiHosNameService,
+  fetchValiGroupNameService,
   addHosToGroupService,
   fetchGroupExportService,
   fetchMemberExportService,
   fetchLocationExportService,
+  fetchHosGroupService,
 } from '@/services/business/yilian-wechat/management/management';
 
 export default {
@@ -32,6 +33,7 @@ export default {
       groupDownload: false,
       memberDownload: false,
       locationDownload: false,
+      hosGroupName: '1',
     },
     list: {
       group: null,
@@ -42,6 +44,8 @@ export default {
       allHosName: null,
       // 所有小组类别
       allGroupName: null,
+      // 根据小组查询医院名
+      groupHosName: null,
     },
     currentPage: {
       group: 0,
@@ -61,10 +65,10 @@ export default {
       const { page } = payload;
       let params = '';
       if (searchParam && searchParam.groupName) {
-        params += `name=${searchParam.groupName}`;
+        params += `&name=${searchParam.groupName}`;
       }
       if (searchParam && !searchParam.groupDownload) {
-        params += `isExport=${searchParam.groupDownload}`;
+        params += `&isExport=${searchParam.groupDownload}`;
       }
       const res = yield call(fetchGroupListService, params, page, 10);
       if (res && res.code === 200) {
@@ -83,7 +87,7 @@ export default {
       const searchParam = yield select(state => state.businessYilianWechatManagement.searchParam);
       let params = '';
       if (searchParam && searchParam.groupName) {
-        params += `name=${searchParam.groupName}`;
+        params += `&name=${searchParam.groupName}`;
       }
       const res = yield call(fetchGroupExportService, params);
       let returnData = null;
@@ -97,10 +101,10 @@ export default {
       const { page } = payload;
       let params = '';
       if (searchParam && searchParam.memberName) {
-        params += `name=${searchParam.memberName}`;
+        params += `&name=${searchParam.memberName}`;
       }
       if (searchParam && !searchParam.memberDownload) {
-        params += `isExport=${searchParam.memberDownload}`;
+        params += `&isExport=${searchParam.memberDownload}`;
       }
       const res = yield call(fetchMemberListService, params, page, 10);
       if (res && res.code === 200) {
@@ -119,7 +123,7 @@ export default {
       const searchParam = yield select(state => state.businessYilianWechatManagement.searchParam);
       let params = '';
       if (searchParam && searchParam.memberName) {
-        params += `name=${searchParam.memberName}`;
+        params += `&name=${searchParam.memberName}`;
       }
       const res = yield call(fetchMemberExportService, params);
       let returnData = null;
@@ -145,10 +149,10 @@ export default {
       const { page } = payload;
       let params = '';
       if (searchParam && searchParam.locationName) {
-        params += `name=${searchParam.locationName}`;
+        params += `&name=${searchParam.locationName}`;
       }
       if (searchParam && !searchParam.locationDownload) {
-        params += `isExport=${searchParam.locationDownload}`;
+        params += `&isExport=${searchParam.locationDownload}`;
       }
       const res = yield call(fetchLocationListService, params, page, 10);
       if (res && res.code === 200) {
@@ -167,7 +171,7 @@ export default {
       const searchParam = yield select(state => state.businessYilianWechatManagement.searchParam);
       let params = '';
       if (searchParam && searchParam.locationName) {
-        params += `name=${searchParam.locationName}`;
+        params += `&name=${searchParam.locationName}`;
       }
       const res = yield call(fetchLocationExportService, params);
       let returnData = null;
@@ -185,7 +189,7 @@ export default {
         yield put({ type: 'fetchGroupList', payload: { page: 0 } });
         message.success('新增小组成功！');
       } else {
-        message.error('新增小组失败！');
+        message.error(res.msg);
       }
       return ifsuccess;
     },
@@ -198,7 +202,7 @@ export default {
         yield put({ type: 'fetchGroupList', payload: { page: 0 } });
         message.success('修改小组信息成功！');
       } else {
-        message.error('修改小组信息失败！');
+        message.error(res.msg);
       }
       return ifsuccess;
     },
@@ -209,7 +213,7 @@ export default {
         yield put({ type: 'fetchGroupList', payload: { page: 0 } });
         message.success('删除小组成功！');
       } else {
-        message.error('删除小组失败！');
+        message.error(res.msg);
       }
     },
     *createMember({ payload }, { call, put }) {
@@ -221,7 +225,7 @@ export default {
         yield put({ type: 'fetchMemberList', payload: { page: 0 } });
         message.success('新增人员成功！');
       } else {
-        message.error('新增人员失败！');
+        message.error(res.msg);
       }
       return ifsuccess;
     },
@@ -234,7 +238,7 @@ export default {
         yield put({ type: 'fetchMemberList', payload: { page: 0 } });
         message.success('修改人员信息成功！');
       } else {
-        message.error('修改人员信息失败！');
+        message.error(res.msg);
       }
       return ifsuccess;
     },
@@ -245,7 +249,7 @@ export default {
         yield put({ type: 'fetchMemberList', payload: { page: 0 } });
         message.success('删除人员成功！');
       } else {
-        message.error('删除人员失败！');
+        message.error(res.msg);
       }
     },
     *createLocation({ payload }, { call, put }) {
@@ -257,7 +261,7 @@ export default {
         yield put({ type: 'fetchLocationList', payload: { page: 0 } });
         message.success('新增地点成功！');
       } else {
-        message.error('新增地点失败！');
+        message.error(res.msg);
       }
       return ifsuccess;
     },
@@ -270,7 +274,7 @@ export default {
         yield put({ type: 'fetchLocationList', payload: { page: 0 } });
         message.success('修改地点信息成功！');
       } else {
-        message.error('修改地点信息失败！');
+        message.error(res.msg);
       }
       return ifsuccess;
     },
@@ -281,11 +285,11 @@ export default {
         yield put({ type: 'fetchLocationList', payload: { page: 0 } });
         message.success('删除地点成功！');
       } else {
-        message.error('删除地点失败！');
+        message.error(res.msg);
       }
     },
     *fetchAllHosName(_, { call, put }) {
-      const res = yield call(fetchAllHosNameService);
+      const res = yield call(fetchValiHosNameService);
       if (res && res.code === 200) {
         yield put({
           type: 'updateList',
@@ -297,7 +301,7 @@ export default {
       }
     },
     *fetchAllGroupName(_, { call, put }) {
-      const res = yield call(fetchAllGroupNameService);
+      const res = yield call(fetchValiGroupNameService);
       if (res && res.code === 200) {
         yield put({
           type: 'updateList',
@@ -326,9 +330,30 @@ export default {
         ifsuccess = true;
         message.success('编辑小组信息成功！');
       } else {
-        message.error('编辑小组信息失败！');
+        message.error(res.msg);
       }
       return ifsuccess;
+    },
+    // 根据组别查询推广医院
+    *fetchHosGroup({ payload }, { call, select, put }) {
+      const searchParam = yield select(state => state.businessYilianWechatManagement.searchParam);
+      const { page } = payload;
+      let params = '';
+      if (searchParam && searchParam.hosGroupName) {
+        params += `&groupId=${searchParam.hosGroupName}`;
+      }
+      const res = yield call(fetchHosGroupService, params, page, 10);
+      if (res && res.code === 200) {
+        yield put({
+          type: 'updateList',
+          payload: {
+            key: 'groupHosName',
+            list: res.data,
+            currentPage: page,
+            totalElements: res.data.totalElements,
+          },
+        });
+      }
     },
   },
 

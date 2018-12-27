@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import { Modal, Divider } from 'antd';
+import { Modal } from 'antd';
 
 import TableList from '@/components/PageComponents/Table/TableList';
 
 const mapStateToProps = state => ({
   promoteAttentionList: state.businessYilianWechatStatisticDatas.detailList.promoteAttention,
-  currentPage: state.businessYilianWechatStatisticDatas.currentPage.promoteAttention,
-  totalElements: state.businessYilianWechatStatisticDatas.totalElements.promoteAttention,
+  currentPage: state.businessYilianWechatStatisticDatas.detailCurrentPage.promoteAttention,
+  totalElements: state.businessYilianWechatStatisticDatas.datailTotalElements.promoteAttention,
   searchParam: state.businessYilianWechatStatisticDatas.searchParam.promoteAttention,
   loading:
     state.loading.effects['businessYilianWechatStatisticDatas/fetchPromoteAttentionAmountDetail'],
@@ -36,10 +36,24 @@ class PopularizationDetail extends Component {
   };
 
   componentDidUpdate(prevProps) {
-    const { onFetchPromoteAttentionAmount, onSearchParamChange, name, date } = this.props;
+    const {
+      onFetchPromoteAttentionAmount,
+      onSearchParamChange,
+      name,
+      date,
+      hosname,
+      channel,
+      group,
+    } = this.props;
     const { way } = this.state;
 
-    if (name && prevProps.name !== name) {
+    if (
+      (name && prevProps.name !== name) ||
+      (date && prevProps.date !== date) ||
+      (hosname && prevProps.hosname !== hosname) ||
+      (channel && prevProps.channel !== channel) ||
+      (group && prevProps.group !== group)
+    ) {
       let startTime = '';
       let endTime = '';
 
@@ -90,6 +104,9 @@ class PopularizationDetail extends Component {
 
       onSearchParamChange('chooseStartTime', startTime);
       onSearchParamChange('chooseEndTime', endTime);
+      onSearchParamChange('chooseHosName', hosname);
+      onSearchParamChange('chooseChannel', channel);
+      onSearchParamChange('chooseGroup', group);
 
       onFetchPromoteAttentionAmount(way, 0);
     }
@@ -136,7 +153,7 @@ class PopularizationDetail extends Component {
   };
 
   render() {
-    const { promoteAttentionList, currentPage, totalElements, visible, date, onClose } = this.props;
+    const { promoteAttentionList, currentPage, totalElements, visible, onClose } = this.props;
     return (
       <Modal
         title="查看详情"
@@ -146,7 +163,6 @@ class PopularizationDetail extends Component {
         footer={null}
         onCancel={onClose}
       >
-        <Divider>{date}</Divider>
         {promoteAttentionList instanceof Object ? (
           <TableList
             rowKey={(_, index) => index}

@@ -40,7 +40,7 @@ export async function fetchPromoteAttentionAmountService(params, page, size, way
 export async function fetchAppointmentsDataService(params, page, size, way) {
   let query = `?page=${page || 0}&size=${size || 10}`;
   if (way) {
-    query += `${way}`;
+    query += `&${way}`;
   }
   if (params) {
     query += `${params}`;

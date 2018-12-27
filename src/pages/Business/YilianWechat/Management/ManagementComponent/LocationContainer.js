@@ -83,6 +83,13 @@ class LocationContainer extends Component {
   };
 
   setTableColumns = () => {
+    const renderValid = record => {
+      let content = <span>有效</span>;
+      if (!record) {
+        content = <span>无效</span>;
+      }
+      return content;
+    };
     const columns = [
       {
         title: '地址名称',
@@ -98,6 +105,8 @@ class LocationContainer extends Component {
         title: '状态',
         dataIndex: 'valid',
         key: 'valid',
+        render: record => renderValid(record),
+        // render: (_,record)
       },
       {
         title: '操作',

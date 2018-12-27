@@ -128,7 +128,7 @@ class GroupContainer extends Component {
       },
       {
         title: '状态',
-        dataIndex: 'valid',
+        dataIndex: 'id',
         key: 'valid',
         render: text => (text !== undefined && (text ? '有效' : '无效')) || '',
       },
@@ -141,7 +141,7 @@ class GroupContainer extends Component {
         title: '操作',
         dataIndex: 'id',
         key: 'action',
-        render: (text, record) => (
+        render: (_, record) => (
           <span>
             <a onClick={e => this.handleEditor(e, record)}>编辑</a>
             <Divider type="vertical" />
@@ -234,7 +234,7 @@ class GroupContainer extends Component {
         />
         <Divider />
         <TableList
-          rowKey="id"
+          rowKey={(_, index) => index}
           list={groupList}
           columns={this.setTableColumns()}
           currentPage={currentPage}

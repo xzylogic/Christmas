@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import { Modal, Divider } from 'antd';
+import { Modal } from 'antd';
 
 import TableList from '@/components/PageComponents/Table/TableList';
 
 const mapStateToProps = state => ({
   appointmentList: state.businessYilianWechatStatisticDatas.detailList.appointmentAttention,
-  currentPage: state.businessYilianWechatStatisticDatas.currentPage.appointmentAttention,
-  totalElements: state.businessYilianWechatStatisticDatas.totalElements.appointmentAttention,
+  currentPage: state.businessYilianWechatStatisticDatas.detailCurrentPage.appointmentAttention,
+  totalElements: state.businessYilianWechatStatisticDatas.datailTotalElements.appointmentAttention,
   searchParam: state.businessYilianWechatStatisticDatas.searchParam.appointmentAttention,
 
   loading: state.loading.effects['businessYilianWechatStatisticDatas/fetchAppointmentsDataDetail'],
@@ -43,10 +43,27 @@ class AppointmentsDetail extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { onFetchAppointmentsDataDetail, onSearchParamChange, name, date } = this.props;
+    const {
+      onFetchAppointmentsDataDetail,
+      onSearchParamChange,
+      name,
+      date,
+      cityname,
+      visitcode,
+      orderstatus,
+      regchannel,
+    } = this.props;
 
     const { way } = this.state;
-    if (name && prevProps.name !== name) {
+
+    if (
+      (name && prevProps.name !== name) ||
+      (date && prevProps.date !== date) ||
+      (cityname && prevProps.cityname !== cityname) ||
+      (visitcode && prevProps.visitcode !== visitcode) ||
+      (orderstatus && prevProps.orderstatus !== orderstatus) ||
+      (regchannel && prevProps.regchannel !== regchannel)
+    ) {
       let startTime = '';
       let endTime = '';
 
@@ -96,6 +113,11 @@ class AppointmentsDetail extends Component {
       }
       onSearchParamChange('chooseStartTime', startTime);
       onSearchParamChange('chooseEndTime', endTime);
+      onSearchParamChange('chooseCityName', cityname);
+      // onSearchParamChange('chooseHosOrgCode', name);
+      onSearchParamChange('chooseVisitLevelCode', visitcode);
+      onSearchParamChange('chooseOrderStatus', orderstatus);
+      onSearchParamChange('chooseRegChannel', regchannel);
       onFetchAppointmentsDataDetail(way, 0);
     }
   }
@@ -181,19 +203,18 @@ class AppointmentsDetail extends Component {
   };
 
   handlePageChange = page => {
-    const { onFetchAppointmentsDataDetail, name } = this.props;
+    const { onFetchAppointmentsDataDetail } = this.props;
     const { way } = this.state;
-    if (name) {
-      onFetchAppointmentsDataDetail(way, page - 1);
-    }
+    // if (name) {
+    onFetchAppointmentsDataDetail(way, page - 1);
+    // }
   };
 
   render() {
-    const { appointmentList, currentPage, totalElements, visible, onClose, date } = this.props;
+    const { appointmentList, currentPage, totalElements, visible, onClose } = this.props;
 
     return (
       <Modal title="明细" width={800} centered visible={visible} footer={null} onCancel={onClose}>
-        <Divider>{date}</Divider>
         {appointmentList instanceof Object ? (
           <TableList
             rowKey={(_, index) => index}

@@ -28,30 +28,6 @@ function AppointmentType1SearchBar(props) {
 
   return (
     <div className={classes.Search}>
-      {/* <DatePicker.RangePicker
-        className={classes.Span}
-        value={[moment(params.startTime, 'YYYY-MM-DD'), moment(params.endTime, 'YYYY-MM-DD')]}
-        onChange={(_, dateStrings) => onParamsChange(dateStrings, 'date')}
-        allowClear={false}
-        ranges={{
-          最近一周: [
-            moment(new Date(new Date().valueOf() - 691200000), 'YYYY-MM-DD'),
-            moment(new Date(new Date().valueOf() - 86400000), 'YYYY-MM-DD'),
-          ],
-          最近30天: [
-            moment(new Date(new Date().valueOf() - 2678400000), 'YYYY-MM-DD'),
-            moment(new Date(new Date().valueOf() - 86400000), 'YYYY-MM-DD'),
-          ],
-          最近90天: [
-            moment(new Date(new Date().valueOf() - 7862400000), 'YYYY-MM-DD'),
-            moment(new Date(new Date().valueOf() - 86400000), 'YYYY-MM-DD'),
-          ],
-          最近一年: [
-            moment(new Date(new Date().valueOf() - 31622400000), 'YYYY-MM-DD'),
-            moment(new Date(new Date().valueOf() - 86400000), 'YYYY-MM-DD'),
-          ],
-        }}
-      /> */}
       <span className={classes.Span}>
         开始日期：
         <DatePicker
@@ -85,7 +61,7 @@ function AppointmentType1SearchBar(props) {
           重置
         </Button>
         <Button type="primary" htmlType="button" onClick={onExport}>
-          导出
+          导出报表
         </Button>
       </span>
     </div>

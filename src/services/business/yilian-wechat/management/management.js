@@ -103,12 +103,24 @@ export async function getMemberService() {
   return request(`/yilian-cloud-backend-api/hos/base/person`);
 }
 
+// 所有地点
 export async function fetchAllHosNameService() {
   return request(`/yilian-cloud-backend-api/ylWeChatCount/search/allHos`);
 }
 
+// 所有小组
 export async function fetchAllGroupNameService() {
   return request(`/yilian-cloud-backend-api/ylWeChatCount/search/allGroup`);
+}
+
+// 所有有效地点
+export async function fetchValiHosNameService() {
+  return request(`/yilian-cloud-backend-api/hos/search/validSite`);
+}
+
+// 所有有效小组
+export async function fetchValiGroupNameService() {
+  return request(`/yilian-cloud-backend-api/hos/search/validGroup`);
 }
 
 export async function addHosToGroupService(newPostData) {
@@ -121,6 +133,15 @@ export async function addHosToGroupService(newPostData) {
       body: {},
     }
   );
+}
+
+// 根据组别查询推广医院
+export async function fetchHosGroupService(params, page, size) {
+  let query = `?page=${page || 0}&size=${size || 10}`;
+  if (params) {
+    query += `${params}`;
+  }
+  return request(`/yilian-cloud-backend-api/ylWeChatCount/search/hosByGroupId${query}`);
 }
 
 // 导出小组

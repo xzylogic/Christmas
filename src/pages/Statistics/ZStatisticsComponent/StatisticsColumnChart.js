@@ -10,7 +10,28 @@ class StatisticsIntervalChart extends Component {
     plotCfg: {
       margin: [30, 100, 250, 100],
     },
+    Chart: null,
   };
+
+  componentWillMount() {
+    const { xKey, yKey, yAlias } = this.props;
+    this.setState({
+      Chart: this.createChart(xKey, yKey, yAlias),
+    });
+  }
+
+  createChart = (xKey, yKey, yAlias) =>
+    createG2(chart => {
+      chart.col(xKey, { alias: ' ' });
+      chart.col(yKey, { alias: yAlias });
+      chart
+        .interval()
+        .position(`${xKey}*${yKey}`)
+        .color('#36cfc9')
+        .animate(false);
+      chart.on('plotclick', this.onChartClick);
+      chart.render();
+    });
 
   getDataSource = (data, range) => {
     const dataCopy = data.slice(
@@ -51,22 +72,17 @@ class StatisticsIntervalChart extends Component {
   };
 
   render() {
-    const { width, height, plotCfg, range } = this.state;
-    const { data, xKey, yKey, yAlias, title } = this.props;
+    const { width, height, plotCfg, range, Chart } = this.state;
+    const { data, title } = this.props;
 
     const dataSource = (data && this.getDataSource(data, range)) || [];
 
-    const Chart = createG2(chart => {
-      chart.col(xKey, { alias: ' ' });
-      chart.col(yKey, { alias: yAlias });
-      chart
-        .interval()
-        .position(`${xKey}*${yKey}`)
-        .color('#36cfc9')
-        .animate(false);
-      chart.on('plotclick', this.onChartClick);
-      chart.render();
-    });
+    let chartContent = '';
+    if (Chart) {
+      chartContent = (
+        <Chart data={dataSource} width={width} height={height} plotCfg={plotCfg} forceFit />
+      );
+    }
 
     return (
       <React.Fragment>
@@ -92,7 +108,7 @@ class StatisticsIntervalChart extends Component {
             />
           </Col>
         </Row>
-        <Chart data={dataSource} width={width} height={height} plotCfg={plotCfg} forceFit />
+        {chartContent}
       </React.Fragment>
     );
   }

@@ -10,24 +10,18 @@ class StatisticsIntervalChart extends Component {
     plotCfg: {
       margin: [0, 120, 30, 50],
     },
+    Chart: null,
   };
 
-  handleChartClick = e => {
-    const { onChartClick } = this.props;
-    if (e && e.shape && e.shape.id) {
-      const title = e.shape.id;
-      try {
-        onChartClick(title.split(' ')[1]);
-      } catch {
-        console.log(title);
-      }
-    }
-  };
+  componentWillMount() {
+    const { label } = this.props;
+    this.setState({
+      Chart: this.createChart(label),
+    });
+  }
 
-  render() {
-    const { width, height, plotCfg } = this.state;
-    const { data, title, label } = this.props;
-    const Chart = createG2(chart => {
+  createChart = label =>
+    createG2(chart => {
       chart.col('item', { alias: '渠道' });
       chart.coord('theta', {
         radius: 0.65,
@@ -74,10 +68,30 @@ class StatisticsIntervalChart extends Component {
       });
     });
 
+  handleChartClick = e => {
+    const { onChartClick } = this.props;
+    if (e && e.shape && e.shape.id) {
+      const title = e.shape.id;
+      try {
+        onChartClick(title.split(' ')[1]);
+      } catch {
+        console.log(title);
+      }
+    }
+  };
+
+  render() {
+    const { width, height, plotCfg, Chart } = this.state;
+    const { data, title } = this.props;
+    let chartContent = '';
+    if (Chart) {
+      chartContent = <Chart data={data} width={width} height={height} plotCfg={plotCfg} forceFit />;
+    }
+
     return (
       <React.Fragment>
         <Divider>{title}</Divider>
-        <Chart data={data} width={width} height={height} plotCfg={plotCfg} forceFit />
+        {chartContent}
       </React.Fragment>
     );
   }

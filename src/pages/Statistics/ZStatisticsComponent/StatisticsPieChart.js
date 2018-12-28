@@ -46,6 +46,9 @@ class StatisticsIntervalChart extends Component {
       chart.on('tooltipchange', ev => {
         const { items } = ev; // tooltip显示的项
         const origin = items[0]; // 将一条数据改成多条数据
+        const {
+          point: { _origin },
+        } = origin;
         items.splice(0); // 清空
         items.push({
           name: `${label}量`,
@@ -60,6 +63,13 @@ class StatisticsIntervalChart extends Component {
           title: origin.name,
           color: origin.color,
           value: origin.value,
+        });
+        items.push({
+          name: `统计总${label}量`,
+          marker: true,
+          title: origin.name,
+          color: origin.color,
+          value: (_origin.count / _origin['..percent']).toFixed(0),
         });
       });
     });

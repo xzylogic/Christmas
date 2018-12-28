@@ -392,7 +392,7 @@ class Member extends Component {
                   />
                 </div>
               ) : (
-                <FollowChart data={followingList} />
+                <FollowChart data={followingList} params={searchParam} />
               )}
             </Tabs.TabPane>
             <Tabs.TabPane tab="会员注册" key="2">
@@ -433,7 +433,7 @@ class Member extends Component {
                   />
                 </div>
               ) : (
-                <RegisterChart data={registrationList} />
+                <RegisterChart data={registrationList} params={searchParam} />
               )}
             </Tabs.TabPane>
           </Tabs>

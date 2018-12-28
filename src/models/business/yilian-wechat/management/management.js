@@ -33,7 +33,8 @@ export default {
       groupDownload: false,
       memberDownload: false,
       locationDownload: false,
-      hosGroupName: '1',
+      hosGroupName: '',
+      recordGroupName: 0,
     },
     list: {
       group: null,
@@ -189,7 +190,7 @@ export default {
         yield put({ type: 'fetchGroupList', payload: { page: 0 } });
         message.success('新增小组成功！');
       } else {
-        message.error(res.msg);
+        message.error((res && res.msg) || '新增小组失败！');
       }
       return ifsuccess;
     },
@@ -202,7 +203,7 @@ export default {
         yield put({ type: 'fetchGroupList', payload: { page: 0 } });
         message.success('修改小组信息成功！');
       } else {
-        message.error(res.msg);
+        message.error((res && res.msg) || '修改小组信息失败！');
       }
       return ifsuccess;
     },
@@ -213,7 +214,7 @@ export default {
         yield put({ type: 'fetchGroupList', payload: { page: 0 } });
         message.success('删除小组成功！');
       } else {
-        message.error(res.msg);
+        message.error((res && res.msg) || '删除小组失败！');
       }
     },
     *createMember({ payload }, { call, put }) {
@@ -225,7 +226,7 @@ export default {
         yield put({ type: 'fetchMemberList', payload: { page: 0 } });
         message.success('新增人员成功！');
       } else {
-        message.error(res.msg);
+        message.error((res && res.msg) || '新增人员失败！');
       }
       return ifsuccess;
     },
@@ -238,7 +239,7 @@ export default {
         yield put({ type: 'fetchMemberList', payload: { page: 0 } });
         message.success('修改人员信息成功！');
       } else {
-        message.error(res.msg);
+        message.error(res.msg(res && res.msg) || '修改人员信息失败！');
       }
       return ifsuccess;
     },
@@ -249,7 +250,7 @@ export default {
         yield put({ type: 'fetchMemberList', payload: { page: 0 } });
         message.success('删除人员成功！');
       } else {
-        message.error(res.msg);
+        message.error((res && res.msg) || '删除人员失败！');
       }
     },
     *createLocation({ payload }, { call, put }) {
@@ -261,7 +262,7 @@ export default {
         yield put({ type: 'fetchLocationList', payload: { page: 0 } });
         message.success('新增地点成功！');
       } else {
-        message.error(res.msg);
+        message.error((res && res.msg) || '新增地点失败！');
       }
       return ifsuccess;
     },
@@ -274,7 +275,7 @@ export default {
         yield put({ type: 'fetchLocationList', payload: { page: 0 } });
         message.success('修改地点信息成功！');
       } else {
-        message.error(res.msg);
+        message.error((res && res.msg) || '修改地点信息失败！');
       }
       return ifsuccess;
     },
@@ -285,7 +286,7 @@ export default {
         yield put({ type: 'fetchLocationList', payload: { page: 0 } });
         message.success('删除地点成功！');
       } else {
-        message.error(res.msg);
+        message.error((res && res.msg) || '删除地点失败！');
       }
     },
     *fetchAllHosName(_, { call, put }) {
@@ -330,7 +331,7 @@ export default {
         ifsuccess = true;
         message.success('编辑小组信息成功！');
       } else {
-        message.error(res.msg);
+        message.error((res && res.msg) || '编辑小组信息失败！');
       }
       return ifsuccess;
     },
@@ -341,6 +342,7 @@ export default {
       let params = '';
       if (searchParam && searchParam.hosGroupName) {
         params += `&groupId=${searchParam.hosGroupName}`;
+        console.log(searchParam.hosGroupName);
       }
       const res = yield call(fetchHosGroupService, params, page, 10);
       if (res && res.code === 200) {

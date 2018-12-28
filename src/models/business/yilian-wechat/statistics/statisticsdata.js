@@ -446,7 +446,7 @@ export default {
         ifsuccess = true;
         message.success('修改密码成功！');
       } else {
-        message.error('修改密码失败！');
+        message.error((res && res.msg) || '修改密码失败！');
       }
       return ifsuccess;
     },

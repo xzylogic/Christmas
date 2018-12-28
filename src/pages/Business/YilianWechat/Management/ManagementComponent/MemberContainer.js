@@ -10,7 +10,6 @@ import WechatCode from './WechatCode';
 
 const mapStateToProps = state => ({
   memberName: state.businessYilianWechatManagement.searchParam.memberName,
-  searchParamGroupHos: state.businessYilianWechatManagement.searchParam.hosGroupName,
   memberList: state.businessYilianWechatManagement.list.member,
   currentPage: state.businessYilianWechatManagement.currentPage.member,
   totalElements: state.businessYilianWechatManagement.totalElements.member,
@@ -181,7 +180,9 @@ class MemberContainer extends Component {
 
   handleParamChange = async e => {
     const { onUpdataSearchParam, onSearchMemberList, onFetchHosGroup } = this.props;
+
     if (typeof e === 'number') {
+      console.log('number');
       await onUpdataSearchParam('hosGroupName', e);
       await onFetchHosGroup(0);
     } else {
@@ -224,7 +225,7 @@ class MemberContainer extends Component {
       if (data) {
         const a = document.createElement('a');
         a.setAttribute('href', data);
-        a.setAttribute('target', '_blank');
+        // a.setAttribute('target', '_blank');
         a.click();
       }
     });
@@ -239,7 +240,7 @@ class MemberContainer extends Component {
   }
 
   render() {
-    const { memberList, currentPage, totalElements, searchParamGroupHos } = this.props;
+    const { memberList, currentPage, totalElements } = this.props;
     const { param, showEditor, showAdd, selectedData, showCode, url } = this.state;
     return (
       <div>
@@ -267,7 +268,6 @@ class MemberContainer extends Component {
           initialValue={selectedData}
           onClose={() => this.setState({ showEditor: false })}
           onParamChange={this.handleParamChange}
-          params={searchParamGroupHos}
         />
         <WechatCode
           showCode={showCode}

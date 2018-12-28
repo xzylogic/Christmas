@@ -78,7 +78,6 @@ class MemberEditor extends Component {
       getMessage,
       groupHosNameList,
       onParamChange,
-      params,
       form: { getFieldDecorator },
     } = this.props;
 
@@ -152,7 +151,7 @@ class MemberEditor extends Component {
             )}
             <Form.Item {...formItemLayout} label="所属小组">
               {getFieldDecorator('groupName', {
-                initialValue: (initialValue && initialValue.groupName) || params,
+                initialValue: (initialValue && initialValue.groupName) || '',
                 rules: [{ required: true, message: '请选择小组！' }],
               })(
                 <Select onChange={value => onParamChange(value, 'hosGroupName')}>
@@ -167,7 +166,8 @@ class MemberEditor extends Component {
             {groupHosNameList instanceof Object && groupHosNameList.length ? (
               <Form.Item {...formItemLayout} label="推广地址">
                 {getFieldDecorator('site', {
-                  initialValue: (initialValue && initialValue.site) || groupHosNameList[0].hos_name,
+                  initialValue: groupHosNameList[0].hos_name || (initialValue && initialValue.site),
+                  // initialValue: hosName?(initialValue && initialValue.site):groupHosNameList[0].hos_name,
                   rules: [{ required: true, message: '请选择推广地址！' }],
                 })(
                   <Select placeholder="请选择推广地址">

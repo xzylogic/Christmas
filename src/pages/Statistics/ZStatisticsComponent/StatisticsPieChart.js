@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import createG2 from 'g2-react';
+import { Stat } from 'g2';
 import { Divider } from 'antd';
 
 class StatisticsIntervalChart extends Component {
@@ -37,7 +38,7 @@ class StatisticsIntervalChart extends Component {
       });
       chart
         .intervalStack()
-        .position('percent')
+        .position(Stat.summary.percent('count'))
         .color('item')
         .label('percent')
         .tooltip('item*percent')

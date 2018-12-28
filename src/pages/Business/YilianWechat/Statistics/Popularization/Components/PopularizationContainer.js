@@ -275,11 +275,11 @@ class AppointmentsContainer extends Component {
     }
 
     const columnsArr = [
-      {
-        title: '医院等级',
-        dataIndex: 'hosName',
-        key: 'hosName',
-      },
+      // {
+      //   title: '医院等级',
+      //   dataIndex: 'hosName',
+      //   key: 'hosName',
+      // },
       {
         title: '医院名称',
         dataIndex: 'hosName',
@@ -316,11 +316,11 @@ class AppointmentsContainer extends Component {
         key: 'groupId',
         render: record => renderGroupId(record),
       },
-      {
-        title: '二维码',
-        dataIndex: 'hosName',
-        key: 'hosName',
-      },
+      // {
+      //   title: '二维码',
+      //   dataIndex: 'hosName',
+      //   key: 'hosName',
+      // },
     ];
 
     columns.push(...columnsArr);

@@ -4,6 +4,14 @@ import StatisticalMethods from '@/components/PageComponents/StatisticalMethods/S
 import classes from './PopularizationBar.less';
 
 class PopularizationBar extends React.Component {
+  handleGroupChange = value => {
+    const { onParamsChange, groupHosName } = this.props;
+    onParamsChange(value, 'group');
+    if (groupHosName instanceof Object && Object.keys(groupHosName).length > 0) {
+      onParamsChange(groupHosName[0].hos_name, 'hosName');
+    }
+  };
+
   render() {
     const {
       onSearch,
@@ -17,10 +25,65 @@ class PopularizationBar extends React.Component {
       onChangeWay,
     } = this.props;
 
+    // const renderHosName = () => {
+    //   let content = '';
+    //   if (groupHosName instanceof Object && Object.keys(groupHosName).length > 0) {
+    //     content = (
+    //       <Select
+    //         className={classes.Gap}
+    //         style={{ width: 260 }}
+    //         placeholder="医院名称"
+    //         onChange={value => onParamsChange(value, 'hosName')}
+    //         value={params.hosName}
+    //       >
+    //         {groupHosName.map(item => (
+    //           <Select.Option id={item.id} key={item.id} value={item.hos_name}>
+    //             {item.hos_name}
+    //           </Select.Option>
+    //         ))}
+    //       </Select>
+    //     );
+    //   } else if (allHosName instanceof Object) {
+    //     content = (
+    //       <Select
+    //         className={classes.Gap}
+    //         style={{ width: 260 }}
+    //         placeholder="医院名称"
+    //         onChange={value => onParamsChange(value, 'hosName')}
+    //         value={params.hosName}
+    //       >
+    //         {allHosName.map(item => (
+    //           <Select.Option id={item.id} key={item.id} value={item.hos_name}>
+    //             {item.hos_name}
+    //           </Select.Option>
+    //         ))}
+    //       </Select>
+    //     );
+    //   }
+    //   return content;
+    // };
+
     const renderHosName = () => {
       let content = '';
+
       if (groupHosName instanceof Object && Object.keys(groupHosName).length > 0) {
+        // const filteredOptions = groupHosName.filter(o => !params.hosName.includes(o));
+        // console.log(filteredOptions)
+        // console.log(2222)
+
         content = (
+          //     <Select
+          //   placeholder="医院名称"
+          //   value={params.hosName}
+          //   onChange={value => onParamsChange(value, 'hosName')}
+          //   style={{ width: '100%' }}
+          // >
+          //   {filteredOptions.map(item => (
+          //     <Select.Option key={item.id} value={item.hos_name}>
+          //       {item.hos_name}
+          //     </Select.Option>
+          //   ))}
+          // </Select>
           <Select
             className={classes.Gap}
             style={{ width: 260 }}
@@ -72,7 +135,8 @@ class PopularizationBar extends React.Component {
                 className={classes.Gap}
                 style={{ width: 115 }}
                 placeholder="组别"
-                onChange={value => onParamsChange(value, 'group')}
+                // onChange={value => onParamsChange(value, 'group')}
+                onChange={this.handleGroupChange}
                 value={params.group}
                 defaultValue={allGroupName[0].name}
               >

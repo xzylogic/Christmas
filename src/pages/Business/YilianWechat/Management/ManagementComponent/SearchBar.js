@@ -7,6 +7,7 @@ function searchBar(props) {
   const {
     inputValue,
     inputPlaceholder,
+    dataKey,
     onInputChange,
     onRefreshClick,
     onNewClick,
@@ -23,12 +24,11 @@ function searchBar(props) {
           type="text"
           placeholder={inputPlaceholder}
           value={inputValue}
-          onChange={onInputChange}
+          onChange={e => onInputChange(dataKey, e.target.value)}
         />
         <Button type="primary" htmlType="button" onClick={onSearchClick}>
           查询
         </Button>
-        {/* <Button type="primary" htmlType="button" onClick={onSearchClick}>查询</Button> */}
       </Col>
       <Col span={12} className={classes.ColRight}>
         <Button type="primary" htmlType="button" onClick={onRefreshClick}>

@@ -34,7 +34,7 @@ export default {
       memberDownload: false,
       locationDownload: false,
       hosGroupName: '',
-      recordGroupName: 0,
+      recordGroupName: '',
     },
     list: {
       group: null,
@@ -47,6 +47,7 @@ export default {
       allGroupName: null,
       // 根据小组查询医院名
       groupHosName: null,
+      groupHosNameEditor: null,
     },
     currentPage: {
       group: 0,
@@ -342,7 +343,6 @@ export default {
       let params = '';
       if (searchParam && searchParam.hosGroupName) {
         params += `&groupId=${searchParam.hosGroupName}`;
-        console.log(searchParam.hosGroupName);
       }
       const res = yield call(fetchHosGroupService, params, page, 10);
       if (res && res.code === 200) {
@@ -350,6 +350,27 @@ export default {
           type: 'updateList',
           payload: {
             key: 'groupHosName',
+            list: res.data,
+            currentPage: page,
+            totalElements: res.data.totalElements,
+          },
+        });
+      }
+    },
+    // 根据组别查询推广医院(编辑小组)
+    *fetchHosGroupEditor({ payload }, { call, select, put }) {
+      const searchParam = yield select(state => state.businessYilianWechatManagement.searchParam);
+      const { page } = payload;
+      let params = '';
+      if (searchParam && searchParam.recordGroupName) {
+        params += `&groupId=${searchParam.recordGroupName}`;
+      }
+      const res = yield call(fetchHosGroupService, params, page, 10);
+      if (res && res.code === 200) {
+        yield put({
+          type: 'updateList',
+          payload: {
+            key: 'groupHosNameEditor',
             list: res.data,
             currentPage: page,
             totalElements: res.data.totalElements,

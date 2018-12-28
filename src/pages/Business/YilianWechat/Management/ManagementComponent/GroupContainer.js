@@ -162,10 +162,10 @@ class GroupContainer extends Component {
     return columns;
   };
 
-  handleParamChange = async e => {
-    e.preventDefault();
+  handleParamChange = async (value, dataKey) => {
     const { onUpdataSearchParam, onSearchGroupList } = this.props;
-    await onUpdataSearchParam('groupName', e.target.value);
+
+    await onUpdataSearchParam(value, dataKey);
     await onSearchGroupList(0);
   };
 
@@ -224,6 +224,7 @@ class GroupContainer extends Component {
         <SearchBar
           inputValue={groupName}
           inputPlaceholder="输入小组名称进行检索"
+          dataKey="groupName"
           onInputChange={this.handleParamChange}
           onSearchClick={this.handleSearch}
           onRefreshClick={this.handleRefresh}

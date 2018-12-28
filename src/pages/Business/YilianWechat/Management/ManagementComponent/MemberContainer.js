@@ -60,6 +60,12 @@ const mapDispatchProps = dispatch => ({
       type: 'businessYilianWechatManagement/fetchHosGroup',
       payload: { page },
     }),
+  // 根据小组查询医院名(编辑小组)
+  onFetchHosGroupEditor: page =>
+    dispatch({
+      type: 'businessYilianWechatManagement/fetchHosGroupEditor',
+      payload: { page },
+    }),
 });
 
 @connect(
@@ -68,7 +74,6 @@ const mapDispatchProps = dispatch => ({
 )
 class MemberContainer extends Component {
   state = {
-    param: '',
     showEditor: false,
     showAdd: false,
     selectedData: null,
@@ -84,13 +89,17 @@ class MemberContainer extends Component {
     onGetMemberMessage(0);
   }
 
-  handleEditor = (e, record) => {
+  handleEditor = async (e, record) => {
     e.preventDefault();
+    const { onUpdataSearchParam, onFetchHosGroupEditor } = this.props;
     this.setState({
       showEditor: true,
       showAdd: false,
       selectedData: record,
     });
+
+    await onUpdataSearchParam('recordGroupName', record.groupId);
+    await onFetchHosGroupEditor(0);
   };
 
   handleDelete = (e, record) => {
@@ -178,21 +187,22 @@ class MemberContainer extends Component {
     return columns;
   };
 
-  handleParamChange = async e => {
-    const { onUpdataSearchParam, onSearchMemberList, onFetchHosGroup } = this.props;
+  handleParamChange = async (dataKey, value) => {
+    const {
+      onUpdataSearchParam,
+      onSearchMemberList,
+      onFetchHosGroup,
+      onFetchHosGroupEditor,
+    } = this.props;
 
-    if (typeof e === 'number') {
-      console.log('number');
-      await onUpdataSearchParam('hosGroupName', e);
-      await onFetchHosGroup(0);
-    } else {
-      e.preventDefault();
-      this.setState({
-        param: e.target.value,
-      });
-      await onUpdataSearchParam('memberName', e.target.value);
+    if (dataKey === 'memberName') {
+      await onUpdataSearchParam('memberName', value);
       await onSearchMemberList(0);
     }
+
+    await onUpdataSearchParam(dataKey, value);
+    await onFetchHosGroup(0);
+    await onFetchHosGroupEditor(0);
   };
 
   handleSearch = async e => {
@@ -209,13 +219,14 @@ class MemberContainer extends Component {
 
   handleNew = e => {
     e.preventDefault();
-    const { onFetchHosGroup } = this.props;
+    const { onFetchHosGroup, onFetchHosGroupEditor } = this.props;
     this.setState({
       showEditor: true,
       showAdd: true,
       selectedData: null,
     });
     onFetchHosGroup(0);
+    onFetchHosGroupEditor(0);
   };
 
   handleExport = e => {
@@ -240,13 +251,14 @@ class MemberContainer extends Component {
   }
 
   render() {
-    const { memberList, currentPage, totalElements } = this.props;
-    const { param, showEditor, showAdd, selectedData, showCode, url } = this.state;
+    const { memberName, memberList, currentPage, totalElements } = this.props;
+    const { showEditor, showAdd, selectedData, showCode, url } = this.state;
     return (
       <div>
         <SearchBar
-          inputValue={param}
+          inputValue={memberName}
           inputPlaceholder="请输入姓名"
+          dataKey="memberName"
           onInputChange={this.handleParamChange}
           onSearchClick={this.handleSearch}
           onRefreshClick={this.handleRefresh}

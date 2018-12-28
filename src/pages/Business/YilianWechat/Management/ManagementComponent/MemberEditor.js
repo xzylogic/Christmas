@@ -7,6 +7,7 @@ const mapStateToProps = state => ({
   modifyLoading: state.loading.effects['businessYilianWechatManagement/createMember'],
   getMessage: state.businessYilianWechatManagement.list.person,
   groupHosNameList: state.businessYilianWechatManagement.list.groupHosName,
+  groupHosNameEditorList: state.businessYilianWechatManagement.list.groupHosNameEditor,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -67,6 +68,15 @@ class MemberEditor extends Component {
     });
   };
 
+  // handleGroupChange = value => {
+  //   const { onParamChange } = this.props;
+  //   onParamChange('hosGroupName',value);
+  //   if(groupHosNameList instanceof Object && groupHosNameList.length){
+  //     onParamChange('hosGroupName',value);
+  //   }
+
+  // }
+
   render() {
     const {
       visible,
@@ -77,6 +87,7 @@ class MemberEditor extends Component {
       onClose,
       getMessage,
       groupHosNameList,
+      groupHosNameEditorList,
       onParamChange,
       form: { getFieldDecorator },
     } = this.props;
@@ -98,6 +109,7 @@ class MemberEditor extends Component {
       { label: 'APP', value: 'APP' },
       { label: '健康云', value: '健康云' },
     ];
+
     return (
       <Modal
         title={showAdd ? '新增' : '编辑'}
@@ -129,65 +141,112 @@ class MemberEditor extends Component {
                     </Select>
                   )}
                 </Form.Item>
+                <Form.Item {...formItemLayout} label="手机">
+                  {getFieldDecorator('phone', {
+                    initialValue: (initialValue && initialValue.phone) || '',
+                    rules: [{ message: '请填写手机号！' }],
+                  })(<Input placeholder="请填写手机号" />)}
+                </Form.Item>
+                <Form.Item {...formItemLayout} label="工号">
+                  {getFieldDecorator('jobNumber', {
+                    initialValue: (initialValue && initialValue.jobNumber) || '',
+                    rules: [{ required: true, message: '请填写工号！' }],
+                  })(<Input placeholder="请填写工号" />)}
+                </Form.Item>
+                <Form.Item {...formItemLayout} label="所属小组">
+                  {getFieldDecorator('groupName', {
+                    initialValue: (initialValue && initialValue.groupName) || '',
+                    rules: [{ required: true, message: '请选择小组！' }],
+                  })(
+                    <Select onChange={value => onParamChange('hosGroupName', value)}>
+                      {/* <Select onChange={this.handleGroupChange}> */}
+                      {getMessage.groups.map(item => (
+                        <Select.Option id={item.id} key={item.id} value={item.id}>
+                          {item.name}
+                        </Select.Option>
+                      ))}
+                    </Select>
+                  )}
+                </Form.Item>
+                {groupHosNameList instanceof Object && groupHosNameList.length ? (
+                  <Form.Item {...formItemLayout} label="推广地址">
+                    {getFieldDecorator('site', {
+                      // initialValue: groupHosNameList[0].hos_name || (initialValue && initialValue.site),
+                      initialValue:
+                        groupHosNameList[0].hos_name || (initialValue && initialValue.site),
+                      rules: [{ required: true, message: '请选择推广地址！' }],
+                    })(
+                      <Select placeholder="请选择推广地址">
+                        {groupHosNameList.map(item => (
+                          <Select.Option id={item.id} key={item.id} value={item.hos_name}>
+                            {item.hos_name}
+                          </Select.Option>
+                        ))}
+                      </Select>
+                    )}
+                  </Form.Item>
+                ) : (
+                  ''
+                )}
+                <Form.Item {...formItemLayout} label="推广码">
+                  {getFieldDecorator('promoCode', {
+                    initialValue: initialValue && initialValue.promoCode.split(' '),
+                    rules: [{ required: true, message: '请选择推广码！' }],
+                  })(<Checkbox.Group options={options} />)}
+                </Form.Item>
               </div>
             ) : (
-              ''
-            )}
-            <Form.Item {...formItemLayout} label="手机">
-              {getFieldDecorator('phone', {
-                initialValue: (initialValue && initialValue.phone) || '',
-                rules: [{ message: '请填写手机号！' }],
-              })(<Input placeholder="请填写手机号" />)}
-            </Form.Item>
-            {showAdd ? (
-              <Form.Item {...formItemLayout} label="工号">
-                {getFieldDecorator('jobNumber', {
-                  initialValue: (initialValue && initialValue.jobNumber) || '',
-                  rules: [{ required: true, message: '请填写工号！' }],
-                })(<Input placeholder="请填写工号" />)}
-              </Form.Item>
-            ) : (
-              ''
-            )}
-            <Form.Item {...formItemLayout} label="所属小组">
-              {getFieldDecorator('groupName', {
-                initialValue: (initialValue && initialValue.groupName) || '',
-                rules: [{ required: true, message: '请选择小组！' }],
-              })(
-                <Select onChange={value => onParamChange(value, 'hosGroupName')}>
-                  {getMessage.groups.map(item => (
-                    <Select.Option id={item.id} key={item.id} value={item.id}>
-                      {item.name}
-                    </Select.Option>
-                  ))}
-                </Select>
-              )}
-            </Form.Item>
-            {groupHosNameList instanceof Object && groupHosNameList.length ? (
-              <Form.Item {...formItemLayout} label="推广地址">
-                {getFieldDecorator('site', {
-                  initialValue: groupHosNameList[0].hos_name || (initialValue && initialValue.site),
-                  // initialValue: hosName?(initialValue && initialValue.site):groupHosNameList[0].hos_name,
-                  rules: [{ required: true, message: '请选择推广地址！' }],
-                })(
-                  <Select placeholder="请选择推广地址">
-                    {groupHosNameList.map(item => (
-                      <Select.Option id={item.id} key={item.id} value={item.hos_name}>
-                        {item.hos_name}
-                      </Select.Option>
-                    ))}
-                  </Select>
+              // 编辑人员
+              <div>
+                <Form.Item {...formItemLayout} label="手机">
+                  {getFieldDecorator('phone', {
+                    initialValue: (initialValue && initialValue.phone) || '',
+                    rules: [{ message: '请填写手机号！' }],
+                  })(<Input placeholder="请填写手机号" />)}
+                </Form.Item>
+                <Form.Item {...formItemLayout} label="所属小组">
+                  {getFieldDecorator('groupName', {
+                    initialValue: (initialValue && initialValue.groupName) || '',
+                    rules: [{ required: true, message: '请选择小组！' }],
+                  })(
+                    <Select onChange={value => onParamChange('recordGroupName', value)}>
+                      {/* <Select onChange={this.handleGroupChange}> */}
+                      {getMessage.groups.map(item => (
+                        <Select.Option id={item.id} key={item.id} value={item.id}>
+                          {item.name}
+                        </Select.Option>
+                      ))}
+                    </Select>
+                  )}
+                </Form.Item>
+
+                {groupHosNameEditorList instanceof Object && groupHosNameEditorList.length ? (
+                  <Form.Item {...formItemLayout} label="推广地址">
+                    {getFieldDecorator('site', {
+                      initialValue:
+                        (initialValue && initialValue.site) || groupHosNameEditorList[0].hos_name,
+                      rules: [{ required: true, message: '请选择推广地址！' }],
+                    })(
+                      <Select placeholder="请选择推广地址">
+                        {groupHosNameEditorList.map(item => (
+                          <Select.Option id={item.id} key={item.id} value={item.hos_name}>
+                            {item.hos_name}
+                          </Select.Option>
+                        ))}
+                      </Select>
+                    )}
+                  </Form.Item>
+                ) : (
+                  ''
                 )}
-              </Form.Item>
-            ) : (
-              ''
+                <Form.Item {...formItemLayout} label="推广码">
+                  {getFieldDecorator('promoCode', {
+                    initialValue: initialValue && initialValue.promoCode.split(' '),
+                    rules: [{ required: true, message: '请选择推广码！' }],
+                  })(<Checkbox.Group options={options} />)}
+                </Form.Item>
+              </div>
             )}
-            <Form.Item {...formItemLayout} label="推广码">
-              {getFieldDecorator('promoCode', {
-                initialValue: initialValue && initialValue.promoCode.split(' '),
-                rules: [{ required: true, message: '请选择推广码！' }],
-              })(<Checkbox.Group options={options} />)}
-            </Form.Item>
           </Form>
         ) : (
           ''

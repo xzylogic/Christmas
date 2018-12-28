@@ -65,6 +65,14 @@ const renderContent = (text, record, index, listLength) => {
   return content;
 };
 
+const downloadTimeRange = (startTime, endTime) => {
+  let content = `从【${startTime}】到【${endTime}】`;
+  if (startTime === endTime) {
+    content = `【${startTime}】`;
+  }
+  return content;
+};
+
 @connect(
   mapStateToProps,
   mapDispatchToProps
@@ -339,9 +347,39 @@ class Member extends Component {
     await onFetchMembershipListDebounce(0);
   };
 
+  handledownloadStartTime = () => {
+    const { searchParam } = this.props;
+
+    let downloadStartTime = searchParam.startTime;
+    if (searchParam.type === '2') {
+      downloadStartTime = searchParam.startTime.substring(0, 7);
+    }
+    if (searchParam.type === '3') {
+      downloadStartTime = searchParam.startTime.substring(0, 4);
+    }
+    return downloadStartTime;
+  };
+
+  handledownloadEndTime = () => {
+    const { searchParam } = this.props;
+
+    let downloadEndTime = searchParam.endTime;
+    if (searchParam.type === '2') {
+      downloadEndTime = searchParam.endTime.substring(0, 7);
+    }
+    if (searchParam.type === '3') {
+      downloadEndTime = searchParam.endTime.substring(0, 4);
+    }
+    return downloadEndTime;
+  };
+
   render() {
     const { followingList, registrationList, searchParam, allHosName, allPerson } = this.props;
     const { tab1Show, tab2Show, tab1ModalShow, tab2ModalShow } = this.state;
+    const startTime = this.handledownloadStartTime();
+    const endTime = this.handledownloadEndTime();
+    const timeRange = downloadTimeRange(startTime, endTime);
+
     return (
       <PageHeaderWrapper>
         <div className={classes.Container}>
@@ -375,8 +413,8 @@ class Member extends Component {
                   onCancel={() => this.setState({ tab1ModalShow: false })}
                 >
                   <div>
-                    【会员关注】: 确定导出从
-                    {searchParam.startTime}到{searchParam.endTime}
+                    【会员关注】: 确定导出
+                    {timeRange}
                     该时段的记录？
                   </div>
                 </Modal>
@@ -416,8 +454,8 @@ class Member extends Component {
                   onCancel={() => this.setState({ tab2ModalShow: false })}
                 >
                   <div>
-                    【会员注册 】: 确定导出从
-                    {searchParam.startTime}到{searchParam.endTime}
+                    【会员注册】: 确定导出
+                    {timeRange}
                     该时段的记录？
                   </div>
                 </Modal>

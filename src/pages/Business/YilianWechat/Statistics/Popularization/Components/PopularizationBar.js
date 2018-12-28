@@ -25,65 +25,11 @@ class PopularizationBar extends React.Component {
       onChangeWay,
     } = this.props;
 
-    // const renderHosName = () => {
-    //   let content = '';
-    //   if (groupHosName instanceof Object && Object.keys(groupHosName).length > 0) {
-    //     content = (
-    //       <Select
-    //         className={classes.Gap}
-    //         style={{ width: 260 }}
-    //         placeholder="医院名称"
-    //         onChange={value => onParamsChange(value, 'hosName')}
-    //         value={params.hosName}
-    //       >
-    //         {groupHosName.map(item => (
-    //           <Select.Option id={item.id} key={item.id} value={item.hos_name}>
-    //             {item.hos_name}
-    //           </Select.Option>
-    //         ))}
-    //       </Select>
-    //     );
-    //   } else if (allHosName instanceof Object) {
-    //     content = (
-    //       <Select
-    //         className={classes.Gap}
-    //         style={{ width: 260 }}
-    //         placeholder="医院名称"
-    //         onChange={value => onParamsChange(value, 'hosName')}
-    //         value={params.hosName}
-    //       >
-    //         {allHosName.map(item => (
-    //           <Select.Option id={item.id} key={item.id} value={item.hos_name}>
-    //             {item.hos_name}
-    //           </Select.Option>
-    //         ))}
-    //       </Select>
-    //     );
-    //   }
-    //   return content;
-    // };
-
     const renderHosName = () => {
       let content = '';
 
       if (groupHosName instanceof Object && Object.keys(groupHosName).length > 0) {
-        // const filteredOptions = groupHosName.filter(o => !params.hosName.includes(o));
-        // console.log(filteredOptions)
-        // console.log(2222)
-
         content = (
-          //     <Select
-          //   placeholder="医院名称"
-          //   value={params.hosName}
-          //   onChange={value => onParamsChange(value, 'hosName')}
-          //   style={{ width: '100%' }}
-          // >
-          //   {filteredOptions.map(item => (
-          //     <Select.Option key={item.id} value={item.hos_name}>
-          //       {item.hos_name}
-          //     </Select.Option>
-          //   ))}
-          // </Select>
           <Select
             className={classes.Gap}
             style={{ width: 260 }}
@@ -135,7 +81,6 @@ class PopularizationBar extends React.Component {
                 className={classes.Gap}
                 style={{ width: 115 }}
                 placeholder="组别"
-                // onChange={value => onParamsChange(value, 'group')}
                 onChange={this.handleGroupChange}
                 value={params.group}
                 defaultValue={allGroupName[0].name}
@@ -152,9 +97,6 @@ class PopularizationBar extends React.Component {
             )}
           </span>
         </Col>
-        {/* <Col span={15}> */}
-        {/* </Col> */}
-        {/* <Col span={8} className={classes.ColRight}> */}
         <span className={classes.Span}>
           医院名称：
           {renderHosName()}
@@ -166,7 +108,6 @@ class PopularizationBar extends React.Component {
             className={classes.Gap}
             placeholder="数据来源"
             value={params.channel}
-            // defaultValue='0'
             onChange={value => onParamsChange(value, 'channel')}
           >
             <Select.Option value="微信">医联微信</Select.Option>
@@ -217,7 +158,6 @@ class PopularizationBar extends React.Component {
             导出Excel
           </Button>
         </span>
-        {/* </Col> */}
       </Row>
     );
   }

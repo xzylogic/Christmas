@@ -4,6 +4,14 @@ import StatisticalMethods from '@/components/PageComponents/StatisticalMethods/S
 import classes from './PopularizationBar.less';
 
 class PopularizationBar extends React.Component {
+  handleGroupChange = value => {
+    const { onParamsChange, groupHosName } = this.props;
+    onParamsChange(value, 'group');
+    if (groupHosName instanceof Object && Object.keys(groupHosName).length > 0) {
+      onParamsChange(groupHosName[0].hos_name, 'hosName');
+    }
+  };
+
   render() {
     const {
       onSearch,
@@ -19,6 +27,7 @@ class PopularizationBar extends React.Component {
 
     const renderHosName = () => {
       let content = '';
+
       if (groupHosName instanceof Object && Object.keys(groupHosName).length > 0) {
         content = (
           <Select
@@ -72,7 +81,7 @@ class PopularizationBar extends React.Component {
                 className={classes.Gap}
                 style={{ width: 115 }}
                 placeholder="组别"
-                onChange={value => onParamsChange(value, 'group')}
+                onChange={this.handleGroupChange}
                 value={params.group}
                 defaultValue={allGroupName[0].name}
               >
@@ -88,9 +97,6 @@ class PopularizationBar extends React.Component {
             )}
           </span>
         </Col>
-        {/* <Col span={15}> */}
-        {/* </Col> */}
-        {/* <Col span={8} className={classes.ColRight}> */}
         <span className={classes.Span}>
           医院名称：
           {renderHosName()}
@@ -102,7 +108,6 @@ class PopularizationBar extends React.Component {
             className={classes.Gap}
             placeholder="数据来源"
             value={params.channel}
-            // defaultValue='0'
             onChange={value => onParamsChange(value, 'channel')}
           >
             <Select.Option value="微信">医联微信</Select.Option>
@@ -153,7 +158,6 @@ class PopularizationBar extends React.Component {
             导出Excel
           </Button>
         </span>
-        {/* </Col> */}
       </Row>
     );
   }

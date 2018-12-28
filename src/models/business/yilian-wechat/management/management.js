@@ -33,7 +33,8 @@ export default {
       groupDownload: false,
       memberDownload: false,
       locationDownload: false,
-      hosGroupName: '1',
+      hosGroupName: '',
+      recordGroupName: '',
     },
     list: {
       group: null,
@@ -46,6 +47,7 @@ export default {
       allGroupName: null,
       // 根据小组查询医院名
       groupHosName: null,
+      groupHosNameEditor: null,
     },
     currentPage: {
       group: 0,
@@ -189,7 +191,7 @@ export default {
         yield put({ type: 'fetchGroupList', payload: { page: 0 } });
         message.success('新增小组成功！');
       } else {
-        message.error(res.msg);
+        message.error((res && res.msg) || '新增小组失败！');
       }
       return ifsuccess;
     },
@@ -202,7 +204,7 @@ export default {
         yield put({ type: 'fetchGroupList', payload: { page: 0 } });
         message.success('修改小组信息成功！');
       } else {
-        message.error(res.msg);
+        message.error((res && res.msg) || '修改小组信息失败！');
       }
       return ifsuccess;
     },
@@ -213,7 +215,7 @@ export default {
         yield put({ type: 'fetchGroupList', payload: { page: 0 } });
         message.success('删除小组成功！');
       } else {
-        message.error(res.msg);
+        message.error((res && res.msg) || '删除小组失败！');
       }
     },
     *createMember({ payload }, { call, put }) {
@@ -225,7 +227,7 @@ export default {
         yield put({ type: 'fetchMemberList', payload: { page: 0 } });
         message.success('新增人员成功！');
       } else {
-        message.error(res.msg);
+        message.error((res && res.msg) || '新增人员失败！');
       }
       return ifsuccess;
     },
@@ -238,7 +240,7 @@ export default {
         yield put({ type: 'fetchMemberList', payload: { page: 0 } });
         message.success('修改人员信息成功！');
       } else {
-        message.error(res.msg);
+        message.error(res.msg(res && res.msg) || '修改人员信息失败！');
       }
       return ifsuccess;
     },
@@ -249,7 +251,7 @@ export default {
         yield put({ type: 'fetchMemberList', payload: { page: 0 } });
         message.success('删除人员成功！');
       } else {
-        message.error(res.msg);
+        message.error((res && res.msg) || '删除人员失败！');
       }
     },
     *createLocation({ payload }, { call, put }) {
@@ -261,7 +263,7 @@ export default {
         yield put({ type: 'fetchLocationList', payload: { page: 0 } });
         message.success('新增地点成功！');
       } else {
-        message.error(res.msg);
+        message.error((res && res.msg) || '新增地点失败！');
       }
       return ifsuccess;
     },
@@ -274,7 +276,7 @@ export default {
         yield put({ type: 'fetchLocationList', payload: { page: 0 } });
         message.success('修改地点信息成功！');
       } else {
-        message.error(res.msg);
+        message.error((res && res.msg) || '修改地点信息失败！');
       }
       return ifsuccess;
     },
@@ -285,7 +287,7 @@ export default {
         yield put({ type: 'fetchLocationList', payload: { page: 0 } });
         message.success('删除地点成功！');
       } else {
-        message.error(res.msg);
+        message.error((res && res.msg) || '删除地点失败！');
       }
     },
     *fetchAllHosName(_, { call, put }) {
@@ -330,7 +332,7 @@ export default {
         ifsuccess = true;
         message.success('编辑小组信息成功！');
       } else {
-        message.error(res.msg);
+        message.error((res && res.msg) || '编辑小组信息失败！');
       }
       return ifsuccess;
     },
@@ -348,6 +350,27 @@ export default {
           type: 'updateList',
           payload: {
             key: 'groupHosName',
+            list: res.data,
+            currentPage: page,
+            totalElements: res.data.totalElements,
+          },
+        });
+      }
+    },
+    // 根据组别查询推广医院(编辑小组)
+    *fetchHosGroupEditor({ payload }, { call, select, put }) {
+      const searchParam = yield select(state => state.businessYilianWechatManagement.searchParam);
+      const { page } = payload;
+      let params = '';
+      if (searchParam && searchParam.recordGroupName) {
+        params += `&groupId=${searchParam.recordGroupName}`;
+      }
+      const res = yield call(fetchHosGroupService, params, page, 10);
+      if (res && res.code === 200) {
+        yield put({
+          type: 'updateList',
+          payload: {
+            key: 'groupHosNameEditor',
             list: res.data,
             currentPage: page,
             totalElements: res.data.totalElements,

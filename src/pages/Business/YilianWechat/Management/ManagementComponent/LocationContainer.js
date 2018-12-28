@@ -51,7 +51,6 @@ const mapDispatchProps = dispatch => ({
 )
 class LocationContainer extends Component {
   state = {
-    param: '',
     showEditor: false,
     selectedData: null,
   };
@@ -133,13 +132,9 @@ class LocationContainer extends Component {
     return columns;
   };
 
-  handleParamChange = async e => {
-    e.preventDefault();
-    this.setState({
-      param: e.target.value,
-    });
+  handleParamChange = async (value, dataKey) => {
     const { onUpdataSearchParam, onSearchLocationList } = this.props;
-    await onUpdataSearchParam('locationName', e.target.value);
+    await onUpdataSearchParam(value, dataKey);
     await onSearchLocationList(0);
   };
 
@@ -170,20 +165,21 @@ class LocationContainer extends Component {
       if (data) {
         const a = document.createElement('a');
         a.setAttribute('href', data);
-        a.setAttribute('target', '_blank');
+        // a.setAttribute('target', '_blank');
         a.click();
       }
     });
   };
 
   render() {
-    const { locationList, currentPage, totalElements } = this.props;
-    const { param, showEditor, selectedData } = this.state;
+    const { locationName, locationList, currentPage, totalElements } = this.props;
+    const { showEditor, selectedData } = this.state;
     return (
       <div>
         <SearchBar
-          inputValue={param}
+          inputValue={locationName}
           inputPlaceholder="请输入地址名称"
+          dataKey="locationName"
           onInputChange={this.handleParamChange}
           onSearchClick={this.handleSearch}
           onRefreshClick={this.handleRefresh}

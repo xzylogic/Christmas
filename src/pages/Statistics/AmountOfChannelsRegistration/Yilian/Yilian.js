@@ -488,7 +488,7 @@ class Index extends Component {
                   <StatisticsChart
                     data={chartOneData.data}
                     title={`渠道注册总量: ${chartOneData.title}`}
-                    label="注册率"
+                    label="注册"
                     onChartClick={this.handleChartClick}
                   />
                 </Col>
@@ -511,7 +511,7 @@ class Index extends Component {
                   <StatisticsChart
                     data={chartTwoData.data}
                     title={`医联自有渠道注册总量: ${chartTwoData.title}`}
-                    label="注册率"
+                    label="注册"
                     onChartClick={this.handleChartClick}
                   />
                 </Col>

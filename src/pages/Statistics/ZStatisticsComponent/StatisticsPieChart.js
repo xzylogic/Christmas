@@ -29,10 +29,6 @@ class StatisticsIntervalChart extends Component {
     const { data, title, label } = this.props;
     const Chart = createG2(chart => {
       chart.col('item', { alias: '渠道' });
-      chart.col('percent', {
-        alias: label,
-        formatter: val => `${(val * 100).toFixed(2)}%`,
-      });
       chart.coord('theta', {
         radius: 0.65,
       });
@@ -40,14 +36,32 @@ class StatisticsIntervalChart extends Component {
         .intervalStack()
         .position(Stat.summary.percent('count'))
         .color('item')
-        .label('percent')
-        .tooltip('item*percent')
+        .label('item*..percent', (_, percent) => `${(percent * 100).toFixed(2)}%`)
         .style({
           lineWidth: 1,
           stroke: '#fff',
         });
       chart.on('plotclick', this.handleChartClick);
       chart.render();
+      chart.on('tooltipchange', ev => {
+        const { items } = ev; // tooltip显示的项
+        const origin = items[0]; // 将一条数据改成多条数据
+        items.splice(0); // 清空
+        items.push({
+          name: `${label}量`,
+          title: origin.name,
+          marker: true,
+          color: origin.color,
+          value: origin.title,
+        });
+        items.push({
+          name: `${label}率`,
+          marker: true,
+          title: origin.name,
+          color: origin.color,
+          value: origin.value,
+        });
+      });
     });
 
     return (

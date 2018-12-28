@@ -249,8 +249,8 @@ export default {
             payload: {
               key: 'promoteAttention',
               list: res.data.content,
-              detailCurrentPage: page,
-              datailTotalElements: res.data.totalElements,
+              currentPage: page,
+              totalElements: res.data.totalElements,
             },
           });
         }
@@ -384,8 +384,8 @@ export default {
           payload: {
             key: 'appointmentAttention',
             list: res.data.content,
-            detailCurrentPage: page,
-            datailTotalElements: res.data.totalElements,
+            currentPage: page,
+            totalElements: res.data.totalElements,
           },
         });
       }

@@ -77,7 +77,10 @@ class Type3Container extends Component {
   handleReset = async e => {
     const { onUpdateSearchParams, onFetchPopularizationReport } = this.props;
     e.preventDefault();
-    await onUpdateSearchParams('time', moment(new Date().valueOf()).format('YYYY-MM-DD'));
+    await onUpdateSearchParams(
+      'time',
+      moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD')
+    );
     await onUpdateSearchParams('isExport', false);
     await onFetchPopularizationReport(0);
   };
@@ -110,7 +113,7 @@ class Type3Container extends Component {
           onExport={this.handleExport}
         />
         <div className={classes.Content}>
-          <ReportList data={reportList} />
+          <ReportList data={reportList} params={searchParam} />
         </div>
       </React.Fragment>
     );

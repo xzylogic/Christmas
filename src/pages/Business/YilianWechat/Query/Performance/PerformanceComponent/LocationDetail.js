@@ -142,7 +142,7 @@ class LocationDetail extends Component {
             onPageChange={this.handlePageChange}
           />
         ) : (
-          <div style={{ textAlign: 'center' }}>无数据</div>
+          <div style={{ textAlign: 'center' }}>暂无数据</div>
         )}
       </Modal>
     );

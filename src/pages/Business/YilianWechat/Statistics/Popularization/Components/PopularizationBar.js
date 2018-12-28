@@ -23,7 +23,7 @@ class PopularizationBar extends React.Component {
         content = (
           <Select
             className={classes.Gap}
-            style={{ width: 130 }}
+            style={{ width: 260 }}
             placeholder="医院名称"
             onChange={value => onParamsChange(value, 'hosName')}
             value={params.hosName}
@@ -39,7 +39,7 @@ class PopularizationBar extends React.Component {
         content = (
           <Select
             className={classes.Gap}
-            style={{ width: 130 }}
+            style={{ width: 260 }}
             placeholder="医院名称"
             onChange={value => onParamsChange(value, 'hosName')}
             value={params.hosName}
@@ -76,6 +76,7 @@ class PopularizationBar extends React.Component {
                 value={params.group}
                 defaultValue={allGroupName[0].name}
               >
+                <Select.Option value="">全部</Select.Option>
                 {allGroupName.map(item => (
                   <Select.Option id={item.id} key={item.id} value={item.id.toString()}>
                     {item.name}

@@ -11,40 +11,74 @@ const renderContent = (text, record) => {
   return content;
 };
 
+const renderTitle = (timeTitle, fansTotal, regTotal, conversionRateTotal) => {
+  let content = (
+    <div>
+      {timeTitle}
+      微信推广数据
+    </div>
+  );
+
+  if (fansTotal.length !== 0 && regTotal !== 0 && conversionRateTotal) {
+    content = (
+      <div>
+        <div>
+          {timeTitle}
+          微信推广数据
+        </div>
+        <div>
+          关注量
+          {fansTotal}
+          ，注册量
+          {regTotal}
+          ，注册转化率
+          {conversionRateTotal}
+        </div>
+      </div>
+    );
+  }
+  return content;
+};
+
 class Type4List extends Component {
   componentDidMount() {}
 
-  setTableColumns = () => {
+  setTableColumns = (timeTitle, fansTotal, regTotal, conversionRateTotal) => {
     const columns = [
       {
-        title: '医院/院区',
-        dataIndex: 'site',
-        key: 'site',
-        render: renderContent,
-      },
-      {
-        title: '组别',
-        dataIndex: 'name',
-        key: 'name',
-        render: renderContent,
-      },
-      {
-        title: '关注量',
-        dataIndex: 'fansCount',
-        key: 'fansCount',
-        render: renderContent,
-      },
-      {
-        title: '注册量',
-        dataIndex: 'regCount',
-        key: 'regCount',
-        render: renderContent,
-      },
-      {
-        title: '注册转换率',
-        dataIndex: 'conversionRate',
-        key: 'conversionRate',
-        render: renderContent,
+        title: renderTitle(timeTitle, fansTotal, regTotal, conversionRateTotal),
+        children: [
+          {
+            title: '医院/院区',
+            dataIndex: 'site',
+            key: 'site',
+            render: renderContent,
+          },
+          {
+            title: '组别',
+            dataIndex: 'name',
+            key: 'name',
+            render: renderContent,
+          },
+          {
+            title: '关注量',
+            dataIndex: 'fansCount',
+            key: 'fansCount',
+            render: renderContent,
+          },
+          {
+            title: '注册量',
+            dataIndex: 'regCount',
+            key: 'regCount',
+            render: renderContent,
+          },
+          {
+            title: '注册转换率',
+            dataIndex: 'conversionRate',
+            key: 'conversionRate',
+            render: renderContent,
+          },
+        ],
       },
     ];
     return columns;
@@ -78,15 +112,56 @@ class Type4List extends Component {
     return dataSource;
   };
 
+  getFansTotal = data => {
+    let fansTotal = [];
+    if (data && Array.isArray(data) && data.length !== 0) {
+      const fansList = data.reduce((pre, curr) => [...pre, curr.fansCount], []);
+      fansTotal = fansList.reduce((preValue, curValue) => preValue + curValue);
+    }
+    return fansTotal;
+  };
+
+  getRegTotal = data => {
+    let regTotal = [];
+
+    if (data && Array.isArray(data) && data.length !== 0) {
+      const regList = data.reduce((pre, curr) => [...pre, curr.regCount], []);
+
+      regTotal = regList.reduce((preValue, curValue) => preValue + curValue);
+    }
+    return regTotal;
+  };
+
+  getTimeTitle = time => {
+    let content = '';
+    const month = parseInt(time.split('-')[1], 10);
+    const date = parseInt(time.split('-')[2], 10);
+    content = (
+      <span>
+        {month}月{date}日
+      </span>
+    );
+    return content;
+  };
+
   render() {
-    const { data } = this.props;
+    const {
+      data,
+      params: { time },
+    } = this.props;
+
+    const timeTitle = this.getTimeTitle(time);
+    const fansTotal = this.getFansTotal(data);
+    const regTotal = this.getRegTotal(data);
+    const conversionRateTotal = `${(regTotal / fansTotal).toFixed(2)}%`;
 
     return (
       <React.Fragment>
         <Table
           rowKey={(_, index) => index}
           dataSource={this.getDataSource(data)}
-          columns={this.setTableColumns()}
+          // columns={this.setTableColumns()}
+          columns={this.setTableColumns(timeTitle, fansTotal, regTotal, conversionRateTotal)}
           pagination={false}
           bordered
         />

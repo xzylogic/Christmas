@@ -60,7 +60,7 @@ function type1SearchBar(props) {
           重置
         </Button>
         <Button type="primary" htmlType="button" onClick={onExport}>
-          导出
+          导出报表
         </Button>
       </span>
     </div>

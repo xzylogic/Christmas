@@ -49,6 +49,14 @@ const getDateSource = data =>
     return [...preArr, ...singleArr];
   }, []);
 
+const getDataNewObj = (dataNew, type) => {
+  let dataObj = dataNew;
+  if (dataNew.length !== 0 && (type === '1' || type === '2' || type === '3')) {
+    dataObj = dataNew.reverse();
+  }
+  return dataObj;
+};
+
 class FollowChart extends Component {
   state = {
     width: 1000,
@@ -60,11 +68,17 @@ class FollowChart extends Component {
 
   render() {
     const { width, height, plotCfg } = this.state;
-    const { data } = this.props;
+    const {
+      data,
+      params: { type },
+    } = this.props;
+    const dataNew = (data && getDateSource(data)) || [];
+    const dataNewObj = getDataNewObj(dataNew, type);
 
     return (
       <Line
-        data={(data && getDateSource(data)) || []}
+        // data={(data && getDateSource(data)) || []}
+        data={dataNewObj}
         width={width}
         height={height}
         plotCfg={plotCfg}

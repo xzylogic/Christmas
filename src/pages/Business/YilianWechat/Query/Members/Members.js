@@ -326,9 +326,12 @@ class Member extends Component {
     const { onSearchParamChange, onFetchMembershipListDebounce } = this.props;
     await onSearchParamChange(
       'startTime',
-      moment(new Date().valueOf() - 604800000).format('YYYY-MM-DD')
+      moment(new Date().valueOf() - 2678400000).format('YYYY-MM-DD')
     );
-    await onSearchParamChange('endTime', moment(new Date().valueOf()).format('YYYY-MM-DD'));
+    await onSearchParamChange(
+      'endTime',
+      moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD')
+    );
     await onSearchParamChange('type', '0');
     await onSearchParamChange('name', '');
     await onSearchParamChange('hosName', '');
@@ -389,7 +392,7 @@ class Member extends Component {
                   />
                 </div>
               ) : (
-                <FollowChart data={followingList} />
+                <FollowChart data={followingList} params={searchParam} />
               )}
             </Tabs.TabPane>
             <Tabs.TabPane tab="会员注册" key="2">
@@ -430,7 +433,7 @@ class Member extends Component {
                   />
                 </div>
               ) : (
-                <RegisterChart data={registrationList} />
+                <RegisterChart data={registrationList} params={searchParam} />
               )}
             </Tabs.TabPane>
           </Tabs>

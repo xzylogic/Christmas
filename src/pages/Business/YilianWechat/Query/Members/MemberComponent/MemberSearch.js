@@ -47,14 +47,14 @@ class MemberSearch extends Component {
             <Select.Option value="3">按年统计</Select.Option>
           </Select>
           <StatisticalMethods params={params} onParamsChange={onParamsChange} />
-          <span style={{ float: 'right', marginTop: '16px' }}>
+          {/* <span style={{ float: 'right', marginTop: '16px' }}>
             <Button type="primary" htmlType="button" onClick={onSearch} className={classes.Gap}>
               查询
             </Button>
             <Button type="primary" htmlType="button" onClick={onReset}>
               重置
             </Button>
-          </span>
+          </span> */}
         </Col>
         <Col>
           <span className={classes.Span}>
@@ -106,6 +106,14 @@ class MemberSearch extends Component {
           ) : (
             ''
           )}
+          <span style={{ float: 'right', marginTop: '16px' }}>
+            <Button type="primary" htmlType="button" onClick={onSearch} className={classes.Gap}>
+              查询
+            </Button>
+            <Button type="primary" htmlType="button" onClick={onReset}>
+              重置
+            </Button>
+          </span>
         </Col>
       </div>
     );

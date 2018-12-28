@@ -51,7 +51,7 @@ export default {
         type: 'week',
         way: 'week',
         startTime: moment(new Date().valueOf() - 2678400000).format('YYYY-MM-DD'),
-        endTime: moment(new Date().valueOf()).format('YYYY-MM-DD'),
+        endTime: moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD'),
         origin: '',
         // 医院名字
         hosName: '',
@@ -249,8 +249,8 @@ export default {
             payload: {
               key: 'promoteAttention',
               list: res.data.content,
-              detailCurrentPage: page,
-              datailTotalElements: res.data.totalElements,
+              currentPage: page,
+              totalElements: res.data.totalElements,
             },
           });
         }
@@ -384,8 +384,8 @@ export default {
           payload: {
             key: 'appointmentAttention',
             list: res.data.content,
-            detailCurrentPage: page,
-            datailTotalElements: res.data.totalElements,
+            currentPage: page,
+            totalElements: res.data.totalElements,
           },
         });
       }

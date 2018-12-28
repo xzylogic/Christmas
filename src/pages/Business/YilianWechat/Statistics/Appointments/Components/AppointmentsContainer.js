@@ -67,6 +67,7 @@ const mapDispatchToProps = dispatch => ({
 class AppointmentsContainer extends Component {
   state = {
     selectedName: '',
+    selectedNameCode: '',
     selectedDate: '',
     selectedCityName: '',
     selectedVisitCode: '',
@@ -262,9 +263,12 @@ class AppointmentsContainer extends Component {
     const { onSearchParamChange, onFetchAppointmentsData } = this.props;
     await onSearchParamChange(
       'startTime',
-      moment(new Date().valueOf() - 604800000).format('YYYY-MM-DD')
+      moment(new Date().valueOf() - 2678400000).format('YYYY-MM-DD')
     );
-    await onSearchParamChange('endTime', moment(new Date().valueOf()).format('YYYY-MM-DD'));
+    await onSearchParamChange(
+      'endTime',
+      moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD')
+    );
     await onSearchParamChange('countType', 'week');
     await onSearchParamChange('cityName', '');
     await onSearchParamChange('hosOrgCode', null);
@@ -275,9 +279,12 @@ class AppointmentsContainer extends Component {
     await onSearchParamChange('isExport', false);
     await onSearchParamChange(
       'chooseStartTime',
-      moment(new Date().valueOf() - 604800000).format('YYYY-MM-DD')
+      moment(new Date().valueOf() - 2678400000).format('YYYY-MM-DD')
     );
-    await onSearchParamChange('chooseEndTime', moment(new Date().valueOf()).format('YYYY-MM-DD'));
+    await onSearchParamChange(
+      'chooseEndTime',
+      moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD')
+    );
     await onSearchParamChange('chooseCityName', '');
     await onSearchParamChange('chooseHosOrgCode', '');
     await onSearchParamChange('chooseVisitLevelCode', null);
@@ -316,7 +323,8 @@ class AppointmentsContainer extends Component {
       }
       this.setState({
         showDetail: true,
-        selectedName: record.hosName, // 更改为code
+        selectedName: record.hosName,
+        selectedNameCode: record.hosOrgCode,
         selectedDate: record.date,
         selectedCityName: cityname,
         selectedVisitCode: record.visitLevelCode,
@@ -345,6 +353,7 @@ class AppointmentsContainer extends Component {
 
     const {
       selectedName,
+      selectedNameCode,
       showDetail,
       selectedDate,
       selectedCityName,
@@ -377,6 +386,7 @@ class AppointmentsContainer extends Component {
         />
         <AppointmentsDetail
           name={selectedName}
+          namecode={selectedNameCode}
           date={selectedDate}
           cityname={selectedCityName}
           visitcode={selectedVisitCode}

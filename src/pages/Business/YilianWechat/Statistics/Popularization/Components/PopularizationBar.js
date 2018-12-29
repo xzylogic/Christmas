@@ -31,7 +31,7 @@ class PopularizationBar extends React.Component {
           placeholder="医院名称"
           showSearch
           onChange={value => onParamsChange(value, 'hosName')}
-          defaultValue=""
+          value=""
         >
           <Select.Option value="" />
         </Select>

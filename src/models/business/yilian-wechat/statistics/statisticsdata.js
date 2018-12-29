@@ -23,7 +23,7 @@ export default {
       // 预约数据统计
       appointmentAttention: {
         startTime: moment(new Date().valueOf() - 2678400000).format('YYYY-MM-DD'),
-        endTime: moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD'),
+        endTime: `${moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD')} 24`,
         countType: 'week',
         // 医院类型
         cityName: '',
@@ -39,7 +39,7 @@ export default {
         isExport: false,
         // 查看详情参数
         chooseStartTime: moment(new Date().valueOf() - 31622400000).format('YYYY-MM-DD'),
-        chooseEndTime: moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD'),
+        chooseEndTime: `${moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD')} 24`,
         chooseHosOrgCode: '',
         chooseCityName: null,
         chooseVisitLevelCode: null,

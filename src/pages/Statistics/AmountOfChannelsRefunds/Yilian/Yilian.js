@@ -62,6 +62,17 @@ const mapDispatchToProps = dispatch => ({
     }),
 });
 
+const add = m => (m < 10 ? `0 + ${m}` : m);
+
+const formDate = milliseconds => {
+  // milliseconds是整数，否则要parseInt转换
+  const time = new Date(milliseconds);
+  const y = time.getFullYear();
+  const m = time.getMonth() + 1;
+  const d = time.getDate();
+  return `${y}-${add(m)}-${add(d)}`;
+};
+
 @connect(
   mapStateToProps,
   mapDispatchToProps
@@ -85,10 +96,25 @@ class Index extends Component {
   }
 
   handleParamsChange = async (value, dataKey) => {
-    const { onUpdateSearchParams, onFetchYilianStatistics, onFetchSearchHospitals } = this.props;
-    if (dataKey === 'date') {
-      await onUpdateSearchParams('startDate', value[0]);
-      await onUpdateSearchParams('endDate', value[1]);
+    const {
+      onUpdateSearchParams,
+      onFetchYilianStatistics,
+      onFetchSearchHospitals,
+      searchParam,
+    } = this.props;
+    if (searchParam.countType === 'day' && dataKey === 'startDate') {
+      onUpdateSearchParams('startDate', value);
+
+      const currentStartTime = moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD');
+      const chooseTime = new Date(value).getTime();
+      const currentTime = new Date(currentStartTime).getTime();
+      const thirtyTime = formDate(chooseTime + 2592000000);
+
+      if (chooseTime + 2592000000 > currentTime) {
+        onUpdateSearchParams('endDate', currentStartTime);
+      } else {
+        onUpdateSearchParams('endDate', thirtyTime);
+      }
     } else if (dataKey === 'cityCode') {
       await onUpdateSearchParams(dataKey, value);
       await onFetchSearchHospitals();
@@ -441,7 +467,6 @@ class Index extends Component {
   handelExport = () => {
     const { onExportYilianStatistics } = this.props;
     onExportYilianStatistics().then(data => {
-      console.log(data);
       if (data) {
         const a = document.createElement('a');
         a.setAttribute('href', data);

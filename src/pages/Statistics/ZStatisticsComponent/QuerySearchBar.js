@@ -118,7 +118,7 @@ function querySearchBar(props) {
             号源类型： */}
           <Select
             placeholder="号源类型"
-            className={[classes.Gap, classes.Select].join(' ')}
+            className={[classes.Gap, classes.Select, classes.Display].join(' ')}
             name="isExclusive"
             value={isExclusive}
             onChange={value => onParamsChange(value, 'isExclusive')}

@@ -38,7 +38,7 @@ class PopularizationBar extends React.Component {
       );
 
       if (params.group === '' && allHosName instanceof Object) {
-        // console.log('空  全部')
+        // 空  全部
         content = (
           <Select
             className={classes.Gap}
@@ -59,7 +59,7 @@ class PopularizationBar extends React.Component {
         params.group !== '' &&
         (groupHosName instanceof Object && Object.keys(groupHosName).length > 0)
       ) {
-        // console.log('小组有医院')
+        // 小组有医院'
         content = (
           <Select
             className={classes.Gap}

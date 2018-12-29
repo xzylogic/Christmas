@@ -131,9 +131,6 @@ class Type1Container extends Component {
       searchParam,
     } = this.props;
 
-    console.log(searchParam.countType);
-    console.log(dataKey);
-
     if (searchParam.countType === 'day' && dataKey === 'startTime') {
       onUpdateSearchParams('startTime', value);
 
@@ -141,8 +138,6 @@ class Type1Container extends Component {
       const chooseTime = new Date(value).getTime();
       const currentTime = new Date(currentStartTime).getTime();
       const thirtyTime = formDate(chooseTime + 2592000000);
-
-      console.log(currentStartTime);
 
       if (chooseTime + 2592000000 > currentTime) {
         onUpdateSearchParams('endTime', currentStartTime);

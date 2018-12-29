@@ -471,7 +471,6 @@ class Index extends Component {
   handelExport = () => {
     const { onExportYilianStatistics } = this.props;
     onExportYilianStatistics().then(data => {
-      console.log(data);
       if (data) {
         const a = document.createElement('a');
         a.setAttribute('href', data);

@@ -15,8 +15,8 @@ const mapStateToProps = state => ({
   currentPage: state.businessYilianWechatManagement.currentPage.group,
   totalElements: state.businessYilianWechatManagement.totalElements.group,
   loading: state.loading.effects['businessYilianWechatManagement/fetchGroupList'],
-  allGroupName: state.businessYilianWechatManagement.list.allGroupName,
-  allHosName: state.businessYilianWechatManagement.list.allHosName,
+  allValiGroupName: state.businessYilianWechatManagement.list.allValiGroupName,
+  allValiHosName: state.businessYilianWechatManagement.list.allValiHosName,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -43,17 +43,23 @@ const mapDispatchToProps = dispatch => ({
       type: 'businessYilianWechatManagement/deleteGroup',
       payload: { id },
     }),
-  onFetchAllGroupName: () =>
-    dispatch({
-      type: 'businessYilianWechatManagement/fetchAllGroupName',
-    }),
-  onFetchAllHosName: () =>
-    dispatch({
-      type: 'businessYilianWechatManagement/fetchAllHosName',
-    }),
+  // onFetchAllGroupName: () =>
+  //   dispatch({
+  //     type: 'businessYilianWechatManagement/fetchAllGroupName',
+  //   }),
   onDownloadGroupList: () =>
     dispatch({
       type: 'businessYilianWechatManagement/downloadGroupList',
+    }),
+  // 获取所有有效小组
+  onFetchAllValiGroupName: () =>
+    dispatch({
+      type: 'businessYilianWechatManagement/fetchAllValiGroupName',
+    }),
+  // 获取所有有效地点
+  onFetchAllValiHosName: () =>
+    dispatch({
+      type: 'businessYilianWechatManagement/fetchAllValiHosName',
     }),
 });
 
@@ -70,12 +76,17 @@ class GroupContainer extends Component {
   };
 
   componentDidMount() {
-    const { groupList, onFetchGroupList, onFetchAllGroupName, onFetchAllHosName } = this.props;
+    const {
+      groupList,
+      onFetchGroupList,
+      onFetchAllValiGroupName,
+      onFetchAllValiHosName,
+    } = this.props;
     if (!groupList) {
       onFetchGroupList(0);
     }
-    onFetchAllGroupName();
-    onFetchAllHosName();
+    onFetchAllValiGroupName();
+    onFetchAllValiHosName();
   }
 
   handleEditor = (e, record) => {
@@ -215,8 +226,8 @@ class GroupContainer extends Component {
       groupList,
       currentPage,
       totalElements,
-      allGroupName,
-      allHosName,
+      allValiGroupName,
+      allValiHosName,
     } = this.props;
     const { showEditor, selectedData, editorBarShow, showEditorGroupHos } = this.state;
     return (
@@ -248,8 +259,8 @@ class GroupContainer extends Component {
           onClose={() => this.setState({ showEditor: false })}
         />
         <GroupHosEditor
-          allGroupName={allGroupName}
-          allHosName={allHosName}
+          allValiGroupName={allValiGroupName}
+          allValiHosName={allValiHosName}
           visible={showEditorGroupHos}
           onClose={() => this.setState({ showEditorGroupHos: false })}
         />

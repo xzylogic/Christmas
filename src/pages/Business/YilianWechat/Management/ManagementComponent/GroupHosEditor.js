@@ -55,8 +55,9 @@ class GroupHosEditor extends Component {
       modifyLoading,
       onClose,
       form: { getFieldDecorator },
-      allGroupName,
-      allHosName,
+      allValiGroupName,
+      // allHosName,
+      allValiHosName,
     } = this.props;
     const { size } = this.state;
 
@@ -82,7 +83,7 @@ class GroupHosEditor extends Component {
         confirmLoading={createLoading || modifyLoading}
         onCancel={onClose}
       >
-        {allHosName instanceof Object && allGroupName instanceof Object ? (
+        {allValiHosName instanceof Object && allValiGroupName instanceof Object ? (
           <Form>
             <Form.Item {...formItemLayout} label="医院">
               {getFieldDecorator('hosName', {
@@ -95,7 +96,7 @@ class GroupHosEditor extends Component {
                   // onChange={this.handleChange}
                   style={{ width: 230 }}
                 >
-                  {allHosName.map(item => (
+                  {allValiHosName.map(item => (
                     <Select.Option id={item} key={item} value={item}>
                       {item}
                     </Select.Option>
@@ -108,7 +109,7 @@ class GroupHosEditor extends Component {
                 rules: [{ required: true, message: '请选择小组！' }],
               })(
                 <Select size={size} placeholder="请选择小组" style={{ width: 115 }}>
-                  {allGroupName.map(item => (
+                  {allValiGroupName.map(item => (
                     <Select.Option id={item.id} key={item.id} value={item.id}>
                       {item.name}
                     </Select.Option>

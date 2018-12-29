@@ -13,12 +13,14 @@ import {
   deleteMemberService,
   deleteLocationService,
   getMemberService,
+  fetchAllHosNameService,
   fetchValiHosNameService,
   fetchValiGroupNameService,
   addHosToGroupService,
   fetchGroupExportService,
   fetchMemberExportService,
   fetchLocationExportService,
+  fetchAllGroupNameService,
   fetchHosGroupService,
 } from '@/services/business/yilian-wechat/management/management';
 
@@ -48,6 +50,10 @@ export default {
       // 根据小组查询医院名
       groupHosName: null,
       groupHosNameEditor: null,
+      // 所有有效医院名称
+      allValiHosName: null,
+      // 所有有效小组
+      allValiGroupName: null,
     },
     currentPage: {
       group: 0,
@@ -291,7 +297,7 @@ export default {
       }
     },
     *fetchAllHosName(_, { call, put }) {
-      const res = yield call(fetchValiHosNameService);
+      const res = yield call(fetchAllHosNameService);
       if (res && res.code === 200) {
         yield put({
           type: 'updateList',
@@ -302,13 +308,39 @@ export default {
         });
       }
     },
+    // 所有有效地点
+    *fetchAllValiHosName(_, { call, put }) {
+      const res = yield call(fetchValiHosNameService);
+      if (res && res.code === 200) {
+        yield put({
+          type: 'updateList',
+          payload: {
+            key: 'allValiHosName',
+            list: res.data,
+          },
+        });
+      }
+    },
     *fetchAllGroupName(_, { call, put }) {
-      const res = yield call(fetchValiGroupNameService);
+      const res = yield call(fetchAllGroupNameService);
       if (res && res.code === 200) {
         yield put({
           type: 'updateList',
           payload: {
             key: 'allGroupName',
+            list: res.data,
+          },
+        });
+      }
+    },
+    // 所有有效小组
+    *fetchAllValiGroupName(_, { call, put }) {
+      const res = yield call(fetchValiGroupNameService);
+      if (res && res.code === 200) {
+        yield put({
+          type: 'updateList',
+          payload: {
+            key: 'allValiGroupName',
             list: res.data,
           },
         });

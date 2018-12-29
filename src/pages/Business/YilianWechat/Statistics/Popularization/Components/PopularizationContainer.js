@@ -77,7 +77,7 @@ class AppointmentsContainer extends Component {
       onFetchPromoteAttentionAmount,
       onFetchAllHosName,
       onFetchAllGroupName,
-      onFetchHosGroup,
+      // onFetchHosGroup,
       searchParam,
     } = this.props;
     const { way } = searchParam;
@@ -85,7 +85,7 @@ class AppointmentsContainer extends Component {
     onFetchPromoteAttentionAmount(way, 0);
     onFetchAllHosName();
     onFetchAllGroupName();
-    onFetchHosGroup(0);
+    // onFetchHosGroup(0);
   }
 
   handleParamsChanged = async (value, dataKey) => {

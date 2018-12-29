@@ -5,11 +5,9 @@ import classes from './PopularizationBar.less';
 
 class PopularizationBar extends React.Component {
   handleGroupChange = value => {
-    const { onParamsChange, groupHosName } = this.props;
+    const { onParamsChange } = this.props;
     onParamsChange(value, 'group');
-    if (groupHosName instanceof Object && Object.keys(groupHosName).length > 0) {
-      onParamsChange(groupHosName[0].hos_name, 'hosName');
-    }
+    onParamsChange('', 'hosName');
   };
 
   render() {
@@ -26,30 +24,27 @@ class PopularizationBar extends React.Component {
     } = this.props;
 
     const renderHosName = () => {
-      let content = '';
+      let content = (
+        <Select
+          className={classes.Gap}
+          style={{ width: 260 }}
+          placeholder="医院名称"
+          showSearch
+          onChange={value => onParamsChange(value, 'hosName')}
+          defaultValue=""
+        >
+          <Select.Option value="" />
+        </Select>
+      );
 
-      if (groupHosName instanceof Object && Object.keys(groupHosName).length > 0) {
+      if (params.group === '' && allHosName instanceof Object) {
+        // console.log('空  全部')
         content = (
           <Select
             className={classes.Gap}
             style={{ width: 260 }}
             placeholder="医院名称"
-            onChange={value => onParamsChange(value, 'hosName')}
-            value={params.hosName}
-          >
-            {groupHosName.map(item => (
-              <Select.Option id={item.id} key={item.id} value={item.hos_name}>
-                {item.hos_name}
-              </Select.Option>
-            ))}
-          </Select>
-        );
-      } else if (allHosName instanceof Object) {
-        content = (
-          <Select
-            className={classes.Gap}
-            style={{ width: 260 }}
-            placeholder="医院名称"
+            showSearch
             onChange={value => onParamsChange(value, 'hosName')}
             value={params.hosName}
           >
@@ -60,7 +55,29 @@ class PopularizationBar extends React.Component {
             ))}
           </Select>
         );
+      } else if (
+        params.group !== '' &&
+        (groupHosName instanceof Object && Object.keys(groupHosName).length > 0)
+      ) {
+        // console.log('小组有医院')
+        content = (
+          <Select
+            className={classes.Gap}
+            style={{ width: 260 }}
+            placeholder="医院名称"
+            showSearch
+            onChange={value => onParamsChange(value, 'hosName')}
+            value={params.hosName}
+          >
+            {groupHosName.map(item => (
+              <Select.Option id={item.id} key={item.id} value={item.hos_name}>
+                {item.hos_name}
+              </Select.Option>
+            ))}
+          </Select>
+        );
       }
+
       return content;
     };
 
@@ -154,7 +171,7 @@ class PopularizationBar extends React.Component {
           <Button type="primary" htmlType="button" onClick={onReset} className={classes.Gap}>
             重置
           </Button>
-          <Button type="primary" htmlType="button" onClick={onExport}>
+          <Button type="primary" htmlType="button" onClick={onExport} style={{ display: 'none' }}>
             导出Excel
           </Button>
         </span>

@@ -68,15 +68,6 @@ class MemberEditor extends Component {
     });
   };
 
-  // handleGroupChange = value => {
-  //   const { onParamChange } = this.props;
-  //   onParamChange('hosGroupName',value);
-  //   if(groupHosNameList instanceof Object && groupHosNameList.length){
-  //     onParamChange('hosGroupName',value);
-  //   }
-
-  // }
-
   render() {
     const {
       visible,
@@ -126,13 +117,11 @@ class MemberEditor extends Component {
               <div>
                 <Form.Item {...formItemLayout} label="姓名">
                   {getFieldDecorator('name', {
-                    initialValue: (initialValue && initialValue.name) || '',
                     rules: [{ required: true, message: '请填写姓名！' }],
                   })(<Input placeholder="请填写姓名" />)}
                 </Form.Item>
                 <Form.Item {...formItemLayout} label="性别">
                   {getFieldDecorator('sex', {
-                    initialValue: (initialValue && `${initialValue.sex}`) || '男',
                     rules: [{ required: true, message: '请选择性别！' }],
                   })(
                     <Select>
@@ -143,23 +132,19 @@ class MemberEditor extends Component {
                 </Form.Item>
                 <Form.Item {...formItemLayout} label="手机">
                   {getFieldDecorator('phone', {
-                    initialValue: (initialValue && initialValue.phone) || '',
                     rules: [{ message: '请填写手机号！' }],
                   })(<Input placeholder="请填写手机号" />)}
                 </Form.Item>
                 <Form.Item {...formItemLayout} label="工号">
                   {getFieldDecorator('jobNumber', {
-                    initialValue: (initialValue && initialValue.jobNumber) || '',
                     rules: [{ required: true, message: '请填写工号！' }],
                   })(<Input placeholder="请填写工号" />)}
                 </Form.Item>
                 <Form.Item {...formItemLayout} label="所属小组">
                   {getFieldDecorator('groupName', {
-                    initialValue: (initialValue && initialValue.groupName) || '',
                     rules: [{ required: true, message: '请选择小组！' }],
                   })(
                     <Select onChange={value => onParamChange('hosGroupName', value)}>
-                      {/* <Select onChange={this.handleGroupChange}> */}
                       {getMessage.groups.map(item => (
                         <Select.Option id={item.id} key={item.id} value={item.id}>
                           {item.name}
@@ -171,9 +156,6 @@ class MemberEditor extends Component {
                 {groupHosNameList instanceof Object && groupHosNameList.length ? (
                   <Form.Item {...formItemLayout} label="推广地址">
                     {getFieldDecorator('site', {
-                      // initialValue: groupHosNameList[0].hos_name || (initialValue && initialValue.site),
-                      initialValue:
-                        groupHosNameList[0].hos_name || (initialValue && initialValue.site),
                       rules: [{ required: true, message: '请选择推广地址！' }],
                     })(
                       <Select placeholder="请选择推广地址">
@@ -190,7 +172,6 @@ class MemberEditor extends Component {
                 )}
                 <Form.Item {...formItemLayout} label="推广码">
                   {getFieldDecorator('promoCode', {
-                    initialValue: initialValue && initialValue.promoCode.split(' '),
                     rules: [{ required: true, message: '请选择推广码！' }],
                   })(<Checkbox.Group options={options} />)}
                 </Form.Item>
@@ -210,7 +191,6 @@ class MemberEditor extends Component {
                     rules: [{ required: true, message: '请选择小组！' }],
                   })(
                     <Select onChange={value => onParamChange('recordGroupName', value)}>
-                      {/* <Select onChange={this.handleGroupChange}> */}
                       {getMessage.groups.map(item => (
                         <Select.Option id={item.id} key={item.id} value={item.id}>
                           {item.name}

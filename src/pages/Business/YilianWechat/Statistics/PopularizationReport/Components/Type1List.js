@@ -84,6 +84,7 @@ class Type1List extends Component {
           dataSource={this.getList(data, 'fansCount')}
           columns={this.setTableColumns(countType, data)}
           pagination={false}
+          // pageSize={5}
         />
       </React.Fragment>
     );
@@ -95,6 +96,7 @@ class Type1List extends Component {
           dataSource={this.getList(data, 'regCount')}
           columns={this.setTableColumns(countType, data)}
           pagination={false}
+          // pageSize={5}
         />
       </React.Fragment>
     );
@@ -108,6 +110,7 @@ class Type1List extends Component {
           currentPage={currentPage}
           totalElements={totalElements}
           onPageChange={onPageChange}
+          // pageSize={5}
         />
       </React.Fragment>
     );
@@ -130,6 +133,7 @@ class Type1List extends Component {
             currentPage={currentPage}
             totalElements={totalElements}
             onPageChange={onPageChange}
+            // pageSize={5}
           />
         </React.Fragment>
       );
@@ -144,6 +148,7 @@ class Type1List extends Component {
             currentPage={currentPage}
             totalElements={totalElements}
             onPageChange={onPageChange}
+            // pageSize={5}
           />
         </React.Fragment>
       );

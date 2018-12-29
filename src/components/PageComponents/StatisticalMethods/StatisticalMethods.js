@@ -29,8 +29,35 @@ const getEndYears = end => {
   return yearList;
 };
 
+const add = m => (m < 10 ? `0 + ${m}` : m);
+
+const formDate = milliseconds => {
+  // milliseconds是整数，否则要parseInt转换
+  const time = new Date(milliseconds);
+  const y = time.getFullYear();
+  const m = time.getMonth() + 1;
+  const d = time.getDate();
+  return `${y}-${add(m)}-${add(d)}`;
+};
+
 function StatisticalMethods(props) {
   const { params, onParamsChange } = props;
+
+  const disabledEndDate = current => {
+    const currentStartTime = moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD');
+    const chooseTime = new Date(params.startTime).getTime();
+    const thirtyTime = formDate(chooseTime + 7776000000);
+    if (currentStartTime < thirtyTime) {
+      return (
+        (current.format('YYYY-MM-DD') && current.format('YYYY-MM-DD') < params.startTime) ||
+        (current.format('YYYY-MM-DD') && current.format('YYYY-MM-DD') > currentStartTime)
+      );
+    }
+    return (
+      (current.format('YYYY-MM-DD') && current.format('YYYY-MM-DD') < params.startTime) ||
+      (current.format('YYYY-MM-DD') && current.format('YYYY-MM-DD') > thirtyTime)
+    );
+  };
 
   const chooseTime = () => {
     let content = (
@@ -51,12 +78,39 @@ function StatisticalMethods(props) {
             format="YYYY-MM-DD"
             showToday={false}
             allowClear={false}
+            disabledDate={disabledEndDate}
             value={moment(params.endTime, 'YYYY-MM-DD')}
             onChange={(_, dateStrings) => onParamsChange(dateStrings, 'endTime')}
           />
         </span>
       </span>
     );
+    if (params.countType === 'week' || params.type === 'week' || params.type === '1') {
+      content = (
+        <span>
+          <span className={classes.Span}>
+            开始日期：
+            <DatePicker
+              format="YYYY-MM-DD"
+              showToday={false}
+              allowClear={false}
+              value={moment(params.startTime, 'YYYY-MM-DD')}
+              onChange={(_, dateStrings) => onParamsChange(dateStrings, 'startTime')}
+            />
+          </span>
+          <span className={classes.Span}>
+            截止日期：
+            <DatePicker
+              format="YYYY-MM-DD"
+              showToday={false}
+              allowClear={false}
+              value={moment(params.endTime, 'YYYY-MM-DD')}
+              onChange={(_, dateStrings) => onParamsChange(dateStrings, 'endTime')}
+            />
+          </span>
+        </span>
+      );
+    }
     if (params.countType === 'month' || params.type === 'month' || params.type === '2') {
       content = (
         <span>

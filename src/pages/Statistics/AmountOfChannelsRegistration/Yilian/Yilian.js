@@ -8,6 +8,7 @@ import SearchBar from '../../ZStatisticsComponent/QuerySearchBar';
 import StatisticsChart from '../../ZStatisticsComponent/StatisticsPieChart';
 import LineChart from '../../ZStatisticsComponent/StatisticsLineChart';
 import { STATISTICS_TYPE, STATISTICS_ORIGIN } from '@/models/statistics/statistics';
+import { sortNumber, sortDate } from '../../ZStatisticsComponent/common';
 
 import classes from '../../Statistics.less';
 
@@ -120,30 +121,28 @@ class Index extends Component {
         dataIndex: 'countDate',
         key: 'countDate',
         width: 150,
-        sorter: (a, b) =>
-          parseInt(new Date(a.countDate).valueOf(), 10) -
-          parseInt(new Date(b.countDate).valueOf(), 10),
+        sorter: (a, b) => sortDate(a, b, 'countDate', '注册量总计', 'countDate'),
       },
       {
         title: totalTitle,
         dataIndex: 'registerTotal',
         key: 'registerTotal',
         width: 100,
-        sorter: (a, b) => parseInt(a.registerTotal, 10) - parseInt(b.registerTotal, 10),
+        sorter: (a, b) => sortNumber(a, b, 'countDate', '注册量总计', 'registerTotal'),
       },
       {
         title: '微医渠道',
         dataIndex: 'weiYiChanelNum',
         key: 'weiYiChanelNum',
         width: 100,
-        sorter: (a, b) => parseInt(a.weiYiChanelNum, 10) - parseInt(b.weiYiChanelNum, 10),
+        sorter: (a, b) => sortNumber(a, b, 'countDate', '注册量总计', 'weiYiChanelNum'),
       },
       {
         title: '微医渠道注册率',
         dataIndex: 'weiYiChannelRate',
         key: 'weiYiChannelRate',
         width: 100,
-        sorter: (a, b) => parseInt(a.weiYiChannelRate, 10) - parseInt(b.weiYiChannelRate, 10),
+        sorter: (a, b) => sortNumber(a, b, 'countDate', '注册量总计', 'weiYiChannelRate'),
       },
       {
         title: '医联自有渠道',
@@ -153,116 +152,112 @@ class Index extends Component {
             dataIndex: 'ylBookPlatformNum',
             key: 'ylBookPlatformNum',
             width: 100,
-            sorter: (a, b) => parseInt(a.ylBookPlatformNum, 10) - parseInt(b.ylBookPlatformNum, 10),
+            sorter: (a, b) => sortNumber(a, b, 'countDate', '注册量总计', 'ylBookPlatformNum'),
           },
           {
             title: '医联预约平台注册率',
             dataIndex: 'ylBookPlatformRate',
             key: 'ylBookPlatformRate',
             width: 100,
-            sorter: (a, b) =>
-              parseInt(a.ylBookPlatformRate, 10) - parseInt(b.ylBookPlatformRate, 10),
+            sorter: (a, b) => sortNumber(a, b, 'countDate', '注册量总计', 'ylBookPlatformRate'),
           },
           {
             title: '家医预约',
             dataIndex: 'homeDoctorBookNum',
             key: 'homeDoctorBookNum',
             width: 100,
-            sorter: (a, b) => parseInt(a.homeDoctorBookNum, 10) - parseInt(b.homeDoctorBookNum, 10),
+            sorter: (a, b) => sortNumber(a, b, 'countDate', '注册量总计', 'homeDoctorBookNum'),
           },
           {
             title: '家医预约注册率',
             dataIndex: 'homeDoctorBookRate',
             key: 'homeDoctorBookRate',
             width: 100,
-            sorter: (a, b) =>
-              parseInt(a.homeDoctorBookRate, 10) - parseInt(b.homeDoctorBookRate, 10),
+            sorter: (a, b) => sortNumber(a, b, 'countDate', '注册量总计', 'homeDoctorBookRate'),
           },
           {
             title: '医联APP',
             dataIndex: 'ylAppNum',
             key: 'ylAppNum',
             width: 100,
-            sorter: (a, b) => parseInt(a.ylAppNum, 10) - parseInt(b.ylAppNum, 10),
+            sorter: (a, b) => sortNumber(a, b, 'countDate', '注册量总计', 'ylAppNum'),
           },
           {
             title: '医联APP注册率',
             dataIndex: 'ylAppRate',
             key: 'ylAppRate',
             width: 100,
-            sorter: (a, b) => parseInt(a.ylAppRate, 10) - parseInt(b.ylAppRate, 10),
+            sorter: (a, b) => sortNumber(a, b, 'countDate', '注册量总计', 'ylAppRate'),
           },
           {
             title: '医联微信',
             dataIndex: 'ylWechatNum',
             key: 'ylWechatNum',
             width: 100,
-            sorter: (a, b) => parseInt(a.ylWechatNum, 10) - parseInt(b.ylWechatNum, 10),
+            sorter: (a, b) => sortNumber(a, b, 'countDate', '注册量总计', 'ylWechatNum'),
           },
           {
             title: '医联微信注册率',
             dataIndex: 'ylWechatRate',
             key: 'ylWechatRate',
             width: 100,
-            sorter: (a, b) => parseInt(a.ylWechatRate, 10) - parseInt(b.ylWechatRate, 10),
+            sorter: (a, b) => sortNumber(a, b, 'countDate', '注册量总计', 'ylWechatRate'),
           },
           {
             title: '电话',
             dataIndex: 'mobileNum',
             key: 'mobileNum',
             width: 100,
-            sorter: (a, b) => parseInt(a.mobileNum, 10) - parseInt(b.mobileNum, 10),
+            sorter: (a, b) => sortNumber(a, b, 'countDate', '注册量总计', 'mobileNum'),
           },
           {
             title: '电话注册率',
             dataIndex: 'mobileRate',
             key: 'mobileRate',
             width: 100,
-            sorter: (a, b) => parseInt(a.mobileRate, 10) - parseInt(b.mobileRate, 10),
+            sorter: (a, b) => sortNumber(a, b, 'countDate', '注册量总计', 'mobileRate'),
           },
           {
             title: '普陀社区',
             dataIndex: 'puTuoCommunityNum',
             key: 'puTuoCommunityNum',
             width: 100,
-            sorter: (a, b) => parseInt(a.puTuoCommunityNum, 10) - parseInt(b.puTuoCommunityNum, 10),
+            sorter: (a, b) => sortNumber(a, b, 'countDate', '注册量总计', 'puTuoCommunityNum'),
           },
           {
             title: '普陀社区注册率',
             dataIndex: 'puTuoCommunityRate',
             key: 'puTuoCommunityRate',
             width: 100,
-            sorter: (a, b) =>
-              parseInt(a.puTuoCommunityRate, 10) - parseInt(b.puTuoCommunityRate, 10),
+            sorter: (a, b) => sortNumber(a, b, 'countDate', '注册量总计', 'puTuoCommunityRate'),
           },
           {
             title: '上海发布',
             dataIndex: 'shangHaiPublicNum',
             key: 'shangHaiPublicNum',
             width: 100,
-            sorter: (a, b) => parseInt(a.shangHaiPublicNum, 10) - parseInt(b.shangHaiPublicNum, 10),
+            sorter: (a, b) => sortNumber(a, b, 'countDate', '注册量总计', 'shangHaiPublicNum'),
           },
           {
             title: '上海发布注册率',
             dataIndex: 'shangHaiPublicRate',
             key: 'shangHaiPublicRate',
             width: 100,
-            sorter: (a, b) =>
-              parseInt(a.shangHaiPublicRate, 10) - parseInt(b.shangHaiPublicRate, 10),
+            sorter: (a, b) => sortNumber(a, b, 'countDate', '注册量总计', 'shangHaiPublicRate'),
           },
           {
             title: '医联门户',
             dataIndex: 'ylGateWayNum',
             key: 'ylGateWayNum',
             width: 100,
-            sorter: (a, b) => parseInt(a.ylGateWayNum, 10) - parseInt(b.ylGateWayNum, 10),
+            sorter: (a, b) => sortNumber(a, b, 'countDate', '注册量总计', 'ylGateWayNum'),
           },
           {
             title: '医联门户注册率',
             dataIndex: 'ylGateWayRate',
             key: 'ylGateWayRate',
             width: 100,
-            sorter: (a, b) => parseInt(a.ylGateWayRate, 10) - parseInt(b.ylGateWayRate, 10),
+            sorter: (a, b) => sortNumber(a, b, 'countDate', '注册量总计', 'ylGateWayRate'),
           },
         ],
       },
@@ -271,14 +266,14 @@ class Index extends Component {
         dataIndex: 'ylOwnerChannelNum',
         key: 'ylOwnerChannelNum',
         width: 100,
-        sorter: (a, b) => parseInt(a.ylOwnerChannelNum, 10) - parseInt(b.ylOwnerChannelNum, 10),
+        sorter: (a, b) => sortNumber(a, b, 'countDate', '注册量总计', 'ylOwnerChannelNum'),
       },
       {
         title: '医联自有渠道注册率',
         dataIndex: 'ylOwnerChannelRate',
         key: 'ylOwnerChannelRate',
         width: 100,
-        sorter: (a, b) => parseInt(a.ylOwnerChannelRate, 10) - parseInt(b.ylOwnerChannelRate, 10),
+        sorter: (a, b) => sortNumber(a, b, 'countDate', '注册量总计', 'ylOwnerChannelRate'),
       },
     ];
     return columns;

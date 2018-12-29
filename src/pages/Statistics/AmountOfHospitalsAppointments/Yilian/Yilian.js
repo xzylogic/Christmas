@@ -8,6 +8,7 @@ import SearchBar from '../../ZStatisticsComponent/QuerySearchBar';
 import StatisticsChart from '../../ZStatisticsComponent/StatisticsColumnChart';
 import LineChart from '../../ZStatisticsComponent/StatisticsLineChart';
 import { STATISTICS_TYPE, STATISTICS_ORIGIN } from '@/models/statistics/statistics';
+import { sortNumber, sortString } from '../../ZStatisticsComponent/common';
 
 import classes from '../../Statistics.less';
 
@@ -115,13 +116,13 @@ class Index extends Component {
         title: '医院名称',
         dataIndex: 'orgName',
         key: 'orgName',
-        sorter: (a, b) => a.orgName.toString().localeCompare(b.orgName.toString()),
+        sorter: (a, b) => sortString(a, b, 'orgName', '预约量总计', 'orgName'),
       },
       {
         title: '预约总量',
         dataIndex: 'orderNum',
         key: 'orderNum',
-        sorter: (a, b) => Number(a.orderNum) - Number(b.orderNum),
+        sorter: (a, b) => sortNumber(a, b, 'orgName', '预约量总计', 'orderNum'),
       },
       {
         title: '门诊类型',
@@ -130,25 +131,25 @@ class Index extends Component {
             title: '专家预约量',
             dataIndex: 'specialistOrderNum',
             key: 'specialistOrderNum',
-            sorter: (a, b) => Number(a.specialistOrderNum) - Number(b.specialistOrderNum),
+            sorter: (a, b) => sortNumber(a, b, 'orgName', '预约量总计', 'specialistOrderNum'),
           },
           {
             title: '专病预约量',
             dataIndex: 'diseaseOrderNum',
             key: 'diseaseOrderNum',
-            sorter: (a, b) => Number(a.diseaseOrderNum) - Number(b.diseaseOrderNum),
+            sorter: (a, b) => sortNumber(a, b, 'orgName', '预约量总计', 'diseaseOrderNum'),
           },
           {
             title: '普通预约量',
             dataIndex: 'commonOrderNum',
             key: 'commonOrderNum',
-            sorter: (a, b) => Number(a.commonOrderNum) - Number(b.commonOrderNum),
+            sorter: (a, b) => sortNumber(a, b, 'orgName', '预约量总计', 'commonOrderNum'),
           },
           {
             title: '特需预约量',
             dataIndex: 'specialOrderNum',
             key: 'specialOrderNum',
-            sorter: (a, b) => Number(a.specialOrderNum) - Number(b.specialOrderNum),
+            sorter: (a, b) => sortNumber(a, b, 'orgName', '预约量总计', 'specialOrderNum'),
           },
         ],
       },
@@ -159,13 +160,13 @@ class Index extends Component {
             title: '主任医师',
             dataIndex: 'highOrderNum',
             key: 'highOrderNum',
-            sorter: (a, b) => Number(a.highOrderNum) - Number(b.highOrderNum),
+            sorter: (a, b) => sortNumber(a, b, 'orgName', '预约量总计', 'highOrderNum'),
           },
           {
             title: '副主任医师',
             dataIndex: 'subOrderNum',
             key: 'subOrderNum',
-            sorter: (a, b) => Number(a.subOrderNum) - Number(b.orderNum),
+            sorter: (a, b) => sortNumber(a, b, 'orgName', '预约量总计', 'subOrderNum'),
           },
         ],
       },

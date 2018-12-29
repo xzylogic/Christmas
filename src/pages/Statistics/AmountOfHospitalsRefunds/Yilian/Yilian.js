@@ -8,6 +8,7 @@ import SearchBar from '../../ZStatisticsComponent/QuerySearchBar';
 import StatisticsChart from '../../ZStatisticsComponent/StatisticsColumnChart';
 import LineChart from '../../ZStatisticsComponent/StatisticsLineChart';
 import { STATISTICS_TYPE, STATISTICS_ORIGIN } from '@/models/statistics/statistics';
+import { sortNumber, sortString } from '../../ZStatisticsComponent/common';
 
 import classes from '../../Statistics.less';
 
@@ -113,13 +114,13 @@ class Index extends Component {
         title: '医院名称',
         dataIndex: 'orgName',
         key: 'orgName',
-        sorter: (a, b) => a.orgName.toString().localeCompare(b.orgName.toString()),
+        sorter: (a, b) => sortString(a, b, 'orgName', '退号量总计', 'orgName'),
       },
       {
         title: '退号总量',
         dataIndex: 'cancelNum',
         key: 'cancelNum',
-        sorter: (a, b) => Number(a.cancelNum) - Number(b.cancelNum),
+        sorter: (a, b) => sortNumber(a, b, 'orgName', '退号量总计', 'cancelNum'),
       },
       {
         title: '门诊类型',
@@ -128,25 +129,25 @@ class Index extends Component {
             title: '专家退号量',
             dataIndex: 'specialistCancelNum',
             key: 'specialistCancelNum',
-            sorter: (a, b) => Number(a.specialistCancelNum) - Number(b.specialistCancelNum),
+            sorter: (a, b) => sortNumber(a, b, 'orgName', '退号量总计', 'specialistCancelNum'),
           },
           {
             title: '专病退号量',
             dataIndex: 'diseaseCancelNum',
             key: 'diseaseCancelNum',
-            sorter: (a, b) => Number(a.diseaseCancelNum) - Number(b.diseaseCancelNum),
+            sorter: (a, b) => sortNumber(a, b, 'orgName', '退号量总计', 'diseaseCancelNum'),
           },
           {
             title: '普通退号量',
             dataIndex: 'commonCancelNum',
             key: 'commonCancelNum',
-            sorter: (a, b) => Number(a.commonCancelNum) - Number(b.commonCancelNum),
+            sorter: (a, b) => sortNumber(a, b, 'orgName', '退号量总计', 'commonCancelNum'),
           },
           {
             title: '特需退号量',
             dataIndex: 'specialCancelNum',
             key: 'specialCancelNum',
-            sorter: (a, b) => Number(a.specialCancelNum) - Number(b.specialCancelNum),
+            sorter: (a, b) => sortNumber(a, b, 'orgName', '退号量总计', 'specialCancelNum'),
           },
         ],
       },
@@ -157,13 +158,13 @@ class Index extends Component {
             title: '主任医师',
             dataIndex: 'highCancelNum',
             key: 'highCancelNum',
-            sorter: (a, b) => Number(a.highCancelNum) - Number(b.highCancelNum),
+            sorter: (a, b) => sortNumber(a, b, 'orgName', '退号量总计', 'highCancelNum'),
           },
           {
             title: '副主任医师',
             dataIndex: 'subCancelNum',
             key: 'subCancelNum',
-            sorter: (a, b) => Number(a.subCancelNum) - Number(b.subCancelNum),
+            sorter: (a, b) => sortNumber(a, b, 'orgName', '退号量总计', 'subCancelNum'),
           },
         ],
       },

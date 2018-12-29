@@ -123,6 +123,7 @@ class Index extends Component {
         dataIndex: 'countDate',
         key: 'countDate',
         width: 150,
+        fixed: 'left',
         sorter: (a, b) => sortDate(a, b, 'countDate', '预约量总计', 'countDate'),
       },
       {
@@ -536,7 +537,7 @@ class Index extends Component {
                 dataSource={list}
                 className={classes.Content}
                 pagination={false}
-                scroll={{ x: 2250 }}
+                scroll={{ x: 2250, y: 450 }}
                 bordered
               />
             </Spin>

@@ -112,10 +112,12 @@ class AppointmentsContainer extends Component {
       const thirtyTime = formDate(chooseTime + 2592000000);
 
       if (chooseTime + 2592000000 > currentTime) {
-        onSearchParamChange('endTime', currentStartTime);
+        onSearchParamChange('endTime', `${currentStartTime} 24`);
       } else {
-        onSearchParamChange('endTime', thirtyTime);
+        onSearchParamChange('endTime', `${thirtyTime} 24`);
       }
+    } else if (dataKey === 'endTime') {
+      onSearchParamChange('endTime', `${value} 24`);
     } else {
       await onSearchParamChange(dataKey, value);
     }
@@ -290,7 +292,7 @@ class AppointmentsContainer extends Component {
     );
     await onSearchParamChange(
       'endTime',
-      moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD')
+      `${moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD')}-24`
     );
     await onSearchParamChange('countType', 'week');
     await onSearchParamChange('cityName', '');
@@ -306,7 +308,7 @@ class AppointmentsContainer extends Component {
     );
     await onSearchParamChange(
       'chooseEndTime',
-      moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD')
+      `${moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD')} 24`
     );
     await onSearchParamChange('chooseCityName', '');
     await onSearchParamChange('chooseHosOrgCode', '');

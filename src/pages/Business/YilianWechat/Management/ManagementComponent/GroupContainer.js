@@ -139,9 +139,8 @@ class GroupContainer extends Component {
       },
       {
         title: '状态',
-        dataIndex: 'id',
+        dataIndex: 'valid',
         key: 'valid',
-        render: text => (text !== undefined && (text ? '有效' : '无效')) || '',
       },
       {
         title: '备注',

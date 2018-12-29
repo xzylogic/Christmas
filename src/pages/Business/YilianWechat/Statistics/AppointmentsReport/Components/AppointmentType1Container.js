@@ -128,9 +128,12 @@ class AppointmentType1Container extends Component {
       onFetchAppointmentReportDebounce,
       onFetchAppointmentChartDebounce,
     } = this.props;
+
     if (dataKey === 'date') {
       await onUpdateSearchParams('startTime', value[0]);
       await onUpdateSearchParams('endTime', value[1]);
+    } else if (dataKey === 'endTime') {
+      await onUpdateSearchParams('endTime', `${value} 24`);
     } else {
       await onUpdateSearchParams(dataKey, value);
     }

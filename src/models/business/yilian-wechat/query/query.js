@@ -103,7 +103,7 @@ export default {
       appointment: {
         type: 'create_time',
         startTime: moment(new Date().valueOf() - 2678400000).format('YYYY-MM-DD'),
-        endTime: moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD'),
+        endTime: `${moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD')} 24`,
         // 预约状态
         orderStatus: '',
         // 预约来源

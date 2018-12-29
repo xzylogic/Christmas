@@ -59,6 +59,8 @@ class AppointmentsContainer extends Component {
     if (dataKey === 'date') {
       await onSearchParamChange('startTime', value[0]);
       await onSearchParamChange('endTime', value[1]);
+    } else if (dataKey === 'endTime') {
+      await onSearchParamChange('endTime', `${value} 24`);
     } else {
       await onSearchParamChange(dataKey, value);
     }
@@ -242,7 +244,7 @@ class AppointmentsContainer extends Component {
     );
     await onSearchParamChange(
       'endTime',
-      moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD')
+      `${moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD')} 24`
     );
     await onSearchParamChange('orderStatus', '');
     await onSearchParamChange('regChannel', '');

@@ -113,7 +113,7 @@ class AppointmentsDetail extends Component {
         endTime = newEndDate.join('-');
       }
       onSearchParamChange('chooseStartTime', startTime);
-      onSearchParamChange('chooseEndTime', endTime);
+      onSearchParamChange('chooseEndTime', `${endTime} 24`);
       onSearchParamChange('chooseCityName', cityname);
       onSearchParamChange('chooseHosOrgCode', namecode);
       onSearchParamChange('chooseVisitLevelCode', visitcode);

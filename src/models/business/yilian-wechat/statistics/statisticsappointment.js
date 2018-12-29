@@ -19,11 +19,11 @@ export default {
     },
     searchParams: {
       appointments: {
-        // 推广数据统计搜索条件
+        // 预约数据统计搜索条件
         origin: {},
         [APPOINTMENTS_REPORT_TYPE.TYPE1]: {
           startTime: moment(new Date().valueOf() - 2678400000).format('YYYY-MM-DD'),
-          endTime: moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD'),
+          endTime: `${moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD')} 24`,
           groupName: '1组',
           show: 'chart',
           isExport: false,
@@ -32,7 +32,7 @@ export default {
     },
     list: {
       appointments: {
-        // 推广数据统计列表
+        // 预约数据统计列表
         origin: null,
         [APPOINTMENTS_REPORT_TYPE.TYPE1]: null,
       },

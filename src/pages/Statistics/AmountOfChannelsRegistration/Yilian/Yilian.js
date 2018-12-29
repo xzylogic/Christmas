@@ -103,7 +103,14 @@ class Index extends Component {
       const currentStartTime = moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD');
       const chooseTime = new Date(value).getTime();
       const currentTime = new Date(currentStartTime).getTime();
-      const thirtyTime = formDate(chooseTime + 2592000000);
+      let thirtyTime = formDate(chooseTime + 2592000000);
+      if (thirtyTime.split('+').length === 2) {
+        const newThirtyTimeStart1 = thirtyTime.split('+')[0];
+        const newThirtyTimeStart2 = newThirtyTimeStart1.replace(/\s*/g, '');
+        const newThirtyTimeEnd1 = thirtyTime.split('+')[1];
+        const newThirtyTimeEnd2 = newThirtyTimeEnd1.replace(/\s*/g, '');
+        thirtyTime = `${newThirtyTimeStart2}${newThirtyTimeEnd2}`;
+      }
 
       if (chooseTime + 2592000000 > currentTime) {
         onUpdateSearchParams('endDate', currentStartTime);

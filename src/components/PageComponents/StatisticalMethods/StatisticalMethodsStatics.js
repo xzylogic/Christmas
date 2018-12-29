@@ -47,7 +47,12 @@ function StatisticalMethods(props) {
     const currentStartTime = moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD');
     const chooseTime = new Date(params.startDate).getTime();
     const thirtyTime = formDate(chooseTime + 7776000000);
-    const startDate = params.startDate.format('YYYY-MM-DD');
+    const startDate1 = params.startDate;
+
+    let startDate = startDate1;
+    if (!(params.startDate && params.startDate.length > 0)) {
+      startDate = params.startDate.format('YYYY-MM-DD');
+    }
 
     if (currentStartTime < thirtyTime) {
       return (

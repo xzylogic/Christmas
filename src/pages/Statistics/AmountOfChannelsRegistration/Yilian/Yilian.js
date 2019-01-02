@@ -62,17 +62,6 @@ const mapDispatchToProps = dispatch => ({
   //   }),
 });
 
-const add = m => (m < 10 ? `0 + ${m}` : m);
-
-const formDate = milliseconds => {
-  // milliseconds是整数，否则要parseInt转换
-  const time = new Date(milliseconds);
-  const y = time.getFullYear();
-  const m = time.getMonth() + 1;
-  const d = time.getDate();
-  return `${y}-${add(m)}-${add(d)}`;
-};
-
 @connect(
   mapStateToProps,
   mapDispatchToProps
@@ -96,28 +85,9 @@ class Index extends Component {
   }
 
   handleParamsChange = async (value, dataKey) => {
-    const { onUpdateSearchParams, onFetchYilianStatistics, searchParam } = this.props;
-    if (searchParam.countType === 'day' && dataKey === 'startDate') {
-      onUpdateSearchParams('startDate', value);
+    const { onUpdateSearchParams, onFetchYilianStatistics } = this.props;
 
-      const currentStartTime = moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD');
-      const chooseTime = new Date(value).getTime();
-      const currentTime = new Date(currentStartTime).getTime();
-      let thirtyTime = formDate(chooseTime + 2592000000);
-      if (thirtyTime.split('+').length === 2) {
-        const newThirtyTimeStart1 = thirtyTime.split('+')[0];
-        const newThirtyTimeStart2 = newThirtyTimeStart1.replace(/\s*/g, '');
-        const newThirtyTimeEnd1 = thirtyTime.split('+')[1];
-        const newThirtyTimeEnd2 = newThirtyTimeEnd1.replace(/\s*/g, '');
-        thirtyTime = `${newThirtyTimeStart2}${newThirtyTimeEnd2}`;
-      }
-
-      if (chooseTime + 2592000000 > currentTime) {
-        onUpdateSearchParams('endDate', currentStartTime);
-      } else {
-        onUpdateSearchParams('endDate', thirtyTime);
-      }
-    } else if (dataKey === 'cityCode') {
+    if (dataKey === 'cityCode') {
       await onUpdateSearchParams(dataKey, value);
       // await onFetchSearchHospitals();
     } else {

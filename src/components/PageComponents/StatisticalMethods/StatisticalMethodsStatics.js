@@ -29,185 +29,202 @@ const getEndYears = end => {
   return yearList;
 };
 
-const add = m => (m < 10 ? `0 + ${m}` : m);
+class StatisticalMethods extends React.Component {
+  handleChangeDayTime = value => {
+    const { onParamsChange } = this.props;
 
-const formDate = milliseconds => {
-  // milliseconds是整数，否则要parseInt转换
-  const time = new Date(milliseconds);
-  const y = time.getFullYear();
-  const m = time.getMonth() + 1;
-  const d = time.getDate();
-  return `${y}-${add(m)}-${add(d)}`;
-};
+    onParamsChange(value, 'startDate');
 
-function StatisticalMethods(props) {
-  const { params, onParamsChange } = props;
+    let endTime = moment(new Date(value).valueOf() + 2592000000).format('YYYY-MM-DD');
 
-  const disabledEndDate = current => {
-    const currentStartTime = moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD');
-    const chooseTime = new Date(params.startDate).getTime();
-    const thirtyTime = formDate(chooseTime + 7776000000);
-    const startDate1 = params.startDate;
+    // 今天
 
-    let startDate = startDate1;
-    if (!(params.startDate && params.startDate.length > 0)) {
-      startDate = params.startDate.format('YYYY-MM-DD');
+    const currentTime = new Date().getTime();
+
+    // 所选日期+30天（2592000000）
+    const chooseTimeAdd30 = new Date(
+      moment(new Date(value).valueOf() + 2592000000).format('YYYY-MM-DD')
+    );
+
+    if (chooseTimeAdd30 > currentTime) {
+      endTime = moment(currentTime - 86400000).format('YYYY-MM-DD');
     }
 
-    if (currentStartTime < thirtyTime) {
+    onParamsChange(endTime, 'endDate');
+  };
+
+  render() {
+    const { params, onParamsChange } = this.props;
+
+    const disabledEndDate = current => {
+      // 当前时间
+      const currentTime = new Date().getTime();
+
+      // 开始可选时间
+      const startChooseTime = new Date(params.startDate).getTime(); // 毫秒
+
+      // 开始+90   （7776000000）
+      const startChooseTimeAdd90 = startChooseTime + 7776000000; // 毫秒
+
+      const startTime1 = moment(startChooseTime).format('YYYY-MM-DD');
+      let endTime1 = moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD');
+
+      if (currentTime > startChooseTimeAdd90) {
+        endTime1 = moment(startChooseTimeAdd90).format('YYYY-MM-DD');
+      }
+
       return (
-        (current.format('YYYY-MM-DD') && current.format('YYYY-MM-DD') < startDate) ||
-        (current.format('YYYY-MM-DD') && current.format('YYYY-MM-DD') > currentStartTime)
+        (current.format('YYYY-MM-DD') && current.format('YYYY-MM-DD') < startTime1) ||
+        (current.format('YYYY-MM-DD') && current.format('YYYY-MM-DD') > endTime1)
       );
-    }
-    return (
-      (current.format('YYYY-MM-DD') && current.format('YYYY-MM-DD') < startDate) ||
-      (current.format('YYYY-MM-DD') && current.format('YYYY-MM-DD') > thirtyTime)
-    );
-  };
+    };
 
-  const chooseTime = () => {
-    let content = (
-      <span>
-        <span className={classes.Span}>
-          开始日期：
-          <DatePicker
-            format="YYYY-MM-DD"
-            showToday={false}
-            allowClear={false}
-            value={moment(params.startDate, 'YYYY-MM-DD')}
-            onChange={(_, dateStrings) => onParamsChange(dateStrings, 'startDate')}
-          />
-        </span>
-        <span className={classes.Span}>
-          截止日期：
-          <DatePicker
-            format="YYYY-MM-DD"
-            showToday={false}
-            allowClear={false}
-            disabledDate={disabledEndDate}
-            value={moment(params.endDate, 'YYYY-MM-DD')}
-            onChange={(_, dateStrings) => onParamsChange(dateStrings, 'endDate')}
-          />
-        </span>
-      </span>
-    );
-    if (params.countType === 'week') {
-      content = (
-        <span>
-          <span className={classes.Span}>
-            开始日期：
-            <DatePicker
-              format="YYYY-MM-DD"
-              showToday={false}
-              allowClear={false}
-              value={moment(params.startDate, 'YYYY-MM-DD')}
-              onChange={(_, dateStrings) => onParamsChange(dateStrings, 'startDate')}
-            />
+    const chooseTime = () => {
+      let content = '';
+      if (params.countType === 'day') {
+        content = (
+          <span>
+            <span className={classes.Span}>
+              开始日期：
+              <DatePicker
+                format="YYYY-MM-DD"
+                showToday={false}
+                allowClear={false}
+                value={moment(params.startDate, 'YYYY-MM-DD')}
+                onChange={(_, dateStrings) => this.handleChangeDayTime(dateStrings)}
+              />
+            </span>
+            <span className={classes.Span}>
+              截止日期：
+              <DatePicker
+                format="YYYY-MM-DD"
+                showToday={false}
+                allowClear={false}
+                disabledDate={disabledEndDate}
+                value={moment(params.endDate, 'YYYY-MM-DD')}
+                onChange={(_, dateStrings) => onParamsChange(dateStrings, 'endDate')}
+              />
+            </span>
           </span>
-          <span className={classes.Span}>
-            截止日期：
-            <DatePicker
-              format="YYYY-MM-DD"
-              showToday={false}
-              allowClear={false}
-              value={moment(params.endDate, 'YYYY-MM-DD')}
-              onChange={(_, dateStrings) => onParamsChange(dateStrings, 'endDate')}
-            />
-          </span>
-        </span>
-      );
-    }
-    if (params.countType === 'month') {
-      content = (
-        <span>
-          <span className={classes.Span}>
-            开始月份：
-            <DatePicker.MonthPicker
-              format="YYYY-MM"
-              showToday={false}
-              allowClear={false}
-              value={moment(params.startDate, 'YYYY-MM-DD')}
-              onChange={(_, dateStrings) => onParamsChange(dateStrings, 'startDate')}
-            />
-          </span>
-          <span className={classes.Span}>
-            截止月份：
-            <DatePicker.MonthPicker
-              format="YYYY-MM"
-              showToday={false}
-              allowClear={false}
-              value={moment(params.endDate, 'YYYY-MM-DD')}
-              onChange={(_, dateStrings) => onParamsChange(dateStrings, 'endDate')}
-            />
-          </span>
-        </span>
-      );
-    }
-    if (params.countType === 'year') {
-      let defaultStartTime = '';
-      let defaultEndTime = '';
-
-      if (params.startDate instanceof Object) {
-        defaultStartTime = params.startDate.format('YYYY');
-      } else {
-        const times = params.startDate.split('-');
-        const [firstTime] = times;
-        defaultStartTime = firstTime;
+        );
       }
-
-      if (params.endDate instanceof Object) {
-        defaultEndTime = params.endDate.format('YYYY');
-      } else {
-        const times = params.endDate.split('-');
-        const [firstTime] = times;
-        defaultEndTime = firstTime;
+      if (params.countType === 'week') {
+        content = (
+          <span>
+            <span className={classes.Span}>
+              开始日期：
+              <DatePicker
+                format="YYYY-MM-DD"
+                showToday={false}
+                allowClear={false}
+                value={moment(params.startDate, 'YYYY-MM-DD')}
+                onChange={(_, dateStrings) => onParamsChange(dateStrings, 'startDate')}
+              />
+            </span>
+            <span className={classes.Span}>
+              截止日期：
+              <DatePicker
+                format="YYYY-MM-DD"
+                showToday={false}
+                allowClear={false}
+                value={moment(params.endDate, 'YYYY-MM-DD')}
+                onChange={(_, dateStrings) => onParamsChange(dateStrings, 'endDate')}
+              />
+            </span>
+          </span>
+        );
       }
-
-      const defaultStartTime1 = parseInt(defaultStartTime, 10);
-
-      const startyearArr = getStartYears();
-      const endyearArr = getEndYears(defaultStartTime1);
-
-      content = (
-        <span>
-          <span className={classes.Span}>
-            开始年份：
-            <Select
-              className={classes.Gap}
-              style={{ width: 150 }}
-              value={defaultStartTime}
-              onChange={value => onParamsChange(value, 'startDate')}
-            >
-              {startyearArr.map(item => (
-                <Select.Option key={item.y} value={item.date}>
-                  {item.y}
-                </Select.Option>
-              ))}
-            </Select>
+      if (params.countType === 'month') {
+        content = (
+          <span>
+            <span className={classes.Span}>
+              开始月份：
+              <DatePicker.MonthPicker
+                format="YYYY-MM"
+                showToday={false}
+                allowClear={false}
+                value={moment(params.startDate, 'YYYY-MM-DD')}
+                onChange={(_, dateStrings) => onParamsChange(dateStrings, 'startDate')}
+              />
+            </span>
+            <span className={classes.Span}>
+              截止月份：
+              <DatePicker.MonthPicker
+                format="YYYY-MM"
+                showToday={false}
+                allowClear={false}
+                value={moment(params.endDate, 'YYYY-MM-DD')}
+                onChange={(_, dateStrings) => onParamsChange(dateStrings, 'endDate')}
+              />
+            </span>
           </span>
-          <span className={classes.Span}>
-            截止年份：
-            <Select
-              className={classes.Gap}
-              style={{ width: 150 }}
-              value={defaultEndTime}
-              onChange={value => onParamsChange(value, 'endDate')}
-            >
-              {endyearArr.map(item => (
-                <Select.Option key={item.y} value={item.date}>
-                  {item.y}
-                </Select.Option>
-              ))}
-            </Select>
-          </span>
-        </span>
-      );
-    }
-    return content;
-  };
+        );
+      }
+      if (params.countType === 'year') {
+        let defaultStartTime = '';
+        let defaultEndTime = '';
 
-  return <span>{chooseTime()}</span>;
+        if (params.startDate instanceof Object) {
+          defaultStartTime = params.startDate.format('YYYY');
+        } else {
+          const times = params.startDate.split('-');
+          const [firstTime] = times;
+          defaultStartTime = firstTime;
+        }
+
+        if (params.endDate instanceof Object) {
+          defaultEndTime = params.endDate.format('YYYY');
+        } else {
+          const times = params.endDate.split('-');
+          const [firstTime] = times;
+          defaultEndTime = firstTime;
+        }
+
+        const defaultStartTime1 = parseInt(defaultStartTime, 10);
+
+        const startyearArr = getStartYears();
+        const endyearArr = getEndYears(defaultStartTime1);
+
+        content = (
+          <span>
+            <span className={classes.Span}>
+              开始年份：
+              <Select
+                className={classes.Gap}
+                style={{ width: 150 }}
+                value={defaultStartTime}
+                onChange={value => onParamsChange(value, 'startDate')}
+              >
+                {startyearArr.map(item => (
+                  <Select.Option key={item.y} value={item.date}>
+                    {item.y}
+                  </Select.Option>
+                ))}
+              </Select>
+            </span>
+            <span className={classes.Span}>
+              截止年份：
+              <Select
+                className={classes.Gap}
+                style={{ width: 150 }}
+                value={defaultEndTime}
+                onChange={value => onParamsChange(value, 'endDate')}
+              >
+                {endyearArr.map(item => (
+                  <Select.Option key={item.y} value={item.date}>
+                    {item.y}
+                  </Select.Option>
+                ))}
+              </Select>
+            </span>
+          </span>
+        );
+      }
+      return content;
+    };
+
+    return <span>{chooseTime()}</span>;
+  }
 }
 
 export default StatisticalMethods;

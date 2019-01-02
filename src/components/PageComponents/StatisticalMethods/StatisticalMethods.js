@@ -57,6 +57,13 @@ class StatisticalMethods extends React.Component {
   render() {
     const { params, onParamsChange } = this.props;
 
+    // 开始时间
+    const disabledStartDate = current => {
+      const currentTime = moment(new Date().getTime());
+      return current && current > currentTime;
+    };
+
+    // 截止时间
     const disabledEndDate = current => {
       // 当前时间
       const currentTime = new Date().getTime();
@@ -68,7 +75,7 @@ class StatisticalMethods extends React.Component {
       const startChooseTimeAdd90 = startChooseTime + 7776000000; // 毫秒
 
       const startTime1 = moment(startChooseTime).format('YYYY-MM-DD');
-      let endTime1 = moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD');
+      let endTime1 = moment(new Date().valueOf()).format('YYYY-MM-DD');
 
       if (currentTime > startChooseTimeAdd90) {
         endTime1 = moment(startChooseTimeAdd90).format('YYYY-MM-DD');
@@ -91,6 +98,7 @@ class StatisticalMethods extends React.Component {
                 format="YYYY-MM-DD"
                 showToday={false}
                 allowClear={false}
+                disabledDate={disabledStartDate}
                 value={moment(params.startTime, 'YYYY-MM-DD')}
                 onChange={(_, dateStrings) => this.handleChangeDayTime(dateStrings)}
               />

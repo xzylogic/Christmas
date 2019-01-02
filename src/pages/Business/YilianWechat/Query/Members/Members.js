@@ -105,8 +105,6 @@ class Member extends Component {
     const listLength = (followingList && followingList.length) || 0;
     const columns = [];
 
-    console.log(followingList);
-
     switch (searchParam.type) {
       case '0':
         columns.push({

@@ -89,6 +89,11 @@ class LocationContainer extends Component {
         key: 'hosName',
       },
       {
+        title: '所在组',
+        dataIndex: 'groupName',
+        key: 'groupName',
+      },
+      {
         title: '备注',
         dataIndex: 'remark',
         key: 'remark',
@@ -105,7 +110,7 @@ class LocationContainer extends Component {
         render: (text, record) => (
           <span>
             <a onClick={e => this.handleEditor(e, record)}>编辑</a>
-            {/* <Divider type="vertical" /> */ ' '}
+            <Divider type="vertical" />
             <Popconfirm
               placement="topRight"
               title={`确定要删除【${record.hosName}】这条记录吗？`}

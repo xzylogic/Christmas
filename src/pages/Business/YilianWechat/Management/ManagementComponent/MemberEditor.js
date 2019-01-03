@@ -69,7 +69,7 @@ class MemberEditor extends Component {
           sex: values.sex,
           phone: values.phone,
           jobNumber: values.jobNumber,
-          groupName: values.groupName,
+          groupId: values.groupName,
           site: values.site,
           promoCode: values.promoCode.join(' '),
           effectiveDate: values.effectiveDate.format('YYYY-MM-DD HH:mm'),
@@ -154,7 +154,10 @@ class MemberEditor extends Component {
                   (initialValue && initialValue.site) || groupHosNameEditorList[0].hos_name,
                 rules: [{ required: true, message: '请选择推广地址！' }],
               })(
-                <Select placeholder="请选择推广地址">
+                <Select
+                  placeholder="请选择推广地址"
+                  getPopupContainer={triggerNode => triggerNode.parentNode}
+                >
                   {groupHosNameEditorList.map(item => (
                     <Select.Option id={item.id} key={item.id} value={item.hos_name}>
                       {item.hos_name}
@@ -172,7 +175,10 @@ class MemberEditor extends Component {
                   groupHosNameEditorList[0].hos_name || (initialValue && initialValue.site),
                 rules: [{ required: true, message: '请选择推广地址！' }],
               })(
-                <Select placeholder="请选择推广地址">
+                <Select
+                  placeholder="请选择推广地址"
+                  getPopupContainer={triggerNode => triggerNode.parentNode}
+                >
                   {groupHosNameEditorList.map(item => (
                     <Select.Option id={item.id} key={item.id} value={item.hos_name}>
                       {item.hos_name}
@@ -246,7 +252,10 @@ class MemberEditor extends Component {
                     rules: [{ required: true, message: '请选择小组！' }],
                     resetFields: {},
                   })(
-                    <Select onChange={this.handleChangeGroupAdd}>
+                    <Select
+                      onChange={this.handleChangeGroupAdd}
+                      getPopupContainer={triggerNode => triggerNode.parentNode}
+                    >
                       {getMessage.groups.map(item => (
                         <Select.Option id={item.id} key={item.id} value={item.id}>
                           {item.name}
@@ -260,7 +269,10 @@ class MemberEditor extends Component {
                     {getFieldDecorator('site', {
                       rules: [{ required: true, message: '请选择推广地址！' }],
                     })(
-                      <Select placeholder="请选择推广地址">
+                      <Select
+                        placeholder="请选择推广地址"
+                        getPopupContainer={triggerNode => triggerNode.parentNode}
+                      >
                         {groupHosNameList.map(item => (
                           <Select.Option id={item.id} key={item.id} value={item.hos_name}>
                             {item.hos_name}
@@ -287,40 +299,6 @@ class MemberEditor extends Component {
                     rules: [{ message: '请填写手机号！' }],
                   })(<Input placeholder="请填写手机号" />)}
                 </Form.Item>
-                <Form.Item {...formItemLayout} label="所属小组">
-                  {getFieldDecorator('groupName', {
-                    initialValue: (initialValue && initialValue.groupName) || '',
-                    rules: [{ required: true, message: '请选择小组！' }],
-                  })(
-                    <Select onChange={this.handleChangeGroupEditor}>
-                      {getMessage.groups.map(item => (
-                        <Select.Option id={item.id} key={item.id} value={item.id}>
-                          {item.name}
-                        </Select.Option>
-                      ))}
-                    </Select>
-                  )}
-                </Form.Item>
-                {EditorSite()}
-                {/* {groupHosNameEditorList instanceof Object && groupHosNameEditorList.length ? (
-                  <Form.Item {...formItemLayout} label="推广地址">
-                    {getFieldDecorator('site', {
-                      initialValue:
-                         groupHosNameEditorList[0].hos_name || (initialValue && initialValue.site),
-                      rules: [{ required: true, message: '请选择推广地址！' }],
-                    })(
-                      <Select placeholder="请选择推广地址">
-                        {groupHosNameEditorList.map(item => (
-                          <Select.Option id={item.id} key={item.id} value={item.hos_name}>
-                            {item.hos_name}
-                          </Select.Option>
-                        ))}
-                      </Select>
-                    )}
-                  </Form.Item>
-                ) : (
-                  ''
-                )} */}
                 <Form.Item {...formItemLayout} label="生效时间">
                   {getFieldDecorator('effectiveDate', {
                     rules: [{ required: true, message: '请选择生效时间！' }],
@@ -334,6 +312,24 @@ class MemberEditor extends Component {
                     />
                   )}
                 </Form.Item>
+                <Form.Item {...formItemLayout} label="所属小组">
+                  {getFieldDecorator('groupName', {
+                    initialValue: (initialValue && initialValue.groupName) || '',
+                    rules: [{ required: true, message: '请选择小组！' }],
+                  })(
+                    <Select
+                      onChange={this.handleChangeGroupEditor}
+                      getPopupContainer={triggerNode => triggerNode.parentNode}
+                    >
+                      {getMessage.groups.map(item => (
+                        <Select.Option id={item.id} key={item.id} value={item.id}>
+                          {item.name}
+                        </Select.Option>
+                      ))}
+                    </Select>
+                  )}
+                </Form.Item>
+                {EditorSite()}
                 <Form.Item {...formItemLayout} label="推广码">
                   {getFieldDecorator('promoCode', {
                     initialValue: initialValue && initialValue.promoCode.split(' '),

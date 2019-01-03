@@ -48,6 +48,10 @@ class GroupHosEditor extends Component {
     });
   };
 
+  // handleChange = value =>{
+  //   console.log(value)    // ["龙华医院", "曙光东院", "曙光西院"]
+  // }
+
   render() {
     const {
       visible,
@@ -56,7 +60,6 @@ class GroupHosEditor extends Component {
       onClose,
       form: { getFieldDecorator },
       allValiGroupName,
-      // allHosName,
       allValiHosName,
     } = this.props;
     const { size } = this.state;
@@ -72,6 +75,10 @@ class GroupHosEditor extends Component {
         md: { span: 10 },
       },
     };
+
+    if (allValiHosName instanceof Object) {
+      console.log('有效医院：', allValiHosName);
+    }
 
     return (
       <Modal
@@ -101,6 +108,9 @@ class GroupHosEditor extends Component {
                     <Select.Option id={item} key={item} value={item}>
                       {item}
                     </Select.Option>
+                    // <Select.Option id={item} key={item} value={item.hosId}>
+                    //   {item.hosName}
+                    // </Select.Option>
                   ))}
                 </Select>
               )}

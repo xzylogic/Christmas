@@ -2,7 +2,16 @@ import React from 'react';
 import { Table } from 'antd';
 
 function tableList(props) {
-  const { rowKey, list, columns, currentPage, pageSize, totalElements, onPageChange } = props;
+  const {
+    rowKey,
+    list,
+    columns,
+    currentPage,
+    pageSize,
+    totalElements,
+    onPageChange,
+    scroll,
+  } = props;
 
   return (
     <Table
@@ -15,6 +24,7 @@ function tableList(props) {
         pageSize: pageSize || 10,
         onChange: onPageChange,
       }}
+      scroll={scroll}
       bordered
     />
   );

@@ -119,26 +119,32 @@ class MemberContainer extends Component {
         title: '姓名',
         dataIndex: 'name',
         key: 'name',
+        // width: 90,
+        // fixed: 'left',
       },
       {
         title: '性别',
         dataIndex: 'sex',
         key: 'sex',
+        // width: 70,
       },
       {
         title: '手机号',
         dataIndex: 'phone',
         key: 'phone',
+        // width: 115,
       },
       {
         title: '工号',
         dataIndex: 'jobNumber',
         key: 'jobNumber',
+        // width: 70,
       },
       {
         title: '所在组',
         dataIndex: 'groupName',
         key: 'groupName',
+        // width: 60,
       },
       {
         title: '推广地点',
@@ -149,6 +155,7 @@ class MemberContainer extends Component {
         title: '生效时间',
         dataIndex: 'effectiveDate',
         key: 'effectiveDate',
+        // width: 115,
       },
       {
         title: '推广码',
@@ -171,6 +178,7 @@ class MemberContainer extends Component {
         title: '操作',
         dataIndex: 'id',
         key: 'action',
+        // width: 90,
         render: (_, record) => (
           <span>
             <a onClick={e => this.handleEditor(e, record)}>编辑</a>
@@ -278,6 +286,7 @@ class MemberContainer extends Component {
           currentPage={currentPage}
           totalElements={totalElements}
           onPageChange={this.handlePageChange}
+          // scroll={{ x: 1150 }}
         />
         <MemberEditor
           visible={showEditor}

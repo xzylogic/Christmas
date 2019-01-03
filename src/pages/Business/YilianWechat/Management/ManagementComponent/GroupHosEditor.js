@@ -76,9 +76,9 @@ class GroupHosEditor extends Component {
       },
     };
 
-    if (allValiHosName instanceof Object) {
-      console.log('有效医院：', allValiHosName);
-    }
+    // if (allValiHosName instanceof Object) {
+    //   console.log('有效医院：', allValiHosName);
+    // }
 
     return (
       <Modal

@@ -146,6 +146,11 @@ class MemberContainer extends Component {
         key: 'site',
       },
       {
+        title: '生效时间',
+        dataIndex: 'effectiveDate',
+        key: 'effectiveDate',
+      },
+      {
         title: '推广码',
         dataIndex: 'promoCode',
         key: 'promoCode',

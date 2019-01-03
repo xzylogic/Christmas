@@ -14,6 +14,7 @@ function type1SearchBar(props) {
         className={classes.Gap}
         name="groupName"
         value={params.groupName}
+        style={{ width: 90 }}
         onChange={value => onParamsChange(value, 'groupName')}
       >
         {searchGroupList.map(data => (

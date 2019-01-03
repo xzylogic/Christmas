@@ -233,7 +233,7 @@ class GroupContainer extends Component {
       <div>
         <SearchBar
           inputValue={groupName}
-          inputPlaceholder="输入小组名称进行检索"
+          inputPlaceholder="输入小组名称"
           dataKey="groupName"
           onInputChange={this.handleParamChange}
           onSearchClick={this.handleSearch}

@@ -94,7 +94,8 @@ class GroupHosEditor extends Component {
                   size={size}
                   placeholder="请选择医院"
                   // onChange={this.handleChange}
-                  style={{ width: 230 }}
+                  style={{ width: 315 }}
+                  getPopupContainer={triggerNode => triggerNode.parentNode}
                 >
                   {allValiHosName.map(item => (
                     <Select.Option id={item} key={item} value={item}>
@@ -108,7 +109,12 @@ class GroupHosEditor extends Component {
               {getFieldDecorator('name', {
                 rules: [{ required: true, message: '请选择小组！' }],
               })(
-                <Select size={size} placeholder="请选择小组" style={{ width: 115 }}>
+                <Select
+                  size={size}
+                  placeholder="请选择小组"
+                  style={{ width: 115 }}
+                  getPopupContainer={triggerNode => triggerNode.parentNode}
+                >
                   {allValiGroupName.map(item => (
                     <Select.Option id={item.id} key={item.id} value={item.id}>
                       {item.name}

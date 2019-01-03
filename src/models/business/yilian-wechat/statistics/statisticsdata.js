@@ -15,6 +15,35 @@ export const APPOINTMENTS_REPORT_TYPE = {
   TYPE1: 'TYPE1',
 };
 
+// const getListCounts = list => {
+//   let listCopy = [];
+//   if (list && Array.isArray(list)) {
+//     listCopy = [...list];
+//     // const initialValue = {
+//     //   counts: 0,
+//     //   hos: 0,
+//     //   online: 0,
+//     //   person: 0,
+//     //   unFollow: 0,
+//     // };
+//     // if (listCopy.length > 0) {
+//     //   const listCounts = listCopy.reduce(
+//     //     (preObj, obj) => ({
+//     //       counts: preObj.counts + parseInt(obj.counts, 10),
+//     //       hos: preObj.hos + parseInt(obj.hos, 10),
+//     //       online: preObj.online + parseInt(obj.online, 10),
+//     //       person: preObj.person + parseInt(obj.person, 10),
+//     //       unFollow: preObj.unFollow + parseInt(obj.unFollow, 10),
+//     //     }),
+//     //     initialValue
+//     //   );
+//     //   listCounts.appName = '合计';
+//     //   listCopy.push(listCounts);
+//     // }
+//   }
+//   return listCopy;
+// };
+
 export default {
   namespace: 'businessYilianWechatStatisticDatas',
 

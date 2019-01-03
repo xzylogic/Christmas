@@ -30,6 +30,32 @@ const getEndYears = end => {
 };
 
 class StatisticalMethods extends React.Component {
+  componentDidMount() {
+    const { params, onParamsChange } = this.props;
+    console.log(params);
+
+    const weekDay = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+    const dateStartStr = params.startTime;
+    const dateEndStr = params.endTime;
+    const myStartDate = new Date(Date.parse(dateStartStr.replace(/-/g, '/')));
+    const myEndDate = new Date(Date.parse(dateEndStr.replace(/-/g, '/')));
+
+    if (params.type === 'week') {
+      if (weekDay[myStartDate.getDay()] !== '周日') {
+        const dateStrMscStart =
+          new Date(dateStartStr).getTime() + 86400000 * (myStartDate.getDay() + 5);
+        const startTime = moment(dateStrMscStart).format('YYYY-MM-DD');
+        onParamsChange(startTime, 'startTime');
+      }
+
+      if (weekDay[myEndDate.getDay()] !== '周日') {
+        const dateStrMscEnd = new Date(dateEndStr).getTime() + 86400000 * (myEndDate.getDay() - 7);
+        const endTime = moment(dateStrMscEnd).format('YYYY-MM-DD');
+        onParamsChange(endTime, 'endTime');
+      }
+    }
+  }
+
   handleChangeDayTime = value => {
     const { onParamsChange } = this.props;
 
@@ -87,8 +113,26 @@ class StatisticalMethods extends React.Component {
       );
     };
 
+    const onChangeStart = value => {
+      // const dateStr=moment(value).day(7).format('YYYY/MM/DD (dddd)')
+      const dateStr = moment(value)
+        .day(7)
+        .format('YYYY/MM/DD');
+
+      onParamsChange(dateStr, 'startTime');
+    };
+
+    const onChangeEnd = value => {
+      const dateStr = moment(value)
+        .day(6)
+        .format('YYYY/MM/DD');
+
+      onParamsChange(dateStr, 'endTime');
+    };
+
     const chooseTime = () => {
       let content = '';
+      // 按日统计
       if (params.countType === 'day' || params.type === 'day' || params.type === '0') {
         content = (
           <span>
@@ -117,32 +161,60 @@ class StatisticalMethods extends React.Component {
           </span>
         );
       }
+      // 按周统计
       if (params.countType === 'week' || params.type === 'week' || params.type === '1') {
         content = (
           <span>
             <span className={classes.Span}>
               开始日期：
-              <DatePicker
+              <DatePicker.WeekPicker
                 format="YYYY-MM-DD"
-                showToday={false}
                 allowClear={false}
+                onChange={onChangeStart}
                 value={moment(params.startTime, 'YYYY-MM-DD')}
-                onChange={(_, dateStrings) => onParamsChange(dateStrings, 'startTime')}
               />
             </span>
             <span className={classes.Span}>
               截止日期：
-              <DatePicker
+              <DatePicker.WeekPicker
                 format="YYYY-MM-DD"
-                showToday={false}
                 allowClear={false}
+                onChange={onChangeEnd}
                 value={moment(params.endTime, 'YYYY-MM-DD')}
-                onChange={(_, dateStrings) => onParamsChange(dateStrings, 'endTime')}
               />
             </span>
           </span>
         );
       }
+
+      // // 按周统计
+      // if (params.countType === 'week' || params.type === 'week' || params.type === '1') {
+      //   content = (
+      //     <span>
+      //       <span className={classes.Span}>
+      //         开始日期：
+      //         <DatePicker
+      //           format="YYYY-MM-DD"
+      //           showToday={false}
+      //           allowClear={false}
+      //           value={moment(params.startTime, 'YYYY-MM-DD')}
+      //           onChange={(_, dateStrings) => onParamsChange(dateStrings, 'startTime')}
+      //         />
+      //       </span>
+      //       <span className={classes.Span}>
+      //         截止日期：
+      //         <DatePicker
+      //           format="YYYY-MM-DD"
+      //           showToday={false}
+      //           allowClear={false}
+      //           value={moment(params.endTime, 'YYYY-MM-DD')}
+      //           onChange={(_, dateStrings) => onParamsChange(dateStrings, 'endTime')}
+      //         />
+      //       </span>
+      //     </span>
+      //   );
+      // };
+      // 按月统计
       if (params.countType === 'month' || params.type === 'month' || params.type === '2') {
         content = (
           <span>
@@ -169,6 +241,7 @@ class StatisticalMethods extends React.Component {
           </span>
         );
       }
+      // 按年统计
       if (params.countType === 'year' || params.type === 'year' || params.type === '3') {
         let defaultStartTime = '';
         let defaultEndTime = '';

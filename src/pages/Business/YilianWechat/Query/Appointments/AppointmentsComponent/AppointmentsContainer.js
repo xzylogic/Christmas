@@ -105,14 +105,14 @@ class AppointmentsContainer extends Component {
 
     const renderSex = record => {
       let content = { record };
+      if (record === '0') {
+        content = <span>未知</span>;
+      }
       if (record === '1') {
         content = <span>男</span>;
       }
       if (record === '2') {
         content = <span>女</span>;
-      }
-      if (record === '0') {
-        content = <span>未知</span>;
       }
       return content;
     };

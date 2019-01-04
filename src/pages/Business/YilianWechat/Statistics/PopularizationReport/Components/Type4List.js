@@ -91,19 +91,18 @@ class Type4List extends Component {
       const groupKeys = Array.from(new Set(groupList));
       const groupTotal = groupKeys.map(groupname => {
         const newGroup = data.filter(obj => obj.name === groupname);
-        // console.log(data)
-        // console.log(newGroup)
         const groupCount = newGroup.reduce(
           (pre, curr) => ({
             fansCount: pre.fansCount + curr.fansCount,
             regCount: pre.regCount + curr.regCount,
-            // conversionRate: parseInt(pre.conversionRate, 10) + parseInt(pre.conversionRate, 10),
-            conversionRate: parseFloat(pre.conversionRate) + parseFloat(pre.conversionRate),
+            conversionRate: parseFloat(pre.conversionRate) + parseFloat(curr.conversionRate),
           }),
           { fansCount: 0, regCount: 0, conversionRate: 0 }
         );
-        // console.log(groupCount.conversionRate,newGroup.length)
         groupCount.conversionRate = `${(groupCount.conversionRate / newGroup.length).toFixed(2)}%`;
+        if (!parseFloat(groupCount.conversionRate)) {
+          groupCount.conversionRate = `0.00%`;
+        }
         groupCount.name = groupname;
         groupCount.site = `${groupname}合计`;
         groupCount.type = 'total';

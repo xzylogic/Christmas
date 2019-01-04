@@ -159,17 +159,35 @@ class StatisticalMethods extends React.Component {
     };
 
     const onChangeStart = value => {
-      const dateStr = moment(value)
+      const weekDay = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+      const dateStartStr = value.format('YYYY/MM/DD');
+      const myStartDate = new Date(Date.parse(dateStartStr.replace(/-/g, '/')));
+
+      let dateStr = moment(value)
         .day(7)
         .format('YYYY/MM/DD');
+
+      if (weekDay[myStartDate.getDay()] === '周日') {
+        dateStr = value.format('YYYY/MM/DD');
+      }
 
       onParamsChange(dateStr, 'startTime');
     };
 
     const onChangeEnd = value => {
-      const dateStr = moment(value)
+      const weekDay = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+      const dateEndStr = value.format('YYYY/MM/DD');
+      const myEndDate = new Date(Date.parse(dateEndStr.replace(/-/g, '/')));
+
+      let dateStr = moment(value)
         .day(6)
         .format('YYYY/MM/DD');
+
+      if (weekDay[myEndDate.getDay()] === '周日') {
+        dateStr = moment(new Date(value.format('YYYY/MM/DD')).valueOf() - 86400000).format(
+          'YYYY-MM-DD'
+        );
+      }
 
       onParamsChange(dateStr, 'endTime');
     };

@@ -49,12 +49,12 @@ class Type3List extends Component {
         title: '注册量',
         dataIndex: 'regCount',
         key: 'regCount',
-      },
-      {
-        title: '注册转换率',
-        dataIndex: 'conversionRate',
-        key: 'conversionRate',
       }
+      // {
+      //   title: '注册转换率',
+      //   dataIndex: 'conversionRate',
+      //   key: 'conversionRate',
+      // }
     );
     return columns;
   };

@@ -31,8 +31,8 @@ const renderTitle = (timeTitle, fansTotal, regTotal, conversionRateTotal) => {
           {fansTotal}
           ，注册量
           {regTotal}
-          ，注册转化率
-          {conversionRateTotal}
+          {/* ，注册转化率
+          {conversionRateTotal} */}
         </div>
       </div>
     );
@@ -72,12 +72,12 @@ class Type4List extends Component {
             key: 'regCount',
             render: renderContent,
           },
-          {
-            title: '注册转换率',
-            dataIndex: 'conversionRate',
-            key: 'conversionRate',
-            render: renderContent,
-          },
+          // {
+          //   title: '注册转换率',
+          //   dataIndex: 'conversionRate',
+          //   key: 'conversionRate',
+          //   render: renderContent,
+          // },
         ],
       },
     ];
@@ -95,7 +95,7 @@ class Type4List extends Component {
           (pre, curr) => ({
             fansCount: pre.fansCount + curr.fansCount,
             regCount: pre.regCount + curr.regCount,
-            conversionRate: parseFloat(pre.conversionRate) + parseFloat(curr.conversionRate),
+            conversionRate: parseInt(pre.conversionRate, 10) + parseInt(pre.conversionRate, 10),
           }),
           { fansCount: 0, regCount: 0, conversionRate: 0 }
         );

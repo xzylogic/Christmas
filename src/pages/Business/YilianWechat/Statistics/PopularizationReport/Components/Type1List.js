@@ -108,26 +108,26 @@ class Type1List extends Component {
         />
       </React.Fragment>
     );
-    const registerRateContent = (
-      <React.Fragment>
-        <Divider>注册转化率</Divider>
-        <TableList
-          rowKey={(_, index) => index}
-          list={this.getList(data, 'conversionRate')}
-          columns={this.setTableColumns(countType, data)}
-          currentPage={currentPage}
-          totalElements={totalElements}
-          onPageChange={onPageChange}
-          // pageSize={5}
-        />
-      </React.Fragment>
-    );
+    // const registerRateContent = (
+    //   <React.Fragment>
+    //     <Divider>注册转化率</Divider>
+    //     <TableList
+    //       rowKey={(_, index) => index}
+    //       list={this.getList(data, 'conversionRate')}
+    //       columns={this.setTableColumns(countType, data)}
+    //       currentPage={currentPage}
+    //       totalElements={totalElements}
+    //       onPageChange={onPageChange}
+    //       // pageSize={5}
+    //     />
+    //   </React.Fragment>
+    // );
     if (!project) {
       container = (
         <React.Fragment>
           {followContent}
           {registerContent}
-          {registerRateContent}
+          {/* {registerRateContent} */}
         </React.Fragment>
       );
     } else if (project && project === 'fansCount') {
@@ -160,10 +160,10 @@ class Type1List extends Component {
           />
         </React.Fragment>
       );
-    } else if (project && project === 'conversionRate') {
-      container = <React.Fragment>{registerRateContent}</React.Fragment>;
     }
-    // return container;
+    //  else if (project && project === 'conversionRate') {
+    //   container = <React.Fragment>{registerRateContent}</React.Fragment>;
+    // }
     return <Spin spinning={loading}>{container}</Spin>;
   }
 }

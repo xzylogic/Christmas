@@ -51,7 +51,7 @@ function type1SearchBar(props) {
         <Select.Option value="">全部</Select.Option>
         <Select.Option value="fansCount">关注量</Select.Option>
         <Select.Option value="regCount">注册量</Select.Option>
-        <Select.Option value="conversionRate">注册转化率</Select.Option>
+        {/* <Select.Option value="conversionRate">注册转化率</Select.Option> */}
       </Select>
       <span className={classes.BtnRight}>
         <Button type="primary" htmlType="button" onClick={onSearch} className={classes.Gap}>

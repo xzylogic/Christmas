@@ -64,7 +64,7 @@ class PopularizationReoprt extends Component {
               onChange={value => onUpdateReportType(value)}
               style={{ width: '100%' }}
             >
-              <Select.Option value={POPULARIZATION_REPORT_TYPE.TYPE1}>
+              {/* <Select.Option value={POPULARIZATION_REPORT_TYPE.TYPE1}>
                 按小组统计医院明细（微信关注量、注册量、注册转化率总量对比）
               </Select.Option>
               <Select.Option value={POPULARIZATION_REPORT_TYPE.TYPE2}>
@@ -75,6 +75,18 @@ class PopularizationReoprt extends Component {
               </Select.Option>
               <Select.Option value={POPULARIZATION_REPORT_TYPE.TYPE4}>
                 微信关注量、注册量、注册转化率日数据（根据小组统计）
+              </Select.Option> */}
+              <Select.Option value={POPULARIZATION_REPORT_TYPE.TYPE1}>
+                按小组统计医院明细（微信关注量、注册量总量对比）
+              </Select.Option>
+              <Select.Option value={POPULARIZATION_REPORT_TYPE.TYPE2}>
+                按小组（微信关注量、注册量）总量统计
+              </Select.Option>
+              <Select.Option value={POPULARIZATION_REPORT_TYPE.TYPE3}>
+                按所有医院（微信关注量、注册量）总量统计
+              </Select.Option>
+              <Select.Option value={POPULARIZATION_REPORT_TYPE.TYPE4}>
+                微信关注量、注册量日数据（根据小组统计）
               </Select.Option>
             </Select>
           </div>

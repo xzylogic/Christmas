@@ -40,32 +40,32 @@ const Line2 = createG2(chart => {
   chart.render();
 });
 
-const Line3 = createG2(chart => {
-  chart.col('date', { alias: ' ' });
-  chart.col('conversionRate', {
-    alias: '注册转换率',
-    formatter: val => `${val}%`,
-  });
-  chart.col('site', { alias: '医院名称' });
-  chart
-    .line()
-    .position('date*conversionRate')
-    .color('site', ['#36cfc9', '#ffc53d', '#40a9ff', '#ff4d4f', '#9254de'])
-    .size(2)
-    .animate(false);
-  chart
-    .point()
-    .position('date*conversionRate')
-    .color('site', ['#36cfc9', '#ffc53d', '#40a9ff', '#ff4d4f', '#9254de'])
-    .size(2)
-    .animate(false);
-  chart.render();
-});
+// const Line3 = createG2(chart => {
+//   chart.col('date', { alias: ' ' });
+//   chart.col('conversionRate', {
+//     alias: '注册转换率',
+//     formatter: val => `${val}%`,
+//   });
+//   chart.col('site', { alias: '医院名称' });
+//   chart
+//     .line()
+//     .position('date*conversionRate')
+//     .color('site', ['#36cfc9', '#ffc53d', '#40a9ff', '#ff4d4f', '#9254de'])
+//     .size(2)
+//     .animate(false);
+//   chart
+//     .point()
+//     .position('date*conversionRate')
+//     .color('site', ['#36cfc9', '#ffc53d', '#40a9ff', '#ff4d4f', '#9254de'])
+//     .size(2)
+//     .animate(false);
+//   chart.render();
+// });
 
 const getDataSource = data => {
   const dataCopy = data.map(obj => {
     const objCopy = { ...obj };
-    objCopy.conversionRate = (obj.conversionRate && Number(obj.conversionRate.split('%')[0])) || 0;
+    // objCopy.conversionRate = (obj.conversionRate && Number(obj.conversionRate.split('%')[0])) || 0;
     return objCopy;
   });
   return dataCopy;
@@ -108,34 +108,35 @@ class Type1Chart extends Component {
         />
       </React.Fragment>
     );
-    const registerRateContent = (
-      <React.Fragment>
-        <Divider>注册转换率</Divider>
-        <Line3
-          data={(data && getDataSource(data)) || []}
-          width={width}
-          height={height}
-          plotCfg={plotCfg}
-          forceFit
-        />
-      </React.Fragment>
-    );
+    // const registerRateContent = (
+    //   <React.Fragment>
+    //     <Divider>注册转换率</Divider>
+    //     <Line3
+    //       data={(data && getDataSource(data)) || []}
+    //       width={width}
+    //       height={height}
+    //       plotCfg={plotCfg}
+    //       forceFit
+    //     />
+    //   </React.Fragment>
+    // );
 
     if (!project) {
       container = (
         <React.Fragment>
           {followContent}
           {registerContent}
-          {registerRateContent}
+          {/* {registerRateContent} */}
         </React.Fragment>
       );
     } else if (project && project === 'fansCount') {
       container = <React.Fragment>{followContent}</React.Fragment>;
     } else if (project && project === 'regCount') {
       container = <React.Fragment>{registerContent}</React.Fragment>;
-    } else if (project && project === 'conversionRate') {
-      container = <React.Fragment>{registerRateContent}</React.Fragment>;
     }
+    //  else if (project && project === 'conversionRate') {
+    //   container = <React.Fragment>{registerRateContent}</React.Fragment>;
+    // }
     return container;
   }
 }

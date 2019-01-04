@@ -36,8 +36,8 @@ class GroupHosEditor extends Component {
     form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         const postData = {
-          name: values.name,
-          hosName: values.hosName,
+          groupId: values.name,
+          hosId: values.hosName,
         };
         onAddHosToGroup(postData).then(ifsuccess => {
           if (ifsuccess) {
@@ -76,10 +76,6 @@ class GroupHosEditor extends Component {
       },
     };
 
-    // if (allValiHosName instanceof Object) {
-    //   console.log('有效医院：', allValiHosName);
-    // }
-
     return (
       <Modal
         title="编辑组别"
@@ -105,12 +101,9 @@ class GroupHosEditor extends Component {
                   getPopupContainer={triggerNode => triggerNode.parentNode}
                 >
                   {allValiHosName.map(item => (
-                    <Select.Option id={item} key={item} value={item}>
-                      {item}
+                    <Select.Option id={item} key={item} value={item.id}>
+                      {item.name}
                     </Select.Option>
-                    // <Select.Option id={item} key={item} value={item.hosId}>
-                    //   {item.hosName}
-                    // </Select.Option>
                   ))}
                 </Select>
               )}

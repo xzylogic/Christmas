@@ -348,15 +348,15 @@ export default {
     },
     *addHosToGroup({ payload }, { call }) {
       const { postData } = payload;
-      const { name, hosName } = postData;
+      const { groupId, hosId } = postData;
       // 小组名转字符串
-      const newname = name.toString();
+      const newname = groupId.toString();
       // 医院id转字符串
-      const newhosName = hosName.join(',');
+      const newhosName = hosId.join(',');
       // 定义新参数
       const newPostData = {
-        name: newname,
-        hosName: newhosName,
+        newGroupId: newname,
+        newHosId: newhosName,
       };
       const res = yield call(addHosToGroupService, newPostData);
       let ifsuccess = false;

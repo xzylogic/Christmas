@@ -69,7 +69,7 @@ class AppointmentsContainer extends Component {
 
   setTableColumns = () => {
     const renderOrderStatus = record => {
-      let content = '';
+      let content = { record };
       if (record === '1') {
         content = <span>已预约</span>;
       }
@@ -84,7 +84,7 @@ class AppointmentsContainer extends Component {
     };
 
     const renderRegChannel = record => {
-      let content = '';
+      let content = { record };
       if (record === 'app' || record === 'app_ios' || record === 'app_android') {
         content = <span>APP</span>;
       }
@@ -103,8 +103,22 @@ class AppointmentsContainer extends Component {
       return content;
     };
 
+    const renderSex = record => {
+      let content = { record };
+      if (record === '1') {
+        content = <span>男</span>;
+      }
+      if (record === '2') {
+        content = <span>女</span>;
+      }
+      if (record === '0') {
+        content = <span>未知</span>;
+      }
+      return content;
+    };
+
     const renderMediCardIdType = record => {
-      let content = '';
+      let content = { record };
       if (record === '1') {
         content = <span>社保卡</span>;
       } else if (record === '2') {
@@ -170,6 +184,7 @@ class AppointmentsContainer extends Component {
         dataIndex: 'sex',
         key: 'sex',
         width: 70,
+        render: record => renderSex(record),
       },
       {
         title: '患者卡号',

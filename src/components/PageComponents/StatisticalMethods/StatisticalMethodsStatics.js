@@ -30,6 +30,33 @@ const getEndYears = end => {
 };
 
 class StatisticalMethods extends React.Component {
+  componentDidUpdate(perProps) {
+    const { params, onParamsChange } = this.props;
+
+    if (params.type !== perProps.params.type || params.countType !== perProps.params.countType) {
+      if (params.countType === 'day' || params.type === 'day' || params.type === '0') {
+        let endTime = moment(new Date(params.startDate).valueOf() + 2592000000).format(
+          'YYYY-MM-DD'
+        );
+
+        // 今天
+
+        const currentTime = new Date().getTime();
+
+        // 所选日期+30天（2592000000）
+        const chooseTimeAdd30 = new Date(
+          moment(new Date(params.startDate).valueOf() + 2592000000).format('YYYY-MM-DD')
+        );
+
+        if (chooseTimeAdd30 > currentTime) {
+          endTime = moment(currentTime - 86400000).format('YYYY-MM-DD');
+        }
+
+        onParamsChange(endTime, 'endDate');
+      }
+    }
+  }
+
   handleChangeDayTime = value => {
     const { onParamsChange } = this.props;
 

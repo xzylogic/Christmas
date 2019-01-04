@@ -125,9 +125,9 @@ export async function fetchValiGroupNameService() {
 
 export async function addHosToGroupService(newPostData) {
   return request(
-    `/yilian-cloud-backend-api/ylWeChatCount/add/HosToGroup?groupId=${newPostData.name}&hosId=${
-      newPostData.hosName
-    }`,
+    `/yilian-cloud-backend-api/ylWeChatCount/add/HosToGroup?groupId=${
+      newPostData.newGroupId
+    }&hosId=${newPostData.newHosId}`,
     {
       method: 'POST',
       body: {},

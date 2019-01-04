@@ -80,6 +80,26 @@ class StatisticalMethods extends React.Component {
           onParamsChange(endTime, 'endTime');
         }
       }
+
+      if (params.countType === 'day' || params.type === 'day' || params.type === '0') {
+        let endTime = moment(new Date(params.startTime).valueOf() + 2592000000).format(
+          'YYYY-MM-DD'
+        );
+
+        // 今天
+
+        const currentTime = new Date().getTime();
+        // 所选日期+30天（2592000000）
+        const chooseTimeAdd30 = new Date(
+          moment(new Date(params.startTime).valueOf() + 2592000000).format('YYYY-MM-DD')
+        );
+
+        if (chooseTimeAdd30 > currentTime) {
+          endTime = moment(currentTime - 86400000).format('YYYY-MM-DD');
+        }
+
+        onParamsChange(endTime, 'endTime');
+      }
     }
   }
 

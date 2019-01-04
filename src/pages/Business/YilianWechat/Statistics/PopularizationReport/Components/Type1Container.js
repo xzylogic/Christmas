@@ -29,6 +29,7 @@ const mapStateToProps = state => ({
     ],
   reportChart:
     state.businessYilianWechatStatistics.chart.popularization[POPULARIZATION_REPORT_TYPE.TYPE1],
+  loading: state.loading.effects['businessYilianWechatStatistics/fetchPopularizationReportType1'],
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -185,6 +186,7 @@ class Type1Container extends Component {
       reportList,
       currentPage,
       totalElements,
+      loading,
     } = this.props;
     return (
       <React.Fragment>
@@ -217,6 +219,7 @@ class Type1Container extends Component {
               onPageChange={this.handlePageChanged}
               countType={searchParam.countType}
               project={searchParam.project}
+              loading={loading}
             />
           )}
         </div>

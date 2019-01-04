@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Divider } from 'antd';
+import { Table, Divider, Spin } from 'antd';
 
 import TableList from '@/components/PageComponents/Table/TableList';
 
@@ -74,7 +74,15 @@ class Type1List extends Component {
   };
 
   render() {
-    const { project, data, countType, currentPage, totalElements, onPageChange } = this.props;
+    const {
+      project,
+      data,
+      countType,
+      currentPage,
+      totalElements,
+      onPageChange,
+      loading,
+    } = this.props;
     let container = '';
     const followContent = (
       <React.Fragment>
@@ -155,7 +163,8 @@ class Type1List extends Component {
     } else if (project && project === 'conversionRate') {
       container = <React.Fragment>{registerRateContent}</React.Fragment>;
     }
-    return container;
+    // return container;
+    return <Spin spinning={loading}>{container}</Spin>;
   }
 }
 

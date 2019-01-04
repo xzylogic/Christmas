@@ -128,11 +128,9 @@ class AppointmentsDetail extends Component {
       let content = '';
       if (record === '1') {
         content = <span>专家</span>;
-      }
-      if (record === '2') {
+      } else if (record === '2') {
         content = <span>专病</span>;
-      }
-      if (record === '3') {
+      } else if (record === '3') {
         content = <span>普通</span>;
       }
       return content;
@@ -142,8 +140,7 @@ class AppointmentsDetail extends Component {
       let content = '';
       if (record === '1') {
         content = <span>已预约</span>;
-      }
-      if (record === '3') {
+      } else if (record === '3') {
         content = <span>已取消</span>;
       }
       return content;
@@ -153,8 +150,7 @@ class AppointmentsDetail extends Component {
       let content = '';
       if (record === 'wechat') {
         content = <span>医联微信</span>;
-      }
-      if (record === 'app') {
+      } else if (record === 'app') {
         content = <span>医联App</span>;
       }
       return content;

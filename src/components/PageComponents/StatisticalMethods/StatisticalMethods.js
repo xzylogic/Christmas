@@ -41,14 +41,13 @@ class StatisticalMethods extends React.Component {
 
     if (params.countType === 'week' || params.type === 'week' || params.type === '1') {
       if (weekDay[myStartDate.getDay()] !== '周日') {
-        const dateStrMscStart =
-          new Date(dateStartStr).getTime() + 86400000 * (myStartDate.getDay() + 5);
+        const dateStrMscStart = new Date(dateStartStr).getTime() - 86400000 * myStartDate.getDay();
         const startTime = moment(dateStrMscStart).format('YYYY-MM-DD');
         onParamsChange(startTime, 'startTime');
       }
 
-      if (weekDay[myEndDate.getDay()] !== '周日') {
-        const dateStrMscEnd = new Date(dateEndStr).getTime() + 86400000 * (myEndDate.getDay() - 7);
+      if (weekDay[myEndDate.getDay()] !== '周六') {
+        const dateStrMscEnd = new Date(dateEndStr).getTime() - 86400000 * (myEndDate.getDay() + 1);
         const endTime = moment(dateStrMscEnd).format('YYYY-MM-DD');
         onParamsChange(endTime, 'endTime');
       }
@@ -68,14 +67,14 @@ class StatisticalMethods extends React.Component {
       if (params.countType === 'week' || params.type === 'week' || params.type === '1') {
         if (weekDay[myStartDate.getDay()] !== '周日') {
           const dateStrMscStart =
-            new Date(dateStartStr).getTime() + 86400000 * (myStartDate.getDay() + 5);
+            new Date(dateStartStr).getTime() - 86400000 * myStartDate.getDay();
           const startTime = moment(dateStrMscStart).format('YYYY-MM-DD');
           onParamsChange(startTime, 'startTime');
         }
 
         if (weekDay[myEndDate.getDay()] !== '周日') {
           const dateStrMscEnd =
-            new Date(dateEndStr).getTime() + 86400000 * (myEndDate.getDay() - 7);
+            new Date(dateEndStr).getTime() - 86400000 * (myEndDate.getDay() + 1);
           const endTime = moment(dateStrMscEnd).format('YYYY-MM-DD');
           onParamsChange(endTime, 'endTime');
         }

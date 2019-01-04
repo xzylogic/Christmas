@@ -87,19 +87,6 @@ class AppointmentsContainer extends Component {
     onFetchAllGroupName();
   }
 
-  // componentDidUpdate(perProps) {
-  //   const {
-  //     onFetchPromoteAttentionAmount,
-  //     onFetchAllHosName,
-  //     onFetchAllGroupName,
-  //     searchParam,
-  //   } = this.props;
-
-  //   if (searchParam.type !== perProps.searchParam.type){
-  //     console.log(123)
-  //   }
-  // }
-
   handleParamsChanged = async (value, dataKey) => {
     const {
       onSearchParamChange,

@@ -48,10 +48,6 @@ class GroupHosEditor extends Component {
     });
   };
 
-  // handleChange = value =>{
-  //   console.log(value)    // ["龙华医院", "曙光东院", "曙光西院"]
-  // }
-
   render() {
     const {
       visible,

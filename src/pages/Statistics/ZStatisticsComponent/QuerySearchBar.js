@@ -62,8 +62,6 @@ function querySearchBar(props) {
     params,
   } = props;
 
-  // console.log(startDate);
-
   return (
     <div className={classes.Container}>
       <Select

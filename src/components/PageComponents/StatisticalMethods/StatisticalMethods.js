@@ -132,6 +132,37 @@ class StatisticalMethods extends React.Component {
     onParamsChange(endTime, 'endTime');
   };
 
+  onParamsChangeStart = value => {
+    const { onParamsChange } = this.props;
+    const start = value.format('YYYY-MM-DD');
+    const newStart = `${start.substring(0, 7)}-01`;
+
+    onParamsChange(newStart, 'startTime');
+  };
+
+  onParamsChangeEnd = value => {
+    const { onParamsChange } = this.props;
+    const end = value.format('YYYY-MM-DD');
+    const month = end.split('-')[1];
+    let newEnd = `${end.substring(0, 7)}-30`;
+    if (
+      month === '01' ||
+      month === '03' ||
+      month === '05' ||
+      month === '07' ||
+      month === '09' ||
+      month === '10' ||
+      month === '12'
+    ) {
+      newEnd = `${end.substring(0, 7)}-31`;
+    }
+    if (month === '02') {
+      newEnd = `${end.substring(0, 7)}-28`;
+    }
+
+    onParamsChange(newEnd, 'endTime');
+  };
+
   render() {
     const { params, onParamsChange } = this.props;
 
@@ -239,8 +270,8 @@ class StatisticalMethods extends React.Component {
               <DatePicker.WeekPicker
                 format="YYYY-MM-DD"
                 allowClear={false}
-                onChange={onChangeStart}
                 value={moment(params.startTime, 'YYYY-MM-DD')}
+                onChange={onChangeStart}
               />
             </span>
             <span className={classes.Span}>
@@ -248,8 +279,8 @@ class StatisticalMethods extends React.Component {
               <DatePicker.WeekPicker
                 format="YYYY-MM-DD"
                 allowClear={false}
-                onChange={onChangeEnd}
                 value={moment(params.endTime, 'YYYY-MM-DD')}
+                onChange={onChangeEnd}
               />
             </span>
           </span>
@@ -266,7 +297,8 @@ class StatisticalMethods extends React.Component {
                 showToday={false}
                 allowClear={false}
                 value={moment(params.startTime, 'YYYY-MM-DD')}
-                onChange={(_, dateStrings) => onParamsChange(dateStrings, 'startTime')}
+                // onChange={(_, dateStrings) => onParamsChange(dateStrings, 'startTime')}
+                onChange={this.onParamsChangeStart}
               />
             </span>
             <span className={classes.Span}>
@@ -276,7 +308,8 @@ class StatisticalMethods extends React.Component {
                 showToday={false}
                 allowClear={false}
                 value={moment(params.endTime, 'YYYY-MM-DD')}
-                onChange={(_, dateStrings) => onParamsChange(dateStrings, 'endTime')}
+                onChange={this.onParamsChangeEnd}
+                // onChange={(_, dateStrings) => onParamsChange(dateStrings, 'endTime')}
               />
             </span>
           </span>

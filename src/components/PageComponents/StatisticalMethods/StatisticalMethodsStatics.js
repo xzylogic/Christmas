@@ -80,6 +80,37 @@ class StatisticalMethods extends React.Component {
     onParamsChange(endTime, 'endDate');
   };
 
+  onParamsChangeStart = value => {
+    const { onParamsChange } = this.props;
+    const start = value.format('YYYY-MM-DD');
+    const newStart = `${start.substring(0, 7)}-01`;
+
+    onParamsChange(newStart, 'startDate');
+  };
+
+  onParamsChangeEnd = value => {
+    const { onParamsChange } = this.props;
+    const end = value.format('YYYY-MM-DD');
+    const month = end.split('-')[1];
+    let newEnd = `${end.substring(0, 7)}-30`;
+    if (
+      month === '01' ||
+      month === '03' ||
+      month === '05' ||
+      month === '07' ||
+      month === '09' ||
+      month === '10' ||
+      month === '12'
+    ) {
+      newEnd = `${end.substring(0, 7)}-31`;
+    }
+    if (month === '02') {
+      newEnd = `${end.substring(0, 7)}-28`;
+    }
+
+    onParamsChange(newEnd, 'endDate');
+  };
+
   render() {
     const { params, onParamsChange } = this.props;
 
@@ -143,6 +174,7 @@ class StatisticalMethods extends React.Component {
           </span>
         );
       }
+      // 按周统计
       if (params.countType === 'week') {
         content = (
           <span>
@@ -169,6 +201,7 @@ class StatisticalMethods extends React.Component {
           </span>
         );
       }
+      // 按月统计
       if (params.countType === 'month') {
         content = (
           <span>
@@ -179,7 +212,8 @@ class StatisticalMethods extends React.Component {
                 showToday={false}
                 allowClear={false}
                 value={moment(params.startDate, 'YYYY-MM-DD')}
-                onChange={(_, dateStrings) => onParamsChange(dateStrings, 'startDate')}
+                // onChange={(_, dateStrings) => onParamsChange(dateStrings, 'startDate')}
+                onChange={this.onParamsChangeStart}
               />
             </span>
             <span className={classes.Span}>
@@ -189,7 +223,8 @@ class StatisticalMethods extends React.Component {
                 showToday={false}
                 allowClear={false}
                 value={moment(params.endDate, 'YYYY-MM-DD')}
-                onChange={(_, dateStrings) => onParamsChange(dateStrings, 'endDate')}
+                // onChange={(_, dateStrings) => onParamsChange(dateStrings, 'endDate')}
+                onChange={this.onParamsChangeEnd}
               />
             </span>
           </span>

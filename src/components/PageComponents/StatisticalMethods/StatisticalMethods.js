@@ -51,6 +51,10 @@ class StatisticalMethods extends React.Component {
         const endTime = moment(dateStrMscEnd).format('YYYY-MM-DD');
         onParamsChange(endTime, 'endTime');
       }
+
+      if (weekDay[myEndDate.getDay()] === '周六') {
+        onParamsChange(dateEndStr, 'endTime');
+      }
     }
   }
 
@@ -72,11 +76,15 @@ class StatisticalMethods extends React.Component {
           onParamsChange(startTime, 'startTime');
         }
 
-        if (weekDay[myEndDate.getDay()] !== '周日') {
+        if (weekDay[myEndDate.getDay()] !== '周六') {
           const dateStrMscEnd =
             new Date(dateEndStr).getTime() - 86400000 * (myEndDate.getDay() + 1);
           const endTime = moment(dateStrMscEnd).format('YYYY-MM-DD');
           onParamsChange(endTime, 'endTime');
+        }
+
+        if (weekDay[myEndDate.getDay()] === '周六') {
+          onParamsChange(dateEndStr, 'endTime');
         }
       }
 

@@ -171,7 +171,7 @@ class PopularizationBar extends React.Component {
           <Button type="primary" htmlType="button" onClick={onReset} className={classes.Gap}>
             重置
           </Button>
-          <Button type="primary" htmlType="button" onClick={onExport} style={{ display: 'none' }}>
+          <Button type="primary" htmlType="button" onClick={onExport}>
             导出Excel
           </Button>
         </span>

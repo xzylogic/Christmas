@@ -80,12 +80,25 @@ class AppointmentsContainer extends Component {
       onFetchAllGroupName,
       searchParam,
     } = this.props;
-    const { way } = searchParam;
+    const { type } = searchParam;
 
-    onFetchPromoteAttentionAmount(way, 0);
+    onFetchPromoteAttentionAmount(type, 0);
     onFetchAllHosName();
     onFetchAllGroupName();
   }
+
+  // componentDidUpdate(perProps) {
+  //   const {
+  //     onFetchPromoteAttentionAmount,
+  //     onFetchAllHosName,
+  //     onFetchAllGroupName,
+  //     searchParam,
+  //   } = this.props;
+
+  //   if (searchParam.type !== perProps.searchParam.type){
+  //     console.log(123)
+  //   }
+  // }
 
   handleParamsChanged = async (value, dataKey) => {
     const {
@@ -317,9 +330,9 @@ class AppointmentsContainer extends Component {
   };
 
   handlePageChange = page => {
-    const { onFetchPromoteAttentionAmount } = this.props;
-    const { way } = this.state;
-    onFetchPromoteAttentionAmount(way, page - 1);
+    const { onFetchPromoteAttentionAmount, searchParam } = this.props;
+    const { type } = searchParam;
+    onFetchPromoteAttentionAmount(type, page - 1);
   };
 
   handleSearch = async e => {

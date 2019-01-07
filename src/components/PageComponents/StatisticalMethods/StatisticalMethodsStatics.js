@@ -39,11 +39,8 @@ class StatisticalMethods extends React.Component {
         let endTime = moment(new Date(params.startDate).valueOf() + 2592000000).format(
           'YYYY-MM-DD'
         );
-
         // 今天
-
         const currentTime = new Date().getTime();
-
         // 所选日期+30天（2592000000）
         const chooseTimeAdd30 = new Date(
           moment(new Date(params.startDate).valueOf() + 2592000000).format('YYYY-MM-DD')
@@ -52,19 +49,22 @@ class StatisticalMethods extends React.Component {
         if (chooseTimeAdd30 > currentTime) {
           endTime = moment(currentTime - 86400000).format('YYYY-MM-DD');
         }
-
         onParamsChange(endTime, 'endDate');
       }
       // 按年统计
       if (params.countType === 'year' || params.type === 'year' || params.type === '3') {
-        let startYear1 = params.startDate.format('YYYY-MM-DD');
+        let startYear1 = params.startDate;
         if (params && params.startDate.length) {
           startYear1 = params.startDate;
+        } else {
+          startYear1 = params.startDate.format('YYYY-MM-DD');
         }
 
-        let endYear1 = params.endDate.format('YYYY-MM-DD');
+        let endYear1 = params.endDate;
         if (params && params.endDate.length) {
           endYear1 = params.endDate;
+        } else {
+          endYear1 = params.endDate.format('YYYY-MM-DD');
         }
         const startYear2 = startYear1.split('-')[0];
         const startYear = `${startYear2}-01-01`;
@@ -74,6 +74,45 @@ class StatisticalMethods extends React.Component {
 
         onParamsChange(startYear, 'startDate');
         onParamsChange(endYear, 'endDate');
+      }
+
+      // 按月统计
+      if (params.countType === 'month' || params.type === 'month' || params.type === '3') {
+        let startMonth1 = params.startDate;
+        if (params && params.startDate.length) {
+          startMonth1 = params.startDate;
+        } else {
+          startMonth1 = params.startDate.format('YYYY-MM-DD');
+        }
+
+        let endMonth1 = params.endDate;
+        if (params && params.endDate.length) {
+          endMonth1 = params.endDate;
+        } else {
+          endMonth1 = params.endDate.format('YYYY-MM-DD');
+        }
+
+        const startMonth = `${startMonth1.substring(0, 7)}-01`;
+        onParamsChange(startMonth, 'startDate');
+        const month = endMonth1.split('-')[1];
+        let endMonth = `${endMonth1.substring(0, 7)}-30`;
+        if (
+          month === '01' ||
+          month === '03' ||
+          month === '05' ||
+          month === '07' ||
+          month === '09' ||
+          month === '10' ||
+          month === '12'
+        ) {
+          endMonth = `${endMonth1.substring(0, 7)}-31`;
+        }
+        if (month === '02') {
+          endMonth = `${endMonth1.substring(0, 7)}-28`;
+        }
+
+        onParamsChange(startMonth, 'startDate');
+        onParamsChange(endMonth, 'endDate');
       }
     }
   }

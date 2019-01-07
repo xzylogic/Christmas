@@ -64,8 +64,8 @@ export default {
     ...(process.env.NODE_ENV === 'development'
       ? {
           '/yilian-cloud-backend-api': {
-            target: 'https://shdcapp.wondersgroup.com',
-            // target: 'http://10.2.10.13:9080',
+            // target: 'https://shdcapp.wondersgroup.com',
+            target: 'http://10.2.10.13:9080',
             changeOrigin: true,
             // pathRewrite: { '^/server': '' }, // /server/api/currentUser -> /api/currentUser
           },

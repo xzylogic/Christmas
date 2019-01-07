@@ -149,15 +149,21 @@ class AppointmentsContainer extends Component {
         width: 115,
       },
       {
-        title: '预约科室',
-        dataIndex: 'deptName',
-        key: 'deptName',
-        width: 160,
+        title: '患者姓名',
+        dataIndex: 'patientName',
+        key: 'patientName',
+        width: 100,
       },
       {
         title: '预约医院',
         dataIndex: 'hosOrgName',
         key: 'hosOrgName',
+        width: 160,
+      },
+      {
+        title: '预约科室',
+        dataIndex: 'deptName',
+        key: 'deptName',
         width: 160,
       },
       {
@@ -172,12 +178,6 @@ class AppointmentsContainer extends Component {
         key: 'regChannel',
         width: 100,
         render: record => renderRegChannel(record),
-      },
-      {
-        title: '患者姓名',
-        dataIndex: 'patientName',
-        key: 'patientName',
-        width: 100,
       },
       {
         title: '性别',

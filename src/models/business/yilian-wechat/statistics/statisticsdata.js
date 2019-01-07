@@ -57,7 +57,7 @@ export default {
         // 医院类型
         cityName: '',
         // 医院名称
-        hosOrgCode: null,
+        hosOrgCode: '',
         // 门诊类型
         visitLevelCode: null,
         // 订单状态

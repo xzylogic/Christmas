@@ -166,7 +166,7 @@ class AppointmentsContainer extends Component {
       //   key: 'hosName',
       // },
       {
-        title: '医院名称',
+        title: '名称',
         dataIndex: 'hosName',
         key: 'hosName',
       },

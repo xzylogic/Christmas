@@ -39,7 +39,7 @@ class PopularizationBar extends React.Component {
           onChange={value => onParamsChange(value, 'hosName')}
           value=""
         >
-          <Select.Option value="" />
+          <Select.Option value="">全部医院</Select.Option>
         </Select>
       );
 
@@ -54,6 +54,7 @@ class PopularizationBar extends React.Component {
             onChange={value => onParamsChange(value, 'hosName')}
             value={params.hosName}
           >
+            <Select.Option value="">全部医院</Select.Option>
             {allHosName.map(item => (
               <Select.Option id={item.id} key={item.id} value={item.hos_name}>
                 {item.hos_name}
@@ -134,7 +135,9 @@ class PopularizationBar extends React.Component {
             onChange={this.handleChangePromoCode}
           >
             <Select.Option value="微信">医联微信</Select.Option>
-            <Select.Option value="app">医联APP</Select.Option>
+            <Select.Option value="app" disabled>
+              医联APP
+            </Select.Option>
           </Select>
         </span>
         {params.channel ? (

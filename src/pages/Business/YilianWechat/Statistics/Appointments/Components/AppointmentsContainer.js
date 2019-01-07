@@ -265,7 +265,7 @@ class AppointmentsContainer extends Component {
     );
     await onSearchParamChange('countType', 'week');
     await onSearchParamChange('cityName', '');
-    await onSearchParamChange('hosOrgCode', null);
+    await onSearchParamChange('hosOrgCode', '');
     await onSearchParamChange('visitLevelCode', null);
     await onSearchParamChange('orderStatus', '');
     await onSearchParamChange('regChannel', null);

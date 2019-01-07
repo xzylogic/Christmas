@@ -217,6 +217,9 @@ class GroupContainer extends Component {
     this.setState({
       showEditorGroupHos: true,
     });
+    const { onFetchAllValiGroupName, onFetchAllValiHosName } = this.props;
+    onFetchAllValiGroupName();
+    onFetchAllValiHosName();
   };
 
   render() {

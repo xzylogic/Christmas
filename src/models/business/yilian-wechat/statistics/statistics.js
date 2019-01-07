@@ -37,7 +37,7 @@ export default {
           startTime: moment(new Date().valueOf() - 2678400000).format('YYYY-MM-DD'),
           endTime: moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD'),
           countType: 'day',
-          groupName: '1组',
+          groupName: '',
           project: '',
           isExport: false,
         },
@@ -111,15 +111,15 @@ export default {
             type: 'updateSearchGroupList',
             payload: res.data,
           });
-          yield put({
-            type: 'updateSearchParams',
-            payload: {
-              pageKey: 'popularization',
-              typeKey: POPULARIZATION_REPORT_TYPE.TYPE1,
-              key: 'groupName',
-              value: res.data[0].name,
-            },
-          });
+          // yield put({
+          //   type: 'updateSearchParams',
+          //   payload: {
+          //     pageKey: 'popularization',
+          //     typeKey: POPULARIZATION_REPORT_TYPE.TYPE1,
+          //     key: 'groupName',
+          //     value: res.data[0].name,
+          //   },
+          // });
         }
       }
     },

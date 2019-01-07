@@ -155,7 +155,7 @@ class Type1Container extends Component {
       moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD')
     );
     await onUpdateSearchParams('countType', 'day');
-    await onUpdateSearchParams('groupName', '1组');
+    await onUpdateSearchParams('groupName', '');
     await onUpdateSearchParams('project', '');
     await onUpdateSearchParams('isExport', false);
     await onFetchPopularizationReport(0);

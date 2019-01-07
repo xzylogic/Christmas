@@ -164,7 +164,7 @@ class AppointmentType1Container extends Component {
       'endTime',
       moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD')
     );
-    await onUpdateSearchParams('groupName', '1组');
+    await onUpdateSearchParams('groupName', '');
     await onUpdateSearchParams('show', 'chart');
     await onUpdateSearchParams('isExport', false);
     await onFetchAppointmentReport(0);

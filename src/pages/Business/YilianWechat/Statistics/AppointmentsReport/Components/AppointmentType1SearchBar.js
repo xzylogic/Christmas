@@ -17,6 +17,7 @@ function AppointmentType1SearchBar(props) {
         value={params.groupName}
         onChange={value => onParamsChange(value, 'groupName')}
       >
+        <Select.Option value="">全部</Select.Option>
         {searchGroupList.map(data => (
           <Select.Option key={data.id} value={data.name}>
             {data.name}

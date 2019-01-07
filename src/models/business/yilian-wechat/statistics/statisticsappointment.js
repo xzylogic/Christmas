@@ -24,7 +24,7 @@ export default {
         [APPOINTMENTS_REPORT_TYPE.TYPE1]: {
           startTime: moment(new Date().valueOf() - 2678400000).format('YYYY-MM-DD'),
           endTime: `${moment(new Date().valueOf() - 86400000).format('YYYY-MM-DD')} 24`,
-          groupName: '1组',
+          groupName: '',
           show: 'chart',
           isExport: false,
         },
@@ -68,15 +68,15 @@ export default {
             type: 'updateSearchGroupList',
             payload: res.data,
           });
-          yield put({
-            type: 'updateSearchParams',
-            payload: {
-              pageKey: 'appointments',
-              typeKey: APPOINTMENTS_REPORT_TYPE.TYPE1,
-              key: 'groupName',
-              value: res.data[0].name,
-            },
-          });
+          // yield put({
+          //   type: 'updateSearchParams',
+          //   payload: {
+          //     pageKey: 'appointments',
+          //     typeKey: APPOINTMENTS_REPORT_TYPE.TYPE1,
+          //     key: 'groupName',
+          //     value: res.data[0].name,
+          //   },
+          // });
         }
       }
     },

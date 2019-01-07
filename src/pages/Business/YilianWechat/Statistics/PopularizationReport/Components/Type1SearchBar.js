@@ -17,6 +17,7 @@ function type1SearchBar(props) {
         style={{ width: 90 }}
         onChange={value => onParamsChange(value, 'groupName')}
       >
+        <Select.Option value="">全部</Select.Option>
         {searchGroupList.map(data => (
           <Select.Option key={data.id} value={data.name}>
             {data.name}
@@ -40,19 +41,26 @@ function type1SearchBar(props) {
         <Select.Option value="year">按年统计</Select.Option>
       </Select>
       <StatisticalMethods params={params} onParamsChange={onParamsChange} />
-      <span className={classes.Span}>{options}</span>
-      <Select
-        className={classes.Span}
-        name="project"
-        value={params.project}
-        onChange={value => onParamsChange(value, 'project')}
-        style={{ width: 120 }}
-      >
-        <Select.Option value="">全部</Select.Option>
-        <Select.Option value="fansCount">关注量</Select.Option>
-        <Select.Option value="regCount">注册量</Select.Option>
-        {/* <Select.Option value="conversionRate">注册转化率</Select.Option> */}
-      </Select>
+      <span className={classes.Span}>
+        小组：
+        {options}
+      </span>
+      <span className={classes.SpanLeft}>
+        项目：
+        <Select
+          className={classes.SpanLeft}
+          name="project"
+          value={params.project}
+          onChange={value => onParamsChange(value, 'project')}
+          style={{ width: 120 }}
+        >
+          <Select.Option value="">全部</Select.Option>
+          <Select.Option value="fansCount">关注量</Select.Option>
+          <Select.Option value="regCount">注册量</Select.Option>
+          {/* <Select.Option value="conversionRate">注册转化率</Select.Option> */}
+        </Select>
+      </span>
+
       <span className={classes.BtnRight}>
         <Button type="primary" htmlType="button" onClick={onSearch} className={classes.Gap}>
           查询

@@ -34,6 +34,7 @@ class StatisticalMethods extends React.Component {
     const { params, onParamsChange } = this.props;
 
     if (params.type !== perProps.params.type || params.countType !== perProps.params.countType) {
+      // 按日统计
       if (params.countType === 'day' || params.type === 'day' || params.type === '0') {
         let endTime = moment(new Date(params.startDate).valueOf() + 2592000000).format(
           'YYYY-MM-DD'
@@ -53,6 +54,26 @@ class StatisticalMethods extends React.Component {
         }
 
         onParamsChange(endTime, 'endDate');
+      }
+      // 按年统计
+      if (params.countType === 'year' || params.type === 'year' || params.type === '3') {
+        let startYear1 = params.startDate.format('YYYY-MM-DD');
+        if (params && params.startDate.length) {
+          startYear1 = params.startDate;
+        }
+
+        let endYear1 = params.endDate.format('YYYY-MM-DD');
+        if (params && params.endDate.length) {
+          endYear1 = params.endDate;
+        }
+        const startYear2 = startYear1.split('-')[0];
+        const startYear = `${startYear2}-01-01`;
+
+        const endYear2 = endYear1.split('-')[0];
+        const endYear = `${endYear2}-12-31`;
+
+        onParamsChange(startYear, 'startDate');
+        onParamsChange(endYear, 'endDate');
       }
     }
   }

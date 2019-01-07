@@ -68,6 +68,27 @@ class StatisticalMethods extends React.Component {
     const myEndDate = new Date(Date.parse(dateEndStr.replace(/-/g, '/')));
 
     if (params.type !== perProps.params.type || params.countType !== perProps.params.countType) {
+      // 按日统计
+      if (params.countType === 'day' || params.type === 'day' || params.type === '0') {
+        let endTime = moment(new Date(params.startTime).valueOf() + 2592000000).format(
+          'YYYY-MM-DD'
+        );
+
+        // 今天
+
+        const currentTime = new Date().getTime();
+        // 所选日期+30天（2592000000）
+        const chooseTimeAdd30 = new Date(
+          moment(new Date(params.startTime).valueOf() + 2592000000).format('YYYY-MM-DD')
+        );
+
+        if (chooseTimeAdd30 > currentTime) {
+          endTime = moment(currentTime - 86400000).format('YYYY-MM-DD');
+        }
+
+        onParamsChange(endTime, 'endTime');
+      }
+      // 按周统计
       if (params.countType === 'week' || params.type === 'week' || params.type === '1') {
         if (weekDay[myStartDate.getDay()] !== '周日') {
           const dateStrMscStart =
@@ -88,24 +109,45 @@ class StatisticalMethods extends React.Component {
         }
       }
 
-      if (params.countType === 'day' || params.type === 'day' || params.type === '0') {
-        let endTime = moment(new Date(params.startTime).valueOf() + 2592000000).format(
-          'YYYY-MM-DD'
-        );
+      // 按年统计
+      if (params.countType === 'year' || params.type === 'year' || params.type === '3') {
+        const startYear1 = params.startTime;
+        const startYear2 = startYear1.split('-')[0];
+        const startYear = `${startYear2}-01-01`;
 
-        // 今天
+        const endYear1 = params.endTime;
+        const endYear2 = endYear1.split('-')[0];
+        const endYear = `${endYear2}-12-31`;
 
-        const currentTime = new Date().getTime();
-        // 所选日期+30天（2592000000）
-        const chooseTimeAdd30 = new Date(
-          moment(new Date(params.startTime).valueOf() + 2592000000).format('YYYY-MM-DD')
-        );
+        onParamsChange(startYear, 'startTime');
+        onParamsChange(endYear, 'endTime');
+      }
 
-        if (chooseTimeAdd30 > currentTime) {
-          endTime = moment(currentTime - 86400000).format('YYYY-MM-DD');
+      // 按月统计
+      if (params.countType === 'month' || params.type === 'month' || params.type === '2') {
+        const start = params.startTime;
+        const newStart = `${start.substring(0, 7)}-01`;
+        onParamsChange(newStart, 'startTime');
+
+        const end = params.endTime;
+        const month = end.split('-')[1];
+        let newEnd = `${end.substring(0, 7)}-30`;
+        if (
+          month === '01' ||
+          month === '03' ||
+          month === '05' ||
+          month === '07' ||
+          month === '09' ||
+          month === '10' ||
+          month === '12'
+        ) {
+          newEnd = `${end.substring(0, 7)}-31`;
+        }
+        if (month === '02') {
+          newEnd = `${end.substring(0, 7)}-28`;
         }
 
-        onParamsChange(endTime, 'endTime');
+        onParamsChange(newEnd, 'endTime');
       }
     }
   }

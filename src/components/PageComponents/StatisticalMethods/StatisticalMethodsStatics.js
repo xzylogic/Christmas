@@ -51,31 +51,6 @@ class StatisticalMethods extends React.Component {
         }
         onParamsChange(endTime, 'endDate');
       }
-      // 按年统计
-      if (params.countType === 'year' || params.type === 'year' || params.type === '3') {
-        let startYear1 = params.startDate;
-        if (params && params.startDate.length) {
-          startYear1 = params.startDate;
-        } else {
-          startYear1 = params.startDate.format('YYYY-MM-DD');
-        }
-
-        let endYear1 = params.endDate;
-        if (params && params.endDate.length) {
-          endYear1 = params.endDate;
-        } else {
-          endYear1 = params.endDate.format('YYYY-MM-DD');
-        }
-        const startYear2 = startYear1.split('-')[0];
-        const startYear = `${startYear2}-01-01`;
-
-        const endYear2 = endYear1.split('-')[0];
-        const endYear = `${endYear2}-12-31`;
-
-        onParamsChange(startYear, 'startDate');
-        onParamsChange(endYear, 'endDate');
-      }
-
       // 按月统计
       if (params.countType === 'month' || params.type === 'month' || params.type === '3') {
         let startMonth1 = params.startDate;
@@ -113,6 +88,31 @@ class StatisticalMethods extends React.Component {
 
         onParamsChange(startMonth, 'startDate');
         onParamsChange(endMonth, 'endDate');
+      }
+
+      // 按年统计
+      if (params.countType === 'year' || params.type === 'year' || params.type === '3') {
+        let startYear1 = params.startDate;
+        if (params && params.startDate.length) {
+          startYear1 = params.startDate;
+        } else {
+          startYear1 = params.startDate.format('YYYY-MM-DD');
+        }
+
+        let endYear1 = params.endDate;
+        if (params && params.endDate.length) {
+          endYear1 = params.endDate;
+        } else {
+          endYear1 = params.endDate.format('YYYY-MM-DD');
+        }
+        const startYear2 = startYear1.split('-')[0];
+        const startYear = `${startYear2}-01-01`;
+
+        const endYear2 = endYear1.split('-')[0];
+        const endYear = `${endYear2}-12-31`;
+
+        onParamsChange(startYear, 'startDate');
+        onParamsChange(endYear, 'endDate');
       }
     }
   }

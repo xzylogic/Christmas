@@ -109,20 +109,6 @@ class StatisticalMethods extends React.Component {
         }
       }
 
-      // 按年统计
-      if (params.countType === 'year' || params.type === 'year' || params.type === '3') {
-        const startYear1 = params.startTime;
-        const startYear2 = startYear1.split('-')[0];
-        const startYear = `${startYear2}-01-01`;
-
-        const endYear1 = params.endTime;
-        const endYear2 = endYear1.split('-')[0];
-        const endYear = `${endYear2}-12-31`;
-
-        onParamsChange(startYear, 'startTime');
-        onParamsChange(endYear, 'endTime');
-      }
-
       // 按月统计
       if (params.countType === 'month' || params.type === 'month' || params.type === '2') {
         const start = params.startTime;
@@ -148,6 +134,20 @@ class StatisticalMethods extends React.Component {
         }
 
         onParamsChange(newEnd, 'endTime');
+      }
+
+      // 按年统计
+      if (params.countType === 'year' || params.type === 'year' || params.type === '3') {
+        const startYear1 = params.startTime;
+        const startYear2 = startYear1.split('-')[0];
+        const startYear = `${startYear2}-01-01`;
+
+        const endYear1 = params.endTime;
+        const endYear2 = endYear1.split('-')[0];
+        const endYear = `${endYear2}-12-31`;
+
+        onParamsChange(startYear, 'startTime');
+        onParamsChange(endYear, 'endTime');
       }
     }
   }

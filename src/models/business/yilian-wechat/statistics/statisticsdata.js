@@ -88,8 +88,9 @@ export default {
         hosGrade: null,
         // 组别
         group: '',
-        // 渠道
+        // 数据来源
         channel: '微信',
+        // 渠道
         hosType: null,
         orderStatus: null,
         // 医联微信
@@ -188,6 +189,9 @@ export default {
         }
         if (promoteAttention && promoteAttention.channel) {
           params += `&promoCode=${promoteAttention.channel}`;
+        }
+        if (promoteAttention && promoteAttention.hosType) {
+          params += `&hosType=${promoteAttention.hosType}`;
         }
         if (promoteAttention && promoteAttention.group) {
           params += `&groupId=${promoteAttention.group}`;

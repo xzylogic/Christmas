@@ -10,6 +10,12 @@ class PopularizationBar extends React.Component {
     onParamsChange('', 'hosName');
   };
 
+  handleChangePromoCode = value => {
+    const { onParamsChange } = this.props;
+    onParamsChange(null, 'hosType');
+    onParamsChange(value, 'channel');
+  };
+
   render() {
     const {
       onSearch,
@@ -125,7 +131,7 @@ class PopularizationBar extends React.Component {
             className={classes.Gap}
             placeholder="数据来源"
             value={params.channel}
-            onChange={value => onParamsChange(value, 'channel')}
+            onChange={this.handleChangePromoCode}
           >
             <Select.Option value="微信">医联微信</Select.Option>
             <Select.Option value="app">医联APP</Select.Option>
@@ -140,22 +146,24 @@ class PopularizationBar extends React.Component {
                   style={{ width: 200 }}
                   className={classes.Gap}
                   placeholder="--请选择--"
-                  value={params.orderStatusWechat}
-                  onChange={value => onParamsChange(value, 'orderStatusWechat')}
+                  value={params.hosType}
+                  onChange={value => onParamsChange(value, 'hosType')}
                 >
-                  <Select.Option value="0">申康医联二维码</Select.Option>
-                  <Select.Option value="1">医院二维码</Select.Option>
-                  <Select.Option value="2">员工个人二维码</Select.Option>
+                  <Select.Option value="0">医院二维码</Select.Option>
+                  <Select.Option value="1">员工个人二维码</Select.Option>
+                  <Select.Option value="3" disabled>
+                    申康医联二维码
+                  </Select.Option>
                 </Select>
               ) : (
                 <Select
                   style={{ width: 200 }}
                   className={classes.Gap}
                   placeholder="--请选择--"
-                  value={params.orderStatusApp}
-                  onChange={value => onParamsChange(value, 'orderStatusApp')}
+                  value={params.hosType}
+                  onChange={value => onParamsChange(value, 'hosType')}
                 >
-                  <Select.Option value="0">按员工工号分类</Select.Option>
+                  <Select.Option value="4">按员工工号分类</Select.Option>
                 </Select>
               )}
             </span>

@@ -83,6 +83,7 @@ class Type1List extends Component {
       onPageChange,
       loading,
     } = this.props;
+
     let container = '';
     const followContent = (
       <React.Fragment>
@@ -92,19 +93,19 @@ class Type1List extends Component {
           dataSource={this.getList(data, 'fansCount')}
           columns={this.setTableColumns(countType, data)}
           pagination={false}
-          // pageSize={5}
         />
       </React.Fragment>
     );
     const registerContent = (
       <React.Fragment>
         <Divider>注册量</Divider>
-        <Table
+        <TableList
           rowKey={(_, index) => index}
-          dataSource={this.getList(data, 'regCount')}
+          list={this.getList(data, 'regCount')}
           columns={this.setTableColumns(countType, data)}
-          pagination={false}
-          // pageSize={5}
+          currentPage={currentPage}
+          totalElements={totalElements}
+          onPageChange={onPageChange}
         />
       </React.Fragment>
     );
@@ -118,7 +119,6 @@ class Type1List extends Component {
     //       currentPage={currentPage}
     //       totalElements={totalElements}
     //       onPageChange={onPageChange}
-    //       // pageSize={5}
     //     />
     //   </React.Fragment>
     // );
@@ -141,7 +141,6 @@ class Type1List extends Component {
             currentPage={currentPage}
             totalElements={totalElements}
             onPageChange={onPageChange}
-            // pageSize={5}
           />
         </React.Fragment>
       );

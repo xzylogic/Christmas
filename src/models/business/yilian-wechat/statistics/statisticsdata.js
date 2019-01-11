@@ -84,19 +84,19 @@ export default {
         origin: '',
         // 医院名字
         hosName: '',
-        // 医院等级
-        hosGrade: null,
+        // // 医院等级
+        // hosGrade: null,
         // 组别
         group: '',
         // 数据来源
         channel: '微信',
         // 渠道
         hosType: null,
-        orderStatus: null,
-        // 医联微信
-        orderStatusWechat: null,
-        // 医联App
-        orderStatusApp: null,
+        // orderStatus: null,
+        // // 医联微信
+        // orderStatusWechat: null,
+        // // 医联App
+        // orderStatusApp: null,
         isExport: false,
         // 查看详情参数
         chooseStartTime: moment(new Date().valueOf() - 31622400000).format('YYYY-MM-DD'),

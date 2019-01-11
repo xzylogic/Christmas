@@ -80,24 +80,26 @@ class AppointmentsContainer extends Component {
       onFetchAllGroupName,
       searchParam,
     } = this.props;
-    const { type } = searchParam;
+    const { way } = searchParam;
+    console.log(123);
+    console.log(searchParam.way);
 
-    onFetchPromoteAttentionAmount(type, 0);
+    onFetchPromoteAttentionAmount(way, 0);
     onFetchAllHosName();
     onFetchAllGroupName();
   }
 
   handleParamsChanged = async (value, dataKey) => {
-    const {
-      onSearchParamChange,
-      onFetchPromoteAttentionAmountDebounce,
-      onFetchHosGroup,
-    } = this.props;
+    const { onSearchParamChange, onFetchPromoteAttentionAmountDebounce, searchParam } = this.props;
     const { way } = this.state;
 
     await onSearchParamChange(dataKey, value);
-    await onFetchPromoteAttentionAmountDebounce(way, 0);
-    await onFetchHosGroup(0);
+
+    if (dataKey !== 'endTime') {
+      await onFetchPromoteAttentionAmountDebounce(searchParam.way, 0);
+    } else {
+      await onFetchPromoteAttentionAmountDebounce(way, 0);
+    }
   };
 
   setTableColumnsWechat = () => {

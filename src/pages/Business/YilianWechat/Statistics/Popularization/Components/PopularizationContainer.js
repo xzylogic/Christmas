@@ -81,8 +81,6 @@ class AppointmentsContainer extends Component {
       searchParam,
     } = this.props;
     const { way } = searchParam;
-    console.log(123);
-    console.log(searchParam.way);
 
     onFetchPromoteAttentionAmount(way, 0);
     onFetchAllHosName();

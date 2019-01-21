@@ -19,7 +19,7 @@ const renderTitle = (timeTitle, fansTotal, regTotal, conversionRateTotal) => {
     </div>
   );
 
-  if (fansTotal.length !== 0 && regTotal !== 0 && conversionRateTotal) {
+  if (fansTotal.length !== 0 || regTotal !== 0 || conversionRateTotal) {
     content = (
       <div>
         <div>

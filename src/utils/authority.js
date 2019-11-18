@@ -13,7 +13,9 @@ export function getAuthority(str) {
   // if (typeof authority === 'string') {
   //   return [authority];
   // }
-  return authority ? ['admin'] : [];
+  // 以下两行，本地开发时第一行不注释，第二行注释（可以不进入登录界面）
+  return authority || ['admin'];
+  // return authority ? ['admin'] : [];
 }
 
 export function setAuthority(authority) {

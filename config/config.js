@@ -60,18 +60,18 @@ export default {
   theme: {
     'primary-color': defaultSettings.primaryColor,
   },
-  proxy: {
-    ...(process.env.NODE_ENV === 'development'
-      ? {
-          '/yilian-cloud-backend-api': {
-            target: 'https://shdcapp.wondersgroup.com',
-            // target: 'http://10.2.10.13:9080',
-            changeOrigin: true,
-            // pathRewrite: { '^/server': '' }, // /server/api/currentUser -> /api/currentUser
-          },
-        }
-      : {}),
-  },
+  // proxy: {
+  //   ...(process.env.NODE_ENV === 'development'
+  //     ? {
+  //         '/yilian-cloud-backend-api': {
+  //           target: 'https://shdcapp.wondersgroup.com',
+  //           // target: 'http://10.2.10.13:9080',
+  //           changeOrigin: true,
+  //           // pathRewrite: { '^/server': '' }, // /server/api/currentUser -> /api/currentUser
+  //         },
+  //       }
+  //     : {}),
+  // },
   externals: {
     '@antv/data-set': 'DataSet',
   },
